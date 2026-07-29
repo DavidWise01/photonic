@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROOT0 LIGHT WEAVE — 128 = 17 PER HEAD</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+<script type="importmap">
+{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}
+</script>
+<style>
+:root{color-scheme:dark}
+html,body{height:100%;background:#050507}
+body{font-family:'Instrument Sans',system-ui,-apple-system,Segoe UI,Roboto;overscroll-behavior:none}
+.font-mono{font-family:'Fragment Mono',ui-monospace,monospace}
+.glow{text-shadow:0 0 24px rgba(255,211,140,.55),0 0 60px rgba(255,180,80,.25)}
+.glow-gold{box-shadow:0 0 14px rgba(255,200,110,.55),inset 0 0 8px rgba(255,230,180,.25)}
+</style>
+</head>
+<body class="overflow-hidden select-none touch-none">
+<div class="relative w-screen h-screen">
+  <canvas id="c" class="absolute inset-0"></canvas>
+  
+  <!-- vignette -->
+  <div class="pointer-events-none absolute inset-0" style="background:radial-gradient(1200px 800px at 50% 45%, rgba(255,210,150,0.07), transparent 60%), radial-gradient(900px 600px at 50% 120%, rgba(0,0,0,0.9), transparent 40%), linear-gradient(to bottom, rgba(5,5,7,0.2), rgba(5,5,7,0.9));"></div>
+
+  <!-- header -->
+  <header class="absolute top-0 left-0 right-0 p-6 md:p-10 flex items-start justify-between pointer-events-none">
+    <div>
+      <h1 class="text-[26px] md:text-[34px] tracking-[0.28em] font-light">ROOT<span class="font-medium tracking-[0.22em]">0</span></h1>
+      <p class="text-[10px] md:text-[11px] tracking-[0.5em] text-[#b39a6b] mt-1">LIGHT WEAVE</p>
+    </div>
+    <div class="text-right">
+      <div class="font-mono text-[42px] md:text-[56px] leading-none font-[300] glow">128</div>
+      <div class="text-[10px] tracking-[0.3em] text-zinc-500 -mt-1">32 × 4 QUADRANTS</div>
+    </div>
+  </header>
+
+  <!-- left heads -->
+  <div class="absolute left-4 md:left-10 top-[52%] -translate-y-1/2 hidden md:flex flex-col gap-3 pointer-events-auto">
+    <!-- HEAD 0 -->
+    <div class="head-card group w-[230px] backdrop-blur-2xl bg-[#0a0b0f]/70 border border-white/10 rounded-[20px] p-3.5 hover:bg-[#10121a]/80 transition cursor-pointer" data-head="0">
+      <div class="flex items-center justify-between">
+        <div class="text-[10px] tracking-[0.28em] text-zinc-500">HEAD 0</div>
+        <div class="text-[10px] font-mono text-zinc-500">W0</div>
+      </div>
+      <div class="mt-3 flex items-center justify-between">
+        <div class="bars-left flex gap-[2px]"></div>
+        <div class="w-[4px] h-[24px] rounded-full bg-amber-300 glow-gold mx-2"></div>
+        <div class="bars-right flex gap-[2px]"></div>
+      </div>
+      <div class="mt-2.5 flex items-center justify-between">
+        <div class="text-[11px] font-mono text-zinc-400">16 <span class="text-zinc-600">+</span> <span class="text-amber-300">1</span> <span class="text-zinc-600">+</span> 16</div>
+        <div class="text-[11px] font-mono text-amber-200/90">= 17</div>
+      </div>
+    </div>
+    <!-- HEAD 1 -->
+    <div class="head-card group w-[230px] backdrop-blur-2xl bg-[#0a0b0f]/70 border border-white/10 rounded-[20px] p-3.5 hover:bg-[#10121a]/80 transition cursor-pointer" data-head="1">
+      <div class="flex items-center justify-between">
+        <div class="text-[10px] tracking-[0.28em] text-zinc-500">HEAD 1</div>
+        <div class="text-[10px] font-mono text-zinc-500">W1</div>
+      </div>
+      <div class="mt-3 flex items-center justify-between">
+        <div class="bars-left flex gap-[2px]"></div>
+        <div class="w-[4px] h-[24px] rounded-full bg-amber-300 glow-gold mx-2"></div>
+        <div class="bars-right flex gap-[2px]"></div>
+      </div>
+      <div class="mt-2.5 flex items-center justify-between">
+        <div class="text-[11px] font-mono text-zinc-400">16 <span class="text-zinc-600">+</span> <span class="text-amber-300">1</span> <span class="text-zinc-600">+</span> 16</div>
+        <div class="text-[11px] font-mono text-amber-200/90">= 17</div>
+      </div>
+    <!-- HEAD 2 -->
+    <div class="head-card group w-[230px] backdrop-blur-2xl bg-[#0a0b0f]/70 border border-white/10 rounded-[20px] p-3.5 hover:bg-[#10121a]/80 transition cursor-pointer" data-head="2">
+      <div class="flex items-center justify-between">
+        <div class="text-[10px] tracking-[0.28em] text-zinc-500">HEAD 2</div>
+        <div class="text-[10px] font-mono text-zinc-500">W2</div>
+      </div>
+      <div class="mt-3 flex items-center justify-between">
+        <div class="bars-left flex gap-[2px]"></div>
+        <div class="w-[4px] h-[24px] rounded-full bg-amber-300 glow-gold mx-2"></div>
+        <div class="bars-right flex gap-[2px]"></div>
+      </div>
+      <div class="mt-2.5 flex items-center justify-between">
+        <div class="text-[11px] font-mono text-zinc-400">16 <span class="text-zinc-600">+</span> <span class="text-amber-300">1</span> <span class="text-zinc-600">+</span> 16</div>
+        <div class="text-[11px] font-mono text-amber-200/90">= 17</div>
+      </div>
+    </div>
+    <!-- HEAD 3 -->
+    <div class="head-card group w-[230px] backdrop-blur-2xl bg-[#0a0b0f]/70 border border-white/10 rounded-[20px] p-3.5 hover:bg-[#10121a]/80 transition cursor-pointer" data-head="3">
+      <div class="flex items-center justify-between">
+        <div class="text-[10px] tracking-[0.28em] text-zinc-500">HEAD 3</div>
+        <div class="text-[10px] font-mono text-zinc-500">W3</div>
+      </div>
+      <div class="mt-3 flex items-center justify-between">
+        <div class="bars-left flex gap-[2px]"></div>
+        <div class="w-[4px] h-[24px] rounded-full bg-amber-300 glow-gold mx-2"></div>
+        <div class="bars-right flex gap-[2px]"></div>
+      </div>
+      <div class="mt-2.5 flex items-center justify-between">
+        <div class="text-[11px] font-mono text-zinc-400">16 <span class="text-zinc-600">+</span> <span class="text-amber-300">1</span> <span class="text-zinc-600">+</span> 16</div>
+        <div class="text-[11px] font-mono text-amber-200/90">= 17</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- right info -->
+  <div class="absolute right-4 md:right-10 top-[16%] hidden lg:block w-[300px] pointer-events-none">
+    <div class="backdrop-blur-2xl bg-black/40 border border-white/10 rounded-[22px] p-5">
+      <div class="text-[11px] tracking-[0.32em] text-[#d2b783]">PHOTONIC SPINE</div>
+      <h3 class="mt-1 text-[22px] font-light tracking-wide">The +1 Light Bit</h3>
+      <p class="mt-3 text-[13px] leading-relaxed text-zinc-400">Each quadrant is 16 data + 1 light + 16 data. The light bit is plasma — the -+1 photon from earlier layers. It sits on the .5 plane, weaving all 4 heads.</p>
+      <div class="mt-4 grid grid-cols-3 gap-2">
+        <div class="bg-white/[0.04] border border-white/5 rounded-xl py-2.5 text-center">
+          <div class="text-[10px] text-zinc-500 tracking-widest">LEFT</div>
+          <div class="font-mono text-[18px] text-zinc-200">16</div>
+        </div>
+        <div class="bg-amber-300/10 border border-amber-300/25 rounded-xl py-2.5 text-center">
+          <div class="text-[10px] text-amber-200/80 tracking-widest">LIGHT</div>
+          <div class="font-mono text-[18px] text-amber-200">1</div>
+        </div>
+        <div class="bg-white/[0.04] border border-white/5 rounded-xl py-2.5 text-center">
+          <div class="text-[10px] text-zinc-500 tracking-widest">RIGHT</div>
+          <div class="font-mono text-[18px] text-zinc-200">16</div>
+        </div>
+      </div>
+      <div class="mt-4 pt-4 border-t border-white/5">
+        <div class="flex items-center gap-2 text-[12px] text-zinc-400">
+          <span class="inline-block w-2 h-2 rounded-full bg-amber-300 animate-pulse"></span>
+          Photons trace W-boundaries, meeting at J junctions (.5)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- bottom bar -->
+  <div class="absolute bottom-5 left-1/2 -translate-x-1/2 w-[94%] md:w-auto pointer-events-none">
+    <div class="mx-auto flex flex-wrap items-center justify-center gap-x-5 gap-y-2 backdrop-blur-xl bg-[#08090c]/75 border border-white/10 rounded-2xl px-4 md:px-6 py-3">
+      <div class="flex items-baseline gap-2">
+        <span class="text-[10px] tracking-[0.3em] text-zinc-500">WIDTH</span>
+        <span class="font-mono text-[15px] text-white">128 = 32 × 4</span>
+      </div>
+      <div class="hidden sm:block w-px h-4 bg-white/10"></div>
+      <div class="flex items-baseline gap-2">
+        <span class="text-[10px] tracking-[0.3em] text-zinc-500">PER HEAD</span>
+        <span class="font-mono text-[15px] text-amber-200">17</span>
+      </div>
+      <div class="hidden sm:block w-px h-4 bg-white/10"></div>
+      <div class="flex items-baseline gap-2">
+        <span class="text-[10px] tracking-[0.3em] text-zinc-500">WEAVE</span>
+        <span class="font-mono text-[15px] text-white">68 → 1</span>
+        <span class="text-[11px] text-zinc-500">via shared .5 plane</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- immortal core label -->
+  <div class="absolute left-5 md:left-10 bottom-5 pointer-events-none">
+    <div class="text-[10px] tracking-[0.45em] text-zinc-600">IMMORTAL</div>
+    <div class="text-[22px] font-[300] leading-none text-zinc-300 -mt-0.5">tensor <span class="font-mono text-zinc-200">=7</span></div>
+  </div>
+
+  <!-- mobile heads -->
+  <div class="absolute bottom-[84px] left-0 right-0 px-4 flex md:hidden gap-2 overflow-x-auto no-scrollbar pointer-events-auto">
+    <div class="shrink-0 backdrop-blur-xl bg-black/60 border border-white/10 rounded-xl px-3 py-2">
+      <div class="text-[10px] text-zinc-500">H0</div><div class="font-mono text-amber-200 text-sm">16+1+16</div>
+    </div>
+    <div class="shrink-0 backdrop-blur-xl bg-black/60 border border-white/10 rounded-xl px-3 py-2">
+      <div class="text-[10px] text-zinc-500">H1</div><div class="font-mono text-amber-200 text-sm">16+1+16</div>
+    </div>
+    <div class="shrink-0 backdrop-blur-xl bg-black/60 border border-white/10 rounded-xl px-3 py-2">
+      <div class="text-[10px] text-zinc-500">H2</div><div class="font-mono text-amber-200 text-sm">16+1+16</div>
+    </div>
+    <div class="shrink-0 backdrop-blur-xl bg-black/60 border border-white/10 rounded-xl px-3 py-2">
+      <div class="text-[10px] text-zinc-500">H3</div><div class="font-mono text-amber-200 text-sm">16+1+16</div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x050507);
+scene.fog = new THREE.Fog(0x050507, 14, 26);
+
+const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.set(0, 0.4, 11.8);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.rotateSpeed = 0.6;
+controls.minDistance = 7.5;
+controls.maxDistance = 18;
+controls.maxPolarAngle = Math.PI * 0.82;
+controls.target.set(0,0,0);
+
+scene.add(new THREE.AmbientLight(0xbfb6a3, 0.28));
+const key = new THREE.DirectionalLight(0xffe8c4, 0.7); key.position.set(5,4,6); scene.add(key);
+const rim = new THREE.DirectionalLight(0x7a8cff, 0.18); rim.position.set(-5,-3,-5); scene.add(rim);
+
+function makeTextSprite(text, color='#d6c7a8', scale=0.5){
+  const c = document.createElement('canvas'); c.width=256; c.height=128;
+  const ctx = c.getContext('2d'); ctx.clearRect(0,0,256,128);
+  ctx.font = '600 84px Fragment Mono'; ctx.fillStyle = color; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.shadowColor = color; ctx.shadowBlur = 12; ctx.fillText(text,128,68);
+  const tex = new THREE.CanvasTexture(c); tex.anisotropy = 4;
+  const spr = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true }));
+  spr.scale.set(scale*1.6, scale*0.8, 1);
+  return spr;
+}
+
+const tensor = new THREE.Group(); scene.add(tensor);
+
+const dataMat = new THREE.MeshStandardMaterial({ color:0x1a1d24, metalness:0.85, roughness:0.5, emissive:0x000000 });
+const dataMatActive = new THREE.MeshStandardMaterial({ color:0x2a3140, metalness:0.7, roughness:0.38, emissive:0x10141c, emissiveIntensity:0.35 });
+const lightMat = new THREE.MeshStandardMaterial({ color:0xffd484, emissive:0xffa63a, emissiveIntensity:1.3, metalness:0.2, roughness:0.25 });
+
+const boxGeo = new THREE.BoxGeometry(0.30, 0.16, 0.30);
+const lightGeo = new THREE.CylinderGeometry(0.068, 0.068, 0.58, 18);
+
+const heads = [];
+const lightBits = [];
+
+for(let h=0; h<4; h++){
+  const y = 1.8 - h*1.2;
+  const g = new THREE.Group(); g.position.y = y; g.userData.index = h; g.userData.bits=[];
+  tensor.add(g); heads.push(g);
+
+  const plate = new THREE.Mesh(new THREE.BoxGeometry(18.8, 0.05, 1.15), new THREE.MeshStandardMaterial({ color:0x0a0b0f, metalness:0.1, roughness:0.95, transparent:true, opacity:0.75 }));
+  plate.position.z = -0.02; g.add(plate);
+
+  for(let i=0;i<33;i++){
+    const x = (i-16)*0.525;
+    if(i===16){
+      const lb = new THREE.Mesh(lightGeo, lightMat.clone());
+      lb.position.set(x, 0.21, 0); g.add(lb); lightBits.push(lb);
+      const halo = new THREE.Sprite(new THREE.SpriteMaterial({ color:0xffcb74, transparent:true, opacity:0.28, blending:THREE.AdditiveBlending }));
+      halo.scale.set(0.7,0.7,1); halo.position.set(x,0.21,0); g.add(halo);
+    }else{
+      const b = new THREE.Mesh(boxGeo, dataMat.clone());
+      b.position.set(x, 0, 0); b.userData = {head:h}; g.add(b); g.userData.bits.push(b);
+    }
+  }
+  const l = makeTextSprite('16', '#5f636e', 0.32); l.position.set(-9.1,0.32,0); g.add(l);
+  const r = makeTextSprite('16', '#5f636e', 0.32); r.position.set(9.1,0.32,0); g.add(r);
+}
+
+// immortal core =7
+const core = new THREE.Mesh(new THREE.SphereGeometry(0.21, 32, 32), new THREE.MeshBasicMaterial({ color:0xfff1d2 }));
+const coreHalo = new THREE.Sprite(new THREE.SpriteMaterial({ color:0xffd994, transparent:true, opacity:0.22, blending:THREE.AdditiveBlending }));
+coreHalo.scale.set(2.4,2.4,1); scene.add(core); scene.add(coreHalo);
+const coreLight = new THREE.PointLight(0xffd07a, 2.2, 9); scene.add(coreLight);
+
+// photonic spine - weaves through all 4 heads
+const spinePts = [
+  new THREE.Vector3(0, 2.06, 0),
+  new THREE.Vector3(0, 1.8, 0),
+  new THREE.Vector3(0, 0.6, 0.14),
+  new THREE.Vector3(0, -0.6, -0.14),
+  new THREE.Vector3(0, -1.8, 0),
+  new THREE.Vector3(0, -2.06, 0),
+];
+const spineCurve = new THREE.CatmullRomCurve3(spinePts, false, 'catmullrom', 0.25);
+const spine = new THREE.Mesh(new THREE.TubeGeometry(spineCurve, 240, 0.023, 10, false), new THREE.MeshBasicMaterial({ color:0xffe1a8 }));
+const spineGlow = new THREE.Mesh(new THREE.TubeGeometry(spineCurve, 120, 0.085, 10, false), new THREE.MeshBasicMaterial({ color:0xffb44d, transparent:true, opacity:0.13, blending:THREE.AdditiveBlending, depthWrite:false }));
+scene.add(spineGlow); scene.add(spine);
+
+// photons on spine
+const photons = [];
+for(let i=0;i<9;i++){
+  const m = new THREE.Mesh(new THREE.SphereGeometry(0.044, 18, 18), new THREE.MeshBasicMaterial({ color:0xfff6e0 }));
+  m.userData = { t: i/9, s: 0.09 + (i%3)*0.015 };
+  const h = new THREE.Sprite(new THREE.SpriteMaterial({ color:0xffd082, transparent:true, opacity:0.65, blending:THREE.AdditiveBlending }));
+  h.scale.set(0.3,0.3,1); m.add(h);
+  photons.push(m); scene.add(m);
+}
+
+// W-boundaries
+const wPts = [
+  new THREE.Vector3(-8.6, 1.8, 0.72),
+  new THREE.Vector3(0, 1.2, 0.72),
+  new THREE.Vector3(8.6, 0.6, 0.72),
+  new THREE.Vector3(0, 0, 0.72),
+  new THREE.Vector3(-8.6, -0.6, 0.72),
+  new THREE.Vector3(0, -1.2, 0.72),
+  new THREE.Vector3(8.6, -1.8, 0.72),
+];
+const wCurve = new THREE.CatmullRomCurve3(wPts);
+const wLine = new THREE.Line(new THREE.BufferGeometry().setFromPoints(wCurve.getPoints(240)), new THREE.LineBasicMaterial({ color:0xffffff, transparent:true, opacity:0.16 }));
+scene.add(wLine);
+
+// J junctions at .5
+const junctions = [];
+[1.2, 0, -1.2].forEach((y,i)=>{
+  const j = new THREE.Mesh(new THREE.TorusGeometry(0.13, 0.016, 16, 56), new THREE.MeshBasicMaterial({ color:0xf0dfbb, transparent:true, opacity:0.92 }));
+  j.rotation.x = Math.PI/2; j.position.set(0, y, 0.72); scene.add(j); junctions.push(j);
+  const t = makeTextSprite('.5', '#e7d6b4', 0.24); t.position.set(0.33, y, 0.72); scene.add(t);
+  const jl = new THREE.PointLight(0xffcb7a, 0.55, 2.2); jl.position.set(0,y,0.72); scene.add(jl);
+});
+
+// w photons
+const wPhotons = [];
+for(let i=0;i<5;i++){
+  const wp = new THREE.Mesh(new THREE.SphereGeometry(0.03, 14, 14), new THREE.MeshBasicMaterial({ color:0xfff0d1 }));
+  wp.userData = { t: i/5 };
+  wPhotons.push(wp); scene.add(wp);
+}
+
+// interaction highlight
+function highlight(idx){
+  heads.forEach((h,i)=>{
+    const active = idx===-1 || i===idx;
+    h.userData.bits.forEach(b=>{
+      b.material = (i===idx) ? dataMatActive : dataMat;
+      b.material.transparent = !active && idx!==-1;
+      b.material.opacity = active ? 1 : 0.22;
+      b.scale.y = (i===idx) ? 1.45 : (active?1:0.75);
+    });
+    lightBits[i].material.emissiveIntensity = (i===idx) ? 1.7 : 1.15;
+    lightBits[i].scale.setScalar((i===idx)?1.15:1);
+  });
+  document.querySelectorAll('.head-card').forEach(c=>{
+    const on = +c.dataset.head === idx;
+    c.classList.toggle('ring-1', on);
+    c.classList.toggle('ring-amber-300/50', on);
+  });
+}
+highlight(-1);
+document.querySelectorAll('.head-card').forEach(card=>{
+  card.addEventListener('mouseenter', ()=> highlight(+card.dataset.head));
+  card.addEventListener('mouseleave', ()=> highlight(-1));
+});
+
+// populate bars
+document.querySelectorAll('.bars-left, .bars-right').forEach(el=>{
+  for(let i=0;i<16;i++){
+    const d=document.createElement('div');
+    d.className='w-[2.4px] h-[14px] md:h-[16px] bg-zinc-700/80 rounded-[1px] group-hover:bg-zinc-500 transition-colors';
+    el.appendChild(d);
+  }
+});
+
+// animate
+let last = performance.now();
+function tick(){
+  requestAnimationFrame(tick);
+  const now = performance.now(); const dt = (now-last)/1000; last = now;
+
+  controls.update();
+
+  const p = Math.sin(now*0.0018)*0.08 + 1;
+  core.scale.set(p,p,p); coreHalo.material.opacity = 0.20 + Math.sin(now*0.0025)*0.04;
+
+  lightBits.forEach((lb,i)=>{ lb.rotation.y += 0.012; lb.material.emissiveIntensity = 1.15 + Math.sin(now*0.002 + i)*0.25; });
+
+  photons.forEach(ph=>{ ph.userData.t = (ph.userData.t + dt*ph.userData.s) % 1; ph.position.copy(spineCurve.getPointAt(ph.userData.t)); });
+  wPhotons.forEach(wp=>{ wp.userData.t = (wp.userData.t + dt*0.07) % 1; wp.position.copy(wCurve.getPointAt(wp.userData.t)); });
+
+  junctions.forEach((j,i)=> j.rotation.z += 0.008 + i*0.002);
+
+  tensor.rotation.y = Math.sin(now*0.00015)*0.07;
+  tensor.position.y = Math.sin(now*0.0004)*0.02;
+
+  renderer.render(scene, camera);
+}
+tick();
+
+window.addEventListener('resize', ()=>{
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+});
+</script>
+</body>
+</html>

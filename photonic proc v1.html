@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photonic Inlays Processor — Mk-VII</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { color-scheme: dark; }
+  * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body {
+    font-family: 'Space Grotesk', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: #020617;
+    overflow-x: hidden;
+  }
+  .font-mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace; }
+  .glass {
+    background: linear-gradient(180deg, rgba(12,18,34,0.85) 0%, rgba(4,7,15,0.75) 100%);
+    backdrop-filter: blur(20px) saturate(120%);
+    -webkit-backdrop-filter: blur(20px) saturate(120%);
+    border: 1px solid rgba(148,163,184,0.12);
+  }
+  .glass:hover { border-color: rgba(34,211,238,0.25); }
+  .glow-cyan { box-shadow: inset 0 0 0 1px rgba(34,211,238,0.08), 0 0 40px rgba(8,145,178,0.06); }
+  .hex-bg {
+    background-image: url("data:image/svg+xml,%3Csvg width='84' height='72' viewBox='0 0 84 72' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M42 3 L75 21 V51 L42 69 L9 51 V21 Z' fill='none' stroke='rgba(100,116,139,0.14)' stroke-width='1'/%3E%3Ccircle cx='42' cy='36' r='1.5' fill='rgba(34,211,238,0.15)'/%3E%3C/svg%3E");
+    background-size: 84px 72px;
+    animation: grid-drift 60s linear infinite;
+  }
+  @keyframes grid-drift { to { background-position: 84px 72px; } }
+  .pulse {
+    position: absolute; left: 0; top: 0;
+    width: 6px; height: 6px; border-radius: 999px;
+    transform: translate(-50%,-50%);
+    will-change: offset-distance;
+  }
+  .pulse::after {
+    content: ''; position: absolute; inset: -6px; border-radius: inherit;
+    background: inherit; filter: blur(8px); opacity: 0.8;
+  }
+  @keyframes travel { to { offset-distance: 100%; } }
+  @keyframes inlayPulse { 0%,100%{ opacity:.9 } 50%{ opacity:1; filter:brightness(1.15); } }
+  .inlay-active {
+    background: radial-gradient(circle at 50% 50%, rgba(16,185,129,0.35) 0%, rgba(16,185,129,0.06) 60%, transparent 70%);
+    border-color: rgba(52,211,153,0.35);
+    box-shadow: inset 0 0 8px rgba(16,185,129,0.18), 0 0 10px rgba(16,185,129,0.08);
+    animation: inlayPulse 3.2s ease-in-out infinite;
+  }
+  .inlay-offline {
+    background: radial-gradient(circle at 50% 50%, rgba(239,68,68,0.25) 0%, rgba(127,29,29,0.15) 60%, transparent 70%);
+    border-color: rgba(248,113,113,0.4);
+    box-shadow: inset 0 0 6px rgba(239,68,68,0.25), 0 0 12px rgba(239,68,68,0.15);
+  }
+  .scanlines::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(255,255,255,0.02) 3px, transparent 4px);
+    mix-blend-mode: overlay;
+  }
+  .noise::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+</style>
+</head>
+<body class="text-slate-200 selection:bg-cyan-500/30 selection:text-cyan-100">
+  <!-- SVG defs -->
+  <svg width="0" height="0" class="absolute">
+    <defs>
+      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="3" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="wg-glow">
+        <feGaussianBlur stdDeviation="2.5" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <linearGradient id="gradCyan" x1="0" x2="1"><stop offset="0%" stop-color="#0891b2"/><stop offset="100%" stop-color="#22d3ee"/></linearGradient>
+      <linearGradient id="gradViolet" x1="0" x2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#c084fc"/></linearGradient>
+      <linearGradient id="gradAmber" x1="0" x2="1"><stop offset="0%" stop-color="#d97706"/><stop offset="100%" stop-color="#fbbf24"/></linearGradient>
+    </defs>
+  </svg>
+
+  <!-- Background -->
+  <div class="fixed inset-0">
+    <div class="absolute inset-0" style="background: radial-gradient(1200px 800px at 50% -10%, rgba(14,165,233,0.12), transparent 60%), radial-gradient(800px 600px at 80% 120%, rgba(124,58,237,0.10), transparent 50%), #020617;"></div>
+    <div class="absolute -top-32 -left-32 w-[520px] h-[520px] rounded-full blur-[140px] bg-cyan-500/10"></div>
+    <div class="absolute -bottom-40 -right-20 w-[480px] h-[480px] rounded-full blur-[130px] bg-violet-600/10"></div>
+  </div>
+
+  <div class="relative z-10 max-w-[1600px] mx-auto p-4 md:p-6 lg:p-8">
+    <!-- Header -->
+    <header class="glass rounded-[20px] p-4 md:p-5 mb-6 glow-cyan">
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3.5">
+          <div class="relative w-11 h-11 rounded-xl bg-slate-900 border border-cyan-500/20 grid place-items-center overflow-hidden">
+            <div class="absolute inset-0 opacity-60" style="background: conic-gradient(from 0deg, transparent, rgba(34,211,238,0.5), transparent 60%); animation: spin 4s linear infinite;"></div>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" class="relative">
+              <path d="M12 2l3.5 6H20l-5 4 2 7-5-3.5L7 19l2-7-5-4h4.5L12 2z" stroke="#22d3ee" stroke-opacity="0.9" stroke-width="1.2" fill="none"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="text-[22px] leading-none tracking-wide font-medium">PHOTONIC INLAYS</h1>
+            <p class="text-[11px] tracking-[0.18em] text-slate-400 mt-1">PROCESSOR CORE • MK-VII</p>
+          </div>
+        </div>
+
+        <div class="hidden lg:flex flex-col items-center">
+          <p class="text-[11px] uppercase tracking-[0.22em] text-cyan-300/80">Light-based compute, double helix sync</p>
+          <div class="mt-1.5 flex items-center gap-2.5 px-3 py-1 rounded-full bg-slate-950/60 border border-slate-800">
+            <canvas id="helix" width="140" height="22" class="block"></canvas>
+            <span class="text-[10px] font-mono text-violet-300/90 tracking-widest">HELIX LOCK</span>
+          </div>
+        </div>
+
+        <div class="text-right">
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+            <span class="text-[11px] font-mono tracking-wide text-emerald-300">SYSTEM NOMINAL</span>
+          </div>
+          <div id="clock" class="font-mono text-[11px] text-slate-500 mt-1.5 tabular-nums">--:--:-- UTC</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="grid grid-cols-1 xl:grid-cols-12 gap-6">
+      <!-- Waveguide Matrix -->
+      <section class="xl:col-span-8 glass rounded-[24px] p-5 md:p-6 glow-cyan relative overflow-hidden">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-3">
+            <h2 class="text-[12px] uppercase tracking-[0.2em] text-slate-300">Photonic Waveguide Matrix</h2>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 font-mono">LIVE</span>
+          </div>
+          <div class="flex items-center gap-4 text-[11px] font-mono">
+            <div class="flex items-center gap-1.5"><span class="text-slate-500">GRID</span><span class="text-cyan-300">HEX-7</span></div>
+            <div class="flex items-center gap-1.5"><span class="text-slate-500">T</span><span class="text-emerald-300">2.70K</span></div>
+            <div class="flex items-center gap-1.5"><span class="text-slate-500">PWR</span><span class="text-violet-300">84.3mW</span></div>
+          </div>
+        </div>
+
+        <div class="relative h-[380px] md:h-[480px] rounded-2xl overflow-hidden bg-[#040a14] border border-slate-800 scanlines noise">
+          <div class="hex-bg absolute inset-0"></div>
+          
+          <!-- central core -->
+          <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div class="w-[220px] h-[220px] rounded-full opacity-40 blur-[60px]" style="background: radial-gradient(circle, rgba(34,211,238,0.5), transparent 60%);"></div>
+          </div>
+          <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28">
+            <div class="absolute inset-0 rounded-full border border-cyan-400/20 animate-[ping_3s_ease-out_infinite]"></div>
+            <div class="absolute inset-3 rounded-full border border-cyan-400/30 animate-[ping_3s_ease-out_infinite_0.5s]"></div>
+            <div class="absolute inset-0 grid place-items-center">
+              <div class="w-16 h-16 rounded-full bg-slate-950 border-cyan-500/30 grid place-items-center shadow-[inset_0_0_20px_rgba(34,211,238,0.2)]">
+                <div class="w-10 h-10 rounded-full" style="background: conic-gradient(from 0deg, #22d3ee, #a855f7, #22d3ee); filter: blur(6px); opacity: 0.8; animation: spin 3s linear infinite;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- waveguides svg -->
+          <svg id="wg" class="absolute inset-0 w-full h-full" viewBox="0 0 1000 480" preserveAspectRatio="none">
+            <g fill="none" stroke-linecap="round" filter="url(#wg-glow)">
+              <path d="M -20 90 C 220 90 260 210 480 210 S 700 330 1020 330" stroke="rgba(34,211,238,0.18)" stroke-width="2.5"/>
+              <path d="M -20 170 C 280 170 320 130 540 130 S 760 210 1020 210" stroke="rgba(168,85,247,0.18)" stroke-width="2.5"/>
+              <path d="M -20 250 C 200 250 240 320 460 320 S 680 190 1020 190" stroke="rgba(34,211,238,0.15)" stroke-width="2"/>
+              <path d="M -20 330 C 300 330 340 280 560 280 S 780 150 1020 150" stroke="rgba(245,158,11,0.18)" stroke-width="2.5"/>
+              <path d="M -20 410 C 240 410 280 210 500 210 S 720 300 1020 300" stroke="rgba(168,85,247,0.15)" stroke-width="2"/>
+              <path d="M 1020 100 C 780 100 740 260 520 260 S 300 380  -20 380" stroke="rgba(34,211,238,0.16)" stroke-width="2"/>
+              <path d="M 1020 410 C 720 410 680 170 460 170 S 240 90 -20 90" stroke="rgba(245,158,11,0.15)" stroke-width="2"/>
+            </g>
+          </svg>
+
+          <!-- pulses container -->
+          <div id="core" class="absolute inset-0"></div>
+
+          <!-- vignette -->
+          <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(600px 300px at 50% 50%, transparent 40%, rgba(0,0,0,0.55) 100%);"></div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 mt-4">
+          <div class="rounded-xl bg-slate-950/60 border border-slate-800 p-3">
+            <div class="text-[10px] text-slate-500 uppercase tracking-wide">Photon Flux</div>
+            <div class="font-mono text-cyan-300 text-[15px] mt-1">4.72×10¹⁴ <span class="text-slate-500 text-xs">p/s</span></div>
+          </div>
+          <div class="rounded-xl bg-slate-950/60 border border-slate-800 p-3">
+            <div class="text-[10px] text-slate-500 uppercase tracking-wide">Interference</div>
+            <div class="font-mono text-violet-300 text-[15px] mt-1">−127.3 <span class="text-slate-500 text-xs">dB</span></div>
+          </div>
+          <div class="rounded-xl bg-slate-950/60 border border-slate-800 p-3">
+            <div class="text-[10px] text-slate-500 uppercase tracking-wide">Coupling Eff.</div>
+            <div class="font-mono text-amber-300 text-[15px] mt-1">99.41 <span class="text-slate-500 text-xs">%</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gauges -->
+      <section class="xl:col-span-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 gap-4 auto-rows-fr">
+        <!-- Phase -->
+        <div class="glass rounded-[20px] p-5 relative group">
+          <div class="absolute inset-0 rounded-[20px] opacity-0 group-hover:opacity-100 transition duration-500" style="background: radial-gradient(400px 120px at 80% -20%, rgba(34,211,238,0.12), transparent);"></div>
+          <div class="relative flex items-start justify-between">
+            <div>
+              <h3 class="text-[11px] uppercase tracking-[0.18em] text-slate-400">Phase Coherence</h3>
+              <div class="mt-2 flex items-baseline gap-1">
+                <span class="text-[32px] leading-none font-medium font-mono text-cyan-300">0.98</span>
+                <span class="text-[12px] text-slate-500">/1.00</span>
+              </div>
+              <div class="mt-1.5 flex items-center gap-2">
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-mono">LOCKED</span>
+                <span class="text-[10px] text-slate-500 font-mono">±0.001</span>
+              </div>
+            </div>
+            <div class="w-[84px] h-[84px] relative">
+              <svg viewBox="0 0 100 100" class="-rotate-90">
+                <circle cx="50" cy="50" r="42" fill="none" stroke="#0f172a" stroke-width="8"/>
+                <circle cx="50" cy="50" r="42" fill="none" stroke="url(#gradCyan)" stroke-width="8" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" id="phaseArc" filter="url(#glow)"/>
+              </svg>
+              <div class="absolute inset-0 grid place-items-center">
+                <span class="text-[11px] font-mono text-cyan-300">98%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 h-[4px] w-full rounded-full bg-slate-900 overflow-hidden border border-slate-800/80">
+            <div class="h-full w-[98%] rounded-full" style="background: linear-gradient(90deg, #0891b2, #22d3ee); box-shadow: 0 0 12px rgba(34,211,238,0.5);"></div>
+          </div>
+        </div>
+
+        <!-- Wavelength -->
+        <div class="glass rounded-[20px] p-5 relative group">
+          <div class="absolute inset-0 rounded-[20px] opacity-0 group-hover:opacity-100 transition duration-500" style="background: radial-gradient(400px 120px at 20% -20%, rgba(168,85,247,0.12), transparent);"></div>
+          <div class="relative">
+            <div class="flex items-start justify-between">
+              <h3 class="text-[11px] uppercase tracking-[0.18em] text-slate-400">Wavelength</h3>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-violet-500/10 text-violet-300 border border-violet-500/20 font-mono">C-BAND</span>
+            </div>
+            <div class="mt-2 flex items-baseline gap-2">
+              <span id="waveVal" class="text-[30px] leading-none font-medium font-mono text-violet-300 tabular-nums">1550.00</span>
+              <span class="text-[13px] text-slate-500">nm</span>
+            </div>
+            <div class="relative mt-3 h-[44px] rounded-lg overflow-hidden bg-slate-950 border border-slate-800">
+              <canvas id="waveCanvas" class="absolute inset-0 w-full h-full"></canvas>
+              <div class="absolute inset-0 mix-blend-screen opacity-60" style="background: linear-gradient(90deg, transparent, rgba(168,85,247,0.25), transparent);"></div>
+              <div class="absolute bottom-1 left-2 text-[10px] font-mono text-slate-500">ITU-T G.652.D • ±0.02nm</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Throughput -->
+        <div class="glass rounded-[20px] p-5 relative group">
+          <div class="absolute inset-0 rounded-[20px] opacity-0 group-hover:opacity-100 transition duration-500" style="background: radial-gradient(400px 120px at 80% -20%, rgba(245,158,11,0.12), transparent);"></div>
+          <div class="relative flex items-start justify-between">
+            <div>
+              <h3 class="text-[11px] uppercase tracking-[0.18em] text-slate-400">Throughput</h3>
+              <div class="mt-2 flex items-baseline gap-1">
+                <span class="text-[32px] leading-none font-medium font-mono text-amber-300">0.98</span>
+                <span class="text-[12px] text-slate-500">Tb/s</span>
+              </div>
+              <div class="mt-1.5 text-[10px] text-slate-500 font-mono">PEAK 1.02 • EFF 96.1%</div>
+            </div>
+            <div class="w-[84px] h-[84px] relative">
+              <svg viewBox="0 0 100 100" class="-rotate-90">
+                <circle cx="50" cy="50" r="42" fill="none" stroke="#0f172a" stroke-width="8"/>
+                <circle cx="50" cy="50" r="42" fill="none" stroke="url(#gradAmber)" stroke-width="8" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="263.89" id="thrArc" filter="url(#glow)"/>
+              </svg>
+              <div class="absolute inset-0 grid place-items-center">
+                <span class="text-[11px] font-mono text-amber-300">98%</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 grid grid-cols-4 gap-1.5">
+            <div class="h-1.5 rounded-full bg-amber-400/80 shadow-[0_0_8px_rgba(245,158,11,0.5)]"></div>
+            <div class="h-1.5 rounded-full bg-amber-400/80 shadow-[0_0_8px_rgba(245,158,11,0.5)]"></div>
+            <div class="h-1.5 rounded-full bg-amber-400/70"></div>
+            <div class="h-1.5 rounded-full bg-slate-800"></div>
+          </div>
+        </div>
+
+        <!-- Active Inlays -->
+        <div class="glass rounded-[20px] p-5 relative group sm:col-span-2 xl:col-span-1">
+          <div class="flex items-start justify-between">
+            <h3 class="text-[11px] uppercase tracking-[0.18em] text-slate-400">Active Inlays</h3>
+            <div class="text-right">
+              <div class="text-[22px] leading-none font-mono"><span class="text-emerald-300">70</span><span class="text-slate-600">/</span><span class="text-slate-300">72</span></div>
+              <div class="text-[10px] text-slate-500 font-mono mt-0.5">97.22% ONLINE</div>
+            </div>
+          <div id="inlayGrid" class="mt-3 grid grid-cols-12 gap-[5px]"></div>
+          <div class="mt-3 flex items-center justify-between">
+            <div class="flex items-center gap-2 text-[10px] font-mono">
+              <span class="w-2 h-2 rounded-[2px] bg-emerald-500/30 border border-emerald-400/40"></span>
+              <span class="text-slate-500">ACTIVE</span>
+            </div>
+            <div class="text-[10px] font-mono text-amber-300/90">WARN: INLAY-19, INLAY-53 OFFLINE</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Chaotic Sequence -->
+      <section class="xl:col-span-12 glass rounded-[20px] p-4 md:p-5">
+        <div class="flex flex-wrap items-center gap-3 mb-3">
+          <h3 class="text-[12px] uppercase tracking-[0.2em] text-slate-300">Chaotic Sequence</h3>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-300 border border-violet-500/20 font-mono">QUANTUM RNG • SOURCE-7</span>
+          <div class="ml-auto flex items-center gap-3 text-[11px] font-mono">
+            <span class="text-slate-500">ENTROPY</span>
+            <span class="text-cyan-300">0.9987</span>
+            <span class="text-slate-700">|</span>
+            <span class="text-slate-500">RATE</span>
+            <span class="text-cyan-300">2.4 Gb/s</span>
+          </div>
+        </div>
+        <div class="relative h-[54px] rounded-xl overflow-hidden bg-[#030712] border border-slate-800">
+          <div class="absolute inset-0 opacity-[0.04]" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(34,211,238,0.8) 3px, transparent 4px);"></div>
+          <div id="ticker" class="absolute inset-0 flex items-center px-4 font-mono text-[13px] md:text-[14px] tracking-wider text-cyan-200 whitespace-nowrap" style="text-shadow: 0 0 12px rgba(34,211,238,0.45), 0 0 2px rgba(34,211,238,0.8);"></div>
+          <div class="pointer-events-none absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#030712] via-[#030712]/80 to-transparent"></div>
+          <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#030712] via-[#030712]/80 to-transparent"></div>
+          <div class="absolute inset-0 rounded-xl" style="box-shadow: inset 0 0 30px rgba(34,211,238,0.05);"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="mt-8 flex items-center justify-between text-[11px] text-slate-600 font-mono">
+      <div>PHOTONIC INLAYS OS v7.3.2 • LIGHTFABRIC DRIVER 4.1.0</div>
+      <div class="hidden md:block">SECURE ENCLAVE • HELIX-SYNC ACTIVE • NO BIT ERRORS</div>
+    </footer>
+  </div>
+
+  <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+
+<script>
+  // Clock
+  const clock = document.getElementById('clock');
+  function tickClock(){
+    const d = new Date();
+    const hh = String(d.getUTCHours()).padStart(2,'0');
+    const mm = String(d.getUTCMinutes()).padStart(2,'0');
+    const ss = String(d.getUTCSeconds()).padStart(2,'0');
+    clock.textContent = `${hh}:${mm}:${ss} UTC`;
+  }
+  tickClock(); setInterval(tickClock,1000);
+
+  // Gauges animate in
+  window.addEventListener('load', ()=>{
+    const circ = 2*Math.PI*42;
+    const phase = document.getElementById('phaseArc');
+    const thr = document.getElementById('thrArc');
+    phase.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)';
+    thr.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1) .15s';
+    requestAnimationFrame(()=>{
+      phase.setAttribute('stroke-dashoffset', circ*(1-0.98));
+      thr.setAttribute('stroke-dashoffset', circ*(1-0.98));
+    });
+  });
+
+  // Helix
+  (function(){
+    const c = document.getElementById('helix');
+    const ctx = c.getContext('2d');
+    let t=0;
+    function draw(){
+      ctx.clearRect(0,0,c.width,c.height);
+      for(let i=0;i<2;i++){
+        ctx.beginPath();
+        for(let x=0;x<=c.width;x+=2){
+          const y = 11 + Math.sin((x*0.09 + t + i*Math.PI))*6*(i===0?1:-1);
+          x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+        }
+        ctx.lineWidth = 1.6;
+        ctx.strokeStyle = i===0?'rgba(34,211,238,0.95)':'rgba(168,85,247,0.95)';
+        ctx.shadowColor = i===0?'#22d3ee':'#a855f7';
+        ctx.shadowBlur = 10;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+        // dots
+        ctx.beginPath();
+        for(let x=6;x<c.width;x+=22){
+          const y = 11 + Math.sin((x*0.09 + t + i*Math.PI))*6*(i===0?1:-1);
+          ctx.moveTo(x+1.2,y); ctx.arc(x,y,1.2,0,Math.PI*2);
+        }
+        ctx.fillStyle = i===0?'rgba(103,232,255,0.9)':'rgba(216,180,254,0.9)';
+        ctx.fill();
+      }
+      t+=0.06;
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  // Wavelength wave
+  (function(){
+    const canvas = document.getElementById('waveCanvas');
+    const ctx = canvas.getContext('2d');
+    const val = document.getElementById('waveVal');
+    function resize(){ canvas.width = canvas.clientWidth*2; canvas.height = canvas.clientHeight*2; }
+    resize(); addEventListener('resize', resize);
+    let p=0;
+    function draw(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      const w = canvas.width, h=canvas.height;
+      // grid
+      ctx.globalAlpha=0.06; ctx.strokeStyle='#94a3b8';
+      for(let x=0;x<w;x+=40){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,h); ctx.stroke(); }
+      ctx.globalAlpha=1;
+      // wave
+      ctx.beginPath();
+      for(let x=0;x<w;x+=2){
+        const y = h*0.55 + Math.sin((x*0.02)+p)*8 + Math.sin((x*0.01)-p*1.3)*4;
+        x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      const grad = ctx.createLinearGradient(0,0,w,0);
+      grad.addColorStop(0,'rgba(124,58,237,0)');
+      grad.addColorStop(0.5,'rgba(34,211,238,0.9)');
+      grad.addColorStop(1,'rgba(124,58,237,0)');
+      ctx.strokeStyle = grad; ctx.lineWidth=2.5; ctx.shadowColor='#22d3ee'; ctx.shadowBlur=12; ctx.stroke(); ctx.shadowBlur=0;
+      // second
+      ctx.beginPath();
+      for(let x=0;x<w;x+=2){
+        const y = h*0.55 + Math.sin((x*0.02)+p+1.8)*6;
+        x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      ctx.strokeStyle='rgba(168,85,247,0.6)'; ctx.lineWidth=1.5; ctx.stroke();
+      p+=0.03;
+      requestAnimationFrame(draw);
+    }
+    draw();
+    // value jitter
+    setInterval(()=>{
+      const base=1550 + (Math.random()-0.5)*0.04;
+      val.textContent = base.toFixed(2);
+    },140);
+  })();
+
+  // Pulses
+  (function(){
+    const core = document.getElementById('core');
+    const paths = [
+      {d:'M -20 90 C 220 90 260 210 480 210 S 700 330 1020 330', c:'#22d3ee', dur:5.8},
+      {d:'M -20 170 C 280 170 320 130 540 130 S 760 210 1020 210', c:'#a855f7', dur:6.4},
+      {d:'M -20 250 C 200 250 240 320 460 320 S 680 190 1020 190', c:'#22d3ee', dur:7.1},
+      {d:'M -20 330 C 300 330 340 280 560 280 S 780 150 1020 150', c:'#f59e0b', dur:6.0},
+      {d:'M -20 410 C 240 410 280 210 500 210 S 720 300 1020 300', c:'#a855f7', dur:5.5},
+      {d:'M 1020 100 C 780 100 740 260 520 260 S 300 380 -20 380', c:'#22d3ee', dur:7.8},
+      {d:'M 1020 410 C 720 410 680 170 460 170 S 240 90 -20 90', c:'#f59e0b', dur:6.9},
+    ];
+    paths.forEach((p,i)=>{
+      for(let k=0;k<2;k++){
+        const el = document.createElement('div');
+        el.className = 'pulse';
+        el.style.background = p.c;
+        el.style.boxShadow = `0 0 10px ${p.c}, 0 0 20px ${p.c}90`;
+        el.style.offsetPath = `path('${p.d}')`;
+        el.style.offsetRotate = '0deg';
+        el.style.animation = `travel ${p.dur + k*0.4}s linear infinite`;
+        el.style.animationDelay = `${-i*0.7 - k*1.2}s`;
+        el.style.opacity = k?0.75:1;
+        el.style.width = el.style.height = (k?5:6)+'px';
+        core.appendChild(el);
+      }
+    });
+  })();
+
+  // Inlays grid
+  (function(){
+    const grid = document.getElementById('inlayGrid');
+    const offline = new Set([19,53]);
+    for(let i=1;i<=72;i++){
+      const cell = document.createElement('div');
+      cell.className = 'aspect-square rounded-[3px] border transition-all duration-500';
+      if(offline.has(i)){
+        cell.classList.add('inlay-offline');
+        cell.title = `INLAY-${i} OFFLINE`;
+      } else {
+        cell.classList.add('inlay-active');
+        cell.style.animationDelay = `${(Math.random()*3).toFixed(2)}s`;
+        cell.title = `INLAY-${i} ACTIVE`;
+      }
+      grid.appendChild(cell);
+    }
+    // occasional flicker
+    setInterval(()=>{
+      const cells = grid.querySelectorAll('.inlay-active');
+      const r = cells[Math.floor(Math.random()*cells.length)];
+      if(r){ r.style.filter='brightness(1.4)'; setTimeout(()=>r.style.filter='',180); }
+    },900);
+  })();
+
+  // Chaotic ticker
+  (function(){
+    const el = document.getElementById('ticker');
+    const hex = '0123456789ABCDEF';
+    function chunk(){ return Array.from({length:4},()=>hex[(Math.random()*16)|0]).join(''); }
+    function build(){
+      const parts=[];
+      for(let i=0;i<80;i++){ parts.push(chunk()); }
+      return parts.join(' • ');
+    }
+    let offset=0;
+    function update(){
+      if(!el.dataset.base || Math.random()<0.08) el.dataset.base = build();
+      const base = el.dataset.base;
+      offset = (offset+1) % base.length;
+      const view = (base+ ' • ' + base).slice(offset, offset+180);
+      el.textContent = view;
+      // occasional glitch color
+      if(Math.random()<0.03){ el.style.color='#a78bfa'; setTimeout(()=>el.style.color='',120); }
+    }
+    setInterval(update, 85);
+    update();
+  })();
+</script>
+</body>
+</html>
