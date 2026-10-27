@@ -26,4 +26,5 @@ document.querySelectorAll("[data-band]").forEach(b=>b.addEventListener("click",(
 refreshSpectrum();selectElement(1);
 function notifyHeight(){if(parent!==window)parent.postMessage({kind:"root0-chem-height",height:document.documentElement.scrollHeight},"*")}
 if(typeof ResizeObserver==="function")new ResizeObserver(notifyHeight).observe(document.body);
+window.addEventListener("message",event=>{if(event.data&&event.data.kind==="root0-chem-request"){sendChem();notifyHeight()}});
 window.addEventListener("resize",notifyHeight);notifyHeight();
