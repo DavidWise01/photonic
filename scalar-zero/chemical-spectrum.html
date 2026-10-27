@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ROOT0 GEN3 · Chemical Photonic Atlas</title><link rel="stylesheet" href="chemical-spectrum.css"></head>
+<body><main>
+<header class="tiny">ROOT0 / PHOTONIC / GEN3 · SYMBOLIC CHEMISTRY + PHYSICAL EM SPECTRUM</header>
+<h1>Color registry · 118-element periodic table</h1>
+<div class="cols">
+<section class="panel"><h2>01 · H/O/N COLOR GRADIENT · 0–360°</h2>
+<canvas id="gradient" width="720" height="90" aria-label="Custom red green blue gradient from 0 to 360 degrees"></canvas>
+<div class="marks"><span>0°</span><span>120°</span><span>240°</span><span>360°</span></div>
+<div class="triad">
+<button id="sH" aria-pressed="true" type="button"><b>H · HYDROGEN</b><small>0–120° · RED · +1k</small></button>
+<button id="sO" aria-pressed="false" type="button"><b>O · OXYGEN</b><small>121–240° · GREEN · 0k</small></button>
+<button id="sN" aria-pressed="false" type="button"><b>N · NITROGEN</b><small>241–360° · BLUE · −1k</small></button></div>
+<div class="controls"><label for="ang">ANGLE</label><input id="ang" type="range" min="0" max="360" value="60" step="1"><output id="angleVal">60°</output></div>
+<div class="cards"><div class="card"><small>REGISTRY SECTOR</small><strong id="sector">HYDROGEN / RED</strong><div id="swatch"></div></div>
+<div class="card"><small>CASIMIR INDEX · MODEL ONLY</small><strong id="casimir">+1k</strong><small id="slot">Signed index, not kelvin</small></div></div>
+<label class="apply"><input id="apply" type="checkbox" checked>Apply symbolic color to 81×81 parent photonic field</label>
+<p class="tiny">ROOT0-designed color geometry, not measured atomic emission. The +1k/0k/−1k labels are signed model indices, not temperatures in Kelvin or measured Casimir forces.</p>
+</section>
+<section class="panel"><h2>02 · ELECTROMAGNETIC SPECTRUM · PHYSICS</h2>
+<div class="bands">
+<button id="ir" type="button" data-band="ir">INFRARED</button><button id="vis" type="button" data-band="vis">VISIBLE</button><button id="xr" type="button" data-band="xr">X-RAY</button><button id="ga" type="button" data-band="ga">GAMMA</button></div>
+<div class="controls"><label for="exp">LOG₁₀ λ / m</label><input id="exp" type="range" min="-13" max="-3" step=".01" value="-6.26"><output id="expval">−6.26</output></div>
+<div class="indicator" id="band">Visible light · physical units</div>
+<div class="cards"><div class="card"><small>WAVELENGTH λ</small><strong id="lambda">—</strong></div>
+<div class="card"><small>FREQUENCY ν = c/λ</small><strong id="frequency">—</strong></div>
+<div class="card"><small>PHOTON ENERGY E = hν</small><strong id="energy">—</strong></div>
+<div class="card"><small>SPECTRUM CATEGORY</small><strong id="category">—</strong></div></div>
+<p class="tiny">Wavelength, frequency and photon energy follow SI physics. NASA band boundaries are approximate; X-ray/gamma designations also depend on photon production. H/O/N color sectors remain independent of these quantities.</p></section></div>
+<section class="panel">
+<div class="tablebar"><div><h2>03 · PERIODIC ELEMENT REGISTER</h2><span class="tiny">All 118 named elements, H through Og · choose an element to focus its color coordinate</span></div><input type="search" id="search" placeholder="Search name, symbol or number…" aria-label="Search 118 elements"></div>
+<div class="scroll"><div class="periodic" id="ptable" role="group" aria-label="118 element periodic table"></div></div>
+<div id="elementDetails"><b id="elementBadge">1 · H</b><strong id="elementName">Hydrogen</strong><span id="elementInfo">Atomic number 1 · period 1 · group 1</span><span id="elementCoordinate">θ 60°</span></div>
+</section>
+<footer>Scientific references: <a href="https://iupac.org/what-we-do/periodic-table-of-elements/" target="_blank" rel="noopener">IUPAC periodic table</a> · <a href="https://imagine.gsfc.nasa.gov/science/toolbox/spectrum_chart.html" target="_blank" rel="noopener">NASA electromagnetic bands</a> · <a href="https://physics.nist.gov/cuu/Constants/" target="_blank" rel="noopener">NIST SI constants</a>. All colors and signed Casimir indices are custom geometry. Oganesson (Og, Z=118) is the highest currently named element.</footer>
+</main><script src="chemical-spectrum.js"></script></body></html>
