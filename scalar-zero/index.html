@@ -148,6 +148,11 @@
     </div>
     <div class="known-notes"><strong>Physics discipline:</strong> Calculated frequency shift and static-clock gain use the exterior Schwarzschild formula, with published NASA Earth/Sun mass and radius values and NIST constants. Source and receiver are idealized stationary observers. The 81 × 81 intensity field remains an independent classical visual field, not a curved-spacetime Maxwell solver. The Planck-probe page above is <em>not</em> calibrated by these measurements. <strong>Sources:</strong> <a href="https://www.physics.nist.gov/cuu/pdf/wall_2022.pdf" target="_blank" rel="noopener">NIST constants</a> · <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html" target="_blank" rel="noopener">NASA Earth</a> · <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html" target="_blank" rel="noopener">NASA Sun</a> · <a href="https://www.gps.gov/space-segment" target="_blank" rel="noopener">GPS.gov</a> · <a href="https://www.nist.gov/atomic-clocks/a-powerful-tool-for-science/putting-einstein-test" target="_blank" rel="noopener">NIST GPS timing</a> · <a href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.4.337" target="_blank" rel="noopener">Pound–Rebka 1960</a>.</div>
   </section>
+  <section class="panel" style="margin-top:14px" id="chemicalAtlas">
+    <div class="panel-head"><h2>09 · H/O/N CHEMICAL GRADIENT + EM SPECTRUM</h2><span class="micro">118 ELEMENTS · IR / X-RAY / GAMMA</span></div>
+    <iframe id="chemicalAtlasFrame" src="chemical-spectrum.html" title="Interactive H O N color wheel and 118-element periodic table" loading="eager" style="display:block;width:100%;height:1100px;border:0;background:#081321" referrerpolicy="no-referrer"></iframe>
+    <div class="canvas-foot"><span>ROOT0 MODEL COLORS ≠ PHYSICAL EMISSION LINES</span><a href="chemical-spectrum.html">OPEN STANDALONE ATLAS</a></div>
+  </section>
   <footer class="foot"><p><strong>Scientific boundary.</strong> This is a deterministic, classical complex-field and Jones-polarization visualization; it does not propagate individual quantum states or establish BB84 security. The gravity well is schematic. GEN2 adds a separately computed photon gravitational redshift and static clock comparison for real Earth/Sun reference scales, not Planck-scale evidence. Predictions near or below the Planck length are not validated. The 81-pixel grid is a normalized visual space, not a nanometer-resolution representation of a 32 cm optical channel. Wavelength affects displayed color and a normalized spatial-frequency proxy. Three code paths in one simulation are not three independent physical instruments.</p><div class="dlw">.dlw / ROOT0</div></footer>
 </div>
 <script>
@@ -179,7 +184,17 @@ function rawIntensity(f){return f.xr*f.xr+f.xi*f.xi+f.yr*f.yr+f.yi*f.yi}
 function project(f,deg){var c=Math.cos(deg*RAD),s=Math.sin(deg*RAD);var re=f.xr*c+f.yr*s,im=f.xi*c+f.yi*s;return re*re+im*im}
 function sampleField(){return phasor(40+selected.x*24,40+selected.y*24,t-selected.z*.42)}
 function normalized(v){return v/(sourceCount()*sourceCount())}
-function renderField(){var base=spectral(values.wavelength),pixels=frame.data,p=0;
+var chemColorOverride=null;
+window.addEventListener("message",function(event){
+ var frame=document.getElementById("chemicalAtlasFrame");
+ if(!frame||event.source!==frame.contentWindow)return;
+ var data=event.data||{};
+ if(data.kind==="root0-chem-color"){
+  if(data.rgb===null)chemColorOverride=null;
+  else if(Array.isArray(data.rgb)&&data.rgb.length===3&&data.rgb.every(function(v){return typeof v==="number"&&Number.isFinite(v)&&v>=0&&v<=1}))chemColorOverride=data.rgb.slice();
+ } else if(data.kind==="root0-chem-height"&&typeof data.height==="number"&&Number.isFinite(data.height))frame.style.height=Math.min(2300,Math.max(740,Math.ceil(data.height+12)))+"px";
+});
+function renderField(){var base=chemColorOverride||spectral(values.wavelength),pixels=frame.data,p=0;
 for(var y=0;y<SIZE;y++)for(var x=0;x<SIZE;x++){var f=phasor(x,y,t),i=rawIntensity(f)/(sourceCount()*sourceCount()),bright=1-Math.exp(-1.7*i);var rip=.14+bright*.86;
 pixels[p++]=Math.max(0,Math.min(255,Math.floor(5+base[0]*225*rip+bright*13)));
 pixels[p++]=Math.max(0,Math.min(255,Math.floor(12+base[1]*225*rip+bright*22)));
