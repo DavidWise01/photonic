@@ -1,0 +1,1 @@
+CHEM_NAME_TEXT+="Copernicium|Nihonium|Flerovium|Moscovium|Livermorium|Tennessine|Oganesson";var CHEM_NAMES=CHEM_NAME_TEXT.split("|");
