@@ -52,3 +52,69 @@ The original 27-node, 81×81 scalar-zero photonic lab remains intact. GEN1 adds 
 **Source references:** [NIST CODATA constants](https://www.nist.gov/programs-projects/codata-values-fundamental-physical-constants) · [JILA Schwarzschild time-dilation description](https://jila-amo.colorado.edu/~ajsh/bh/schwp.html).
 
 **Commit provenance:** Previous GEN0 remains accessible through Git history. GEN1 extends the page rather than erasing historical revisions.
+
+## GEN2 · Known-physics calibration (2026-10-27)
+
+This append-only revision adds **Section 08 · KNOWN PHYSICS / PHOTON REDSHIFT**, beneath the existing photonic lattice and exploratory Planck-scale panel. It does not overwrite GEN0 or GEN1.
+
+### Physical inputs
+
+- Vacuum light speed c = 299,792,458 m/s (exact).
+- G = 6.67430 × 10^-11 m^3 kg^-1 s^-2 (CODATA 2022).
+- Planck constant h = 6.62607015 × 10^-34 J s (exact), for possible photon energy extensions.
+- Earth mass 5.9722 × 10^24 kg and mean radius 6,371 km (NASA).
+- Sun mass 1.9884 × 10^30 kg and mean radius 695,700 km (NASA).
+- Nominal GPS altitude 20,200 km (GPS.gov).
+- One astronomical unit = 149,597,870,700 m (exact).
+- Light wavelength comes from the existing photonic field setting (default 550 nm).
+
+### Model used
+
+For two *stationary* observers at radii \`r_e\` (emitter) and \`r_r\` (receiver), in the exterior of a nonrotating spherically symmetric source with mass \`M\`:
+
+\`\`\`text
+r_s = 2 G M / c^2
+lapse(r) = sqrt(1 - r_s / r)
+nu_r / nu_e = lapse(r_e) / lapse(r_r)
+lambda_r / lambda_e = lapse(r_r) / lapse(r_e)
+
+The receiver higher in the gravity well sees a redshift:
+(nu_r - nu_e) / nu_e < 0.
+
+The higher static clock gains time relative to the lower clock:
+lapse(r_r) / lapse(r_e) - 1 > 0.
+\`\`\`
+
+Numerical implementation uses algebraically stable \`sqrt(1±x)-1\` identities to avoid cancellation when the expected fractional shift is ~10^-15.
+
+### Numerical self-checks
+
+These three reference values are computed in-browser, then checked against documented baseline constants. These are **arithmetic self-checks** rather than independent empirical tests:
+
+| Case | Geometry | Predicted result |
+|---|---|---|
+| Pound–Rebka | Earth surface to surface + 22.5 m | Photon fraction \`-2.4584673e-15\` |
+| GPS gravitational-only | Earth surface to +20,200 km | Upper stationary clock +\`45.7244267 µs/day\` |
+| Solar redshift | Sun surface to 1 AU | Photon fraction \`-2.1126237e-6\` |
+
+The real Pound–Rebka experiment used gamma rays, **not 550 nm green light**. The fractional gravitational shift is essentially frequency-independent in this idealized geometric-optics calculation. The GPS clock in motion additionally loses ~7 µs/day through special relativity, giving the familiar net +38 µs/day. The solar reference omits plasma, receiver gravity, solar rotation, and Doppler effects. Real Earth and Sun have nonspherical structure; for these reference comparisons, the Schwarzschild exterior is an approximation.
+
+### Animation and provenance limits
+
+- The colorful ray animation is **schematic**, not a null geodesic or coupled Einstein–Maxwell calculation.
+- Visible separation of waveforms is greatly **exaggerated**; 10^-15 optical wavelength differences cannot be resolved visually at canvas scale.
+- Each new append-only local capture retains both the GEN1 Planck exploration parameters and the GEN2 calibrated result as separate fields, alongside original A/B/C reports.
+- Three software reports in one webpage **do not constitute three independent physical witnesses**.
+- This section benchmarks classical relativity at real-world scales. It **does not validate** the 10^-28 through 10^-35 m probe model or assert discoveries below the Planck length.
+
+### Source references
+
+- [NIST CODATA 2022 constants](https://www.physics.nist.gov/cuu/pdf/wall_2022.pdf)
+- [NASA Earth facts](https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html)
+- [NASA Sun facts](https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html)
+- [Pound & Rebka, 1960 measured gravitational frequency shift](https://doi.org/10.1103/PhysRevLett.4.337)
+- [NIST relativity and GPS clocks](https://www.nist.gov/atomic-clocks/a-powerful-tool-for-science/putting-einstein-test)
+- [GPS.gov space segment](https://www.gps.gov/space-segment)
+
+\`.dlw\` · ROOT0 attribution preserved.
+
