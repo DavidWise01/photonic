@@ -4,7 +4,7 @@ const CLAMP=(n,a,b)=>Math.min(b,Math.max(a,n));
 function chemSector(a){return a<=120?{key:"H",name:"HYDROGEN · RED",k:"+1k",i:0}:a<=240?{key:"O",name:"OXYGEN · GREEN",k:"0k",i:1}:{key:"N",name:"NITROGEN · BLUE",k:"−1k",i:2}}
 function chemRGB(a){a=CLAMP(a,0,360);let sec=chemSector(a),t=sec.i===0?a/120:sec.i===1?(a-121)/119:(a-241)/119;
  const stops=[[[112,24,50],[232,65,52],[142,30,42]],[[22,87,52],[49,219,119],[15,101,89]],[[24,46,109],[80,122,244],[47,53,145]]][sec.i];
- const left=t<=.5?stops[0]:stops[1],right=t<=.5?stops[1]:stops[2],u=(t%0.5)*2;
+ const left=t<=.5?stops[0]:stops[1],right=t<=.5?stops[1]:stops[2],u=t<=.5?t*2:(t-.5)*2;
  return left.map((v,i)=>Math.round(v+(right[i]-v)*u))}
 function toCSS(rgb){return "rgb("+rgb.join(",")+")"}
 function groupPos(z){if(z===1)return[1,1];if(z===2)return[1,18];
