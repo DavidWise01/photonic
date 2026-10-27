@@ -9,6 +9,26 @@
 <style>
 :root{color-scheme:dark;--bg:#080f1b;--panel:#0e1a29;--panel2:#111e2e;--line:#294155;--fg:#e4f3f5;--muted:#91aab7;--mint:#5df9b4;--blue:#64c9ff;--gold:#ffc276;--pink:#ff8aa8;--violet:#bd9cfe}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 55% -20%,#123247 0,#080f1b 56%) fixed;color:var(--fg);font:15px/1.48 system-ui,-apple-system,Segoe UI,sans-serif}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--mint);outline-offset:3px}a{color:var(--blue)}.shell{width:min(1480px,calc(100% - 36px));margin:0 auto;padding-bottom:70px}.top{display:flex;gap:14px;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid #294155}.brand{letter-spacing:.22em;font-weight:900;font-size:13px}.brand span{color:var(--mint)}.nav{display:flex;gap:18px;align-items:center;font-size:12px}.nav a{text-decoration:none;color:var(--muted)}.nav a:hover{color:white}.stamp{padding:5px 10px;border:1px solid #446b66;border-radius:20px;color:var(--mint);font-size:11px}.hero{display:flex;justify-content:space-between;align-items:end;gap:25px;padding:36px 0 26px}.eyebrow{color:var(--mint);font-weight:800;font-size:11px;letter-spacing:.25em}.hero h1{font-size:clamp(32px,5vw,67px);line-height:1;margin:10px 0;letter-spacing:-.045em}.hero p{max-width:730px;margin:14px 0 0;color:var(--muted)}.hero-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;min-width:345px}.metric{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#101c2b}.metric b{display:block;font-size:25px;color:white;font-variant-numeric:tabular-nums}.metric small{color:var(--muted);font-size:10px;letter-spacing:.11em}.main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(265px,.58fr);gap:14px;align-items:stretch}.panel{min-width:0;background:linear-gradient(145deg,#101f30,#0b1524);border:1px solid var(--line);border-radius:17px;box-shadow:0 14px 50px #0002;overflow:hidden}.panel-head{padding:16px 19px 13px;border-bottom:1px solid #263e50;display:flex;justify-content:space-between;gap:9px;align-items:center}.panel-head h2,.panel-head h3{font-size:13px;margin:0;letter-spacing:.14em;font-weight:850}.micro{font:10px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted);text-transform:uppercase}.canvas-wrap{position:relative;min-height:375px;display:flex;justify-content:center;align-items:center;background:radial-gradient(circle,#102b38 0%,#0b1523 55%,#08111c 95%)}#lattice{width:100%;height:420px;display:block;cursor:crosshair}.field-wrap{position:relative;padding:18px;min-height:420px;display:grid;place-items:center}.field-frame{width:min(100%,420px);aspect-ratio:1;position:relative;border:1px solid #36687b;box-shadow:0 0 0 6px #0b1925,0 0 40px #1ebd9420;overflow:hidden}#field{width:100%;height:100%;image-rendering:pixelated;display:block}.cross{pointer-events:none;position:absolute;top:50%;left:50%;width:12px;height:12px;border:1px solid #fff9;border-radius:50%;transform:translate(-50%,-50%)}.cross:before,.cross:after{content:"";position:absolute;background:#fff6}.cross:before{width:28px;height:1px;top:5px;left:-9px}.cross:after{width:1px;height:28px;left:5px;top:-9px}.canvas-foot{display:flex;gap:12px;justify-content:space-between;align-items:center;padding:11px 17px;border-top:1px solid #263e50;color:var(--muted);font:11px ui-monospace,monospace}.pill{border:1px solid #365568;border-radius:25px;padding:3px 8px;color:var(--mint)}.controls{padding:17px;display:flex;flex-direction:column;gap:15px}.control{display:grid;gap:6px}.control label{display:flex;justify-content:space-between;align-items:baseline;color:#b9d5dd;font-size:12px}.control output{font:12px ui-monospace,monospace;color:var(--mint)}input[type=range]{width:100%;accent-color:#63e7b3}select{width:100%;background:#0b1623;color:white;border:1px solid #355168;border-radius:8px;padding:8px}.toggles{display:grid;grid-template-columns:1fr 1fr;gap:8px}.btn{background:#1b3043;border:1px solid #406278;border-radius:9px;color:#e3f4f7;padding:10px 12px;font-weight:750;font-size:12px}.btn:hover{background:#25435a}.btn.primary{background:#155746;border-color:#3cbb95;color:#d7fff0}.btn.wide{grid-column:span 2}.details{font-size:12px;color:var(--muted);line-height:1.55}.details strong{color:#ebfaf5}.rowspan{grid-column:1/-1}.lower{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.witness{padding:17px}.witness-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.witness-head h2{font-size:13px;letter-spacing:.12em;margin:0}.observer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:14px}.observer{border:1px solid #304d5d;background:#0c1927;padding:13px;border-radius:11px}.observer h3{margin:0 0 3px;font-size:20px}.observer small{color:var(--muted)}.observer b{display:block;font:24px ui-monospace,monospace;padding:12px 0;color:var(--mint)}.observer .why{font-size:11px;color:var(--muted)}.observer.a{border-color:#486c74}.observer.b{border-color:#4d6fa4}.observer.c{border-color:#b4875c}.ledger{max-height:251px;overflow:auto;margin-top:12px;border-top:1px solid var(--line)}.entry{display:grid;grid-template-columns:46px 1fr;gap:12px;padding:9px 0;border-bottom:1px solid #20394a;font:11px/1.6 ui-monospace,monospace}.entry em{font-style:normal;color:var(--mint)}.entry code{white-space:pre-wrap;color:#adcad5}.empty{color:var(--muted);padding:25px 4px;text-align:center}.scope{padding:16px}#scope{width:100%;height:110px;display:block}.foot{margin-top:15px;padding:18px 20px;border:1px solid #324759;border-radius:13px;display:flex;gap:30px;justify-content:space-between;align-items:start;background:#0b1623}.foot p{margin:0;color:var(--muted);font-size:12px;max-width:870px}.foot strong{color:#eaf7ee}.dlw{font:900 19px ui-monospace,monospace;white-space:nowrap;color:var(--mint)}.status{color:var(--gold)}.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--muted)}.dot{display:inline-block;height:9px;width:9px;border-radius:50%;margin-right:5px}.quiet{color:var(--muted)}@media(max-width:1150px){.main{grid-template-columns:1fr 1fr}.side{grid-column:1/-1}.controls{display:grid;grid-template-columns:repeat(3,1fr)}.toggles{align-content:end}.hero{align-items:start;flex-direction:column}.hero-metrics{width:100%}}@media(max-width:700px){.shell{width:calc(100% - 22px)}.hero{padding:24px 0}.hero-metrics{min-width:0}.main,.lower{grid-template-columns:1fr}.controls{grid-template-columns:1fr 1fr}.panel-head{padding:13px}.field-wrap{min-height:unset}#lattice{height:350px}.canvas-wrap{min-height:350px}.observer-grid{grid-template-columns:1fr}.observer b{padding:4px 0}.nav{gap:7px}.nav a:nth-child(2){display:none}.foot{flex-direction:column;gap:10px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* GEN1 · gravitational scale explorer */
+.gravity-module{margin-top:14px}.gravity-layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,.8fr)}
+.gravity-visual{position:relative;min-width:0;min-height:455px;background:radial-gradient(ellipse at 50% 58%,#132d44,#091522 75%);overflow:hidden}
+#gravityWell{width:100%;height:455px;display:block}.gravity-overlay{pointer-events:none;position:absolute;left:18px;top:17px;color:#b3d0e0;font:11px ui-monospace,monospace;line-height:1.7}
+.gravity-side{padding:18px;border-left:1px solid var(--line);display:flex;flex-direction:column;gap:14px}
+.grav-num{font-size:24px;font-weight:850;color:#e5fff1;font-variant-numeric:tabular-nums;letter-spacing:-.035em}
+.grav-read{border-bottom:1px solid #294156;padding-bottom:8px}.grav-read small{display:block;color:var(--muted);font-size:10px;letter-spacing:.09em}
+.grav-flag{font-size:12px;color:#ffd19a;border-left:3px solid #bd9256;padding-left:10px;min-height:45px}
+.scale-ruler{border-top:1px solid var(--line);padding:18px 21px}
+.scale-track{position:relative;height:58px;margin:4px 7px 0}
+.scale-axis{height:4px;border-radius:6px;background:linear-gradient(90deg,#5eb8e9,#7a83da,#a96db8,#edab68);position:absolute;left:0;right:0;top:18px}
+.scale-mark{position:absolute;top:0;transform:translateX(-50%);display:flex;align-items:center;flex-direction:column;gap:7px;color:var(--muted);font:10px ui-monospace,monospace}
+.scale-mark::before{content:"";display:block;width:1px;height:24px;background:#54728b}.scale-mark.first{transform:none}.scale-mark.last{transform:translateX(-100%)}
+.scale-planck{position:absolute;top:3px;height:30px;width:2px;background:#ffbd75;left:97.02%;box-shadow:0 0 8px #ffbc88}
+.scale-probe{position:absolute;top:12px;left:0;width:14px;height:14px;transform:translateX(-50%);border:3px solid #dffff4;background:#1fa987;box-shadow:0 0 12px #60f6bc;border-radius:50%}
+.scale-descr{display:flex;gap:13px;justify-content:space-between;flex-wrap:wrap;color:var(--muted);font-size:11px;margin-top:12px}
+@media(max-width:890px){.gravity-layout{grid-template-columns:1fr}.gravity-side{border-left:0;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(2,1fr)}.gravity-side .grav-flag{grid-column:1/-1}}
+@media(max-width:560px){.gravity-side{grid-template-columns:1fr}#gravityWell{height:350px}.gravity-visual{min-height:350px}.scale-mark{font-size:8px}}
+
 </style>
 </head>
 <body>
@@ -42,7 +62,44 @@
     <section class="panel witness"><div class="witness-head"><h2>05 · WITNESS LEDGER</h2><span class="micro">APPEND ONLY · LOCAL DEVICE</span></div><div id="ledger" class="ledger"><div class="empty">No events yet. Capture to store three reports.</div></div><div class="details" style="padding-top:12px">Captures persist in this browser where local storage is permitted. Export the JSON for a portable record. Timestamps describe recording time, not independent historical authentication.</div></section>
     <section class="panel rowspan scope"><div class="witness-head"><h2>06 · PHASE / SIGNAL SCOPE</h2><span class="micro">0° AXIS + ±15° PROJECTIONS</span></div><canvas id="scope" width="900" height="150" aria-label="Three colored waveform projections over a model period"></canvas><div class="legend"><span><i class="dot" style="background:#60ffc2"></i>A 0°</span><span><i class="dot" style="background:#61bfff"></i>B −15°</span><span><i class="dot" style="background:#ffbc77"></i>C +15°</span><span class="quiet">Calculated, not detector data</span></div></section>
   </section>
-  <footer class="foot"><p><strong>Scientific boundary.</strong> This is a deterministic, classical complex-field and Jones-polarization visualization; it does not propagate individual quantum states or establish BB84 security. The 81-pixel grid is a normalized visual space, not a nanometer-resolution representation of a 32 cm optical channel. Wavelength affects displayed color and a normalized spatial-frequency proxy. Three code paths in one simulation are not three independent physical instruments.</p><div class="dlw">.dlw / ROOT0</div></footer>
+
+  <section class="panel gravity-module" aria-labelledby="gtitle">
+    <div class="panel-head"><h2 id="gtitle">07 · GRAVITY WELL / UNOBSERVABLE PROBE FIELD</h2><span class="micro">GEN1 · 10⁻²⁸ → 10⁻³⁵ m</span></div>
+    <div class="gravity-layout">
+      <div class="gravity-visual">
+        <canvas id="gravityWell" aria-label="Animated conceptual gravity well with three probe markers approaching scalar zero"></canvas>
+        <div class="gravity-overlay">SCALAR 0 · SCHEMATIC EMBEDDING<br>A / B / C = VIRTUAL TRACES<br>D = SHARED GROUND</div>
+      </div>
+      <div class="gravity-side">
+        <div class="control"><label for="probeExponent">PROBE DISTANCE <output id="probeExpLabel">10⁻²⁸ m</output></label><input id="probeExponent" type="range" min="-35" max="-28" step=".05" value="-28" aria-label="Probe distance as a power of ten meters"></div>
+        <div class="control"><label for="gravityMass">SOURCE MASS <output id="gravityMassLabel">1.00 mₚ</output></label><input id="gravityMass" type="range" min=".1" max="2" step=".05" value="1" aria-label="Illustrative source mass in Planck masses"></div>
+        <div class="control"><label for="gravitySpin">VISUAL ORBIT RATE <output id="gravitySpinLabel">0.60×</output></label><input id="gravitySpin" type="range" min="0" max="3" step=".05" value=".6"></div>
+        <div class="grav-read"><small>SELECTED RADIAL COORDINATE</small><div class="grav-num" id="probeMeters">1.00 × 10⁻²⁸ m</div></div>
+        <div class="grav-read"><small>DISTANCE / PLANCK LENGTH</small><div class="grav-num" id="planckRatio">6.19 × 10⁶ ℓₚ</div></div>
+        <div class="grav-read"><small>STATIC CLOCK RATIO · CLASSICAL GR</small><div class="grav-num" id="gravityClock">≈ 1.000000</div></div>
+        <div class="grav-read"><small>MODEL SCHWARZSCHILD RADIUS</small><div class="grav-num" id="horizonMeters">3.23 × 10⁻³⁵ m</div></div>
+        <div class="grav-flag" id="gravityFlag" role="status">Conceptual field: no Planck-scale detector data.</div>
+      </div>
+    </div>
+    <div class="scale-ruler">
+      <div class="micro">LOG₁₀ DISTANCE · SELECT A POWER OF TEN</div>
+      <div class="scale-track">
+        <div class="scale-axis"></div>
+        <div class="scale-planck" title="Planck length ≈ 1.616 × 10^-35 m"></div>
+        <div class="scale-probe" id="scaleProbe"></div>
+        <div class="scale-mark first" style="left:0%">10⁻²⁸</div>
+        <div class="scale-mark" style="left:14.2857%">10⁻²⁹</div>
+        <div class="scale-mark" style="left:28.5714%">10⁻³⁰</div>
+        <div class="scale-mark" style="left:42.8571%">10⁻³¹</div>
+        <div class="scale-mark" style="left:57.1429%">10⁻³²</div>
+        <div class="scale-mark" style="left:71.4286%">10⁻³³</div>
+        <div class="scale-mark" style="left:85.7143%">10⁻³⁴</div>
+        <div class="scale-mark last" style="left:100%">10⁻³⁵</div>
+      </div>
+      <div class="scale-descr"><span>Field-to-probe gap: many orders of magnitude</span><span style="color:#ffca81">│ Planck length ≈ 1.616 × 10⁻³⁵ m</span><span>Below this point: unvalidated extrapolation</span></div>
+    </div>
+  </section>
+  <footer class="foot"><p><strong>Scientific boundary.</strong> This is a deterministic, classical complex-field and Jones-polarization visualization; it does not propagate individual quantum states or establish BB84 security. The added gravity well is a schematic visual and displays a textbook Schwarzschild lapse only outside its hypothetical horizon; predictions near or below the Planck length are not validated. The 81-pixel grid is a normalized visual space, not a nanometer-resolution representation of a 32 cm optical channel. Wavelength affects displayed color and a normalized spatial-frequency proxy. Three code paths in one simulation are not three independent physical instruments.</p><div class="dlw">.dlw / ROOT0</div></footer>
 </div>
 <script>
 (function(){
@@ -101,9 +158,92 @@ $("origin").addEventListener("click",function(){selected={x:0,y:0,z:0};refreshIn
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(log))}catch(_){$("count").textContent=log.length+" (session only)"}}
 function renderLedger(){var el=$("ledger");el.textContent="";$("count").textContent=String(log.length);if(!log.length){var e=document.createElement("div");e.className="empty";e.textContent="No events yet. Capture to store three reports.";el.appendChild(e);return}
 log.slice().reverse().slice(0,70).forEach(function(rec){var row=document.createElement("div"),num=document.createElement("em"),details=document.createElement("code");row.className="entry";num.textContent="#"+rec.ordinal;var vals=rec.reports.map(function(r){return r.id+":"+r.intensity.toFixed(3)}).join("  ");details.textContent=rec.timestamp+"\n"+vals+"  D:0° | no quorum";row.appendChild(num);row.appendChild(details);el.appendChild(row)})}
-$("capture").addEventListener("click",function(){var report=currentReports().map(function(r){return Object.assign({what:"projected intensity",how:"Jones analyzer at "+r.angle+" degrees",why:r.basis},r)});var rec={ordinal:log.length+1,timestamp:new Date().toISOString(),modelTime:+t.toFixed(4),selected:Object.assign({},selected),ground:{id:"D",coordinate:[0,0,0],axisDegrees:0,role:"implicit reference; not a witness"},settings:Object.assign({},values),reports:report,claim:"simulated classical field observation, not independent physical evidence"};log.push(rec);persist();renderLedger()});
+$("capture").addEventListener("click",function(){var report=currentReports().map(function(r){return Object.assign({what:"projected intensity",how:"Jones analyzer at "+r.angle+" degrees",why:r.basis},r)});var rec={ordinal:log.length+1,timestamp:new Date().toISOString(),modelTime:+t.toFixed(4),selected:Object.assign({},selected),ground:{id:"D",coordinate:[0,0,0],axisDegrees:0,role:"implicit reference; not a witness"},settings:Object.assign({},values),reports:report,claim:"simulated classical field observation, not independent physical evidence"};rec.gravity=gravityState();log.push(rec);persist();renderLedger()});
 $("export").addEventListener("click",function(){var archive={name:"ROOT0 PHOTONIC SCALAR-ZERO · .dlw",schema:"scalar-zero-witness-v1",copyright:"David Lee Wise / ROOT0",model:"classical wave/Jones simulation",note:"append-only capture history from this browser; no cryptographic authenticity implied",exportedAt:new Date().toISOString(),recordCount:log.length,records:log};var blob=new Blob([JSON.stringify(archive,null,2)],{type:"application/json"});var url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="scalar-zero-witness-ledger-"+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},1000)});
-function tick(now){if(!last)last=now;var dt=Math.min(.05,(now-last)/1000);last=now;if(running)t+=dt*values.speed*2;renderField();renderLattice();if(!window.__lastReadout||now-window.__lastReadout>120){refreshInspector();renderScope();window.__lastReadout=now}requestAnimationFrame(tick)}
+
+/* GEN1 · gravity-well schematic. Schwarzschild lapse is displayed only where r > r_s. */
+var PLANCK_LENGTH=1.616255e-35,PLANCK_MASS=2.176434e-8;
+var gv={exponent:-28,mass:1,spin:.6};
+var gcanvas=$("gravityWell"),gctx=gcanvas.getContext("2d");
+function readGravityControls(){
+  gv.exponent=+$("probeExponent").value;gv.mass=+$("gravityMass").value;gv.spin=+$("gravitySpin").value;
+  $("probeExpLabel").textContent="10^("+gv.exponent.toFixed(2)+") m";
+  $("gravityMassLabel").textContent=gv.mass.toFixed(2)+" mₚ";
+  $("gravitySpinLabel").textContent=gv.spin.toFixed(2)+"×";
+}
+function sci(n,d){
+  if(!Number.isFinite(n)||n<=0)return "—";
+  var exp=Math.floor(Math.log10(n)),base=n/Math.pow(10,exp);
+  return base.toFixed(d===undefined?2:d)+" × 10"+exp.toString().replace(/-/,"⁻").replace(/\d/g,function(k){return"⁰¹²³⁴⁵⁶⁷⁸⁹"[+k]})
+}
+function gravityState(){
+  var r=Math.pow(10,gv.exponent),rs=2*PLANCK_LENGTH*gv.mass,lp=r/PLANCK_LENGTH;
+  return{exponent:gv.exponent,r:r,rs:rs,planckLengths:lp,massInPlanck:gv.mass,horizonRatio:rs/r,
+    lapse:r>rs?Math.sqrt(1-rs/r):null,
+    regime:r<PLANCK_LENGTH?"BELOW_PLANCK":r<=rs?"BEHIND_CLASSICAL_HORIZON":lp<=10?"NEAR_PLANCK":"CLASSICAL_FORMULA",
+    interpretation:"model-only; no observations or detector claims"};
+}
+function updateGravityReadout(){
+  var g=gravityState();
+  $("probeMeters").textContent=sci(g.r,2)+" m";
+  $("planckRatio").textContent=sci(g.planckLengths,2)+" ℓₚ";
+  $("horizonMeters").textContent=sci(g.rs,2)+" m";
+  $("gravityClock").textContent=g.lapse===null?"not defined":g.lapse.toFixed(9);
+  $("scaleProbe").style.left=(((-28-g.exponent)/7)*100).toFixed(2)+"%";
+  var msg="";
+  if(g.regime==="BELOW_PLANCK")msg="Below the Planck length: coordinate marker only. No established space-time or probe physics at this scale.";
+  else if(g.regime==="BEHIND_CLASSICAL_HORIZON")msg="Inside the nominal classical horizon. A stationary Schwarzschild clock ratio is undefined here; quantum gravity is unresolved.";
+  else if(g.regime==="NEAR_PLANCK")msg="Within 10 Planck lengths: displayed GR formula is an extrapolation, not a validated quantum-gravity prediction.";
+  else msg="Outside the illustrative classical horizon. The static clock ratio is a textbook Schwarzschild calculation, not a measured field.";
+  $("gravityFlag").textContent=msg;
+}
+["probeExponent","gravityMass","gravitySpin"].forEach(function(id){$(id).addEventListener("input",function(){readGravityControls();updateGravityReadout()})});
+readGravityControls();updateGravityReadout();
+function resizeGravity(){
+  var d=Math.min(window.devicePixelRatio||1,2),r=gcanvas.getBoundingClientRect();
+  if(r.width<1||r.height<1)return;
+  var w=Math.round(r.width*d),h=Math.round(r.height*d);
+  if(gcanvas.width!==w||gcanvas.height!==h){gcanvas.width=w;gcanvas.height=h}
+  gctx.setTransform(d,0,0,d,0,0);
+}
+window.addEventListener("resize",resizeGravity);resizeGravity();
+function renderGravity(){
+  resizeGravity();
+  var w=gcanvas.clientWidth,h=gcanvas.clientHeight,c=gctx,g=gravityState();
+  if(w<1||h<1)return;c.clearRect(0,0,w,h);
+  var cx=w*.50,cy=h*.28,rx=Math.min(w*.42,h*.75),ry=rx*.38,drop=Math.min(155,h*.42);
+  var depth=function(r){return drop/(1+Math.pow(r/.23,2))};
+  function point(r,a){return{x:cx+rx*r*Math.cos(a),y:cy+ry*r*Math.sin(a)+depth(r)}}
+  /* Non-physical funnel: only an embedding-like visual metaphor. */
+  for(var j=0;j<=28;j++){
+    var a0=j*Math.PI/14;c.beginPath();
+    for(var k=0;k<=60;k++){var rad=.06+.94*k/60,p=point(rad,a0);if(k===0)c.moveTo(p.x,p.y);else c.lineTo(p.x,p.y)}
+    c.strokeStyle="rgba(87,181,207,"+(.13+.07*(j%3))+")";c.lineWidth=1;c.stroke()
+  }
+  for(var rr=1;rr>=.05;rr-=.065){
+    c.beginPath();for(var i=0;i<=120;i++){var q=point(rr,TAU*i/120);if(i===0)c.moveTo(q.x,q.y);else c.lineTo(q.x,q.y)}
+    c.strokeStyle=rr<.22?"rgba(248,173,112,.38)":"rgba(75,209,208,.33)";
+    c.lineWidth=rr<.19?1.7:1;c.stroke()
+  }
+  var core=point(0,0),grad=c.createRadialGradient(core.x,core.y,1,core.x,core.y,26);
+  grad.addColorStop(0,"rgba(0,0,0,.98)");grad.addColorStop(.63,"rgba(2,10,23,.96)");grad.addColorStop(.8,"rgba(211,123,90,.5)");grad.addColorStop(1,"rgba(34,150,159,0)");
+  c.fillStyle=grad;c.beginPath();c.arc(core.x,core.y,26,0,TAU);c.fill();
+  var u=(-28-g.exponent)/7,rProbe=.93-u*.82,colors=["#6bffbe","#76baff","#ffc47f"],tags=["A","B","C"];
+  var orbit=t*gv.spin*.45;
+  for(var j=0;j<3;j++){
+    var theta=orbit+j*TAU/3,pp=point(rProbe,theta);
+    c.beginPath();for(var s=0;s<=35;s++){var trailtheta=theta-.72+s*.72/35,p=point(rProbe,trailtheta);if(s===0)c.moveTo(p.x,p.y);else c.lineTo(p.x,p.y)}
+    c.strokeStyle=colors[j];c.lineWidth=2;c.globalAlpha=.45;c.stroke();c.globalAlpha=1;
+    c.beginPath();c.arc(pp.x,pp.y,6,0,TAU);c.fillStyle=colors[j];c.shadowColor=colors[j];c.shadowBlur=18;c.fill();c.shadowBlur=0;
+    c.fillStyle="#dceaf4";c.font="bold 12px ui-monospace,monospace";c.fillText(tags[j],pp.x+10,pp.y-10)
+  }
+  c.fillStyle="#91b4c8";c.font="11px ui-monospace,monospace";
+  c.fillText("OUTER LOG SCALE",20,h-40);c.fillText("PROBE "+g.exponent.toFixed(2),20,h-21);
+  c.fillText("UNOBSERVED / SCHEMATIC",Math.max(20,w-192),h-21);
+  /* No physical horizon is asserted in a Planck-mass regime. */
+}
+
+function tick(now){if(!last)last=now;var dt=Math.min(.05,(now-last)/1000);last=now;if(running)t+=dt*values.speed*2;renderField();renderLattice();renderGravity();if(!window.__lastReadout||now-window.__lastReadout>120){refreshInspector();renderScope();window.__lastReadout=now}requestAnimationFrame(tick)}
 function invariant(ok,msg){if(!ok)throw Error("Invariant failed: "+msg)}
 invariant(nodes.length===27,"27 nodes");invariant(edges.length===54,"54 edges");invariant(SIZE*SIZE===6561,"81x81 field");invariant(nodes.filter(function(n){return n.x===0&&n.y===0&&n.z===0}).length===1,"scalar zero");invariant(currentReports().length===3,"three reports");invariant(Number.isFinite(rawIntensity(phasor(40,40,0))),"finite intensity");
 renderLedger();refreshInspector();requestAnimationFrame(tick);
