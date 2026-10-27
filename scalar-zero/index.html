@@ -29,6 +29,23 @@
 @media(max-width:890px){.gravity-layout{grid-template-columns:1fr}.gravity-side{border-left:0;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(2,1fr)}.gravity-side .grav-flag{grid-column:1/-1}}
 @media(max-width:560px){.gravity-side{grid-template-columns:1fr}#gravityWell{height:350px}.gravity-visual{min-height:350px}.scale-mark{font-size:8px}}
 
+
+/* GEN2 · real-source redshift and weak-field calibration */
+.known{margin-top:14px}.known-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(310px,.95fr);gap:0}
+.known-screen{background:radial-gradient(ellipse at 28% 43%,#16394a,#071421 75%);position:relative;min-width:0;overflow:hidden}
+#knownCanvas{width:100%;height:400px;display:block}
+.known-screen-label{position:absolute;left:17px;top:14px;font:11px ui-monospace,monospace;color:#8fc8d6;pointer-events:none}
+.known-panel{border-left:1px solid #2b4359;padding:19px;display:flex;flex-direction:column;gap:13px;min-width:0}
+.known-readouts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.known-stat{background:#0a1926;padding:11px;border:1px solid #284357;border-radius:9px;overflow:hidden}
+.known-stat small{display:block;color:#89a4b4;font:10px/1.4 ui-monospace,monospace;letter-spacing:.02em}
+.known-stat b{display:block;font:700 clamp(13px,1.55vw,18px)/1.5 ui-monospace,monospace;color:#e3fff0;overflow-wrap:anywhere}
+.known-foot{padding:15px 20px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.known-check{border:1px solid #385467;border-radius:9px;padding:10px;display:grid;gap:3px}.known-check b{color:#94ffd1;font:11px ui-monospace,monospace}.known-check strong{font:15px ui-monospace,monospace}.known-check small{color:var(--muted);font-size:10px}
+.known-notes{padding:13px 20px;border-top:1px solid #294155;color:var(--muted);font-size:11px;line-height:1.6}.known-notes a{color:#8fd8f4}
+@media(max-width:920px){.known-layout{grid-template-columns:1fr}.known-panel{border-left:0;border-top:1px solid var(--line)}#knownCanvas{height:320px}}
+@media(max-width:620px){.known-readouts{grid-template-columns:1fr 1fr}.known-foot{grid-template-columns:1fr}.known-stat b{font-size:15px}}
+
 </style>
 </head>
 <body>
@@ -99,7 +116,39 @@
       <div class="scale-descr"><span>Field-to-probe gap: many orders of magnitude</span><span style="color:#ffca81">│ Planck length ≈ 1.616 × 10⁻³⁵ m</span><span>Below this point: unvalidated extrapolation</span></div>
     </div>
   </section>
-  <footer class="foot"><p><strong>Scientific boundary.</strong> This is a deterministic, classical complex-field and Jones-polarization visualization; it does not propagate individual quantum states or establish BB84 security. The added gravity well is a schematic visual and displays a textbook Schwarzschild lapse only outside its hypothetical horizon; predictions near or below the Planck length are not validated. The 81-pixel grid is a normalized visual space, not a nanometer-resolution representation of a 32 cm optical channel. Wavelength affects displayed color and a normalized spatial-frequency proxy. Three code paths in one simulation are not three independent physical instruments.</p><div class="dlw">.dlw / ROOT0</div></footer>
+
+  <section class="panel known" id="knownPhysics" aria-labelledby="knownTitle">
+    <div class="panel-head"><h2 id="knownTitle">08 · KNOWN PHYSICS / PHOTON REDSHIFT</h2><span class="micro">GEN2 · MEASURED BENCHMARKS + CLASSICAL MODEL</span></div>
+    <div class="known-layout">
+      <div class="known-screen">
+        <span class="known-screen-label">STATIC CLOCKS · SPHERICAL MASS MODEL<br>ILLUSTRATED RAY PATH / WAVES NOT TO SCALE</span>
+        <canvas id="knownCanvas" aria-label="Diagram of emitted and received photon waves moving upward through a gravitational potential"></canvas>
+      </div>
+      <div class="known-panel">
+        <div class="control"><label for="knownPreset">PHYSICAL REFERENCE</label><select id="knownPreset">
+          <option value="tower">Pound–Rebka · Harvard tower</option>
+          <option value="gps">GPS orbit · gravitational contribution</option>
+          <option value="sun">Sun surface → 1 AU · idealized</option>
+        </select></div>
+        <div class="control"><label for="knownHeight"><span id="knownDistanceTitle">RECEIVER ALTITUDE</span><output id="knownHeightLabel">22.5 m</output></label><input id="knownHeight" type="range" min="1" max="100" step=".5" value="22.5"></div>
+        <div class="details">Source wavelength is inherited from the photonic field: <strong id="knownLocalLambda">550 nm</strong>. For each preset, photons travel from a lower static radius to a higher one.</div>
+        <div class="known-readouts">
+          <div class="known-stat"><small>PHOTON FREQUENCY SHIFT Δν / ν</small><b id="knownFreqShift">—</b></div>
+          <div class="known-stat"><small>RECEIVER PHOTON Δν (Hz)</small><b id="knownHzShift">—</b></div>
+          <div class="known-stat"><small>LOCAL WAVELENGTH CHANGE Δλ</small><b id="knownLambdaShift">—</b></div>
+          <div class="known-stat"><small>HIGHER STATIC CLOCK GAIN / DAY</small><b id="knownClockGain">—</b></div>
+        </div>
+        <div class="details" id="knownAssumptions">—</div>
+      </div>
+    </div>
+    <div class="known-foot">
+      <div class="known-check"><b id="knownCheckTower">✓ MODEL CHECK</b><strong id="knownTowerValue">—</strong><small>Pound–Rebka · photon redshift across 22.5 m</small></div>
+      <div class="known-check"><b id="knownCheckGps">✓ MODEL CHECK</b><strong id="knownGpsValue">—</strong><small>GPS · gravitational clock gain (no orbital SR)</small></div>
+      <div class="known-check"><b id="knownCheckSun">✓ MODEL CHECK</b><strong id="knownSunValue">—</strong><small>Solar redshift · static Sun-only approximation to 1 AU</small></div>
+    </div>
+    <div class="known-notes"><strong>Physics discipline:</strong> Calculated frequency shift and static-clock gain use the exterior Schwarzschild formula, with published NASA Earth/Sun mass and radius values and NIST constants. Source and receiver are idealized stationary observers. The 81 × 81 intensity field remains an independent classical visual field, not a curved-spacetime Maxwell solver. The Planck-probe page above is <em>not</em> calibrated by these measurements. <strong>Sources:</strong> <a href="https://www.physics.nist.gov/cuu/pdf/wall_2022.pdf" target="_blank" rel="noopener">NIST constants</a> · <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html" target="_blank" rel="noopener">NASA Earth</a> · <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html" target="_blank" rel="noopener">NASA Sun</a> · <a href="https://www.gps.gov/space-segment" target="_blank" rel="noopener">GPS.gov</a> · <a href="https://www.nist.gov/atomic-clocks/a-powerful-tool-for-science/putting-einstein-test" target="_blank" rel="noopener">NIST GPS timing</a> · <a href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.4.337" target="_blank" rel="noopener">Pound–Rebka 1960</a>.</div>
+  </section>
+  <footer class="foot"><p><strong>Scientific boundary.</strong> This is a deterministic, classical complex-field and Jones-polarization visualization; it does not propagate individual quantum states or establish BB84 security. The gravity well is schematic. GEN2 adds a separately computed photon gravitational redshift and static clock comparison for real Earth/Sun reference scales, not Planck-scale evidence. Predictions near or below the Planck length are not validated. The 81-pixel grid is a normalized visual space, not a nanometer-resolution representation of a 32 cm optical channel. Wavelength affects displayed color and a normalized spatial-frequency proxy. Three code paths in one simulation are not three independent physical instruments.</p><div class="dlw">.dlw / ROOT0</div></footer>
 </div>
 <script>
 (function(){
@@ -158,7 +207,7 @@ $("origin").addEventListener("click",function(){selected={x:0,y:0,z:0};refreshIn
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(log))}catch(_){$("count").textContent=log.length+" (session only)"}}
 function renderLedger(){var el=$("ledger");el.textContent="";$("count").textContent=String(log.length);if(!log.length){var e=document.createElement("div");e.className="empty";e.textContent="No events yet. Capture to store three reports.";el.appendChild(e);return}
 log.slice().reverse().slice(0,70).forEach(function(rec){var row=document.createElement("div"),num=document.createElement("em"),details=document.createElement("code");row.className="entry";num.textContent="#"+rec.ordinal;var vals=rec.reports.map(function(r){return r.id+":"+r.intensity.toFixed(3)}).join("  ");details.textContent=rec.timestamp+"\n"+vals+"  D:0° | no quorum";row.appendChild(num);row.appendChild(details);el.appendChild(row)})}
-$("capture").addEventListener("click",function(){var report=currentReports().map(function(r){return Object.assign({what:"projected intensity",how:"Jones analyzer at "+r.angle+" degrees",why:r.basis},r)});var rec={ordinal:log.length+1,timestamp:new Date().toISOString(),modelTime:+t.toFixed(4),selected:Object.assign({},selected),ground:{id:"D",coordinate:[0,0,0],axisDegrees:0,role:"implicit reference; not a witness"},settings:Object.assign({},values),reports:report,claim:"simulated classical field observation, not independent physical evidence"};rec.gravity=gravityState();log.push(rec);persist();renderLedger()});
+$("capture").addEventListener("click",function(){var report=currentReports().map(function(r){return Object.assign({what:"projected intensity",how:"Jones analyzer at "+r.angle+" degrees",why:r.basis},r)});var rec={ordinal:log.length+1,timestamp:new Date().toISOString(),modelTime:+t.toFixed(4),selected:Object.assign({},selected),ground:{id:"D",coordinate:[0,0,0],axisDegrees:0,role:"implicit reference; not a witness"},settings:Object.assign({},values),reports:report,claim:"simulated classical field observation, not independent physical evidence"};rec.gravity=gravityState();rec.knownPhysics=knownState();log.push(rec);persist();renderLedger()});
 $("export").addEventListener("click",function(){var archive={name:"ROOT0 PHOTONIC SCALAR-ZERO · .dlw",schema:"scalar-zero-witness-v1",copyright:"David Lee Wise / ROOT0",model:"classical wave/Jones simulation",note:"append-only capture history from this browser; no cryptographic authenticity implied",exportedAt:new Date().toISOString(),recordCount:log.length,records:log};var blob=new Blob([JSON.stringify(archive,null,2)],{type:"application/json"});var url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="scalar-zero-witness-ledger-"+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},1000)});
 
 /* GEN1 · gravity-well schematic. Schwarzschild lapse is displayed only where r > r_s. */
@@ -243,7 +292,111 @@ function renderGravity(){
   /* No physical horizon is asserted in a Planck-mass regime. */
 }
 
-function tick(now){if(!last)last=now;var dt=Math.min(.05,(now-last)/1000);last=now;if(running)t+=dt*values.speed*2;renderField();renderLattice();renderGravity();if(!window.__lastReadout||now-window.__lastReadout>120){refreshInspector();renderScope();window.__lastReadout=now}requestAnimationFrame(tick)}
+
+/* GEN2 · weak-field optical redshift with numerically stable small deltas */
+var PHYS={G:6.67430e-11,c:299792458,h:6.62607015e-34,e:1.602176634e-19,earthM:5.9722e24,earthR:6371000,sunM:1.9884e30,sunR:695700000,AU:149597870700};
+var knownChoice=$("knownPreset"),knownDist=$("knownHeight"),knownCtx=$("knownCanvas").getContext("2d");
+var KPRESETS={
+  tower:{M:PHYS.earthM,r:PHYS.earthR,dist:22.5,min:1,max:100,step:.5,label:"RECEIVER ALTITUDE",unit:"m",note:"Earth's approximate spherical field; tower is assumed stationary. The historic gamma-ray experiment used a different wavelength."},
+  gps:{M:PHYS.earthM,r:PHYS.earthR,dist:20200000,min:100000,max:35000000,step:100000,label:"RECEIVER ALTITUDE",unit:"km",note:"Idealized stationary clock at GPS orbital radius. Real GPS clocks move; add the ≈ −7 μs/day special-relativistic contribution separately."},
+  sun:{M:PHYS.sunM,r:PHYS.sunR,dist:1,min:.3,max:2,step:.05,label:"RECEIVER RADIUS FROM SUN",unit:"AU",note:"Static observers in a Sun-only Schwarzschild exterior. Receiver at chosen astronomical-unit radius; Earth gravity, solar rotation, plasma, and Doppler effects excluded."}
+};
+function redshiftStationary(M,re,rr,lambda_nm){
+  var rs=2*PHYS.G*M/(PHYS.c*PHYS.c),ue=rs/re,ur=rs/rr;
+  if(![M,re,rr,lambda_nm].every(Number.isFinite)||M<=0||re<=rs||rr<=re||lambda_nm<=0) return null;
+  var small=(ue-ur)/(1-ur),smallClock=(ue-ur)/(1-ue);
+  // Stable sqrt(1-x)-1 and sqrt(1+x)-1 identities prevent cancellation near Earth.
+  var photonFraction=-small/(1+Math.sqrt(1-small));
+  var clockFraction=smallClock/(1+Math.sqrt(1+smallClock));
+  var sourceHz=PHYS.c/(lambda_nm*1e-9);
+  var observerShiftHz=sourceHz*photonFraction;
+  var lambdaShiftNm=lambda_nm*(-photonFraction)/(1+photonFraction);
+  return{rs:rs,sourceRadius:re,receiverRadius:rr,photonFraction:photonFraction,
+    clockFraction:clockFraction,frequencyHz:sourceHz,frequencyShiftHz:observerShiftHz,
+    wavelengthShiftNm:lambdaShiftNm,clockGainMicrosecondsDay:clockFraction*86400*1e6,
+    wavelengthNm:lambda_nm,massKg:M};
+}
+function knownState(){
+ var p=KPRESETS[knownChoice.value]||KPRESETS.tower,dist=+knownDist.value;
+ var rr=knownChoice.value==="sun"?dist*PHYS.AU:p.r+dist;
+ return Object.assign({preset:knownChoice.value,receiverParameter:dist,receiverUnit:p.unit,model:"stationary-source-and-receiver / exterior Schwarzschild; no measured detector inputs"},
+ redshiftStationary(p.M,p.r,rr,values.wavelength)||{});
+}
+function knownFormat(x,n){
+ if(!Number.isFinite(x))return "—";
+ if(x===0)return "0";
+ var ax=Math.abs(x);
+ return ax>=.001&&ax<1e5?x.toLocaleString("en-US",{maximumFractionDigits:n===undefined?6:n}):x.toExponential(n===undefined?4:n).replace("e-"," × 10⁻").replace("e+"," × 10⁺");
+}
+function knownConfig(){
+ var p=KPRESETS[knownChoice.value]||KPRESETS.tower;
+ knownDist.min=p.min;knownDist.max=p.max;knownDist.step=p.step;knownDist.value=p.dist;
+ $("knownDistanceTitle").textContent=p.label;
+ knownOutput();
+}
+knownChoice.addEventListener("change",knownConfig);
+knownDist.addEventListener("input",knownOutput);
+function knownOutput(){
+ var k=knownState(),p=KPRESETS[knownChoice.value];
+ var distance=+knownDist.value;
+ $("knownHeightLabel").textContent=(p.unit==="km"?(distance/1000).toLocaleString("en-US",{maximumFractionDigits:1}):distance.toFixed(p.unit==="AU"?2:1))+" "+p.unit;
+ $("knownLocalLambda").textContent=values.wavelength+" nm";
+ $("knownFreqShift").textContent=knownFormat(k.photonFraction,5);
+ $("knownHzShift").textContent=knownFormat(k.frequencyShiftHz,5)+" Hz";
+ $("knownLambdaShift").textContent=knownFormat(k.wavelengthShiftNm,5)+" nm";
+ $("knownClockGain").textContent=knownFormat(k.clockGainMicrosecondsDay,5)+" µs";
+ $("knownAssumptions").textContent=p.note;
+}
+function benchmarkKnown(){
+ var tower=redshiftStationary(PHYS.earthM,PHYS.earthR,PHYS.earthR+22.5,550),
+ gps=redshiftStationary(PHYS.earthM,PHYS.earthR,PHYS.earthR+20200000,550),
+ sun=redshiftStationary(PHYS.sunM,PHYS.sunR,PHYS.AU,550);
+ var checks=[
+   {ok:Math.abs(tower.photonFraction/-2.45847e-15-1)<.001,id:"knownCheckTower",value:"knownTowerValue",text:knownFormat(tower.photonFraction,3)},
+   {ok:Math.abs(gps.clockGainMicrosecondsDay/45.7244-1)<.001,id:"knownCheckGps",value:"knownGpsValue",text:gps.clockGainMicrosecondsDay.toFixed(2)+" µs/day"},
+   {ok:Math.abs(sun.photonFraction/-2.11262e-6-1)<.001,id:"knownCheckSun",value:"knownSunValue",text:knownFormat(sun.photonFraction,3)}
+ ];
+ checks.forEach(function(c){$(c.id).textContent=c.ok?"✓ NUMERIC CHECK":"✕ NUMERIC CHECK";$(c.value).textContent=c.text;$(c.id).style.color=c.ok?"#8dffd0":"#ff8d94"});
+ return checks.every(function(c){return c.ok});
+}
+function knownResize(){
+ var can=$("knownCanvas"),d=Math.min(devicePixelRatio||1,2),r=can.getBoundingClientRect();
+ var w=Math.max(1,Math.round(r.width*d)),h=Math.max(1,Math.round(r.height*d));
+ if(can.width!==w||can.height!==h){can.width=w;can.height=h}
+ knownCtx.setTransform(d,0,0,d,0,0)
+}
+window.addEventListener("resize",knownResize);knownResize();
+function knownDrawWave(ctx,x0,x1,y,period,amp,color,phase){
+ ctx.beginPath();for(var x=x0;x<=x1;x+=2){var v=y+Math.sin((x-x0)*Math.PI*2/period+phase)*amp;if(x===x0)ctx.moveTo(x,v);else ctx.lineTo(x,v)}
+ ctx.lineWidth=2;ctx.strokeStyle=color;ctx.stroke();
+}
+function knownRender(){
+ knownResize();var c=knownCtx,can=$("knownCanvas"),w=can.clientWidth,h=can.clientHeight,k=knownState();
+ if(w<1||h<1)return;c.clearRect(0,0,w,h);
+ var cx=w*.28,cy=h*.57,r=Math.min(w*.22,h*.3),endX=w*.84;
+ var grad=c.createRadialGradient(cx,cy,0,cx,cy,r);
+ grad.addColorStop(0,"#2f8991");grad.addColorStop(.7,"#135b71");grad.addColorStop(1,"#123546");
+ c.fillStyle=grad;c.beginPath();c.arc(cx,cy,r,0,Math.PI*2);c.fill();c.strokeStyle="#55bfd0";c.lineWidth=1.2;c.stroke();
+ c.strokeStyle="#5e9eb2";c.globalAlpha=.22;
+ for(var j=1;j<=3;j++){c.beginPath();c.ellipse(cx,cy,r+25*j,r*.45+j*8,-.25,0,Math.PI*2);c.stroke()}
+ c.globalAlpha=1;
+ var sy=cy-r*.62,tx=cx+r*.38;
+ c.beginPath();c.moveTo(tx,sy);c.quadraticCurveTo(w*.60,h*.10,endX,h*.22);
+ c.strokeStyle="#6af6c6";c.lineWidth=1.9;c.setLineDash([5,7]);c.stroke();c.setLineDash([]);
+ var progress=((t*.17)%1),px=(1-progress)*(1-progress)*tx+2*(1-progress)*progress*w*.60+progress*progress*endX,
+ py=(1-progress)*(1-progress)*sy+2*(1-progress)*progress*h*.10+progress*progress*h*.22;
+ c.beginPath();c.arc(px,py,5,0,TAU);c.fillStyle="#a5ffe0";c.shadowBlur=13;c.shadowColor="#8bffb7";c.fill();c.shadowBlur=0;
+ c.fillStyle="#ccffeb";c.font="11px ui-monospace,monospace";c.fillText("EMITTER",Math.max(12,tx-15),Math.max(30,sy-21));c.fillText("RECEIVER",Math.min(w-94,endX-20),h*.22-14);
+ c.fillStyle="#9ac7d9";c.font="10px ui-monospace,monospace";c.fillText(knownChoice.value==="sun"?"SUN":"EARTH",cx-r*.2,cy+r+18);
+ var xx=w*.08,xx2=w*.92,y1=h*.83,y2=h*.93,visual=12+(Math.max(0,Math.min(1,(Math.log10(Math.abs(k.photonFraction||1e-20))+16)/14)))*10;
+ // Visual periods deliberately exaggerated; real frequency shift is in the numeric table.
+ knownDrawWave(c,xx,xx2,y1,24,9,"#63eebd",t*1.3);
+ knownDrawWave(c,xx,xx2,y2,24+visual,9,"#edb674",t*1.3);
+ c.fillStyle="#bcd6e3";c.font="10px ui-monospace,monospace";c.fillText("EMITTED",xx,y1-14);c.fillText("RECEIVED · EXAGGERATED",xx,y2-14)
+}
+knownConfig();benchmarkKnown();
+
+function tick(now){if(!last)last=now;var dt=Math.min(.05,(now-last)/1000);last=now;if(running)t+=dt*values.speed*2;renderField();renderLattice();renderGravity();knownRender();if(!window.__lastReadout||now-window.__lastReadout>120){refreshInspector();renderScope();knownOutput();window.__lastReadout=now}requestAnimationFrame(tick)}
 function invariant(ok,msg){if(!ok)throw Error("Invariant failed: "+msg)}
 invariant(nodes.length===27,"27 nodes");invariant(edges.length===54,"54 edges");invariant(SIZE*SIZE===6561,"81x81 field");invariant(nodes.filter(function(n){return n.x===0&&n.y===0&&n.z===0}).length===1,"scalar zero");invariant(currentReports().length===3,"three reports");invariant(Number.isFinite(rawIntensity(phasor(40,40,0))),"finite intensity");
 renderLedger();refreshInspector();requestAnimationFrame(tick);
