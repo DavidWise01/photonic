@@ -1,0 +1,1 @@
+CHEM_NAME_TEXT+="Rutherfordium|Dubnium|Seaborgium|Bohrium|Hassium|Meitnerium|Darmstadtium|Roentgenium|";
