@@ -293,7 +293,7 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
   $("phase").value="0";$("pause").textContent="▶ RESUME";sync();draw()});
  $("next").addEventListener("click",()=>{phase=(phase+1)%732;$("phase").value=phase;playing=false;$("pause").textContent="▶ RESUME";draw()});
  $("export").addEventListener("click",()=>{
-  const data={schema:"root0-gen15-log-descent-v1",view:"pure Canvas2D",
+  const data={schema:"root0-gen16-hon366-axial-v1",view:"pure Canvas2D",
    scaleDescent:{schema:S.schema,topMeters:S.mouthMeters,floorMeters:S.floorMeters,
     markers:S.setupMarkers(),generations:S.generations,selectedMarker,selectedGeneration,
     markerFilter:$("markerFilter").value,vertical:"logarithmic meters",width:"schematic geometry"},floor:{...F.geometry,gridSize:+$("grid").value,visible:$("floorVisible").checked},
@@ -307,7 +307,7 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
     benchmarkBands:V.markerBands},
    disclaimer:"Vertical scale is log10 true from atom 10^-10m to author floor 1.61615e-35m; funnel width is schematic; wave/Compton/probe markers are not physical particle diameters."};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="ROOT0_GEN15_LOG_SCALE_VORTEX.json";
+  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="ROOT0_GEN16_HON_366_COLOR_STRETCH_0_TO_1E-35.json";
   document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
  });
  function tick(now){
