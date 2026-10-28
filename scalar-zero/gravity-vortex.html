@@ -73,7 +73,7 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
 <div class="readout"><small>REFERENCE FLOOR</small><b>1.61615 × 10⁻³⁵ m</b><div class="readgrid">
 <div><small>GRID SPAN</small><strong id="span">2.100995 × 10⁻³⁴ m</strong></div><div><small>SELECTED PHASE</small><strong id="scan">V000 / −</strong></div><div><small>MOUTH RADIUS</small><strong id="mouth">—</strong></div><div><small>FLOOR NECK</small><strong id="neck">—</strong></div></div></div>
 <div class="control"><label for="markerFilter">VISIBLE SCIENCE REFERENCE KIND</label><select id="markerFilter"><option value="all">All distinct reference types</option><option value="size">Measured / representative size</option><option value="wavelength">Photon wavelength · not size</option><option value="compton">Higgs reduced Compton length</option><option value="limit">Pointlike / probe context</option><option value="floor">Floor reference</option></select></div>
-<div class="readout"><small>SELECTED DESCENT REFERENCE</small><b id="selectedScale">ATOM · 10⁻¹⁰ m</b><div id="scaleCategory" class="note">Size reference</div><p class="note" id="scaleDetail">Representative atomic scale</p><a id="scaleSource" href="https://cds.cern.ch/record/2204859/files/CERN%20Higgs%20Panel.pdf" target="_blank" rel="noopener">Open scientific source</a></div>
+<div class="readout"><small>SELECTED DESCENT REFERENCE</small><b id="selectedScale">ATOM · 10⁻¹⁰ m</b><div id="scaleCategory" class="note">Size reference</div><div id="scaleGeneration" class="note">GEN 00 · 10⁻¹⁰ m</div><p class="note" id="scaleDetail">Representative atomic scale</p><a id="scaleSource" href="https://cds.cern.ch/record/2204859/files/CERN%20Higgs%20Panel.pdf" target="_blank" rel="noopener">Open scientific source</a></div>
 <p class="note">Only the vertical positions correspond to logarithmic length; the narrowing width is a qualitative geometry. Gamma/X-ray markers are wavelengths, alpha is a measured helium nucleus radius, Higgs is a reduced Compton scale, and beta/quark markers indicate unresolved structure or probe limits.</p>
 </div></aside></div>
 <div class="chart">
@@ -129,6 +129,8 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
   $("selectedScale").textContent=m.label;
   $("scaleCategory").textContent="TYPE: "+m.kind.toUpperCase()+" · "+m.meters.toExponential(6)+" m";
   $("scaleDetail").textContent=m.detail;
+  const generation=S.generations[selectedGeneration];
+  $("scaleGeneration").textContent=generation.label+" · "+generation.meters.toExponential(6)+" m";
   $("scaleSource").href=m.source;
   for(const b of $("scienceMarkers").children)b.classList.toggle("active",b.dataset.key===selectedMarker);
   for(const b of $("generations").children)b.classList.toggle("active",Number(b.dataset.generation)===selectedGeneration);
@@ -156,8 +158,17 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
     b.title="log position "+(100*g.t).toFixed(2)+"% of the descent";
     b.addEventListener("click",()=>{
       selectedGeneration=i;
-      const closest=S.near(g.t,$("markerFilter").value);
-      if(closest)selectedMarker=closest.key;
+      if(i===S.generations.length-1){
+        // The terminal generation is always the actual floor, irrespective
+        // of the current radiation/particle filter.
+        if($("markerFilter").value!=="all"&&$("markerFilter").value!=="floor"){
+          $("markerFilter").value="all";renderScienceMarkers();
+        }
+        selectedMarker="floor";
+      }else{
+        const closest=S.near(g.t,$("markerFilter").value);
+        if(closest)selectedMarker=closest.key;
+      }
       refreshScaleSelection();draw();
     });
     root.appendChild(b);
