@@ -762,3 +762,54 @@ GEN11's independent vector scale and GEN12's six-beat roll **−36 / 0 / +36 / 0
 **Geometry:** \`t=0\` is the wide vortex mouth, \`t=1\` the sink on the floor. For every \`t\`, the radius is still \`R_neck+(R_mouth−R_neck)(1−t)^c\`; the bands narrow to the sink together, and all 366 remain addressable by their existing source index.
 
 **Attribution:** David Lee Wise / ROOT0 · \`.dlw\`. [Original OASIS HON v9.4 source](https://github.com/DavidWise01/oasis/blob/main/n184/elemental-hon-color-operants-v94/hon_core.mjs). All earlier generations remain available through Git commit history.
+
+
+## GEN17 · H/Og spherical identity invariant and phase-locked control (2026-10-28)
+
+### Hypothesis and boundary
+
+Two independent angular sampler channels can sweep a nearly isotropic spherical occupancy distribution. Element identity is preserved when the **model stretch** changes: Hydrogen H has Z=1; oganesson Og has Z=118. Phase-locking one angle must be a deliberately failing control. This is a **computational sampling model**, not an electroweak binding derivation, experimentally compressed hydrogen, a composite Higgs, elemental transmutation, or an observed quantum information-density law.
+
+### Model and invariant
+
+- **Reference radius:** 5.29177210903e-11 m, chosen from the hydrogen Bohr scale for *both* H and Og to isolate their labels. It is NOT an experimentally determined Og radius.
+- **Floor radius:** 1.61615e-35 m, exact model floor from GEN13.
+- **Stretch:** s ∈ [0,1], R(s) = R_floor + s × (R_ref − R_floor).
+- **Normalized density change:** 3 log10(R_ref/R(s)); this is relative geometric sampling occupancy per hypothetical volume, NOT a measured physical information density.
+- **Sample scheme:** n=0..16383; u=frac((n+0.5)√2), v=frac((n+0.5)√3), z=2u−1, φ=2πv, x=√(1−z²)cosφ, y=√(1−z²)sinφ. Control: lock φ=0.
+- **Isotropy criterion:** diagonal second moments near 1/3, off-diagonal second moments near 0, centroid norm < 0.01, and octant entropy > 2.95 out of 3 bits.
+- **Scalar zero:** s=0 retains identity but is *regularized to the finite floor radius*; it does not claim physically that an atom can be compressed to this radius.
+
+### Deterministic results
+
+| Measurement | Two-angle sphere | Locked-phase control |
+|---|---:|---:|
+| Isotropy error | 0.0000479533 | 0.3333385295 |
+| Octant entropy | 2.9999996561 bits | 0.9999999570 bits |
+| Criterion | PASS | FAIL as expected |
+
+**10/10 invariant checks passed:** near-isotropic sampler, expected control failure, H and Og identity conservation, elemental distinction, color category separation, positive floor geometry, monotonic relative density growth, no actual elemental conversion.
+
+This demonstrates a mathematical property of the *chosen sampling process*, not a physical discovery about hydrogen, Og, W bosons or Higgs particles.
+
+### Emission versus OASIS HON colors
+
+The original OASIS HON v9.4 design color for element H001 is **#FF0000 red**. The register color for chemical-element Og118 is **#FF7B00 orange**. These are **model palette colors**, not physical spectral or flame observations.
+
+- Hydrogen H-alpha emission is around **656.3 nm (red)**. A hydrogen flame is often hard to see; the orange visible hue is frequently due to sodium impurities at about **589 nm** rather than a rule that hydrogen burns cooler or orange.
+- Oganesson has **no experimentally established flame color or bulk visible emission spectrum**. Very few atoms have been made and the isotope is short-lived; some thermodynamic/electronic properties are theoretical predictions.
+
+References:
+- [NIST atomic hydrogen](https://physics.nist.gov/PhysRefData/Handbook/Tables/hydrogentable1_a.htm)
+- [Hydrogen safety / flame visibility](https://h2tools.org/faq/color-visibility-h2-fires)
+- [Hydrogen flame sodium contamination research (2026)](https://doi.org/10.1016/j.nxener.2026.100962)
+- [RSC oganesson](https://periodic-table.rsc.org/element/118/oganesson)
+- [PubChem oganesson](https://pubchem.ncbi.nlm.nih.gov/element/118)
+
+### Files
+
+- **scalar-zero/spherical-invariant-gen17.js:** immutable identities, unit-direction sampler, moment diagnostics, compression coordinate and complete reproducible test with 10 checks.
+- **scalar-zero/spherical-invariant.html:** standalone interactive Canvas2D test (H/Og, stretch, coherent/two-angle vs locked control, original palette swatch, measured-versus-unknown emission notes, numerical readouts).
+- **scalar-zero/index.html:** section 18 embeds the GEN17 test and supports iframe height updates. GEN0–16 sources are not overwritten.
+
+**Attribution:** David Lee Wise / ROOT0 · .dlw. The term quanta here refers to the author's symbolic model, not demonstrated elementary-particle physics.
