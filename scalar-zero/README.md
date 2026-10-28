@@ -326,3 +326,52 @@ Since \`z + m(z) = 28\` is even, opposite addresses always have the **same binar
 **Formal invariants:** \`20 tokens\`, \`13 dots\`, \`7 bars\`, \`27 weighted positions\`, \`13 mirror pairs\`, \`1 center\`, \`m(m(z))=z\` for \`1≤z≤27\`, \`z%2===m(z)%2\`, and one external ground \`D=0\`. No unsupported biological or chemical inference is made.
 
 Author: David Lee Wise / ROOT0; history preserved by append-only Git commits.
+
+## GEN8 · 364 / 366 / 732 — 28×13 arms, ± terminals and one visual rotation (2026-10-27)
+
+This generation builds a **separate, new 366-site scalar-zero toroidal registry** above the previously established GEN7 \`13 | 1 | 13 = 27\` mirror geometry. No earlier page or generation is replaced. The standalone page is \`scalar-zero/rotation-732.html\`, embedded in \`scalar-zero/index.html\`.
+
+### Four independent counts and their meanings
+
+| Calculation | Value | Interpretation |
+|---|---:|---|
+| \`364/13 = 28\` | 28 | Radial arms (13 logical positions on each arm) |
+| \`28 + 4 = 32\` | 32 | 28 arm-address lanes plus **four independent nibble bit lanes** |
+| \`364 + 2 = 366\` | 366 | Data positions plus two new **minus / plus axial terminal** positions |
+| \`366 × 2 = 732\` | 732 | Two ordered **− and + phase events per position** during one complete \`360°\` model revolution |
+
+A **nibble is four bits and therefore represents 16 distinct values**, not four values; it supplies four additional control *lanes*. The 32-channel control layout is different from the 366-position spatial register. They must not be added to each other. The two terminal sites 365/366 are symbolic polarity controls and **not** chemical elements. The two polarities are distinct phase *events*, so the same address is visited twice per turn, not 732 independent locations.
+
+The 732-phase cyclic scanner is:
+
+\`\`\`text
+phase_tick ∈ {0,...,731}
+address = floor(phase_tick / 2) + 1      // 1..366
+polarity = (phase_tick mod 2 == 0) ? − : +
+angle = 360° * phase_tick / 732         // degrees in visual space
+next = (phase_tick + 1) mod 732
+\`\`\`
+
+At tick 731, the next tick wraps to 0, completing the 360-degree model period. No physical angular resolution or Planck-scale measurement is implied.
+
+### Chemical overlay — 366 equal model slots
+
+The new registry uses an **equal three-way partition** consistent with the 366-level extension, without changing the older GEN3 360-degree gradient:
+
+- Positions **1–122**: H / red, signed Casimir slot **+1k**.
+- Positions **123–244**: O / green, signed Casimir slot **0k**.
+- Positions **245–366**: N / blue, signed Casimir slot **−1k**.
+
+These H/O/N assignments are geometric palette labels; they are not chemical element Z values, emission-line measurements or absolute temperatures. Casimir is a user-defined signed model index; no experimentally established Casimir force is inferred. They do not assert the existence of 366 chemical elements. The only names, symbols, and atomic numbers presented as known are **Z=1–118** from the existing IUPAC element registry; **119–366** are unlabeled registry coordinates.
+
+### Interaction, controls and retained boundaries
+
+The new Canvas2D page renders all 364 data sites as 28 straight spokes of 13 positions on a radial/toroidal schematic, with two separate axial markers and D=0. The 366-site scanner runs through each register twice for 732 phase events per 360-degree visual revolution. User controls include phase-event rate, phase index, selected address, pause, reset, single-step, four nibble-bit toggles (0–15) and export of the complete JSON register.
+
+The layout maintains parity encoding \`0 → □ box / 1 → ◉ toroid\`; it does **not** claim the atoms physically have these shapes. GEN7's distinct \`13 | 1 | 13\` mirror and GEN6's \`13 dots + 7 bars = 27 weighted cells\` remain unchanged; \`28 × 13\` is a **new higher-level topology**, not 28 copies of the full 27-cell mirror.
+
+Key invariant checks embedded in the page: exactly 28 arms, 13 positions per arm, 364 data positions, 2 axial controls, 366 total registry sites, 4 nibble bits, 32 logical control lanes, 732 phase events, and three H/O/N blocks of precisely 122 positions.
+
+Physical boundary: these are mathematical visualizations and labeled model structure. Neither Planck-scale probes, new atomic elements, newly measured spectra nor a physical quantum-gravity torus have been established.
+
+**Authorship:** David Lee Wise / ROOT0 · \`.dlw\`. Original earlier source versions preserved in Git commits.
