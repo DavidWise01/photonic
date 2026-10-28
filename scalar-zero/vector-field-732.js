@@ -9,6 +9,7 @@
  let rollStep=0,rollElapsed=0,rollPlaying=true,vortexSpin=0;
  const canvas=$("vectors"),ctx=canvas.getContext("2d");
  const colors=Array.from({length:732},(_,i)=>C.colorAt(M.decode(i).address,"S").hex);
+ const axialSourceColors=Array.from({length:366},(_,i)=>C.colorAt(i+1,"S").hex);
  if(!Array.isArray(M.rollBeats)||M.rollBeats.length!==6||M.rollBeats.map(b=>b.code).join("/")!=="−36/0/+36/0/1/1")throw Error("GEN12 roll mapping not available");
  function refreshFloor(){
    const grid=+($("floorGrid").value);
@@ -24,7 +25,7 @@
    $("vortexRingsOut").textContent=$("vortexRings").value;
  }
  for(const id of ["vortexCompression","vortexRings"])$(id).addEventListener("input",refreshVortex);
- for(const id of ["vortexVisible","vortexMarkers"])$(id).addEventListener("change",refreshVortex);
+ for(const id of ["vortexVisible","vortexMarkers","vortexChromatic"])$(id).addEventListener("change",refreshVortex);
  refreshVortex();
  function updateScaleInfo(){
    const m=S.markerInfo($("gen15Select").value)||S.markers[0];
@@ -226,6 +227,9 @@
       vortex:{schema:"root0-gen14-vortex-v1",enabled:$("vortexVisible").checked,
        compression:+$("vortexCompression").value,rings:+$("vortexRings").value,
        markersVisible:$("vortexMarkers").checked,scaleBands:G.markerBands,visualOnly:true,
+       chromatic:{...G.chromatic,enabled:$("vortexChromatic").checked,
+         firstSourceHex:axialSourceColors[0],lastSourceHex:axialSourceColors[365],
+         note:"linear symbolic color axis independent of log scale and GEN13 physical floor pitch"},
        logarithmicDescent:{schema:S.schema,enabled:$("gen15Visible").checked,
         selectedMarker:$("gen15Select").value,topMeters:S.mouthMeters,floorMeters:S.floorMeters,
         generations:S.generations,scienceMarkers:S.setupMarkers(),interpretation:"logarithmic height, schematic funnel width"}},
@@ -301,7 +305,7 @@
       mouthRadius:outer*.54,neckRadius:2.3,
       compression:+$("vortexCompression").value,ringCount:+$("vortexRings").value,
       flatten:Math.max(.16,tiltY*.65),spin:vortexSpin,direction:1,
-      labels:false});
+      labels:false,axialColors:$("vortexChromatic").checked,sourceColors:axialSourceColors});
     if($("gen15Visible").checked){
       const topY=cy+outer*.08,floorY=cy+outer*.73;
       const cfg={cx,topY,floorY,mouthRadius:outer*.54,neckRadius:2.3,
