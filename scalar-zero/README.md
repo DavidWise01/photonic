@@ -860,3 +860,60 @@ This checks the **mathematical discretization and conservation of assigned ident
 - **index.html:** links both GEN18 views; previous generations remain committed in history.
 
 **Attribution:** David Lee Wise / ROOT0 · .dlw.
+
+
+## GEN19 · HONEY five operators / 16 shared operants (2026-10-28)
+
+**Authored notation:** `1×4×1×4×1×4×1×4×1` and `5[4×4]`.
+
+The long expression is **topology**, not an arithmetic instruction to multiply all the factors. It identifies **five operator nodes** linked by **four four-lane interconnects**:
+
+```text
+{{i}} / scalar-zero boundary
+          H --4-- O --4-- N --4-- E --4-- Y
+          1      1      1      1      1
+{{i}} / scalar-zero reference at far end
+
+H = hydrogen basis operator; O = oxygen basis operator;
+N = nitrogen basis operator; E = energy control;
+Y = yellow-light signal operator (not universal measured emission).
+```
+
+There is only **one shared 4×4 operant-address plane** `C[r,c]`, where row and column each run 0..3. Each of the five operators has an *independently editable control bank* over those same 16 operants: **5 × 16 = 80 operator–operant addresses**, not 80 different operants.
+
+Each of the four interconnects chooses one of four lanes; independent selections yield **4^4 = 256 distinct four-hop routes**. The incoming/outgoing transfer representation for a route `[a,b,c,d]` is:
+
+```text
+H[0,a] -> O[a,b] -> N[b,c] -> E[c,d] -> Y[d,0]
+```
+
+The endpoint zeroes are the user's **symbolic scalar-zero reference {{i}}**. Each bracketed pair is an index into the same 16-address matrix. One route is open only if all five selected operator gates are open. This gate predicate is a logical simulation rule, **not a demonstrated W/M/S physical interaction or chemical compound formation**.
+
+### Natural boundary discovered
+
+Scalar-zero **pinning of both ends** limits which operator/address pairs lie on the 256 permitted paths:
+
+| Operator | Control capacity | Routed operant addresses |
+|---|---:|---:|
+| H | 16 | 4 |
+| O | 16 | 16 |
+| N | 16 | 16 |
+| E | 16 | 16 |
+| Y | 16 | 4 |
+| **Total** | **80** | **56** |
+
+The other **24 independent controls remain editable** but are not reachable by any route in the defined, zero-pinned open-chain topology. Full 16-of-16 route reachability at H and Y would require an additional link, unpinned boundary, or loopback. That **must be modeled explicitly**, never silently inferred. This is an informative boundary of the current design, not a problem with the 5[4×4] count.
+
+### Reproducible verification
+
+The pure JavaScript module performs **11 automatic invariant checks**, including five ordered operator labels, four links/four lanes, exactly 16 shared operants, 80 independent control addresses, 256 distinct lane routes, complete five-stage traces, in-bounds operant indices, all routes passing with all gates on, selected-gate blocking, no mutation of unrelated control banks, and the **4,16,16,16,4** reachability constraint.
+
+### GEN19 artifacts
+
+- `honey-5x16-gen19.js` — zero-dependency HONEY topology model and immutable gate-state operations; `ROOT0_HONEY_5x16.test()` and self-test on loading.
+- `honey-5x16.html` — standalone GitHub Pages view with selectable lanes, five operator tabs, clickable shared 4×4 control grid, live route/blocked diagnostics, self-tests and JSON export. All state stays local; no remote modifications from the browser.
+- `index.html` — appends GEN19 after GEN18 while preserving earlier source and viewers.
+
+**Attribution:** David Lee Wise / ROOT0 · .dlw.
+
+**Physical boundary:** This is an information routing / geometry model. Hydrogen, oxygen and nitrogen are actual distinct chemical elements, and their atomic numbers are not changed by symbolic spatial scaling. Energy and yellow light are not separate material elements; yellow light is a band of electromagnetic radiation and energy is a physical quantity. Actual chemical bonds and nuclear processes require experimentally accurate quantum dynamics, interaction strengths and conservation laws. GEN19 makes no claims that the model predicts known compounds or a composite Higgs.
