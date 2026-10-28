@@ -272,7 +272,7 @@ GEN6 adds the author-supplied two-symbol weighted sequence as a separate **logic
 
 Its literal count is **20 operator characters**: **13 dots** and **7 vertical bars**. Its weighted value is exactly **13 × 1 + 7 × 2 = 27**. The weight ratio for one bar versus one dot is **2:1**, not a claim that there are twice as many bars as dots.
 
-For the stated "out to 23" point, the **23rd weighted position** is reached at **operator 17**. The operator list then continues through position 27 at operator 20. These are two different coordinate systems (operator index versus weighted cell index); the page preserves the author's description while representing what the literal arithmetic establishes.
+The **only terminal weighted boundary is 27**, reached at source operator 20. GEN7 additionally folds the complete 27 addresses as 13 left + 1 center + 13 right. No intermediate checkpoint is a closure.
 
 ### Visualization and interaction
 
@@ -291,3 +291,38 @@ Atomic numbers, names, noble-gas period ends, and parity are ordinary arithmetic
 **Source of element identities:** [IUPAC periodic table](https://iupac.org/what-we-do/periodic-table-of-elements/). GEN5 noble-gas closures retained.
 
 **Attribution** \`.dlw\` — David Lee Wise / ROOT0. Original input sequence retained literally.
+
+
+## GEN7 · Complete 27 boundary, mirrored as 13 | 1 | 13 (2026-10-27)
+
+**Corrected boundary:** There is no separate intermediate checkpoint. The source sequence is still \`..||..|....|||....|.\`, exactly 20 symbols of which 13 are dots and seven are vertical bars. The weighted total is \`13*1 + 7*2 = 27\`.
+
+The author's notation \`13x1x13\` is treated as a **three-part arrangement**, not arithmetic multiplication:
+
+\`\`\`text
+   13 LEFT CELLS     1 PIVOT       13 RIGHT CELLS
+
+   01 ... 12 13       [14]          15 16 ... 27
+                \       |        /
+                  D = 0 REFERENCE
+
+   13 + 1 + 13 = 27
+   MIRROR: m(z) = 28 - z
+   PAIRS: (13,15), (12,16), ... (01,27)
+   CENTER ADDRESS: 14, EVEN BOX, SILICON
+\`\`\`
+
+Since \`z + m(z) = 28\` is even, opposite addresses always have the **same binary parity and therefore the same symbolic geometry** under \`bit = z mod 2\`. The two mirrored positions are otherwise independent: each can belong to a different weighted source token, have a different token weight, and carry a different fight/flight/hide response label.
+
+- \`D=0\` remains the independent scalar-zero **coordinate reference**, not chemical atomic number zero. The central logical address \`14\` is silicon, an **even-numbered box** in the element mapping; placing it at the coordinate origin does not turn silicon into physical scalar zero.
+- \`3 × 3 × 3 = 27\` remains an **alternative spatial arrangement** of the same 27 labeled positions, not a claim that its adjacency graph equals the 13 | 1 | 13 line/pair graph.
+- \`13×1×13\` in the author's architectural usage **does not mean** arithmetic multiplication \`13·1·13=169\`. Explicitly expressing the intended partition as \`13 | 1 | 13\` prevents accidental inflation.
+- Every response remains **manually assigned** and preserved separately; no vote, quorum, automatic correction, or inferred cellular behavior is added.
+- The existing 118 known elements and seven noble-gas closures remain separate and unmodified.
+- Standalone visual: \`scalar-zero/mirror-13-1-13.html\` with its own \`mirror-13-1-13.js\`, embedded as section 13 of the main \`scalar-zero/index.html\`.
+- The new viewer can select each of the 27 atoms by known name, display the opposite address, compare weight and response differences, append an observation to GEN6's same-origin browser-local event log, and export a JSON snapshot with all 13 pairs and the full 27-cell expansion.
+- The colored/box/toroid geometry is **conceptual indexing**, not evidence of physically box-shaped or toroidal atoms, quantum gravity, or actual cellular warfare.
+
+**Formal invariants:** \`20 tokens\`, \`13 dots\`, \`7 bars\`, \`27 weighted positions\`, \`13 mirror pairs\`, \`1 center\`, \`m(m(z))=z\` for \`1≤z≤27\`, \`z%2===m(z)%2\`, and one external ground \`D=0\`. No unsupported biological or chemical inference is made.
+
+Author: David Lee Wise / ROOT0; history preserved by append-only Git commits.
