@@ -114,6 +114,104 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
   ctx.textAlign="center";ctx.fillStyle="#a3f2e8";ctx.font="11px ui-monospace,monospace";
   ctx.fillText("FLOOR / PITCH 1.61615×10⁻³⁵ m",cx,Math.min(height-18,fy+outer*.31));
  }
+
+ function markerT(m){return S.t(m.meters)}
+ function selectMarker(key,drawNow=true){
+  const m=S.markerInfo(key);if(!m)return;
+  selectedMarker=m.key;
+  const mt=markerT(m);
+  selectedGeneration=S.generations.reduce((best,g,i)=>Math.abs(g.t-mt)<Math.abs(S.generations[best].t-mt)?i:best,0);
+  refreshScaleSelection();
+  if(drawNow)draw();
+ }
+ function refreshScaleSelection(){
+  const m=S.markerInfo(selectedMarker)||S.markers[0];
+  $("selectedScale").textContent=m.label;
+  $("scaleCategory").textContent="TYPE: "+m.kind.toUpperCase()+" · "+m.meters.toExponential(6)+" m";
+  $("scaleDetail").textContent=m.detail;
+  $("scaleSource").href=m.source;
+  for(const b of $("scienceMarkers").children)b.classList.toggle("active",b.dataset.key===selectedMarker);
+  for(const b of $("generations").children)b.classList.toggle("active",Number(b.dataset.generation)===selectedGeneration);
+ }
+ function renderScienceMarkers(){
+  const root=$("scienceMarkers");root.replaceChildren();
+  for(const m of S.filtered($("markerFilter").value)){
+   const b=document.createElement("button");
+   b.type="button";b.className="scale-button";b.dataset.key=m.key;
+   const left=document.createElement("span"),label=document.createElement("b"),details=document.createElement("small");
+   label.textContent=m.label;label.style.color=m.color;
+   details.textContent=m.meters.toExponential(4)+" m · "+m.detail;
+   left.append(label,details);
+   const badge=document.createElement("span");badge.className="scale-kind";badge.textContent=m.kind.toUpperCase();
+   b.append(left,badge);b.addEventListener("click",()=>selectMarker(m.key));
+   root.appendChild(b);
+  }
+  refreshScaleSelection();
+ }
+ function renderGenerations(){
+  const root=$("generations");root.replaceChildren();
+  S.generations.forEach((g,i)=>{
+    const b=document.createElement("button");b.type="button";b.className="gen-btn";b.dataset.generation=String(i);
+    b.textContent=i===25?"FLOOR · 1.61615×10⁻³⁵ m":("GEN "+String(i).padStart(2,"0")+" · 10^"+g.exponent+" m");
+    b.title="log position "+(100*g.t).toFixed(2)+"% of the descent";
+    b.addEventListener("click",()=>{
+      selectedGeneration=i;
+      const closest=S.near(g.t,$("markerFilter").value);
+      if(closest)selectedMarker=closest.key;
+      refreshScaleSelection();draw();
+    });
+    root.appendChild(b);
+  });
+  refreshScaleSelection();
+ }
+ function drawLogGenerations(o){
+  if(!$("markersVisible").checked)return;
+  const gen=S.generations;
+  ctx.save();
+  ctx.textAlign="left";ctx.font="9px ui-monospace,monospace";
+  const leftX=14;
+  for(let i=0;i<gen.length;i++){
+   const g=gen[i],r=V.ringAt(g.t,o),selected=selectedGeneration===i;
+   const x0=leftX,x1=Math.max(x0+15,r.x-r.rx-7);
+   ctx.strokeStyle=selected?"#dbffed":"#6eb8d276";ctx.lineWidth=selected?1.65:.7;
+   ctx.beginPath();ctx.moveTo(x0,r.y);ctx.lineTo(x1,r.y);ctx.stroke();
+   ctx.beginPath();ctx.ellipse(r.x,r.y,Math.max(.35,r.rx),Math.max(.6,r.ry),0,0,TAU);
+   ctx.strokeStyle=selected?"#fcffb7":"#8ae0ec69";ctx.lineWidth=selected?2.4:.8;ctx.stroke();
+   if(i%3===0||i===gen.length-1||selected){
+     ctx.fillStyle=selected?"#c3ffe4":"#83b8c7";
+     ctx.fillText(i===25?"FLOOR":("10^"+g.exponent),x0,r.y-3);
+   }
+  }
+  for(const m of S.filtered($("markerFilter").value)){
+    const r=V.ringAt(markerT(m),o),selected=m.key===selectedMarker;
+    // Distinct reference category bands do not claim equal-sized particles.
+    ctx.beginPath();ctx.arc(r.x+r.rx+4,r.y,selected?5:3,0,TAU);
+    ctx.fillStyle=m.color;ctx.fill();
+    if(selected){
+      ctx.beginPath();ctx.ellipse(r.x,r.y,Math.max(.5,r.rx),Math.max(.65,r.ry),0,0,TAU);
+      ctx.lineWidth=2.8;ctx.strokeStyle=m.color;ctx.stroke();
+      ctx.fillStyle="#e8fff7";ctx.font="bold 10px ui-monospace,monospace";ctx.textAlign="right";
+      // Keep detailed naming in the inspector to avoid overlapping alpha/nucleus etc.
+      ctx.fillText(m.kind.toUpperCase()+" / "+m.meters.toExponential(2)+" m",Math.min(width-8,r.x+r.rx+138),r.y-8);
+      ctx.textAlign="left";ctx.font="9px ui-monospace,monospace";
+    }
+  }
+  ctx.restore();
+ }
+ cvs.addEventListener("click",event=>{
+  const rect=cvs.getBoundingClientRect();
+  const topY=height*.20,floorY=height*.82,cy=event.clientY-rect.top;
+  if(cy<topY-12||cy>floorY+12)return;
+  const t=Math.max(0,Math.min(1,(cy-topY)/(floorY-topY)));
+  const nearest=S.near(t,$("markerFilter").value);
+  if(nearest)selectMarker(nearest.key);
+ });
+ $("markerFilter").addEventListener("change",()=>{
+  const list=S.filtered($("markerFilter").value);
+  if(!list.some(x=>x.key===selectedMarker))selectMarker(list[0].key,false);
+  renderScienceMarkers();draw();
+ });
+ renderGenerations();renderScienceMarkers();
  function draw(){
   resize();if(width<=0||height<=0)return;
   const w=width,h=height,cx=w*.46,topY=h*.20,floorY=h*.82;
