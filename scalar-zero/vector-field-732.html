@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#071421"><meta name="description" content="ROOT0 GEN10 — 732 individually pinnable scalar-zero vectors with signed logarithmic scaling to symbolic positive and negative infinity."><title>ROOT0 GEN11 · 732 Pinned Vectors / Signed Metric</title>
+<meta name="theme-color" content="#071421"><meta name="description" content="ROOT0 GEN10 — 732 individually pinnable scalar-zero vectors with signed logarithmic scaling to symbolic positive and negative infinity."><title>ROOT0 GEN12 · Six-Beat Roll / 732 Vector Signed Metric</title>
 <style>
 :root{color-scheme:dark;--bg:#071421;--panel:#0c2332;--line:#31576a;--ink:#e7fafa;--muted:#91b4c2;--mint:#7dffcb;--amber:#ffd1a0;--blue:#78baff}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#194056,#071421 65%) fixed;color:var(--ink);font:13px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
@@ -18,19 +18,39 @@ button,select{border:1px solid #527284;border-radius:8px;background:#183d50;colo
 .small{color:var(--muted);font-size:11px;line-height:1.6}.below{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:13px}.body{padding:15px}.formula{white-space:pre-wrap;overflow-wrap:anywhere;font:750 13px/1.9 ui-monospace,monospace;color:#b0ffe2;margin:0}.log{max-height:190px;overflow:auto;font:11px/1.6 ui-monospace,monospace;color:#bbd7df}.event{padding:5px 0;border-bottom:1px solid #254b5f}.anchors{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.anchors button{padding:11px 5px;font:750 12px ui-monospace,monospace}.anchors small{display:block;color:#a8cbd5;font-size:10px}.bottom{text-align:center;color:var(--muted);font-size:11px;margin-top:17px}
 @media(max-width:1020px){.grid{grid-template-columns:1fr}.side{grid-template-columns:repeat(2,1fr)}.side .readout,.side .buttons{grid-column:1/-1}.view{height:540px}}
 @media(max-width:680px){.stats{grid-template-columns:repeat(2,1fr)}.below{grid-template-columns:1fr}.view{height:410px}.side{grid-template-columns:1fr}.side .readout,.side .buttons{grid-column:auto}.anchors{grid-template-columns:1fr 1fr}}
+.roll-box{border:1px solid #4a777f;background:linear-gradient(135deg,#113c45,#092433);border-radius:10px;padding:12px;display:grid;gap:10px}
+.roll-title{color:#b6ffe7;font:800 10px ui-monospace,monospace;letter-spacing:.1em}
+.roll-beats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px}
+.roll-beats button{min-width:0;padding:9px 1px;font:800 11px ui-monospace,monospace;border:1px solid #447a81;background:#132f41;color:#dbecfa;border-radius:5px}
+.roll-beats button.active{background:#146a51;outline:2px solid #d6fff0;outline-offset:1px}
+.roll-beats button.zero{background:#473d36}
+.roll-stage{background:#0a2232;border:1px solid #376171;border-radius:7px;padding:9px}
+.roll-stage strong{display:block;color:#b8ffe6;font:800 20px ui-monospace,monospace}.roll-stage small{font:10px ui-monospace,monospace;color:#a2bdc9;display:block}
+.roll-scope{display:grid;grid-template-columns:1fr 1fr;gap:6px}.roll-scope select{min-width:0;width:100%}
+.roll-box button:focus-visible,.roll-box select:focus-visible{outline:2px solid #fff;outline-offset:2px}
 </style></head><body><main>
-<header class="top"><span class="kicker">ROOT0 / GEN11 METRIC · 732 ADDRESSABLE −/+ VECTORS</span><nav><a href="./">SCALAR ZERO</a><a href="pinwheel-366.html">GEN9 DISK</a><a href="rotation-732.html">GEN8</a></nav></header>
+<header class="top"><span class="kicker">ROOT0 / GEN12 ROLL · GEN11 SIGNED METRIC · 732 ADDRESSABLE −/+ VECTORS</span><nav><a href="./">SCALAR ZERO</a><a href="pinwheel-366.html">GEN9 DISK</a><a href="rotation-732.html">GEN8</a></nav></header>
 <h1>Pin to exact zero.<br>Scale ±10<sup>−36</sup> to ±10<sup>36</sup>.</h1>
 <p class="lede">Each of the 366 original HON color addresses has two independent phase vectors: minus and plus. Every vector can be anchored to scalar <strong>D = 0</strong>, independently signed, and logarithmically scaled. Exact zero is a distinct state, <strong>10⁰ = 1</strong>, and infinity is a symbolic endpoint. All displayed screen coordinates stay finite.</p>
 <div class="stats"><div class="stat"><strong>732</strong><small>INDEPENDENT VECTOR STATES</small></div><div class="stat"><strong id="pinnedTotal">0</strong><small>VECTORS PINNED TO D = 0</small></div><div class="stat"><strong>366 × 2</strong><small>ORIGINAL COLORS / PHASES</small></div><div class="stat"><strong id="infiniteTotal">0</strong><small>SYMBOLIC INFINITY STATES</small></div><div class="stat"><strong>10<sup>−36</sup> … 10<sup>36</sup></strong><small>GEN11 SIGNED POWER-OF-TEN METRIC</small></div></div>
 <div class="grid">
-<section class="panel"><div class="head"><h2>01 · 732-VECTOR ACCRETION / TOROIDAL FIELD</h2><span id="modeLabel">GEN11 · SIGNED METRIC · EXPLICIT ZERO</span></div>
+<section class="panel"><div class="head"><h2>01 · 732-VECTOR ACCRETION / TOROIDAL FIELD</h2><span id="modeLabel">GEN12 · SIX-BEAT ROLL · GEN11 SIGNED METRIC</span></div>
 <div class="view"><canvas id="vectors" aria-label="732 colored phase vectors, independently anchored to a scalar-zero center and scaled in signed directions"></canvas><div class="hud">D = 0 · COMMON ANCHOR<br>− / + = PHASE ADDRESS<br>VECTOR SIGN IS INDEPENDENT<br>RADIUS = COMPRESSED LOG SCALE</div></div>
 <div class="legend"><span><i class="pill m"></i>Minus phase</span><span><i class="pill p"></i>Plus phase</span><span><i class="pill pin"></i>Pinned vector</span><span><i class="pill d"></i>D = zero</span></div></section>
 <aside class="panel"><div class="head"><h2>02 · VECTOR PIN / SIGNED SCALING</h2><span>ALL 732 SELECTABLE</span></div><div class="side">
 <div class="control"><label for="vector">SELECT VECTOR INDEX <output id="vectorOut">000 / 731</output></label><input id="vector" type="range" min="0" max="731" step="1" value="0"></div>
 <div class="control"><label for="tilt">DISK TILT <output id="tiltOut">65°</output></label><input id="tilt" type="range" min="0" max="85" step="1" value="65"></div>
 <div class="control"><label for="exponent">LOG₁₀ MAGNITUDE · EXPONENT <output id="expOut">0.00</output></label><input id="exponent" type="range" min="-36" max="36" step=".25" value="0"></div>
+<div class="roll-box" id="gen12Roll">
+<div class="roll-title">GEN12 · SIX-BEAT METRIC ROLL · −36 / 0 / +36 / 0 / 1 / 1</div>
+<div class="roll-beats" id="rollBeats" role="group" aria-label="Six-step roll sequence"></div>
+<div class="roll-stage"><small>CURRENT BEAT <output id="rollIndex">1 / 6</output></small><strong id="rollValue">10⁻³⁶</strong><small id="rollMetric">10^-36 · FIRST BEAT</small></div>
+<div class="control"><label for="rollSpeed">BEATS PER SECOND <output id="rollSpeedOut">1.00</output></label><input id="rollSpeed" type="range" min=".25" max="8" step=".25" value="1"></div>
+<div class="control"><label for="rollScope">PREVIEW SCOPE</label><select id="rollScope"><option value="all">All 732 vectors · preview pinned to D</option><option value="selected">Selected vector only</option><option value="pinned">Saved pinned vectors only</option></select></div>
+<div class="buttons"><button id="rollPlay" type="button" aria-pressed="true">Ⅱ PAUSE ROLL</button><button id="rollNext" type="button">+1 BEAT</button></div>
+<div class="buttons"><button id="rollReset" type="button">RESET TO −36</button><button id="rollCommit" type="button">COMMIT BEAT TO SELECTED</button></div>
+<p class="small" style="margin:0">A reversible display roll: all six stops are exact metric states; both trailing 1 beats equal 10⁰ = 1. The overlay does not overwrite any saved vector. Commit explicitly to store a beat on the selected vector. Saved sign is independent of the −/+ HON phase.</p>
+</div>
 <div class="readout"><small>SELECTED VECTOR</small><strong id="identity">V000 · 001 −</strong><span class="sub" id="label">HON H · source 1</span><div id="swatch" class="swatch"></div>
 <div class="readgrid"><div><small>PIN</small><b id="pinState">FREE</b></div><div><small>DIRECTION SIGN</small><b id="signState">+</b></div><div><small>SCALAR COORDINATE</small><b id="magnitude">0</b></div><div><small>METRIC CLASS</small><b id="zeroState">EXACT 0</b></div><div><small>MIRROR PHASE</small><b id="pair">V001</b></div></div></div>
 <div class="buttons"><button id="pin" type="button" aria-pressed="false">PIN → D = 0</button><button id="otherPhase" type="button">↔ SAME COLOR / OTHER PHASE</button></div>
