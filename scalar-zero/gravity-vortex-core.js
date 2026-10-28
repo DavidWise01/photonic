@@ -14,6 +14,24 @@
   Object.freeze({key:"subnuclear",name:"10⁻¹⁶ m ? (REFERENCE)",meters:1e-16,t:.77,hex:"#b0ffd3",provenance:"exploratory scale marker; not the known diameter of a particular particle"})
  ]);
  const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+ // GEN16: symbolic axial color coordinate (distinct from GEN15 physical
+ // logarithmic size levels and from GEN13's 1.61615e-35 m floor *tile*).
+ const chromatic=Object.freeze({schema:"root0-gen16-axial-color-v1",
+   origin:0,endpointMeters:1e-35,addresses:366,source:"OASIS HON v9.4",
+   unit:"model color-axis coordinate marked in meters; not photon wavelength",
+   coordinate:"linear from D=0 (mouth) to 10^-35 m (floor contact)"});
+ function chromaticCoordinate(t){
+  if(!Number.isFinite(t))throw RangeError("Chromatic coordinate requires finite descent");
+  return clamp(t,0,1)*chromatic.endpointMeters;
+ }
+ function chromaticAddress(t){
+  if(!Number.isFinite(t))throw RangeError("Chromatic address requires finite descent");
+  return 1+Math.min(chromatic.addresses-1,Math.floor(clamp(t,0,1)*chromatic.addresses));
+ }
+ function chromaticTForAddress(address){
+  if(!Number.isInteger(address)||address<1||address>366)throw RangeError("HON chromatic address 1..366");
+  return (address-1)/(chromatic.addresses-1);
+ }
  function radiusAt(t,mouth=160,neck=2.5,compression=1.25){
   if(![t,mouth,neck,compression].every(Number.isFinite)||mouth<=0||neck<=0||mouth<neck||compression<=0)throw new RangeError("Invalid vortex dimensions");
   const u=clamp(t,0,1);
@@ -47,6 +65,28 @@
   for(let i=0;i<=seg;i++){const r=ringAt(i/seg,o);if(i===0)ctx.moveTo(r.x-r.rx,r.y);else ctx.lineTo(r.x-r.rx,r.y)}
   for(let i=seg;i>=0;i--){const r=ringAt(i/seg,o);ctx.lineTo(r.x+r.rx,r.y)}
   ctx.closePath();ctx.fillStyle=gradient;ctx.fill();
+  // GEN16: span the full descent with every one of the original 366 HON
+  // swatches. A given swatch occupies one 1/366 vertical band. The upper
+  // edge is chromatic 0 and the lower edge is chromatic 10^-35 m. The
+  // separately calibrated GEN15 vertical length log axis is NOT redefined.
+  // Render first so meridians, rings, spirals and sink stay readable above it.
+  const sourceColors=o.sourceColors;
+  const axialColors=!!o.axialColors;
+  if(axialColors){
+    if(!Array.isArray(sourceColors)||sourceColors.length!==366||
+      sourceColors.some(x=>typeof x!=="string"||!/^#[0-9A-Fa-f]{6}$/.test(x)))
+      throw Error("GEN16 needs 366 unmodified OASIS HON RGB hex colors");
+    for(let i=0;i<sourceColors.length;i++){
+      const a=ringAt(i/366,o),b=ringAt((i+1)/366,o);
+      ctx.beginPath();
+      ctx.moveTo(a.x-a.rx,a.y);
+      ctx.lineTo(a.x+a.rx,a.y);
+      ctx.lineTo(b.x+b.rx,b.y);
+      ctx.lineTo(b.x-b.rx,b.y);
+      ctx.closePath();
+      ctx.fillStyle=sourceColors[i];ctx.globalAlpha=.75;ctx.fill();ctx.globalAlpha=1;
+    }
+  }
   // The complete profile runs to a finite floor contact; never a physical singularity.
   for(const side of [-1,1]){
    ctx.beginPath();
@@ -109,11 +149,19 @@
   ctx.restore();
   return {mouthRadius:start.rx,neckRadius:end.rx,topY:o.topY,floorY:o.floorY,
     ringCount:o.ringCount,markerBands,monotonic:true,sink:{x:end.x,y:end.y},
+    chromatic:axialColors?{...chromatic,firstColor:sourceColors[0],
+      lastColor:sourceColors[365],filledBands:366,
+      coordinateAtOrigin:chromaticCoordinate(0),
+      coordinateAtFloor:chromaticCoordinate(1)}:null,
     floorPitchMeters:g.ROOT0_FIELD_FLOOR?.geometry.oneTilePitchMeters??null};
  }
  const defaults=Object.freeze({compression:1.4,ringCount:23,flatten:.24,direction:1});
  if(!(radiusAt(.0,100,2,1.4)>radiusAt(.5,100,2,1.4)&&radiusAt(.5,100,2,1.4)>radiusAt(1,100,2,1.4))||
-   markerBands.length!==3||!(markerBands[0].meters>markerBands[1].meters&&markerBands[1].meters>markerBands[2].meters))
+   markerBands.length!==3||!(markerBands[0].meters>markerBands[1].meters&&markerBands[1].meters>markerBands[2].meters)||
+   chromaticCoordinate(0)!==0||chromaticCoordinate(1)!==1e-35||
+   chromaticAddress(0)!==1||chromaticAddress(1)!==366||
+   chromaticTForAddress(1)!==0||chromaticTForAddress(366)!==1)
    throw Error("GEN14 vortex radius/scale invariant failed");
- g.ROOT0_GRAVITY_VORTEX=Object.freeze({defaults,markerBands,radiusAt,ringAt,pointOnRing,validate,draw});
+ g.ROOT0_GRAVITY_VORTEX=Object.freeze({defaults,markerBands,radiusAt,ringAt,pointOnRing,validate,draw,
+   chromatic,chromaticCoordinate,chromaticAddress,chromaticTForAddress});
 })(typeof window!=="undefined"?window:this);
