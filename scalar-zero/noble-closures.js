@@ -110,7 +110,7 @@
   $("ringCount").textContent=rings[activePeriod].length.toString();
   $("ringEdges").textContent=(rings[activePeriod].length-1)+" straight edges";
   $("canonical").textContent=grammar(rings[activePeriod]);
-  $("authored").textContent=activePeriod<2?authored[activePeriod]:"— Not provided. Generated parity grammar is above.";
+  $("authored").textContent=activePeriod===1?authored[0]:activePeriod===2?authored[1]:"— Not provided. Generated parity grammar is above.";
   for(let button of document.querySelectorAll("#ringButtons button"))button.classList.toggle("active",+button.dataset.period===activePeriod);
   for(let button of document.querySelectorAll("#sequence button"))button.classList.toggle("selected",+button.dataset.z===selected);
   $("state").textContent=(spinning?"LIVE":"PAUSED")+" / "+($("view").value==="all"?"ALL PERIODS":"SINGLE RING");
