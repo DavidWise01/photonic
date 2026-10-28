@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#061422">
-<title>ROOT0 GEN17 · H/Og spherical invariance under compression</title>
+<title>ROOT0 GEN18 · H/Og 366/370/999 Logarithmic Compression Test</title>
 <meta name="description" content="Interactive deterministic two-angle spherical occupancy test for hydrogen and oganesson identity under scalar stretch, with a phase-locked negative control.">
 <style>
 :root{color-scheme:dark;--bg:#061422;--fg:#e5f8ff;--muted:#9ebdc9;--line:#31576c;--teal:#8af9df}
@@ -40,9 +40,9 @@ output{color:#a2ffdf;font:800 12px ui-monospace,monospace}
 .swatch{display:inline-block;width:15px;height:15px;border-radius:50%;vertical-align:middle;border:1px solid #c7f7ff;margin-right:7px}
 @media(max-width:880px){.grid,.extra{grid-template-columns:1fr}canvas{height:400px}}@media(max-width:500px){canvas{height:320px}.probe{grid-template-columns:1fr 1fr}}
 </style></head><body><main>
-<header class="top"><strong>ROOT0 · GEN17 / TWO-ANGLE SPHERICAL INVARIANT</strong><nav><a href="./">SCALAR-ZERO LAB</a> · <a href="gravity-vortex.html">GEN16 VORTEX</a> · <a href="vector-field-732.html">732 VECTORS</a></nav></header>
+<header class="top"><strong>ROOT0 · GEN18 / FRACTIONAL-POWER H/Og SPHERE INVARIANT</strong><nav><a href="./">SCALAR-ZERO LAB</a> · <a href="gravity-vortex.html">GEN16 VORTEX</a> · <a href="vector-field-732.html">732 VECTORS</a></nav></header>
 <h1>Does oscillation maintain a sphere?</h1>
-<p class="sub">The H/Og comparison keeps atomic identity separate from spatial stretch and rendered color. Two independent angular samplers cover a sphere; locking one angle is a deliberate negative control. This tests the proposed quanta geometry only—not physical hydrogen compression, element transmutation, or Higgs structure.</p>
+<p class="sub">The H/Og comparison keeps atomic identity separate from spatial stretch and rendered color. Two independent angular samplers cover a sphere; locking one angle is a deliberate negative control. GEN18 sweeps 366, 370 or 999 fractional-power intervals (367, 371 or 1000 positions). This tests the proposed quanta geometry only—not physical hydrogen compression, element transmutation, or Higgs structure.</p>
 <div class="grid">
 <section class="panel"><div class="head"><b>01 · LIVE SPHERE / PHASE CONTROL</b><small id="modeStatus">TWO-ANGLE COHERENT COVERAGE</small></div>
 <canvas id="orbit" aria-label="Animated simulated sphere or phase-locked collapsed angular distribution for selected element identity"></canvas>
@@ -52,6 +52,10 @@ output{color:#a2ffdf;font:800 12px ui-monospace,monospace}
 <div class="controls">
 <div class="control"><label for="element">IDENTITY / Z (NOT INTERCHANGED)</label><select id="element"><option value="H">H · hydrogen · Z=1</option><option value="Og">Og · oganesson · Z=118</option></select></div>
 <div class="control"><label for="stretch">SCALAR STRETCH <output id="stretchValue">1.0000</output></label><input id="stretch" type="range" min="0" max="1" step=".0025" value="1"></div>
+<div class="control"><label for="sweepResolution">LOG GENERATIONS / RESOLUTION</label><select id="sweepResolution"><option value="366">366 intervals / 367 nodes</option><option value="370" selected>370 intervals / 371 nodes</option><option value="999">999 intervals / 1000 nodes</option></select></div>
+<div class="control"><label for="sweepIndex">FRACTIONAL-POWER STEP <output id="sweepOut">0 / 370</output></label>
+<input id="sweepIndex" type="range" min="0" max="370" value="0" step="1"></div>
+<div class="read"><small>GEN18 H / Og IDENTITY AND DENSITY SWEEP</small><strong id="sweepStatus">370 intervals</strong><span id="sweepRadius" class="disc">Current log radius: 5.291772×10⁻¹¹ m</span></div>
 <div class="control"><label for="motion">ANGULAR TEST</label><select id="motion"><option value="two">Two-angle spherical coverage</option><option value="locked">Locked phase · one-angle control</option></select></div>
 <div class="read"><small>REFERENCE RADIUS · NOT OBSERVED UNDER COMPRESSION</small><strong id="radiusRead">5.291772 × 10⁻¹¹ m</strong></div>
 <div class="read"><small>LOG10 INFORMATION DENSITY / RELATIVE TO STRETCH=1</small><strong id="densityRead">0.000 dex</strong></div>
@@ -76,22 +80,38 @@ Control: φ=0 → directional anisotropy.</pre>
 </div></section>
 </div>
 <footer class="disc" style="margin-top:15px">David Lee Wise / ROOT0 · .dlw · <a href="https://github.com/DavidWise01/photonic/blob/main/scalar-zero/spherical-invariant-gen17.js">GEN17 invariant source</a>. Physical H-alpha wavelength: <a href="https://physics.nist.gov/PhysRefData/Handbook/Tables/hydrogentable1_a.htm">NIST</a>; 2026 orange H-flame result: <a href="https://doi.org/10.1016/j.nxener.2026.100962">Next Energy</a>; oganesson properties: <a href="https://periodic-table.rsc.org/element/118/oganesson">RSC</a>.</footer>
-</main><script src="pinwheel-source-v94.js"></script><script src="spherical-invariant-gen17.js"></script>
+</main><script src="pinwheel-source-v94.js"></script><script src="spherical-invariant-gen17.js"></script><script src="scale-descent-gen15.js"></script><script src="scale-generations-gen18.js"></script>
 <script>
 "use strict";
 (function(){
- const $=id=>document.getElementById(id),M=window.ROOT0_SPHERICAL_INVARIANT,C=window.ROOT0_PINWHEEL_366;
- if(!M||!C||M.model.floorMeters!==1.61615e-35)throw Error("GEN17 prerequisites missing");
- const cvs=$("orbit"),ctx=cvs.getContext("2d");let w=0,h=0,dpr=1,angle=0,last=0,playing=true,check=M.test();
+ const $=id=>document.getElementById(id),M=window.ROOT0_SPHERICAL_INVARIANT,C=window.ROOT0_PINWHEEL_366,E=window.ROOT0_SCALE_GENERATIONS;
+ if(!M||!C||!E||M.model.floorMeters!==1.61615e-35)throw Error("GEN17 prerequisites missing");
+ const cvs=$("orbit"),ctx=cvs.getContext("2d");let w=0,h=0,dpr=1,angle=0,last=0,playing=true,check=M.test(),useStep=true,sweepCheck=E.test(370);
  function resize(){const b=cvs.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1);
   if(w!==b.width||h!==b.height||d!==dpr){w=b.width;h=b.height;dpr=d;
    cvs.width=Math.max(1,Math.round(w*d));cvs.height=Math.max(1,Math.round(h*d));ctx.setTransform(d,0,0,d,0,0)}
  }
+ function currentStretch(){
+  if(!useStep)return +$("stretch").value;
+  const n=+$("sweepResolution").value,i=+$("sweepIndex").value,t=i/n;
+  const ref=M.model.baseReferenceMeters,floor=M.model.floorMeters;
+  const radius=i===0?ref:i===n?floor:Math.exp(Math.log(ref)+(Math.log(floor)-Math.log(ref))*t);
+  return i===0?1:i===n?0:(radius-floor)/(ref-floor);
+ }
+ function refreshSweep(){
+  const n=+$("sweepResolution").value,i=Math.max(0,Math.min(n,+$("sweepIndex").value));
+  $("sweepIndex").max=String(n);
+  $("sweepOut").textContent=i+" / "+n;
+  $("sweepStatus").textContent=(sweepCheck.pass?"PASS":"FAIL")+" · "+n+" intervals / "+(n+1)+" nodes · H Z=1 / Og Z=118";
+  const stretch=currentStretch(),state=M.geometry(stretch);
+  $("sweepRadius").textContent="Log radius "+state.radiusMeters.toExponential(6)+" m · power "+
+   Math.log10(state.radiusMeters).toFixed(5)+" · floor exact at last step";
+ }
  function update(){
-  const symbol=$("element").value,s=+$("stretch").value,og=symbol==="Og";
+  const symbol=$("element").value,s=currentStretch(),og=symbol==="Og";
   const state=M.compress(symbol,s,C.colorAt(og?118:1,"S").hex);
   const shape=state.shape,source=state.identity,locked=$("motion").value==="locked",measure=locked?check.locked:check.coherent;
-  $("stretchValue").textContent=s.toFixed(4);
+  $("stretchValue").textContent=s>0&&s<.0001?s.toExponential(3):s.toFixed(4);
   $("radiusRead").textContent=shape.radiusMeters.toExponential(6)+" m";
   $("densityRead").textContent=shape.log10RelativeInformationDensity.toFixed(3)+" dex";
   $("orbitalKey").textContent=symbol+" · Z="+source.Z+" · "+(locked?"LOCKED":"TWO-ANGLE");
@@ -146,14 +166,22 @@ Control: φ=0 → directional anisotropy.</pre>
   ctx.fillStyle="#9fc4d3";ctx.fillText("scalar stretch="+s.toFixed(3),cx,Math.min(h-15,cy+R+22));
   ctx.textAlign="left";
  }
- for(const id of ["element","stretch","motion"])$(id).addEventListener(id==="stretch"?"input":"change",draw);
- $("run").addEventListener("click",()=>{check=M.test();renderTests();draw()});
+ $("element").addEventListener("change",draw);
+ $("motion").addEventListener("change",draw);
+ $("stretch").addEventListener("input",()=>{useStep=false;refreshSweep();draw()});
+ $("sweepIndex").addEventListener("input",()=>{useStep=true;refreshSweep();draw()});
+ $("sweepResolution").addEventListener("change",()=>{
+  $("sweepIndex").value="0";useStep=true;
+  sweepCheck=E.test(+$("sweepResolution").value);
+  refreshSweep();draw();
+ });
+ $("run").addEventListener("click",()=>{check=M.test();sweepCheck=E.test(+$("sweepResolution").value);refreshSweep();renderTests();draw()});
  $("play").addEventListener("click",()=>{playing=!playing;$("play").textContent=playing?"Ⅱ PAUSE":"▶ RESUME"});
  function frame(t){const dt=last?Math.min(.08,Math.max(0,(t-last)/1000)):0;last=t;
   if(playing)angle+=dt*.6;draw();requestAnimationFrame(frame)}
  function height(){if(window.parent!==window)window.parent.postMessage({kind:"root0-gen17-height",height:document.documentElement.scrollHeight},"*")}
  if(typeof ResizeObserver==="function")new ResizeObserver(height).observe(document.body);
  window.addEventListener("resize",height);
- renderTests();draw();height();requestAnimationFrame(frame);
+ refreshSweep();renderTests();draw();height();requestAnimationFrame(frame);
 })();
 </script></body></html>
