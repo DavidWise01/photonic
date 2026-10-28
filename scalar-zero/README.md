@@ -248,3 +248,46 @@ All subsequent closure strings are generated deterministically from the known el
 Scientific references: [IUPAC Periodic Table](https://iupac.org/what-we-do/periodic-table-of-elements/), [PubChem Oganesson](https://pubchem.ncbi.nlm.nih.gov/element/118).
 
 **Author:** David Lee Wise / ROOT0. \`.dlw\` provenance preserved by prior Git history; GEN5 is added as new source files rather than rewriting earlier generation artifacts.
+
+## GEN6 · Binary box/toroid geometry and 27 weighted cellular positions (2026-10-27)
+
+GEN6 adds the author-supplied two-symbol weighted sequence as a separate **logical cellular overlay** and expands the simple 0/1 geometry through all **118 known elements**. The earlier GEN0–GEN5 pages and algorithms are left in place.
+
+### Distinct registers — do not collapse
+
+| Register | Exact rule | Meaning |
+|---|---|---|
+| **Geometry / binary** | 0 → □ box; 1 → ◉ toroid | Shapes only |
+| **Atomic parity** | bit = Z modulo 2 (for Z=1 through 118) | Even Z = 0 box; odd Z = 1 toroid |
+| **Scalar-zero** | D = Z 0 as a reference only | D is **not** element zero |
+| **Weighted operator** | \`.\` = advance 1 cell; \`|\` = advance 2 cells | Independent of the geometry bit |
+| **Response** | Fight / Flight / Hide | Three **human-selected symbolic** cell-response labels; never inferred automatically |
+| **Closure** | Period ends at He, Ne, Ar, Kr, Xe, Rn, Og | The group-18 noble-gas terminals from known chemistry |
+
+**Exact input, unmodified:**
+
+\`\`\`text
+..||..|....|||....|.
+\`\`\`
+
+Its literal count is **20 operator characters**: **13 dots** and **7 vertical bars**. Its weighted value is exactly **13 × 1 + 7 × 2 = 27**. The weight ratio for one bar versus one dot is **2:1**, not a claim that there are twice as many bars as dots.
+
+For the stated "out to 23" point, the **23rd weighted position** is reached at **operator 17**. The operator list then continues through position 27 at operator 20. These are two different coordinate systems (operator index versus weighted cell index); the page preserves the author's description while representing what the literal arithmetic establishes.
+
+### Visualization and interaction
+
+- Standalone: \`scalar-zero/cellular-war-27.html\` with \`cellular-war-27.js\`; also embedded in \`scalar-zero/index.html\`.
+- 20 source tokens: selectable, with explicit weight and starting/ending cell span.
+- 27 logical positions presented as three 3 × 3 layers; each cell displays its associated element index from H (Z=1) through Co (Z=27) and its **independently computed parity shape**.
+- Full 0–118 selector: scalar-zero D shown as a reference box; the seven standard periods through Oganesson are selectable and every recognized element gets its corresponding odd/even glyph.
+- Three possible response labels, **Fight / Flight / Hide**, can be set explicitly on any selected weighted cell. The program does not infer behaviors from chemistry, mimic actual biology or trigger external interventions.
+- Each response assignment **appends** a timestamped local event, without deleting previous events; browser storage is not cryptographically immutable. JSON export includes all token spans, all 27 cells, all 118 element records, seven noble-gas closures, assigned response events and provenance caveats.
+- Uses the already present IUPAC 118-element registry; no external runtime, no invented element values or hypothetical element 119.
+
+### Scientific boundary
+
+Atomic numbers, names, noble-gas period ends, and parity are ordinary arithmetic and established chemistry. The claim that odd-Z atoms are **physically** toroids or even-Z atoms are **physically** boxes is **not** an established atomic-physics result. It is the ROOT0 symbolic coordinate convention. "Cellular warfare" is a conceptual/visual labeling of three possible states, not evidence about immune systems, combat tactics or quantum biology. None of these invented model channels alter the physical optical or gravitational calculations in GEN0–GEN3.
+
+**Source of element identities:** [IUPAC periodic table](https://iupac.org/what-we-do/periodic-table-of-elements/). GEN5 noble-gas closures retained.
+
+**Attribution** \`.dlw\` — David Lee Wise / ROOT0. Original input sequence retained literally.
