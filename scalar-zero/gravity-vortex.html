@@ -99,7 +99,7 @@ GEN12 roll = −36 / 0 / +36 / 0 / 1 / 1</pre>
  const cvs=$("scene"),ctx=cvs.getContext("2d");
  const colors=Array.from({length:366},(_,i)=>H.colorAt(i+1).hex);
  const stars=Array.from({length:180},(_,i)=>({x:((i*183.779)%991)/991,y:((i*397.1)%997)/997,r:i%5===0?1.1:.6}));
- let last=0,spin=0,phase=0,playing=true,frameIndex=0,dpr=0,width=0,height=0;
+ let last=0,spin=0,phase=0,phaseProgress=0,playing=true,dpr=0,width=0,height=0;
  function resize(){let rect=cvs.getBoundingClientRect(),dpi=Math.min(window.devicePixelRatio||1,2);
   if(rect.width!==width||rect.height!==height||dpi!==dpr){width=rect.width;height=rect.height;dpr=dpi;
    cvs.width=Math.max(1,Math.round(width*dpi));cvs.height=Math.max(1,Math.round(height*dpi));ctx.setTransform(dpi,0,0,dpi,0,0)}
@@ -162,7 +162,7 @@ GEN12 roll = −36 / 0 / +36 / 0 / 1 / 1</pre>
  for(const id of ["compression","rings","speed"])$(id).addEventListener("input",sync);
  $("phase").addEventListener("input",()=>{phase=+$("phase").value;playing=false;$("pause").textContent="▶ RESUME";draw()});
  $("pause").addEventListener("click",()=>{playing=!playing;$("pause").textContent=playing?"Ⅱ PAUSE":"▶ RESUME"});
- $("reset").addEventListener("click",()=>{spin=0;phase=0;playing=false;
+ $("reset").addEventListener("click",()=>{spin=0;phase=0;phaseProgress=0;playing=false;
   $("compression").value="1.4";$("rings").value="23";$("speed").value=".6";$("direction").value="1";
   $("grid").value="13";$("floorVisible").checked=true;$("markersVisible").checked=true;$("haloVisible").checked=true;
   $("phase").value="0";$("pause").textContent="▶ RESUME";sync();draw()});
@@ -181,7 +181,8 @@ GEN12 roll = −36 / 0 / +36 / 0 / 1 / 1</pre>
  });
  function tick(now){
   const dt=last?Math.max(0,Math.min(.08,(now-last)/1000)):0;last=now;
-  if(playing){spin+=dt*(+$("speed").value)*(+$("direction").value);phase=(phase+Math.floor(dt*24))%732;}
+  if(playing){spin+=dt*(+$("speed").value)*(+$("direction").value);phaseProgress+=dt*24;
+   if(phaseProgress>=1){phase=(phase+Math.floor(phaseProgress))%732;phaseProgress%=1;$("phase").value=phase;}}
   draw();requestAnimationFrame(tick);
  }
  function heightMessage(){if(window.parent!==window)window.parent.postMessage({kind:"root0-gen14-height",height:document.documentElement.scrollHeight},"*")}
