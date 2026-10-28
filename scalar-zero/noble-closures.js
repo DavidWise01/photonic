@@ -31,7 +31,7 @@
  function project(p){let a=yaw,b=-.64,ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(b),sb=Math.sin(b);
  let x=p.x*ca+p.z*sa,z=-p.x*sa+p.z*ca;
  let y=p.y*cb-z*sb,depth=p.y*sb+z*cb;
- let scale=Math.min(wd*.45,ht*.33),factor=3.6/(3.6-depth*.16);
+ let scale=Math.min(wd*.27,ht*.31),factor=3.6/(3.6-depth*.16);
  return{x:wd/2+x*scale*factor,y:ht*.51+y*scale*factor,z:depth}}
  function coords(n,c){let ring=n.period-1,major=c.all?.36+ring*.202:1.15;
   let minor=c.tube*(c.all?.52:.96);
