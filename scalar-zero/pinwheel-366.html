@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ROOT0 · OASIS 366-Color Pinwheel · GEN9</title><meta name="theme-color" content="#07121e">
+<title>ROOT0 · OASIS 366-Color Accretion Pinwheel · GEN9</title><meta name="theme-color" content="#07121e">
 <style>
 :root{color-scheme:dark;--bg:#07121e;--line:#2f5066;--muted:#9ab7c4;--ink:#ebfffb;--mint:#8afdd0}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 48% -20%,#164357,#07121e 68%);color:var(--ink);font:13px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}main{max-width:1440px;margin:auto;padding:16px}
@@ -21,15 +21,18 @@ button{cursor:pointer;border:1px solid #4b7284;background:#174253;color:#f0fffb;
 @media(max-width:680px){.metrics{grid-template-columns:1fr 1fr}.lower{grid-template-columns:1fr}.view{height:390px}.side{grid-template-columns:1fr}.rootcards{grid-template-columns:1fr 1fr}.op{grid-template-columns:repeat(3,1fr)}}
 </style></head><body><main>
 <header class="top"><span class="kicker">ROOT0 / OASIS N184 V9.4 / GEN9 PINWHEEL</span><nav><a href="./">SCALAR ZERO</a><a href="rotation-732.html">GEN8 SCANNER</a><a href="chemical-spectrum.html">GEN3 CHEMISTRY</a></nav></header>
-<h1>366-color pinwheel</h1><p class="lede">Recovered from your OASIS color-wheel lineage. Each of 366 positions now displays its own source-defined hue: H red→orange, O green→teal, N blue→violet. The wheel shares address selection with GEN8 when embedded, while preserving its earlier 732-phase scan and the separate 370-color historical source.</p>
+<h1>366-color accretion pinwheel</h1><p class="lede">Recovered from your OASIS color-wheel lineage. Each of 366 positions now displays its own source-defined hue: H red→orange, O green→teal, N blue→violet. The wheel shares address selection with GEN8 when embedded. Accretion-disk mode uses an adjustable inclined projection, luminous orbiting bands, and a dark scalar-zero center; the original face-on wheel and earlier 370-color source remain available.</p>
 <div class="metrics"><div class="metric"><b>366</b><small>UNIQUE REGISTRY ADDRESSES</small></div><div class="metric"><b>122 × 3</b><small>H / O / N CARRIERS</small></div><div class="metric"><b>732</b><small>± PHASE EVENTS / SWEEP</small></div><div class="metric"><b>366</b><small>NITROGEN LID / STITCH</small></div></div>
 <div class="layout">
-<section class="panel"><div class="head"><h2>01 · CANONICAL H/O/N COLOR WHEEL</h2><small>366 DISTINCT SOURCE COLORS · 28-SPOKE OVERLAY</small></div>
-<div class="view"><canvas id="wheel" aria-label="366 individually colored segments arranged as a rotating circular pinwheel with three H O N sectors and 28 overlaid spokes"></canvas>
+<section class="panel"><div class="head"><h2>01 · CANONICAL H/O/N COLOR / ACCRETION DISK</h2><small>366 DISTINCT SOURCE COLORS · 28-SPOKE OVERLAY</small></div>
+<div class="view"><canvas id="wheel" aria-label="366 address-specific OASIS colors rendered as a rotating inclined accretion disk or flat pinwheel with 28-spoke guide"></canvas>
 <div class="hud">OASIS N184 v9.4 · SOURCE COLORS<br>H: 001..122 · RED / ORANGE<br>O: 123..244 · GREEN / TEAL<br>N: 245..366 · BLUE / VIOLET<br>D=0 · REFERENCE</div></div>
-<div class="foot"><span>ONE SEGMENT = ONE SOURCE ADDRESS</span><span>GOLD = SELECTED</span><span>28 SPOKES = GEN8 OVERLAY</span></div></section>
+<div class="foot"><span>ONE SEGMENT = ONE SOURCE ADDRESS</span><span>GOLD = SELECTED</span><span>28 SPOKES = GEN8 OVERLAY</span><span>DRAG TO INCLINE / ROTATE DISK</span></div></section>
 <aside class="panel"><div class="head"><h2>02 · COLOR / SCAN CONTROL</h2><small id="mode">LIVE</small></div>
 <div class="side">
+<div class="control"><label for="viewMode">DISPLAY GEOMETRY</label><select id="viewMode"><option value="disk" selected>Inclined accretion disk</option><option value="flat">Face-on color pinwheel</option></select></div>
+<div class="control"><label for="tilt">DISK INCLINATION · 0° FACE-ON / 86° EDGE-ON <output id="tiltOut">68°</output></label><input id="tilt" type="range" min="0" max="86" step="1" value="68"></div>
+<div class="control"><label><span>SCHEMATIC GRAVITATIONAL HALO</span></label><label style="justify-content:flex-start;align-items:center;gap:8px"><input id="halo" type="checkbox" checked style="accent-color:#7ef5d0;width:auto">Show luminous lensing-style arch (illustrative)</label></div>
 <div class="control"><label for="address">SELECT REGISTRY ADDRESS <output id="addrOut">366</output></label><input id="address" type="range" min="1" max="366" step="1" value="366"></div>
 <div class="control"><label for="tick">PHASE EVENT <output id="tickOut">0 / 731</output></label><input id="tick" type="range" min="0" max="731" step="1" value="0"></div>
 <div class="control"><label for="speed">SCAN EVENTS / SECOND <output id="speedOut">48</output></label><input id="speed" type="range" min="1" max="180" step="1" value="48"></div>
@@ -39,6 +42,7 @@ button{cursor:pointer;border:1px solid #4b7284;background:#174253;color:#f0fffb;
 <div class="reads"><div><small>EXACT SOURCE HEX</small><b id="hex">—</b></div><div><small>SOURCE HUE</small><b id="hue">—</b></div><div><small>ROOT / LOCAL</small><b id="local">—</b></div><div><small>PHASE / POLARITY</small><b id="polarity">—</b></div></div></div>
 <div class="control"><label>OASIS'S FIVE DISPLAY OPERANTS</label><div class="op" id="ops"></div>
 <div class="opdata"><span id="opChain">none</span><button id="clearOps" type="button">CLEAR</button></div></div>
+<p class="note">Your 370-color screenshot shows a nearly edge-on ring. Select disk inclination near 86° to recreate that flattened band, or lower it to see the complete rotating field. The halo and dark center are illustrative visual geometry, not a general-relativistic ray trace.</p>
 <p class="note">Operants compose in click order and may be used at most five times: Gravity, Expansion, Compression, Containment, Explosion. They are **display-only** color transforms exactly following OASIS v9.4, not physical forces. The unmodified source hue and color remain accessible independently of any applied chain.</p>
 </div></aside></div>
 <div class="lower"><section class="panel"><div class="head"><h2>03 · 3 × 122 ROOTS</h2><small>ORIGINAL CARRIER BAND DEFINITION</small></div><div class="body"><div class="rootcards"><button type="button" class="rootcard h" data-root="H"><b>H</b><small>1–122</small><small>0°→30°</small></button><button type="button" class="rootcard o" data-root="O"><b>O</b><small>123–244</small><small>120°→180°</small></button><button type="button" class="rootcard n" data-root="N"><b>N</b><small>245–366</small><small>240°→290°</small></button></div>
