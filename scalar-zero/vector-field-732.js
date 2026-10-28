@@ -1,8 +1,8 @@
 "use strict";
 (function(){
  const $=id=>document.getElementById(id);
- const M=window.ROOT0_VECTOR_732,C=window.ROOT0_PINWHEEL_366,F=window.ROOT0_FIELD_FLOOR,G=window.ROOT0_GRAVITY_VORTEX,TAU=Math.PI*2;
- if(!M||!C||!F||!G||M.count!==732||C.capacity!==366||F.geometry.oneTilePitchMeters!==1.61615e-35)throw Error("GEN13 field floor / vector / OASIS source missing");
+ const M=window.ROOT0_VECTOR_732,C=window.ROOT0_PINWHEEL_366,F=window.ROOT0_FIELD_FLOOR,G=window.ROOT0_GRAVITY_VORTEX,S=window.ROOT0_SCALE_DESCENT,TAU=Math.PI*2;
+ if(!M||!C||!F||!G||!S||M.count!==732||C.capacity!==366||F.geometry.oneTilePitchMeters!==1.61615e-35||S.floorMeters!==F.geometry.oneTilePitchMeters)throw Error("GEN13 field floor / vector / OASIS source missing");
  const STORE="root0.gen11.vector-field.metric.v2",LEGACY_STORE="root0.gen10.vector-field.v1";
  const defaults=()=>Array.from({length:732},()=>M.defaults());
  let vectors=defaults(),audit=[],selected=0,tilt=65,seq=0,last=0;
@@ -26,6 +26,18 @@
  for(const id of ["vortexCompression","vortexRings"])$(id).addEventListener("input",refreshVortex);
  for(const id of ["vortexVisible","vortexMarkers"])$(id).addEventListener("change",refreshVortex);
  refreshVortex();
+ function updateScaleInfo(){
+   const m=S.markerInfo($("gen15Select").value)||S.markers[0];
+   $("gen15Detail").textContent=m.label+" · "+m.meters.toExponential(4)+" m · "+m.kind.toUpperCase()+". "+m.detail;
+ }
+ for(const m of S.markers){
+   const option=document.createElement("option");option.value=m.key;option.textContent=m.label;
+   $("gen15Select").appendChild(option);
+ }
+ $("gen15Select").value="atom";
+ $("gen15Select").addEventListener("change",updateScaleInfo);
+ $("gen15Visible").addEventListener("change",updateScaleInfo);
+ updateScaleInfo();
  const regions=Array.from({length:130},(_,i)=>({
     x:((i*73.743)%987)/987,y:((i*241.173)%991)/991,r:.25+(i%4)*.21
  }));
@@ -213,7 +225,10 @@
       gridSpanMeters:F.span(+$("floorGrid").value),tetherFromD:true,
       vortex:{schema:"root0-gen14-vortex-v1",enabled:$("vortexVisible").checked,
        compression:+$("vortexCompression").value,rings:+$("vortexRings").value,
-       markersVisible:$("vortexMarkers").checked,scaleBands:G.markerBands,visualOnly:true},
+       markersVisible:$("vortexMarkers").checked,scaleBands:G.markerBands,visualOnly:true,
+       logarithmicDescent:{schema:S.schema,enabled:$("gen15Visible").checked,
+        selectedMarker:$("gen15Select").value,topMeters:S.mouthMeters,floorMeters:S.floorMeters,
+        generations:S.generations,scienceMarkers:S.setupMarkers(),interpretation:"logarithmic height, schematic funnel width"}},
       calibration:"user value, not CODATA 2022 exactly; not a physical spatial quantum"},
    roll:{schema:"root0-gen12-six-beat-v1",sequence:M.rollBeats.map(x=>({...x})),beat:rollStep+1,
     speedBeatsPerSecond:+$("rollSpeed").value,playing:rollPlaying,scope:$("rollScope").value,
@@ -286,7 +301,23 @@
       mouthRadius:outer*.54,neckRadius:2.3,
       compression:+$("vortexCompression").value,ringCount:+$("vortexRings").value,
       flatten:Math.max(.16,tiltY*.65),spin:vortexSpin,direction:1,
-      labels:$("vortexMarkers").checked});
+      labels:false});
+    if($("gen15Visible").checked){
+      const topY=cy+outer*.08,floorY=cy+outer*.73;
+      const cfg={cx,topY,floorY,mouthRadius:outer*.54,neckRadius:2.3,
+        compression:+$("vortexCompression").value,ringCount:+$("vortexRings").value,
+        spin:vortexSpin,flatten:Math.max(.16,tiltY*.65)};
+      for(const gen of S.generations){
+        const r=G.ringAt(gen.t,cfg);
+        ctx.beginPath();ctx.ellipse(r.x,r.y,r.rx,r.ry,0,0,TAU);
+        ctx.strokeStyle=gen.generation%5===0?"#d3faefc6":"#74bff16b";
+        ctx.lineWidth=gen.generation%5===0?1.7:.8;ctx.stroke();
+      }
+      const m=S.markerInfo($("gen15Select").value)||S.markers[0];
+      const mr=G.ringAt(S.t(m.meters),cfg);
+      ctx.beginPath();ctx.ellipse(mr.x,mr.y,mr.rx,mr.ry,0,0,TAU);
+      ctx.strokeStyle=m.color;ctx.lineWidth=3;ctx.stroke();
+    }
   }
   // Gray geometric field: neither a gravitational lens solution nor physical space.
   for(let ring=1;ring<=4;ring++){
