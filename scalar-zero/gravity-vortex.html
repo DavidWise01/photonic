@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ROOT0 GEN14 · Scalar-Zero Gravity Vortex</title><meta name="theme-color" content="#050d1c">
+<title>ROOT0 GEN15 · Gravity Vortex Logarithmic Generations to the Floor</title><meta name="theme-color" content="#050d1c">
 <meta name="description" content="A live Canvas2D gravity-vortex schematic from a 366-color accretion field to a 1.61615e-35 meter reference floor, with shrinking rings, spiral funnel and sink.">
 <style>
 :root{color-scheme:dark;--bg:#050d1c;--ink:#e8faff;--muted:#98b8c8;--edge:#2b4b63;--mint:#86fce0}
@@ -41,65 +41,65 @@ code,pre{font:12px/1.7 ui-monospace,monospace;color:#b7ffe3}pre{white-space:pre-
 footer{font-size:11px;color:var(--muted);margin-top:16px}
 @media(max-width:1040px){.layout{grid-template-columns:1fr}.side{grid-template-columns:repeat(2,minmax(0,1fr))}.side .readout{grid-column:1/-1}.scene{height:650px}}
 @media(max-width:700px){.scene{height:520px}.metrics{grid-template-columns:1fr 1fr}.chart{grid-template-columns:1fr}.side{grid-template-columns:1fr}.side .readout{grid-column:auto}}
+.science-markers{display:grid;gap:6px}.scale-button{width:100%;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:#0a283b;border:1px solid #2f5266;text-align:left;padding:9px 10px;color:#d6ecf5;border-radius:7px}
+.scale-button b{display:block;font:750 12px ui-monospace,monospace}.scale-button small{color:#92b5c5;font-size:10px;display:block;margin-top:2px}
+.scale-button.active{outline:2px solid #d2fff4;background:#164f53}
+.scale-kind{font:800 9px ui-monospace,monospace;letter-spacing:.03em;border:1px solid #406c7a;border-radius:20px;padding:5px;color:#a8e3e1;white-space:nowrap}
+.generation-list{max-height:350px;overflow:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+.gen-btn{background:#0c2638;border:1px solid #2e5369;border-radius:5px;padding:6px 5px;text-align:left;font:750 10px ui-monospace,monospace;color:#b8d5e2}
+.gen-btn.active{background:#175850;border-color:#94f0d7}
+.gen-btn:last-child{grid-column:span 2;color:#b9ffe9;border-color:#73ac9d}
 </style></head><body><main>
-<header class="top"><strong>ROOT0 / GEN14 · DOWNWARD GRAVITY VORTEX</strong><nav><a href="./">FULL SCALAR-ZERO LAB</a><a href="vector-field-732.html">732 VECTORS</a><a href="pinwheel-366.html">366 PINWHEEL</a></nav></header>
-<h1>Gravity vortex <span style="color:#92ffe3">/|\</span> down to the floor</h1>
-<p class="lead">A rotating 366-color accretion-field mouth compresses into a narrowing vortex of concentric rings and twin spirals, terminating in a sink node on the existing scalar-floor grid. The logarithmic reference labels show representative orders of magnitude, not measured vertical gravitational distances.</p>
-<div class="metrics"><div class="metric"><b>366</b><small>OASIS SOURCE COLORS</small></div><div class="metric"><b>732</b><small>−/+ PHASE VECTORS</small></div><div class="metric"><b id="ringMetric">23</b><small>SHRINKING VORTEX RINGS</small></div><div class="metric"><b>1.61615×10<sup>−35</sup></b><small>FLOOR TILE PITCH · METERS</small></div></div>
+<header class="top"><strong>ROOT0 / GEN15 · LOGARITHMIC SCALE DESCENT / FLOOR</strong><nav><a href="./">FULL SCALAR-ZERO LAB</a><a href="vector-field-732.html">732 VECTORS</a><a href="pinwheel-366.html">366 PINWHEEL</a></nav></header>
+<h1>Generations down the vortex <span style="color:#92ffe3">/|\</span></h1>
+<p class="lead">A rotating 366-color accretion-field mouth compresses into a narrowing vortex of concentric rings and twin spirals, terminating in a sink node on the existing scalar-floor grid. Each scale generation now occupies its measured logarithmic position from 10⁻¹⁰ m to the 1.61615×10⁻³⁵ m floor. Radiation is marked by wavelength, decay products by known sizes or limits, and elementary particles by documented probe or Compton scales—not invented particle diameters.</p>
+<div class="metrics"><div class="metric"><b>366</b><small>OASIS SOURCE COLORS</small></div><div class="metric"><b>732</b><small>−/+ PHASE VECTORS</small></div><div class="metric"><b id="ringMetric">26</b><small>LOGARITHMIC SCALE GENERATIONS</small></div><div class="metric"><b>1.61615×10<sup>−35</sup></b><small>FLOOR TILE PITCH · METERS</small></div></div>
 <div class="layout">
-<section class="panel"><div class="head"><h2>01 · LIVE CANVAS2D VORTEX / ACCRETION TO FLOOR</h2><small>WIDE MOUTH → CONSTRICTING SHAFT → FLOOR SINK</small></div>
+<section class="panel"><div class="head"><h2>01 · 26 LOG-SCALE GENERATIONS TO THE FLOOR</h2><small>10⁻¹⁰ m → 1.61615 × 10⁻³⁵ m · TRUE LOG-VERTICAL MAPPING</small></div>
 <div class="scene"><canvas id="scene" aria-label="Animated gravity vortex: colored accretion disk, shrinking ring funnel, three scale markers and a grid floor sink"></canvas>
-<div class="hud">SCALAR ORIGIN D = 0 · UPPER FIELD<br>INCREASING COMPRESSION ↓<br>FLOOR = 1 × 1.61615×10⁻³⁵ m PER TILE<br>SCHEMATIC GEOMETRY / NOT A RELATIVITY SIMULATION</div></div>
-<div class="legend"><span>◉ 366 HON spectral palette addresses</span><span>∿ 2 intertwined spiral threads</span><span>⬇ narrowing meridian field</span><span>◎ luminous/dark sink at floor</span></div></section>
+<div class="hud">SCALAR ORIGIN D = 0 · UPPER FIELD<br>INCREASING COMPRESSION ↓<br>FLOOR = 1 × 1.61615×10⁻³⁵ m PER TILE<br>LOG10 HEIGHTS · SIZES / WAVELENGTHS / LIMITS DISTINCT</div></div>
+<div class="legend"><span>◉ 366 HON spectral palette addresses</span><span>∿ 2 intertwined spiral threads</span><span>⬇ 26 calibrated log-position generations</span><span>◎ luminous/dark sink at floor</span></div></section>
 <aside class="panel"><div class="head"><h2>02 · VORTEX CONTROLLER</h2><small id="state">LIVE · CLOCKWISE</small></div><div class="side">
 <div class="control"><label for="compression">TAPER COMPRESSION <output id="compressionOut">1.40</output></label><input id="compression" type="range" min=".55" max="3.5" step=".05" value="1.4"></div>
-<div class="control"><label for="rings">CONCENTRIC RINGS <output id="ringsOut">23</output></label><input id="rings" type="range" min="4" max="64" value="23"></div>
+<div class="control"><label for="rings">DECORATIVE SPIRAL RINGS <output id="ringsOut">26</output></label><input id="rings" type="range" min="4" max="64" value="26"></div>
 <div class="control"><label for="speed">ORBITAL SPEED <output id="speedOut">0.60</output></label><input id="speed" type="range" min="0" max="3" step=".05" value=".6"></div>
 <div class="control"><label for="direction">SPIN DIRECTION</label><select id="direction"><option value="1">Clockwise (+)</option><option value="-1">Counterclockwise (−)</option></select></div>
 <div class="control"><label for="grid">FLOOR GRID</label><select id="grid"><option value="1">1 × 1 tile</option><option value="13" selected>13 × 13 tiles</option><option value="27">27 × 27 tiles</option></select></div>
 <div class="control"><label for="phase">SCANNER PHASE <output id="phaseOut">0 / 731</output></label><input id="phase" type="range" min="0" max="731" value="0"></div>
 <label class="checkrow"><input id="floorVisible" type="checkbox" checked> Floor + sink contact enabled</label>
-<label class="checkrow"><input id="markersVisible" type="checkbox" checked> Atomic/nuclear scale markers</label>
+<label class="checkrow"><input id="markersVisible" type="checkbox" checked> Log-spaced scale generations / science markers</label>
 <label class="checkrow"><input id="haloVisible" type="checkbox" checked> Accretion halo / light traces</label>
 <div class="buttons"><button id="pause" type="button">Ⅱ PAUSE</button><button id="reset" type="button">◎ RESET</button><button id="export" type="button">↓ EXPORT JSON</button><button id="next" type="button">+1 PHASE</button></div>
 <div class="readout"><small>REFERENCE FLOOR</small><b>1.61615 × 10⁻³⁵ m</b><div class="readgrid">
 <div><small>GRID SPAN</small><strong id="span">2.100995 × 10⁻³⁴ m</strong></div><div><small>SELECTED PHASE</small><strong id="scan">V000 / −</strong></div><div><small>MOUTH RADIUS</small><strong id="mouth">—</strong></div><div><small>FLOOR NECK</small><strong id="neck">—</strong></div></div></div>
-<p class="note">The funnel is an illustrative field geometry. Scale labels are logarithmic reference bands; they do not assert a particular elementary particle size, a gravitational singularity, a physical minimum spacetime cell, or a computed Kerr geodesic.</p>
+<div class="control"><label for="markerFilter">VISIBLE SCIENCE REFERENCE KIND</label><select id="markerFilter"><option value="all">All distinct reference types</option><option value="size">Measured / representative size</option><option value="wavelength">Photon wavelength · not size</option><option value="compton">Higgs reduced Compton length</option><option value="limit">Pointlike / probe context</option><option value="floor">Floor reference</option></select></div>
+<div class="readout"><small>SELECTED DESCENT REFERENCE</small><b id="selectedScale">ATOM · 10⁻¹⁰ m</b><div id="scaleCategory" class="note">Size reference</div><p class="note" id="scaleDetail">Representative atomic scale</p><a id="scaleSource" href="https://cds.cern.ch/record/2204859/files/CERN%20Higgs%20Panel.pdf" target="_blank" rel="noopener">Open scientific source</a></div>
+<p class="note">Only the vertical positions correspond to logarithmic length; the narrowing width is a qualitative geometry. Gamma/X-ray markers are wavelengths, alpha is a measured helium nucleus radius, Higgs is a reduced Compton scale, and beta/quark markers indicate unresolved structure or probe limits.</p>
 </div></aside></div>
 <div class="chart">
-<section class="panel"><div class="head"><h2>03 · REFERENCE LENGTH BANDS</h2><small>PHYSICAL UNITS · DIAGRAM POSITIONS NOT TO SCALE</small></div><div class="inner lines">
-<div class="line"><span><b>ATOM · ~10⁻¹⁰ m</b><small>Representative atomic scale</small></span><span style="color:#7edfff">TOP</span></div>
-<div class="line"><span><b>NUCLEUS · ~10⁻¹⁵ m</b><small>Representative nuclear scale</small></span><span style="color:#ff9ebc">MID</span></div>
-<div class="line"><span><b>10⁻¹⁶ m ?</b><small>Subnuclear reference coordinate, not a known particle diameter</small></span><span style="color:#b5ffdb">LOWER</span></div>
-<div class="line"><span><b>1.61615 × 10⁻³⁵ m</b><small>User-defined floor tile pitch, not an observed minimal length</small></span><span style="color:#b5ffdb">FLOOR</span></div>
-</div></section>
-<section class="panel"><div class="head"><h2>04 · COMPLETE FIELD BOUNDARY</h2><small>GEN13 → GEN14</small></div><div class="inner">
-<pre>D = 0                 scalar field origin
-mouth radius > neck   continuously for all 0 ≤ t < 1
-R(t) = r_neck + (r_mouth - r_neck)(1-t)^c
-field threads = 2    helical, phase rotated
-floor sink = grid projected D reference
-phase addresses = 366 × (−/+) = 732
-floor pitch = 1 × 1.61615 × 10^-35 m
-GEN12 roll = −36 / 0 / +36 / 0 / 1 / 1</pre>
-<p class="note">Source geometry uses the existing GEN13 floor helper; color coordinates are the original OASIS HON v9.4 palette. Neither floor scale nor these conceptual vortex rings physically clamp the independent GEN11 signed 10⁻³⁶ ... 10³⁶ vector metric.</p></div></section>
-</div>
+<section class="panel"><div class="head"><h2>03 · PARTICLE / DECAY / PHOTON REFERENCES</h2><small>CLICK TO HIGHLIGHT THE CORRESPONDING VORTEX LEVEL</small></div>
+<div class="inner"><div id="scienceMarkers" class="science-markers" role="group" aria-label="Particle and radiation scale references"></div>
+<p class="note">A wavelength, a charge radius, a reduced Compton length, and a scattering constraint are different quantities. Their positions are comparable lengths, not comparable measured diameters.</p></div></section>
+<section class="panel"><div class="head"><h2>04 · FULL GENERATION DESCENT</h2><small>10⁻¹⁰ TO FLOOR · 26 INDIVIDUAL STOPS</small></div>
+<div class="inner"><div id="generations" class="generation-list" aria-label="Logarithmic 10-power scale generations"></div>
+<p class="note">Each successive decade occupies equal vertical distance. The last interval stops at your exact floor reference 1.61615×10⁻³⁵ m, not an invented 10⁻³⁶ m physical wall.</p></div></section></div>
 <footer>.dlw / David Lee Wise / ROOT0 · <a href="https://github.com/DavidWise01/photonic/blob/main/scalar-zero/gravity-vortex-core.js">Source geometry</a> · <a href="https://github.com/DavidWise01/oasis/blob/main/n184/elemental-hon-color-operants-v94/hon_core.mjs">HON v9.4 source colors</a>. Accretion and lensing are visual metaphors; no live physical simulation or claim about particle substructure.</footer>
 </main>
 <script src="field-floor-1lp.js"></script>
 <script src="pinwheel-source-v94.js"></script>
 <script src="vector-732-core.js"></script>
 <script src="gravity-vortex-core.js"></script>
+<script src="scale-descent-gen15.js"></script>
 <script>
 "use strict";
 (function(){
  const $=id=>document.getElementById(id),F=window.ROOT0_FIELD_FLOOR,H=window.ROOT0_PINWHEEL_366,
-  M=window.ROOT0_VECTOR_732,V=window.ROOT0_GRAVITY_VORTEX,TAU=Math.PI*2;
- if(!F||!H||!M||!V||F.geometry.oneTilePitchMeters!==1.61615e-35||M.count!==732)throw Error("Vortex dependencies missing");
+  M=window.ROOT0_VECTOR_732,V=window.ROOT0_GRAVITY_VORTEX,S=window.ROOT0_SCALE_DESCENT,TAU=Math.PI*2;
+ if(!F||!H||!M||!V||!S||F.geometry.oneTilePitchMeters!==1.61615e-35||S.floorMeters!==F.geometry.oneTilePitchMeters||M.count!==732)throw Error("Vortex dependencies missing");
  const cvs=$("scene"),ctx=cvs.getContext("2d");
  const colors=Array.from({length:366},(_,i)=>H.colorAt(i+1).hex);
  const stars=Array.from({length:180},(_,i)=>({x:((i*183.779)%991)/991,y:((i*397.1)%997)/997,r:i%5===0?1.1:.6}));
- let last=0,spin=0,phase=0,phaseProgress=0,playing=true,dpr=0,width=0,height=0;
+ let last=0,spin=0,phase=0,phaseProgress=0,playing=true,dpr=0,width=0,height=0,selectedMarker="atom",selectedGeneration=0;
  function resize(){let rect=cvs.getBoundingClientRect(),dpi=Math.min(window.devicePixelRatio||1,2);
   if(rect.width!==width||rect.height!==height||dpi!==dpr){width=rect.width;height=rect.height;dpr=dpi;
    cvs.width=Math.max(1,Math.round(width*dpi));cvs.height=Math.max(1,Math.round(height*dpi));ctx.setTransform(dpi,0,0,dpi,0,0)}
@@ -119,12 +119,13 @@ GEN12 roll = −36 / 0 / +36 / 0 / 1 / 1</pre>
   const w=width,h=height,cx=w*.46,topY=h*.20,floorY=h*.82;
   const mouth=Math.min(w*.275,h*.29),neck=Math.max(1.5,mouth*.013),n=+$("rings").value;
   const options={cx,topY,floorY,mouthRadius:mouth,neckRadius:neck,compression:+$("compression").value,
-   ringCount:n,spin,direction:+$("direction").value,labels:$("markersVisible").checked,halo:$("haloVisible").checked,
+   ringCount:n,spin,direction:+$("direction").value,labels:false,halo:$("haloVisible").checked,
    flatten:.24};
   ctx.clearRect(0,0,w,h);
   for(const p of stars){ctx.fillStyle="#a2d9ee59";ctx.fillRect(p.x*w,p.y*h,p.r,p.r)}
   floor(cx,floorY,mouth);
   let geometry=V.draw(ctx,options);
+  drawLogGenerations(options);
   // A 366-segment source-color disk at the wide mouth (not 366 new chemical elements).
   const ellipseH=mouth*.22,base=spin*.12;
   if($("haloVisible").checked){
@@ -152,7 +153,7 @@ GEN12 roll = −36 / 0 / +36 / 0 / 1 / 1</pre>
   ctx.fillText("SINK / FLOOR CONTACT",cx,Math.min(h-6,floorY+19));
   $("mouth").textContent=geometry.mouthRadius.toFixed(1)+" px";
   $("neck").textContent=geometry.neckRadius.toFixed(2)+" px";
-  $("ringMetric").textContent=n;
+  $("ringMetric").textContent=S.generations.length;
   $("scan").textContent="V"+String(phase).padStart(3,"0")+" / "+active.polarity;
   $("span").textContent=F.span(+$("grid").value).toExponential(5)+" m";
   $("phaseOut").textContent=phase+" / 731";
@@ -165,18 +166,22 @@ GEN12 roll = −36 / 0 / +36 / 0 / 1 / 1</pre>
  $("reset").addEventListener("click",()=>{spin=0;phase=0;phaseProgress=0;playing=false;
   $("compression").value="1.4";$("rings").value="23";$("speed").value=".6";$("direction").value="1";
   $("grid").value="13";$("floorVisible").checked=true;$("markersVisible").checked=true;$("haloVisible").checked=true;
+  $("rings").value="26";selectedMarker="atom";selectedGeneration=0;refreshScaleSelection();
   $("phase").value="0";$("pause").textContent="▶ RESUME";sync();draw()});
  $("next").addEventListener("click",()=>{phase=(phase+1)%732;$("phase").value=phase;playing=false;$("pause").textContent="▶ RESUME";draw()});
  $("export").addEventListener("click",()=>{
-  const data={schema:"root0-gen14-vortex-v1",view:"pure Canvas2D",floor:{...F.geometry,gridSize:+$("grid").value,visible:$("floorVisible").checked},
+  const data={schema:"root0-gen15-log-descent-v1",view:"pure Canvas2D",
+   scaleDescent:{schema:S.schema,topMeters:S.mouthMeters,floorMeters:S.floorMeters,
+    markers:S.setupMarkers(),generations:S.generations,selectedMarker,selectedGeneration,
+    markerFilter:$("markerFilter").value,vertical:"logarithmic meters",width:"schematic geometry"},floor:{...F.geometry,gridSize:+$("grid").value,visible:$("floorVisible").checked},
    colorSource:"OASIS HON v9.4: 366 original hue addresses",vectorPhases:732,
    phase,rollSequence:"-36/0/+36/0/1/1",gravityVortex:{
     compression:+$("compression").value,ringCount:+$("rings").value,
     spin,direction:+$("direction").value,markersVisible:$("markersVisible").checked,haloVisible:$("haloVisible").checked,
     benchmarkBands:V.markerBands},
-   disclaimer:"Narrowing funnel and sink are schematic; scale bands are not vertically calibrated; 10^-16m is exploratory."};
+   disclaimer:"Vertical scale is log10 true from atom 10^-10m to author floor 1.61615e-35m; funnel width is schematic; wave/Compton/probe markers are not physical particle diameters."};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="ROOT0_GEN14_GRAVITY_VORTEX.json";
+  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="ROOT0_GEN15_LOG_SCALE_VORTEX.json";
   document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
  });
  function tick(now){
