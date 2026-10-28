@@ -375,3 +375,43 @@ Key invariant checks embedded in the page: exactly 28 arms, 13 positions per arm
 Physical boundary: these are mathematical visualizations and labeled model structure. Neither Planck-scale probes, new atomic elements, newly measured spectra nor a physical quantum-gravity torus have been established.
 
 **Authorship:** David Lee Wise / ROOT0 · \`.dlw\`. Original earlier source versions preserved in Git commits.
+
+## GEN9 · OASIS 366-color pinwheel integration (2026-10-27)
+
+GEN9 identifies the earlier color-wheel lineage in **\`DavidWise01/oasis\`** and imports its **source-defined hues**, rather than inventing a new palette or overwriting the earlier source.
+
+### Original sources found
+
+1. [OASIS \`apps/i-color-370/index.html\`](https://github.com/DavidWise01/oasis/blob/main/apps/i-color-370/index.html), an existing **370-color interactive wheel**. The earlier wheel's 370 address space remains intact. Four symbolic tail values 367 (white), 368 (black), 369 (gray) and 370 (purple) are outside the 366 carrier.
+2. [OASIS N184 v9.4 \`hon_core.mjs\`](https://github.com/DavidWise01/oasis/blob/main/n184/elemental-hon-color-operants-v94/hon_core.mjs), the **366-position H/O/N canonical carrier mapping**, and its [source specification](https://github.com/DavidWise01/oasis/blob/main/n184/elemental-hon-color-operants-v94/spec.json).
+3. [OASIS v9.1 color-core \`color_core.mjs\`](https://github.com/DavidWise01/oasis/blob/main/n184/generational-color-lattice-v91/color_core.mjs) for the exact HSV-to-RGB conversion and the three W/M/S brightness tiers.
+
+OASIS's v9.4 README also references an original \`MN_PRIME_366_EXPLORER.html\` with 365 model stages plus a last-position nitrogen lid; that named file was not independently located in the checked default-branch trees. No claim is made that it was found or copied verbatim.
+
+### Imported mapping (exact v9.4 contract)
+
+| Root | Addresses | Hue interpolation in degrees | Neutral source RGB anchor | Symbolic display index |
+|---|---|---|---|---|
+| H | 1–122 | \`0 + (a-1)*30/121\` | \`#FF0000\` | GEN8 +1k |
+| O | 123–244 | \`120 + (a-123)*60/121\` | \`#00FF00\` | GEN8 0k |
+| N | 245–366 | \`240 + (a-245)*50/121\` | \`#0000FF\` | GEN8 −1k |
+
+- **Source color conversion:** \`HSV(hue, saturation=1, value=W:1/3, M:2/3, S:1)\`, rounded to 8-bit RGB as the source does.
+- **Last address 366** is the canonical N **lid/stitch** in OASIS's HON model.
+- **GEN8 previously models addresses 365 and 366 as −/+ axial endpoints**, and this geometric designation is retained as a *separate overlay*. It must not be confused with the source v9.4 HON lid semantics.
+- Five OASIS **display operants** retained in ordered chains of up to 5: Gravity, Expansion, Compression, Containment and Explosion. The formulas are ported as **display-only color transformations** from v9.4; the original \`oasis\` code remains read-only, unchanged.
+- No synthetic element 119–366 is asserted. IUPAC named elements remain Z=1–118. No measured Casimir temperatures, photon emission line spectra or quantum-gravity evidence is claimed.
+
+### Added working interfaces
+
+- **\`scalar-zero/pinwheel-source-v94.js\`**: standalone browser adapter that ports the OASIS v9.4 H/O/N hue interpolation, HSV rounding, brightness tiers and five ordered operants. It is explicitly attributed to the OASIS source and exposes \`window.ROOT0_PINWHEEL_366\`.
+- **\`scalar-zero/pinwheel-366.html\`** and **\`pinwheel-366.js\`**: animated 366 individually colored source segments with selectable address, W/M/S intensity, 28-spoke GEN8 overlay, five display operants, 732 event scanner, JSON export and source provenance links.
+- **\`scalar-zero/rotation-732.html\`**: GEN8's 366 register glyphs now use the source adapter's full **per-address** HSV palette, instead of one flat RGB color per H/O/N group. Cardinalities and 732 event mechanics are unchanged.
+- **\`scalar-zero/index.html\`**: embeds the GEN9 viewer and bridges user address/phase selections between the GEN8 and GEN9 frames. Incoming address and tick values are checked against 1..366 and 0..731; echo loops are avoided because auto-forwarded selections are not re-emitted.
+- The original GEN0–GEN7 modules, the GEN8 count invariants and all earlier source versions remain available in prior commits. This is an additive integration with one intentional GEN8 color-rendering upgrade.
+
+### Model versus observation
+
+The pinwheel's **color calculations are deterministic and reproduce the documented OASIS palette math**, but the choice of H/O/N colors, three sectors and 366 cells is symbolic geometry. The five operants are *not physical effects of gravity, expansion, compression, containment or explosion*. The displayed wheel and 732-phase scanner are simulated animations, not measured optical frequencies, Casimir forces or newly identified elements.
+
+**Authorship/provenance:** David Lee Wise / ROOT0, \`.dlw\`. OASIS source links retained explicitly rather than presenting the port as independent research.
