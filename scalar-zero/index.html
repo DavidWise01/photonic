@@ -193,6 +193,11 @@
     <iframe id="gen14Frame" src="gravity-vortex.html" title="GEN14 continuous tapered gravity vortex with concentric shrinking rings and scalar-zero floor sink" loading="lazy" style="display:block;width:100%;height:1760px;border:0;background:#050d1c" referrerpolicy="no-referrer"></iframe>
     <div class="canvas-foot"><span>GEN16 366 COLORS · AXIAL 0 → 10⁻³⁵ m · GEN15 26 LOG GENERATIONS · 732 PHASES</span><a href="gravity-vortex.html">OPEN GEN16 COLOR-STRETCHED VORTEX</a></div>
   </section>
+  <section class="panel" style="margin-top:14px" id="gen17SphereTest">
+   <div class="panel-head"><h2>18 · GEN17 H / Og SPHERICAL INVARIANT — IDENTITY VS STRETCH</h2><span class="micro">16,384 SAMPLES · TWO-ANGLE ISOTROPY · ONE-ANGLE NEGATIVE CONTROL · SCALAR ZERO FLOOR</span></div>
+   <iframe id="gen17Frame" src="spherical-invariant.html" title="GEN17 hydrogen and oganesson preserved-identity spherical isotropy model" loading="lazy" style="display:block;width:100%;height:1630px;border:0;background:#061422" referrerpolicy="no-referrer"></iframe>
+   <div class="canvas-foot"><span>H Z=1 / Og Z=118 · H-ALPHA RED / ORANGE FLAME CONTAMINATION · Og EMISSION UNKNOWN</span><a href="spherical-invariant.html">OPEN GEN17 SPHERE INVARIANT TEST</a></div>
+  </section>
   <footer class="foot"><p><strong>Scientific boundary.</strong> This is a deterministic, classical complex-field and Jones-polarization visualization; it does not propagate individual quantum states or establish BB84 security. The gravity well is schematic. GEN2 adds a separately computed photon gravitational redshift and static clock comparison for real Earth/Sun reference scales, not Planck-scale evidence. Predictions near or below the Planck length are not validated. The 81-pixel grid is a normalized visual space, not a nanometer-resolution representation of a 32 cm optical channel. Wavelength affects displayed color and a normalized spatial-frequency proxy. Three code paths in one simulation are not three independent physical instruments.</p><div class="dlw">.dlw / ROOT0</div></footer>
 </div>
 <script>
@@ -535,6 +540,13 @@ window.addEventListener("message",function(event){
  var frame=document.getElementById("gen14Frame");
  if(frame&&event.source===frame.contentWindow&&event.data&&event.data.kind==="root0-gen14-height"&&Number.isFinite(event.data.height)){
    frame.style.height=Math.min(4300,Math.max(1050,Math.ceil(event.data.height+24)))+"px";
+ }
+});
+/* GEN17: same-origin iframe sends its calculated height only. */
+window.addEventListener("message",function(event){
+ var frame=document.getElementById("gen17Frame");
+ if(frame&&event.source===frame.contentWindow&&event.data&&event.data.kind==="root0-gen17-height"&&Number.isFinite(event.data.height)){
+  frame.style.height=Math.min(4700,Math.max(900,Math.ceil(event.data.height+24)))+"px";
  }
 });
 function tick(now){if(!last)last=now;var dt=Math.min(.05,(now-last)/1000);last=now;if(running)t+=dt*values.speed*2;renderField();renderLattice();renderGravity();knownRender();if(!window.__lastReadout||now-window.__lastReadout>120){refreshInspector();renderScope();knownOutput();window.__lastReadout=now}requestAnimationFrame(tick)}
