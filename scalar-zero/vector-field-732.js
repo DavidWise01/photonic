@@ -1,8 +1,8 @@
 "use strict";
 (function(){
  const $=id=>document.getElementById(id);
- const M=window.ROOT0_VECTOR_732,C=window.ROOT0_PINWHEEL_366,TAU=Math.PI*2;
- if(!M||!C||M.count!==732||C.capacity!==366)throw Error("GEN10 vector / OASIS source missing");
+ const M=window.ROOT0_VECTOR_732,C=window.ROOT0_PINWHEEL_366,F=window.ROOT0_FIELD_FLOOR,TAU=Math.PI*2;
+ if(!M||!C||!F||M.count!==732||C.capacity!==366||F.geometry.oneTilePitchMeters!==1.61615e-35)throw Error("GEN13 field floor / vector / OASIS source missing");
  const STORE="root0.gen11.vector-field.metric.v2",LEGACY_STORE="root0.gen10.vector-field.v1";
  const defaults=()=>Array.from({length:732},()=>M.defaults());
  let vectors=defaults(),audit=[],selected=0,tilt=65,seq=0,last=0;
@@ -10,6 +10,15 @@
  const canvas=$("vectors"),ctx=canvas.getContext("2d");
  const colors=Array.from({length:732},(_,i)=>C.colorAt(M.decode(i).address,"S").hex);
  if(!Array.isArray(M.rollBeats)||M.rollBeats.length!==6||M.rollBeats.map(b=>b.code).join("/")!=="−36/0/+36/0/1/1")throw Error("GEN12 roll mapping not available");
+ function refreshFloor(){
+   const grid=+($("floorGrid").value);
+   if(!F.isAllowed(grid))return;
+   $("floorPitch").textContent="1.61615 × 10⁻³⁵ m";
+   $("floorSpan").textContent=F.span(grid).toExponential(6).replace("e-"," × 10^-")+" m";
+ }
+ $("floorGrid").addEventListener("change",refreshFloor);
+ $("showFloor").addEventListener("change",refreshFloor);
+ refreshFloor();
  const regions=Array.from({length:130},(_,i)=>({
     x:((i*73.743)%987)/987,y:((i*241.173)%991)/991,r:.25+(i%4)*.21
  }));
@@ -193,6 +202,9 @@
    name:"ROOT0 GEN11 signed power-of-ten metric for 732 independent vectors",
    coordinateSystem:"scalar D=(0,0): 0 exact OR sign*10^e with e∈[-36,36] OR symbolic sign*∞",
    phaseCount:732,colorAddresses:366,source:"DavidWise01/oasis N184 HON v9.4",
+   floor:{...F.geometry,enabled:$("showFloor").checked,gridSize:+$("floorGrid").value,
+      gridSpanMeters:F.span(+$("floorGrid").value),tetherFromD:true,
+      calibration:"user value, not CODATA 2022 exactly; not a physical spatial quantum"},
    roll:{schema:"root0-gen12-six-beat-v1",sequence:M.rollBeats.map(x=>({...x})),beat:rollStep+1,
     speedBeatsPerSecond:+$("rollSpeed").value,playing:rollPlaying,scope:$("rollScope").value,
     previewOnly:true,manualCommitOnly:true},
@@ -210,6 +222,43 @@
    canvas.height=Math.max(1,Math.round(b.height*dpr));ctx.setTransform(dpr,0,0,dpr,0,0);
   }
  }
+ function drawFloor(cx,cy,outer){
+   if(!$("showFloor").checked)return;
+   const count=+$("floorGrid").value;
+   if(!F.isAllowed(count))return;
+   const floorY=cy+outer*.73;
+   const pitch=outer/(Math.max(count,5)*.84);
+   const half=count/2;
+   const polygon=[
+     F.project(-half,-half,cx,floorY,pitch),
+     F.project(half,-half,cx,floorY,pitch),
+     F.project(half,half,cx,floorY,pitch),
+     F.project(-half,half,cx,floorY,pitch)
+   ];
+   ctx.beginPath();
+   polygon.forEach((p,i)=>{if(i===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y)});
+   ctx.closePath();
+   ctx.fillStyle="#184d5b29";ctx.fill();
+   ctx.strokeStyle="#78d5c777";ctx.lineWidth=1.2;ctx.stroke();
+   const grid=F.projectedGrid(count,cx,floorY,pitch);
+   ctx.strokeStyle="#83d4d44d";ctx.lineWidth=count>13?.48:.75;
+   ctx.beginPath();
+   for(const [a,b] of grid){ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y)}
+   ctx.stroke();
+   // Scalar D=0 belongs to the vector origin; its ground-floor projection is
+   // an annotated tether, not a claim of gravitational acceleration.
+   ctx.save();
+   ctx.setLineDash([4,5]);
+   ctx.strokeStyle="#defceb8f";ctx.lineWidth=1;
+   ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx,floorY);ctx.stroke();
+   ctx.restore();
+   ctx.fillStyle="#c8ffe4";ctx.beginPath();ctx.arc(cx,floorY,3.8,0,TAU);ctx.fill();
+   ctx.textAlign="center";ctx.font="10px ui-monospace,monospace";
+   ctx.fillStyle="#b5ffe9";
+   ctx.fillText("1 TILE = 1.61615×10⁻³⁵ m",cx,Math.min(dims.h-11,floorY+pitch*(count*.245)+18));
+   ctx.fillText("D=0 FLOOR PROJECTION",cx,floorY-10);
+   ctx.textAlign="left";
+ }
  function draw(){
   resize();const w=dims.w,h=dims.h;
   if(w<=0||h<=0)return;
@@ -219,6 +268,7 @@
   hit={cx,cy,inner,outer,tiltY,offset};
   const polar=(r,a)=>({x:cx+Math.cos(a)*r,y:cy+Math.sin(a)*r*tiltY});
   for(const s of regions){ctx.fillStyle="#a0c8da55";ctx.fillRect(s.x*w,s.y*h,s.r,s.r)}
+  drawFloor(cx,cy,outer);
   // Gray geometric field: neither a gravitational lens solution nor physical space.
   for(let ring=1;ring<=4;ring++){
     let r=inner+(outer-inner)*ring/4;ctx.beginPath();
