@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ROOT0 GEN15 · Gravity Vortex Logarithmic Generations to the Floor</title><meta name="theme-color" content="#050d1c">
+<title>ROOT0 GEN16 · 366-Color Vortex from 0 to 10^-35</title><meta name="theme-color" content="#050d1c">
 <meta name="description" content="A live Canvas2D gravity-vortex schematic from a 366-color accretion field to a 1.61615e-35 meter reference floor, with shrinking rings, spiral funnel and sink.">
 <style>
 :root{color-scheme:dark;--bg:#050d1c;--ink:#e8faff;--muted:#98b8c8;--edge:#2b4b63;--mint:#86fce0}
@@ -50,15 +50,15 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
 .gen-btn.active{background:#175850;border-color:#94f0d7}
 .gen-btn:last-child{grid-column:span 2;color:#b9ffe9;border-color:#73ac9d}
 </style></head><body><main>
-<header class="top"><strong>ROOT0 / GEN15 · LOGARITHMIC SCALE DESCENT / FLOOR</strong><nav><a href="./">FULL SCALAR-ZERO LAB</a><a href="vector-field-732.html">732 VECTORS</a><a href="pinwheel-366.html">366 PINWHEEL</a></nav></header>
-<h1>Generations down the vortex <span style="color:#92ffe3">/|\</span></h1>
-<p class="lead">A rotating 366-color accretion-field mouth compresses into a narrowing vortex of concentric rings and twin spirals, terminating in a sink node on the existing scalar-floor grid. Each scale generation now occupies its measured logarithmic position from 10⁻¹⁰ m to the 1.61615×10⁻³⁵ m floor. Radiation is marked by wavelength, decay products by known sizes or limits, and elementary particles by documented probe or Compton scales—not invented particle diameters.</p>
+<header class="top"><strong>ROOT0 / GEN16 · COLOR STRETCH 0 → 10⁻³⁵ / GEN15 LOG DESCENT</strong><nav><a href="./">FULL SCALAR-ZERO LAB</a><a href="vector-field-732.html">732 VECTORS</a><a href="pinwheel-366.html">366 PINWHEEL</a></nav></header>
+<h1>366 colors down the vortex <span style="color:#92ffe3">/|\</span></h1>
+<p class="lead">A rotating 366-color accretion-field mouth compresses into a narrowing vortex of concentric rings and twin spirals, terminating in a sink node on the existing scalar-floor grid. All 366 OASIS hues stretch along the whole shaft from color-axis zero to 10⁻³⁵ m. Independently, each scientific scale generation retains its logarithmic position from 10⁻¹⁰ m to the 1.61615×10⁻³⁵ m floor. Radiation is marked by wavelength, decay products by known sizes or limits, and elementary particles by documented probe or Compton scales—not invented particle diameters.</p>
 <div class="metrics"><div class="metric"><b>366</b><small>OASIS SOURCE COLORS</small></div><div class="metric"><b>732</b><small>−/+ PHASE VECTORS</small></div><div class="metric"><b id="ringMetric">26</b><small>LOGARITHMIC SCALE GENERATIONS</small></div><div class="metric"><b>1.61615×10<sup>−35</sup></b><small>FLOOR TILE PITCH · METERS</small></div></div>
 <div class="layout">
 <section class="panel"><div class="head"><h2>01 · 26 LOG-SCALE GENERATIONS TO THE FLOOR</h2><small>10⁻¹⁰ m → 1.61615 × 10⁻³⁵ m · TRUE LOG-VERTICAL MAPPING</small></div>
 <div class="scene"><canvas id="scene" aria-label="Animated gravity vortex: colored accretion disk, shrinking ring funnel, three scale markers and a grid floor sink"></canvas>
-<div class="hud">SCALAR ORIGIN D = 0 · UPPER FIELD<br>INCREASING COMPRESSION ↓<br>FLOOR = 1 × 1.61615×10⁻³⁵ m PER TILE<br>LOG10 HEIGHTS · SIZES / WAVELENGTHS / LIMITS DISTINCT</div></div>
-<div class="legend"><span>◉ 366 HON spectral palette addresses</span><span>∿ 2 intertwined spiral threads</span><span>⬇ 26 calibrated log-position generations</span><span>◎ luminous/dark sink at floor</span></div></section>
+<div class="hud">SCALAR ORIGIN D = 0 · UPPER FIELD<br>INCREASING COMPRESSION ↓<br>FLOOR = 1 × 1.61615×10⁻³⁵ m PER TILE<br>COLOR AXIS 0 → 10⁻³⁵ m · SCIENCE SCALE LOG10</div></div>
+<div class="legend"><span>◉ 366 HON hues stretched mouth-to-floor</span><span>∿ 2 intertwined spiral threads</span><span>⬇ chromatic 0→10⁻³⁵ m / 26 log-size generations</span><span>◎ luminous/dark sink at floor</span></div></section>
 <aside class="panel"><div class="head"><h2>02 · VORTEX CONTROLLER</h2><small id="state">LIVE · CLOCKWISE</small></div><div class="side">
 <div class="control"><label for="compression">TAPER COMPRESSION <output id="compressionOut">1.40</output></label><input id="compression" type="range" min=".55" max="3.5" step=".05" value="1.4"></div>
 <div class="control"><label for="rings">DECORATIVE SPIRAL RINGS <output id="ringsOut">26</output></label><input id="rings" type="range" min="4" max="64" value="26"></div>
@@ -67,9 +67,11 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
 <div class="control"><label for="grid">FLOOR GRID</label><select id="grid"><option value="1">1 × 1 tile</option><option value="13" selected>13 × 13 tiles</option><option value="27">27 × 27 tiles</option></select></div>
 <div class="control"><label for="phase">SCANNER PHASE <output id="phaseOut">0 / 731</output></label><input id="phase" type="range" min="0" max="731" value="0"></div>
 <label class="checkrow"><input id="floorVisible" type="checkbox" checked> Floor + sink contact enabled</label>
+<label class="checkrow"><input id="axialColors" type="checkbox" checked> Stretch all 366 HON colors down to floor</label>
 <label class="checkrow"><input id="markersVisible" type="checkbox" checked> Log-spaced scale generations / science markers</label>
 <label class="checkrow"><input id="haloVisible" type="checkbox" checked> Accretion halo / light traces</label>
 <div class="buttons"><button id="pause" type="button">Ⅱ PAUSE</button><button id="reset" type="button">◎ RESET</button><button id="export" type="button">↓ EXPORT JSON</button><button id="next" type="button">+1 PHASE</button></div>
+<div class="readout"><small>CHROMATIC AXIS</small><b>0 → 10⁻³⁵ m</b><div class="readgrid"><div><small>FIRST / D=0</small><strong id="firstAxialColor">H001</strong></div><div><small>LAST / FLOOR</small><strong id="lastAxialColor">N366</strong></div></div></div>
 <div class="readout"><small>REFERENCE FLOOR</small><b>1.61615 × 10⁻³⁵ m</b><div class="readgrid">
 <div><small>GRID SPAN</small><strong id="span">2.100995 × 10⁻³⁴ m</strong></div><div><small>SELECTED PHASE</small><strong id="scan">V000 / −</strong></div><div><small>MOUTH RADIUS</small><strong id="mouth">—</strong></div><div><small>FLOOR NECK</small><strong id="neck">—</strong></div></div></div>
 <div class="control"><label for="markerFilter">VISIBLE SCIENCE REFERENCE KIND</label><select id="markerFilter"><option value="all">All distinct reference types</option><option value="size">Measured / representative size</option><option value="wavelength">Photon wavelength · not size</option><option value="compton">Higgs reduced Compton length</option><option value="limit">Pointlike / probe context</option><option value="floor">Floor reference</option></select></div>
@@ -238,6 +240,7 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
   const mouth=Math.min(w*.275,h*.29),neck=Math.max(1.5,mouth*.013),n=+$("rings").value;
   const options={cx,topY,floorY,mouthRadius:mouth,neckRadius:neck,compression:+$("compression").value,
    ringCount:n,spin,direction:+$("direction").value,labels:false,halo:$("haloVisible").checked,
+   axialColors:$("axialColors").checked,sourceColors:colors,
    flatten:.24};
   ctx.clearRect(0,0,w,h);
   for(const p of stars){ctx.fillStyle="#a2d9ee59";ctx.fillRect(p.x*w,p.y*h,p.r,p.r)}
@@ -272,6 +275,8 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
   $("mouth").textContent=geometry.mouthRadius.toFixed(1)+" px";
   $("neck").textContent=geometry.neckRadius.toFixed(2)+" px";
   $("ringMetric").textContent=S.generations.length;
+  $("firstAxialColor").textContent=colors[0]+" · H001";
+  $("lastAxialColor").textContent=colors[365]+" · N366";
   $("scan").textContent="V"+String(phase).padStart(3,"0")+" / "+active.polarity;
   $("span").textContent=F.span(+$("grid").value).toExponential(5)+" m";
   $("phaseOut").textContent=phase+" / 731";
@@ -283,7 +288,7 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
  $("pause").addEventListener("click",()=>{playing=!playing;$("pause").textContent=playing?"Ⅱ PAUSE":"▶ RESUME"});
  $("reset").addEventListener("click",()=>{spin=0;phase=0;phaseProgress=0;playing=false;
   $("compression").value="1.4";$("rings").value="23";$("speed").value=".6";$("direction").value="1";
-  $("grid").value="13";$("floorVisible").checked=true;$("markersVisible").checked=true;$("haloVisible").checked=true;
+  $("grid").value="13";$("floorVisible").checked=true;$("markersVisible").checked=true;$("haloVisible").checked=true;$("axialColors").checked=true;
   $("rings").value="26";selectedMarker="atom";selectedGeneration=0;refreshScaleSelection();
   $("phase").value="0";$("pause").textContent="▶ RESUME";sync();draw()});
  $("next").addEventListener("click",()=>{phase=(phase+1)%732;$("phase").value=phase;playing=false;$("pause").textContent="▶ RESUME";draw()});
@@ -293,7 +298,10 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
     markers:S.setupMarkers(),generations:S.generations,selectedMarker,selectedGeneration,
     markerFilter:$("markerFilter").value,vertical:"logarithmic meters",width:"schematic geometry"},floor:{...F.geometry,gridSize:+$("grid").value,visible:$("floorVisible").checked},
    colorSource:"OASIS HON v9.4: 366 original hue addresses",vectorPhases:732,
-   phase,rollSequence:"-36/0/+36/0/1/1",gravityVortex:{
+   phase,rollSequence:"-36/0/+36/0/1/1",
+   chromaticAxis:{...V.chromatic,enabled:$("axialColors").checked,firstSourceHex:colors[0],lastSourceHex:colors[365],
+     placement:"0..1e-35 linearly mapped onto full shaft; distinct from logarithmic physical-size markers"},
+   gravityVortex:{
     compression:+$("compression").value,ringCount:+$("rings").value,
     spin,direction:+$("direction").value,markersVisible:$("markersVisible").checked,haloVisible:$("haloVisible").checked,
     benchmarkBands:V.markerBands},
