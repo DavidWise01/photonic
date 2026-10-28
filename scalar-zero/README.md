@@ -194,3 +194,57 @@ A new **visual / geometric** layer adds:
 The toroidal geometry, center-zero convention, bracket-inspired connections, stringlike rails, starfield, element palette and signed Casimir indices are **model structure**, not experimental confirmation of string theory or a sub-Planck physical lattice. Electron identities and ground-state shell distributions are the standard chemistry layer.
 
 **Path:** \`scalar-zero/toroid-chem-astral.html\`. It runs without a CDN; the embedded copy is available from the original \`scalar-zero/index.html\` page. \`.dlw\` / ROOT0 attribution continues through repository and page history.
+
+## GEN5 · Odd toroids, even boxes, seven noble-gas closures (2026-10-27)
+
+GEN5 extends GEN4's ten-element toroidal H–Ne field to **all 118 recognized elements**, with seven completed periodic rings. It preserves GEN0–GEN4 assets and introduces a separate \`scalar-zero/noble-closures.html\` viewer, embedded in the original \`scalar-zero/index.html\`.
+
+### Canonical geometry
+
+- **Atomic number Z odd → toroid glyph \`(Symbol)\`**.
+- **Atomic number Z even → box glyph \`[Symbol]\`**.
+- Each ring stops at a **group-18 noble gas**. Because all seven terminal Z values are even, each terminal renders as a **box lid**.
+- \`D=0\` stays the shared scalar-zero **coordinate reference**, not an observing agent, voting member, physical vacuum detector or atom.
+- Straight chords connect each successive pair of elements in a period, ending at its noble gas. Noble-gas terminals have a reference spoke to D; there is no fabricated link from one period's terminal to the next period's start.
+- Toroidal meshes are a coordinate visualization. They are **not** experimentally determined atomic morphology.
+- Data-rich globules identify noble-gas terminals and the selected element; the visual rim and model hues indicate structural emphasis.
+- Coloring reuses GEN3's H/O/N 360-step custom-sector map (H red/+1k, O green/0k, N blue/−1k). Those signed values are purely symbolic; they are not thermal, atomic-emission or measured Casimir data.
+- All seven glyph systems can be rendered together or one at a time; click nodes to inspect their Z, element name, period, parity and model color; speed/phase/tube mesh controls are interactive.
+- JSON export includes all 118 elements, all seven generated parity sequences, original user-provided glyph expressions, and the distinction between known chemistry and conceptual geometry.
+
+| Ring | Atomic Z range | Element count | Nobel-gas endpoint |
+|---|---|---|---|
+| 1 | 1–2 | 2 | He, Z=2 |
+| 2 | 3–10 | 8 | Ne, Z=10 |
+| 3 | 11–18 | 8 | Ar, Z=18 |
+| 4 | 19–36 | 18 | Kr, Z=36 |
+| 5 | 37–54 | 18 | Xe, Z=54 |
+| 6 | 55–86 | 32 | Rn, Z=86 |
+| 7 | 87–118 | 32 | Og, Z=118 |
+
+Oganesson's element name, atomic number and placement in group 18 are recognized; its physical chemistry is not thoroughly measured and expected noble-gas-like behaviors should not be asserted as experimentally established.
+
+### Original author-supplied grammar
+
+These are stored as literal text, **not** parsed or repaired, and remain attached to the first two authored closures:
+
+\`\`\`text
+{{ ([h]he)((li[be]\(b[c]))((n[o]f)){neon} }}
+{{(na),[mg],(al)[si])){{(p)[s]}}(cl) argon }}
+\`\`\`
+
+The page **separately** constructs mechanically normalized sequences: odd Z in parentheses and even Z in brackets. Ring 3 (Na through Ar) thus normalizes to:
+
+\`\`\`text
+{{ (Na) [Mg] (Al) [Si] (P) [S] (Cl) [Ar] }}
+\`\`\`
+
+All subsequent closure strings are generated deterministically from the known element order, never by inventing new elements. As a visual metaphor, this is a periodic-toroidal register and not string-theory evidence.
+
+### Assets
+
+\`scalar-zero/noble-closures.html\`, \`noble-closures.css\`, \`noble-closures.js\`. Reuses GEN3's local \`chem-data-*.js\` and \`chem-core.js\` as the single element registry and color index sources. No CDN dependencies.
+
+Scientific references: [IUPAC Periodic Table](https://iupac.org/what-we-do/periodic-table-of-elements/), [PubChem Oganesson](https://pubchem.ncbi.nlm.nih.gov/element/118).
+
+**Author:** David Lee Wise / ROOT0. \`.dlw\` provenance preserved by prior Git history; GEN5 is added as new source files rather than rewriting earlier generation artifacts.
