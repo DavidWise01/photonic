@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071421"><meta name="description" content="ROOT0 GEN8 — 364 radial sites, 366 registers, 32 control lanes, 732 polarity phases per turn.">
+<title>ROOT0 GEN8 · 364 → 366 → 732 · Scalar-Zero Rotation</title>
+<style>
+:root{color-scheme:dark;--bg:#071421;--panel:#0c2233;--line:#35536a;--txt:#eaf8fb;--muted:#97b4c3;--mint:#70f1bb;--blue:#73bcfc;--amber:#ffc37d}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 45% -30%,#153c51,#071421 60%);color:var(--txt);font:13px/1.52 system-ui,Segoe UI,sans-serif}main{max-width:1500px;padding:18px;margin:auto}
+.top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);gap:12px;flex-wrap:wrap;padding-bottom:13px}.eyebrow{font:850 11px ui-monospace,Consolas,monospace;color:var(--mint);letter-spacing:.15em}a{color:#91d9ef}.top nav{display:flex;gap:14px;font:11px ui-monospace,monospace}.top nav a{text-decoration:none}
+h1{font-size:clamp(30px,5.3vw,66px);letter-spacing:-.055em;line-height:1;margin:22px 0 12px}.intro{color:var(--muted);font-size:14px;max-width:1000px;margin:0 0 21px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:13px}.stat{border:1px solid var(--line);border-radius:11px;padding:12px;background:#0b2537}.stat b{font:850 clamp(20px,3vw,30px) ui-monospace,monospace;display:block}.stat small{font:10px ui-monospace,monospace;color:var(--muted);display:block}
+.panel{border:1px solid var(--line);background:linear-gradient(140deg,#102638,#091a2a);border-radius:13px;overflow:hidden;min-width:0}.head{padding:13px 15px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}.head h2{margin:0;font:800 12px ui-monospace,monospace;letter-spacing:.12em}.head small{font:10px ui-monospace,monospace;color:var(--muted)}
+.layout{display:grid;grid-template-columns:minmax(0,1.62fr) minmax(300px,.67fr);gap:13px}
+.view{position:relative;height:620px;background:radial-gradient(circle at 50% 47%,#163346,#081626 75%)}#field{width:100%;height:100%;display:block;cursor:crosshair;touch-action:pan-y}.hud{position:absolute;top:16px;left:16px;pointer-events:none;font:10px/1.7 ui-monospace,monospace;color:#9fcbd9}.legend{display:flex;gap:15px;flex-wrap:wrap;padding:11px 15px;color:#acc4d1;font:11px ui-monospace,monospace;border-top:1px solid #2e4f62}.mark{height:10px;width:10px;display:inline-block;margin-right:6px;border-radius:50%;background:#fa7077}.mark.o{background:#4be4a3}.mark.n{background:#77aaff}.mark.zero{background:#fff}
+.side{padding:16px;display:grid;align-content:start;gap:12px}.control{display:grid;gap:5px}.control label{display:flex;justify-content:space-between;gap:10px;color:#b5d2df;font:11px ui-monospace,monospace}.control output{color:var(--mint)}input[type=range]{width:100%;accent-color:#75edb6}
+button{cursor:pointer;color:#f0fff7;border:1px solid #4c7282;background:#183d50;border-radius:8px;padding:10px;font:750 12px system-ui}button:hover{background:#245a66}button:focus-visible,input:focus-visible{outline:2px solid white;outline-offset:2px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.data{background:#091d2d;border:1px solid #355a6d;border-radius:10px;padding:13px}.data small{display:block;font:10px ui-monospace,monospace;color:var(--muted)}.data strong{display:block;font:800 25px ui-monospace,monospace}.reads{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.reads div{border:1px solid #325467;background:#102e40;padding:9px;border-radius:7px}.reads b{font:700 13px ui-monospace,monospace;display:block;color:#eafff2}.source{padding:12px 15px;border-top:1px solid var(--line);font:11px ui-monospace,monospace;color:#b9d7e4}.source strong{color:#dff8ec}
+.below{margin-top:13px;display:grid;grid-template-columns:1fr 1fr;gap:13px}.body{padding:15px}.nibble{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:11px 0}.bit{border:1px solid #547186;padding:12px 5px;text-align:center;background:#152d43;border-radius:8px}.bit strong{display:block;font:800 20px ui-monospace,monospace}.bit small{font:10px ui-monospace,monospace;display:block;color:var(--muted)}.bit[aria-pressed=true]{background:#136247;border-color:#7dffd5}
+.nibble-note,.note{font-size:11px;color:var(--muted);line-height:1.65;margin-top:11px}.formula{font:700 clamp(12px,2vw,21px)/1.9 ui-monospace,monospace;color:#a2ffd4;margin:6px 0}.formula span{color:#eabc8e}
+.channels{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin:12px 0}.channel{padding:8px 3px;background:#122c3d;border:1px solid #3c6272;border-radius:5px;color:#bfe4ed;text-align:center;font:700 11px ui-monospace,monospace;min-width:0}.channel.active{outline:2px solid white}.channel.control-channel{border-color:#d1a773;color:#ffdbad}
+.valuebox{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.valuebox>div{background:#0b2331;border:1px solid #2f5365;border-radius:8px;padding:10px}.valuebox small{display:block;font:10px ui-monospace,monospace;color:var(--muted)}.valuebox b{font:800 16px ui-monospace,monospace}
+.gas{border-top:1px solid var(--line);padding:12px 15px;display:flex;gap:12px;flex-wrap:wrap;color:#a2bdc9;font:10px ui-monospace,monospace}
+footer{font-size:11px;color:var(--muted);line-height:1.6;margin-top:15px}
+@media(max-width:1050px){.layout{grid-template-columns:1fr}.view{height:550px}.side{grid-template-columns:repeat(3,minmax(0,1fr))}.side .data{grid-column:span 2}.side .actions{align-content:end}}
+@media(max-width:750px){.stats{grid-template-columns:repeat(3,1fr)}.view{height:460px}.below{grid-template-columns:1fr}.side{grid-template-columns:1fr 1fr}.channels{grid-template-columns:repeat(8,1fr)}}
+@media(max-width:500px){.stats{grid-template-columns:repeat(2,1fr)}.side{grid-template-columns:1fr}.side .data{grid-column:auto}.view{height:370px}.hud{font-size:9px}.channels{grid-template-columns:repeat(8,1fr)}.valuebox{grid-template-columns:1fr 1fr}}
+</style></head><body><main>
+<header class="top"><span class="eyebrow">ROOT0 · GEN8 / 28 × 13 / BIDIRECTIONAL PHASE</span><nav><a href="./">SCALAR ZERO</a><a href="mirror-13-1-13.html">GEN7</a><a href="chemical-spectrum.html">CHEMICAL REGISTRY</a></nav></header>
+<h1>364 → 366 → 732</h1>
+<p class="intro">Twenty-eight arms of thirteen indexed cells each. Two axial operators, <strong>−</strong> and <strong>+</strong>, complete a 366-position register. A full 360° visual sweep visits every position twice (negative and positive phase), producing 732 phase samples. A separate four-bit nibble extends the 28 arm addresses into 32 control lanes.</p>
+<div class="stats"><div class="stat"><b>28</b><small>RADIAL ARMS</small></div><div class="stat"><b>364</b><small>28 × 13 DATA CELLS</small></div><div class="stat"><b>366</b><small>DATA + −/+ TERMINALS</small></div><div class="stat"><b>32</b><small>28 + 4 CONTROL LANES</small></div><div class="stat"><b>732</b><small>2 × 366 PHASE EVENTS</small></div></div>
+<div class="layout">
+<section class="panel"><div class="head"><h2>01 · SCALAR-ZERO ROTATION FIELD</h2><small>28 STRAIGHT SPOKES / 13 CELLS EACH</small></div>
+<div class="view"><canvas id="field" aria-label="Rotating donut-shaped ring with 28 spokes, 364 element registry dots and two axial terminals around scalar zero"></canvas>
+<div class="hud">D = 0 · EXTERNAL GROUND<br>28 × 13 DATA CELLS<br>365 = −  /  366 = +<br>− / + PHASE AT EACH POSITION</div></div>
+<div class="legend"><span><i class="mark"></i>H · 1–122 / +1k</span><span><i class="mark o"></i>O · 123–244 / 0k</span><span><i class="mark n"></i>N · 245–366 / −1k</span><span><i class="mark zero"></i>D · scalar zero</span></div>
+<div class="source">THE RING IS A <strong>SYMBOLIC GEOMETRY</strong>. Z=1–118 has documented element identities. Registry slots 119–366 do <strong>not</strong> imply discovered elements.</div></section>
+<aside class="panel"><div class="head"><h2>02 · ROTATION / SCANNER</h2><small id="status">LIVE</small></div><div class="side">
+<div class="control"><label for="speed">PHASE EVENTS PER SECOND <output id="speedOut">48</output></label><input id="speed" type="range" min="1" max="180" step="1" value="48"></div>
+<div class="control"><label for="tick">PHASE ADDRESS <output id="tickOut">0 / 731</output></label><input id="tick" type="range" min="0" max="731" step="1" value="0"></div>
+<div class="control"><label for="selected">REGISTER ADDRESS <output id="addressOut">1 / 366</output></label><input id="selected" type="range" min="1" max="366" step="1" value="1"></div>
+<div class="actions"><button id="play" type="button">Ⅱ PAUSE</button><button id="reset" type="button">◎ ZERO</button><button id="advance" type="button">+1 PHASE</button><button id="export" type="button">↓ EXPORT JSON</button></div>
+<div class="data"><small>CURRENT SCANNER PHASE</small><strong id="current">01 / −</strong><div class="reads"><div><small>PHASE EVENT</small><b id="event">1 / 732</b></div><div><small>ANGULAR POSITION</small><b id="degrees">0.00°</b></div><div><small>ACTIVE LANE</small><b id="lane">A01 · 01</b></div><div><small>POLARITY</small><b id="polarity">−</b></div></div></div>
+<div class="data"><small>SELECTED REGISTER SITE</small><strong id="identity">01 · H</strong><div id="name" style="color:#aad0dc;font-size:12px">Hydrogen</div><div class="reads"><div><small>SHAPE / PARITY</small><b id="shape">1 · TOROID</b></div><div><small>COLOR / CASIMIR INDEX</small><b id="color">H / +1k</b></div><div><small>ARM / CELL</small><b id="arm">A01 / 01</b></div><div><small>REGISTRY CLASS</small><b id="regClass">KNOWN ELEMENT</b></div></div></div>
+</div></aside></div>
+<div class="below">
+<section class="panel"><div class="head"><h2>03 · FOUR-BIT NIBBLE</h2><small>28 ARMS + 4 BIT LANES = 32</small></div><div class="body"><div class="formula">28 + 4 = <span>32</span> · 4 bits = 16 values</div><div class="nibble" id="nibble"></div>
+<div class="valuebox"><div><small>NIBBLE BIN</small><b id="binary">0000</b></div><div><small>NIBBLE HEX</small><b id="hex">0x0</b></div><div><small>LANE COUNT</small><b>32</b></div></div>
+<p class="nibble-note">The nibble contributes four <em>bit positions</em> (not four values): it can encode 0–15. It controls metadata in this visualization; the 364 cells and 366-register cardinality stay unchanged.</p></div></section>
+<section class="panel"><div class="head"><h2>04 · FULL 32-LANE CHANNEL MAP</h2><small>28 SECTORS / 4 CONTROL BIT LINES</small></div><div class="body">
+<div id="channels" class="channels" aria-label="Twenty-eight arm lanes and four bit lanes"></div>
+<div class="formula">364 + 2 = <span>366</span><br>366 × 2 = <span>732</span></div>
+<p class="note">One 360° turn is divided into 732 ordered phase events. Each of the 366 register positions is sampled twice in immediate <strong>−, +</strong> succession. Angles are display coordinates, not physical measured rotation or atomic dynamics.</p></div></section></div>
+<section class="panel" style="margin-top:13px"><div class="head"><h2>05 · CANONICAL BOUNDARY / CHEMICAL OVERLAY</h2><small>NUMERIC GEOMETRY, NOT ELEMENT 119+</small></div><div class="body">
+<pre class="formula" style="font-size:clamp(11px,1.5vw,17px);white-space:pre-wrap;overflow-wrap:anywhere">D = 0
+28 ARMS × 13 CELLS = 364 DATA SITES
+                    + 2  [- / +]
+                    = 366 REGISTERS
+
+28 ARM LANES + 4 CONTROL BITS = 32 LANES
+366 REGISTERS × 2 POLARITIES = 732 SAMPLES / TURN
+
+1...122   H-RED       +1k  [ROOT0 MODEL]
+123...244 O-GREEN      0k  [ROOT0 MODEL]
+245...366 N-BLUE       -1k  [ROOT0 MODEL]
+
+KNOWN CHEMISTRY: Z = 1...118 (H...Og)
+REGISTRY ONLY:   119...366</pre>
+<p class="note">The previous GEN7 13 | 1 | 13 = 27 local mirror geometry remains unchanged. This 28 × 13 toroidal registry is a new higher-level arrangement, not 28 copies of 27. “Casimir” refers to the user's signed symbolic color index, not physical temperatures or measured Casimir-force shifts.</p>
+</div></section>
+<footer>.dlw · David Lee Wise / ROOT0 · Element names from the <a href="https://iupac.org/what-we-do/periodic-table-of-elements/">IUPAC Periodic Table</a>. All rotations, 366 coordinates, 732 phase events, H/O/N bands and nibble controls are model-space conventions. No evidence is asserted for chemical elements above Z=118 or for measured Planck-scale physics.</footer>
+</main>
+<script src="chem-data-head.js"></script><script src="chem-data-mid.js"></script><script src="chem-data-late.js"></script><script src="chem-data-heavy-a.js"></script><script src="chem-data-heavy-b.js"></script>
+<script>
+"use strict";
+(function(){
+ const $=id=>document.getElementById(id),TAU=2*Math.PI;
+ const ARM_COUNT=28,CELLS_PER_ARM=13,DATA_COUNT=364,REGISTER_COUNT=366,PHASE_COUNT=732,CTRL_BITS=4;
+ const items=Array.from({length:REGISTER_COUNT},(_,i)=>{
+  const address=i+1,arm=address<=364?Math.floor(i/13)+1:null,cell=address<=364?i%13+1:null;
+  const color=address<=122?{key:"H",name:"hydrogen / red",casimir:"+1k",rgb:[242,91,100]}:
+    address<=244?{key:"O",name:"oxygen / green",casimir:"0k",rgb:[72,230,154]}:
+    {key:"N",name:"nitrogen / blue",casimir:"-1k",rgb:[96,143,249]};
+  return{address,arm,cell,kind:address===365?"minus-terminal":address===366?"plus-terminal":"data",
+   bit:address%2,shape:address%2?"toroid":"box",symbol:address<=118?CHEM_SYMBOLS[i]:null,
+   elementName:address<=118?CHEM_NAMES[i]:null,knownElement:address<=118,color:color}
+ });
+ const invariant=(ok,msg)=>{if(!ok)throw Error("GEN8 invariant: "+msg)};
+ invariant(CHEM_SYMBOLS.length===118&&CHEM_NAMES.length===118&&CHEM_SYMBOLS[117]==="Og","known 118 element registry");
+ invariant(ARM_COUNT*CELLS_PER_ARM===DATA_COUNT,"364 data sites");
+ invariant(DATA_COUNT+2===REGISTER_COUNT,"366 register sites");
+ invariant(ARM_COUNT+CTRL_BITS===32,"32 lanes");
+ invariant(REGISTER_COUNT*2===PHASE_COUNT,"732 events");
+ invariant(items.length===366&&items[364].kind==="minus-terminal"&&items[365].kind==="plus-terminal","2 terminals");
+ invariant(items.filter(x=>x.color.key==="H").length===122&&items.filter(x=>x.color.key==="O").length===122&&items.filter(x=>x.color.key==="N").length===122,"122 each H O N");
+ invariant(Array.from({length:732},(_,i)=>Math.floor(i/2)+1).every((x,i)=>x>=1&&x<=366),"double registration");
+ let tickFloat=0,running=true,last=0,selected=1,nibble=0,positions=[],size={width:0,height:0,dpr:1};
+ const canvas=$("field"),ctx=canvas.getContext("2d");
+ const stars=Array.from({length:170},(_,i)=>({x:((i*131.173)%997)/997,y:((i*333.377)%991)/991,r:.5+(i%3)*.28}));
+ function hex(n){return "#"+n.map(x=>Math.round(x).toString(16).padStart(2,"0")).join("")}
+ function resize(){const r=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);
+  if(r.width!==size.width||r.height!==size.height||dpr!==size.dpr){
+  size={width:r.width,height:r.height,dpr};canvas.width=Math.max(1,Math.round(r.width*dpr));canvas.height=Math.max(1,Math.round(r.height*dpr));
+  ctx.setTransform(dpr,0,0,dpr,0,0)}}
+ function xy(cx,cy,r,a){return{x:cx+Math.cos(a)*r,y:cy+Math.sin(a)*r}}
+ function scanner(){const tick=((Math.floor(tickFloat)%PHASE_COUNT)+PHASE_COUNT)%PHASE_COUNT;
+  return{tick,address:Math.floor(tick/2)+1,polarity:tick%2===0?"−":"+",angle:tick*360/PHASE_COUNT}}
+ function draw(){
+  resize();const w=size.width,h=size.height;if(w<1||h<1)return;
+  ctx.clearRect(0,0,w,h);
+  for(const p of stars){ctx.fillStyle="#9fc3dd44";ctx.fillRect(p.x*w,p.y*h,p.r,p.r)}
+  const cx=w*.5,cy=h*.51,outer=Math.min(w*.43,h*.46),inner=outer*.49,base=(Math.floor(tickFloat)%732)/732*TAU;
+  const grad=ctx.createRadialGradient(cx,cy,inner,cx,cy,outer);
+  grad.addColorStop(0,"#092638");grad.addColorStop(.37,"#17465a");grad.addColorStop(1,"#0d263a");
+  ctx.beginPath();ctx.arc(cx,cy,outer+9,0,TAU);ctx.arc(cx,cy,inner-9,0,TAU,true);ctx.fillStyle=grad;ctx.fill("evenodd");
+  positions=[];
+  for(let arm=0;arm<ARM_COUNT;arm++){
+   const angle=TAU*(arm+.5)/ARM_COUNT-Math.PI/2+base;
+   const a=xy(cx,cy,inner-3,angle),b=xy(cx,cy,outer+3,angle);
+   ctx.strokeStyle=arm===Math.floor((selected-1)/13)?"#fbf1d1aa":"#4c9caaa1";
+   ctx.lineWidth=arm===Math.floor((selected-1)/13)?2:1;
+   ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+   for(let j=0;j<13;j++){
+    const item=items[arm*13+j],rr=inner+(j+.5)/13*(outer-inner),p=xy(cx,cy,rr,angle);
+    positions.push({x:p.x,y:p.y,id:item.address});
+    const active=item.address===scanner().address,chosen=item.address===selected,r=chosen?5.7:active?5:2.7;
+    ctx.beginPath();ctx.fillStyle=hex(item.color.rgb);ctx.strokeStyle=chosen?"#fff":active?"#fff6":"#091523";
+    ctx.lineWidth=chosen?2:1;
+    if(item.bit){ctx.arc(p.x,p.y,r,0,TAU);ctx.fill();ctx.stroke();
+      if(chosen){ctx.beginPath();ctx.arc(p.x,p.y,1.7,0,TAU);ctx.fillStyle="#091a26";ctx.fill()}}
+    else{ctx.rect(p.x-r,p.y-r,r*2,r*2);ctx.fill();ctx.stroke()}
+    if(active||chosen){ctx.shadowColor=hex(item.color.rgb);ctx.shadowBlur=chosen?18:11;ctx.stroke();ctx.shadowBlur=0}
+   }
+   if(arm%2===0){const label=xy(cx,cy,outer+20,angle);ctx.fillStyle="#a0c7d5";
+     ctx.font="10px ui-monospace,monospace";ctx.textAlign="center";ctx.fillText(String(arm+1).padStart(2,"0"),label.x,label.y+4)}
+  }
+  ctx.textAlign="left";
+  const poles=[items[364],items[365]],dx=Math.max(22,inner*.35),scan=scanner();
+  poles.forEach((item,j)=>{
+   const x=cx+(j===0?-dx:dx),y=cy,chosen=item.address===selected,active=item.address===scan.address,r=chosen?12:10;
+   positions.push({x,y,id:item.address});
+   ctx.beginPath();ctx.arc(x,y,r+6,0,TAU);ctx.strokeStyle=chosen?"#fff":active?"#ffeac0":"#7392be";ctx.lineWidth=chosen?2.2:1;ctx.stroke();
+   ctx.fillStyle=hex(item.color.rgb);ctx.fillRect(x-r*.65,y-r*.65,r*1.3,r*1.3);
+   ctx.font="bold 15px ui-monospace,monospace";ctx.fillStyle="#ffffff";ctx.textAlign="center";ctx.fillText(j===0?"−":"+",x,y+5);
+  });
+  ctx.textAlign="center";ctx.fillStyle="#e4fff5";ctx.font="bold 11px ui-monospace,monospace";ctx.fillText("D=0",cx,cy-inner*.46);
+  ctx.strokeStyle="#baf8d0";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cx-8,cy-inner*.38);ctx.lineTo(cx+8,cy-inner*.38);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx,cy-inner*.38-8);ctx.lineTo(cx,cy-inner*.38+8);ctx.stroke();
+  const pointer=xy(cx,cy,outer+9,base-Math.PI/2);
+  ctx.beginPath();ctx.arc(pointer.x,pointer.y,5,0,TAU);ctx.fillStyle=scan.polarity==="−"?"#72bcfd":"#ffc585";ctx.shadowBlur=18;ctx.shadowColor=ctx.fillStyle;ctx.fill();ctx.shadowBlur=0;
+  ctx.fillStyle="#8cb5c6";ctx.textAlign="left";ctx.font="10px ui-monospace,monospace";
+  ctx.fillText("REGISTERS 001–366 / PHASES 000–731",14,h-14);
+ }
+ function refresh(){
+  const s=scanner(),x=items[selected-1],p=items[s.address-1];
+  $("tickOut").textContent=s.tick+" / 731";$("tick").value=s.tick;
+  $("current").textContent=String(s.address).padStart(3,"0")+" / "+s.polarity;
+  $("event").textContent=(s.tick+1)+" / 732";$("degrees").textContent=s.angle.toFixed(2)+"°";
+  $("polarity").textContent=s.polarity;$("lane").textContent=p.arm===null?p.kind.toUpperCase():"A"+String(p.arm).padStart(2,"0")+" · "+String(p.cell).padStart(2,"0");
+  $("selected").value=selected;$("addressOut").textContent=selected+" / 366";
+  $("identity").textContent=String(selected).padStart(3,"0")+" · "+(x.symbol|| (selected===365?"−":selected===366?"+":"REG"));
+  $("name").textContent=x.elementName|| (selected>=365?"Axial operator / reference terminal":"Registry coordinate only — no known element");
+  $("shape").textContent=x.bit+" · "+x.shape.toUpperCase();
+  $("color").textContent=x.color.key+" / "+x.color.casimir;
+  $("arm").textContent=x.arm===null?"AXIAL "+(x.kind==="minus-terminal"?"−":"+"):"A"+String(x.arm).padStart(2,"0")+" / "+String(x.cell).padStart(2,"0");
+  $("regClass").textContent=x.knownElement?"KNOWN Z≤118":x.kind==="data"?"REGISTRY ONLY":"AXIAL OPERATOR";
+  $("status").textContent=running?"LIVE":"FROZEN";
+  for(const b of document.querySelectorAll(".channel"))b.classList.toggle("active",b.dataset.lane===String(p.arm));
+ }
+ function nibbleRefresh(){
+  for(const b of document.querySelectorAll(".bit")){const n=+b.dataset.bit,on=Boolean(nibble&(1<<n));
+    b.setAttribute("aria-pressed",String(on));b.querySelector("strong").textContent=on?"1":"0"}
+  $("binary").textContent=nibble.toString(2).padStart(4,"0");
+  $("hex").textContent="0x"+nibble.toString(16).toUpperCase();
+ }
+ for(let bit=3;bit>=0;bit--){const b=document.createElement("button");b.className="bit";b.type="button";b.dataset.bit=bit;b.setAttribute("aria-pressed","false");
+   const title=document.createElement("strong"),sub=document.createElement("small");title.textContent="0";sub.textContent="b"+bit;b.append(title,sub);
+   b.addEventListener("click",()=>{nibble^=1<<bit;nibbleRefresh()});$("nibble").appendChild(b)}
+ for(let i=1;i<=32;i++){const b=document.createElement("button");b.type="button";b.className="channel"+(i>28?" control-channel":"");
+   b.dataset.lane=String(i);b.textContent=i<=28?"A"+String(i).padStart(2,"0"):"b"+(32-i);
+   b.title=i<=28?"13 data sites in arm "+i:"Nibble control bit b"+(32-i);
+   if(i<=28)b.addEventListener("click",()=>{selected=(i-1)*13+1;refresh()});
+   else b.addEventListener("click",()=>{nibble^=1<<(32-i);nibbleRefresh()});
+   $("channels").appendChild(b)}
+ $("speed").addEventListener("input",()=>$("speedOut").textContent=$("speed").value);
+ $("selected").addEventListener("input",()=>{selected=+$("selected").value;refresh()});
+ $("tick").addEventListener("input",()=>{tickFloat=+$("tick").value;running=false;$("play").textContent="▶ RESUME";refresh()});
+ $("play").addEventListener("click",()=>{running=!running;$("play").textContent=running?"Ⅱ PAUSE":"▶ RESUME";refresh()});
+ $("reset").addEventListener("click",()=>{tickFloat=0;selected=1;nibble=0;running=false;$("play").textContent="▶ RESUME";nibbleRefresh();refresh()});
+ $("advance").addEventListener("click",()=>{tickFloat=(Math.floor(tickFloat)+1)%PHASE_COUNT;running=false;$("play").textContent="▶ RESUME";refresh()});
+ canvas.addEventListener("click",e=>{
+  const r=canvas.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;let best=null,d=14*14;
+  for(const p of positions){const delta=(p.x-mx)**2+(p.y-my)**2;if(delta<d){d=delta;best=p}}
+  if(best){selected=best.id;refresh()}
+ });
+ $("export").addEventListener("click",()=>{
+  const payload={title:"ROOT0 GEN8 · 364/366/732",version:"GEN8",geometry:{arms:28,cellsPerArm:13,dataSites:364,axial:["-","+"],registers:366,
+   controlLanes:32,controlBits:4,nibbleValue:nibble,
+   phaseEventsPerTurn:732,phaseConvention:"two polarity samples at each of 366 registers, one conceptual 360-degree rotation"},
+   scalarZero:0,knownChemicalElements:"Z=1..118 only",registry:items,
+   H_O_N:{H:"1..122 / red / Casimir +1k model index",O:"123..244 / green / Casimir 0k model index",N:"245..366 / blue / Casimir -1k model index"},
+   selected,tick:scanner().tick,producedAt:new Date().toISOString(),physicalDisclaimer:"No element identities or measured chemical effects beyond Z=118; no experimental quanta/Planck results"};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}),u=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=u;a.download="ROOT0_GEN8_28x13_366_732.json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);
+ });
+ function loop(now){
+  let delta=last?Math.min(.075,(now-last)/1000):0;last=now;
+  if(running)tickFloat=(tickFloat+delta*(+$("speed").value))%PHASE_COUNT;
+  refresh();draw();requestAnimationFrame(loop)
+ }
+ nibbleRefresh();refresh();requestAnimationFrame(loop);
+ if(window.parent!==window){
+  const height=()=>window.parent.postMessage({kind:"root0-gen8-height",height:document.documentElement.scrollHeight},"*");
+  if(typeof ResizeObserver==="function")new ResizeObserver(height).observe(document.body);
+  window.addEventListener("resize",height);height();
+ }
+})();
+</script></body></html>
