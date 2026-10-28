@@ -192,7 +192,11 @@
   const out={schema:"root0-vector732-metric-v2",metric:M.metric,exponentRange:[M.minExponent,M.maxExponent],zeroMode:"independent exact zero",
    name:"ROOT0 GEN11 signed power-of-ten metric for 732 independent vectors",
    coordinateSystem:"scalar D=(0,0): 0 exact OR sign*10^e with e∈[-36,36] OR symbolic sign*∞",
-   phaseCount:732,colorAddresses:366,source:"DavidWise01/oasis N184 HON v9.4",states:vectors.map((v,i)=>({vector:M.decode(i),...v,
+   phaseCount:732,colorAddresses:366,source:"DavidWise01/oasis N184 HON v9.4",
+   roll:{schema:"root0-gen12-six-beat-v1",sequence:M.rollBeats.map(x=>({...x})),beat:rollStep+1,
+    speedBeatsPerSecond:+$("rollSpeed").value,playing:rollPlaying,scope:$("rollScope").value,
+    previewOnly:true,manualCommitOnly:true},
+   states:vectors.map((v,i)=>({vector:M.decode(i),...v,
     descriptor:M.descriptor(v),sourceHex:colors[i]})),events:audit.slice(),selected,generated:new Date().toISOString(),
    boundary:"No physical infinities, observed cosmic vector fields or quantum gravity claims"};
   const blob=new Blob([JSON.stringify(out,null,2)],{type:"application/json"});
