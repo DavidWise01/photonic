@@ -428,3 +428,50 @@ This is a **projection / visualization** built from known circular geometry and 
 The pinwheel's **color calculations are deterministic and reproduce the documented OASIS palette math**, but the choice of H/O/N colors, three sectors and 366 cells is symbolic geometry. The five operants are *not physical effects of gravity, expansion, compression, containment or explosion*. The displayed wheel and 732-phase scanner are simulated animations, not measured optical frequencies, Casimir forces or newly identified elements.
 
 **Authorship/provenance:** David Lee Wise / ROOT0, \`.dlw\`. OASIS source links retained explicitly rather than presenting the port as independent research.
+
+
+## GEN10 · 732 independently pinnable signed vectors (2026-10-27)
+
+GEN10 provides a **new, separate scalar-zero vector layer** over the existing GEN8/GEN9 366-color, 732-phase register. It **does not modify** OASIS's original 370-color source wheel, the frozen OASIS HON v9.4 366-color source mapping, or the physics calibrated in earlier photonic generations.
+
+### One canonical vector address per GEN8 phase
+
+\`\`\`text
+VECTOR ID    0 .. 731
+ADDRESS      floor(id / 2) + 1            # 1..366
+PHASE        id even = −, id odd = +
+PHASE PAIR   id XOR 1                    # same HON address
+D            (0,0)                       # external scalar-zero ground
+\`\`\`
+
+**Every one of the 732 vectors** carries an independent model state:
+
+\`\`\`json
+{ "pinned": false, "sign": 1, "exponent": 0, "infinite": false }
+\`\`\`
+
+- **Pin to D=0:** \`pinned=true\` anchors the vector origin at the shared scalar-zero coordinate. \`exponent=0\` renders its tip exactly at D. The state can also be unpinned independently; \`PIN ALL\` and \`UNPIN ALL\` are explicit bulk operations.
+- **Independent signed scale:** \`sign=−1\` reverses the visual direction of the selected vector; \`sign=+1\` uses its forward direction. The sign is independent of the vector's original \`−/+\` **phase address**.
+- **Finite range:** \`exponent\` takes quarter-step values in \`[0,36]\`. Model scalar magnitude is \`abs(scale) = 10^exponent − 1\`, with exact \`scale=0\` at exponent zero. This is a **dimensionless model value**, not meters, meters per second, energy or a physical force.
+- **Negative or positive infinity:** \`infinite=true\` records a **symbolic** \`−∞\` or \`+∞\` endpoint; the renderer maps it to the maximum visible disk radius. It never uses infinite screen coordinates, asserts an infinite physical distance, or numerically integrates a singularity.
+- **Finite rendering projection:** Signed direction is an angle relative to the source phase; screen length is \`outerRadius × clamp(exponent/36,0,1)\`, with a maximum clipped radius for symbolic infinity. Negative scale points to the opposite direction of the chosen vector. Disk tilt compresses the Y axis, with no claim of calculated Kerr or Schwarzschild geodesics.
+- **Color provenance:** Color is \`OASIS HON v9.4(address, strength S)\`, so each \`−/+\` pair shares one of exactly 366 original source hues. The program neither creates 732 distinct chemical colors nor asserts atomic elements past the IUPAC 118.
+- **Independence:** Pin, scale, sign and infinity changes to one phase vector do not mutate its paired vector. Each state is stored separately in a browser-local 732-entry array.
+- **Append-only UI log:** Individual edits append timestamped event records. Bulk pin/unpin operations append one explicitly labeled \`BULK_...\` event instead of 732 false independent observations. Browser \`localStorage\` can be deleted or edited by the user: this is not a cryptographic ledger or externally witnessed experiment.
+- **Export:** JSON includes all 732 vector identities, all current pin/scale/sign/infinity states, 366 palette addresses and the local event history.
+
+### Interface / integration
+
+- \`scalar-zero/vector-732-core.js\` — pure browser-side vector address/scale model, mapping and invariants.
+- \`scalar-zero/vector-field-732.html\` — standalone interactive toroidal vector field, all 732 angle-address marks, pin/scale/±∞ controls, and an H/O/N source palette overlay.
+- \`scalar-zero/vector-field-732.js\` — interactive UI, independent persistence, zero-origin projection, export and range-checked cross-frame synchronization.
+- \`scalar-zero/index.html\` — embeds GEN10 after GEN9; a new message bridge relays GEN10 vector IDs to GEN8's 732-phase control and GEN9's 366-color selection. GEN8/GEN9 manual selection moves the GEN10 inspector. Relayed events do not emit return messages, so they don't enter a message loop.
+- GEN8 and GEN9 standalone navigation now links to the GEN10 vector editor.
+
+### Verification boundaries
+
+Arithmetic test: \`732 = 366×2\`, all IDs 0..731 map bijectively to address-plus-phase pairs, \`phasePair = id XOR 1\`, and a zero exponent projects a pinned tip exactly to D. GUI tests include pinning zero, scaling, choosing \`−∞\`, selecting a paired phase, bulk pinning all 732, unpinning all, and verifying independent stored states. All are **software invariants**, not measurements of gravitational or chemical phenomena.
+
+**Known physics:** Ordinary optical frequency/energy calculations and known element identities remain limited to earlier, independently marked sections. **ROOT0 model conventions:** 732 vectors, scalar zero pinning, model toroidal angles, display Casimir slots and formal infinities.
+
+**Authorship:** David Lee Wise / ROOT0 · \`.dlw\`. Source lineage: [OASIS HON v9.4](https://github.com/DavidWise01/oasis/blob/main/n184/elemental-hon-color-operants-v94/hon_core.mjs).
