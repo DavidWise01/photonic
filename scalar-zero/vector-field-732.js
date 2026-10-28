@@ -163,7 +163,7 @@
   // Both axes point away from zero; negative values reverse the arrow orientation.
   for(let id=0;id<732;id++){
     const v=vectors[id];if(!v.pinned||id===selected)continue;
-    const d=M.decode(id),frac=M.fraction(v),a=offset+d.angleDegrees*Math.PI/180+(v.sign<0?Math.PI:0),point=polar(inner+frac*(outer-inner),a);
+    const d=M.decode(id),frac=M.fraction(v),a=offset+d.angleDegrees*Math.PI/180+(v.sign<0?Math.PI:0),point=polar(frac*outer,a);
     ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(point.x,point.y);
     ctx.strokeStyle=colors[id];ctx.globalAlpha=v.infinite?.64:.28;ctx.lineWidth=v.infinite?1.5:.8;ctx.stroke();ctx.globalAlpha=1;
     if(frac>0){ctx.fillStyle=colors[id];ctx.fillRect(point.x-1.5,point.y-1.5,3,3)}
@@ -178,7 +178,7 @@
   ctx.fillText("D = 0",cx,cy+4);
   // Selected vector always visible, even when currently unpinned (dashed preview).
   const d=M.decode(selected),v=vectors[selected],a=offset+d.angleDegrees*Math.PI/180+(v.sign<0?Math.PI:0);
-  const frac=M.fraction(v),r=inner+frac*(outer-inner),to=polar(v.pinned?r:outer,a);
+  const frac=M.fraction(v),r=frac*outer,to=polar(v.pinned?r:outer,a);
   ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(to.x,to.y);
   ctx.strokeStyle=v.pinned?"#fff9cf":"#b7ccde";ctx.lineWidth=v.pinned?3:1.8;
   ctx.setLineDash(v.pinned?[]:[7,6]);ctx.shadowColor=colors[selected];ctx.shadowBlur=v.pinned?13:0;ctx.stroke();
