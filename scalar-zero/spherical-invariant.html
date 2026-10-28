@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#061422">
+<title>ROOT0 GEN17 · H/Og spherical invariance under compression</title>
+<meta name="description" content="Interactive deterministic two-angle spherical occupancy test for hydrogen and oganesson identity under scalar stretch, with a phase-locked negative control.">
+<style>
+:root{color-scheme:dark;--bg:#061422;--fg:#e5f8ff;--muted:#9ebdc9;--line:#31576c;--teal:#8af9df}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#163a4c,#061422 68%);color:var(--fg);font:13px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:1250px;margin:auto;padding:18px 15px 35px}
+.top{display:flex;gap:12px;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:11px;flex-wrap:wrap}
+.top strong{font:800 11px ui-monospace,monospace;letter-spacing:.13em;color:var(--teal)}
+a{color:#9bdff9}.top a{font:11px ui-monospace,monospace}
+h1{font-size:clamp(26px,4vw,49px);letter-spacing:-.05em;line-height:1.1;margin:22px 0 9px}
+.sub{color:var(--muted);max-width:850px;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(290px,.65fr);gap:13px}
+.panel{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0a2032}
+.head{border-bottom:1px solid var(--line);padding:11px 14px;display:flex;justify-content:space-between;align-items:center;gap:9px;flex-wrap:wrap}
+.head b{font:800 12px ui-monospace,monospace}.head small{font:10px ui-monospace,monospace;color:var(--muted)}
+canvas{display:block;width:100%;height:445px;background:radial-gradient(ellipse at center,#16334e,#08121e);touch-action:pan-y}
+.foot{display:flex;gap:13px;flex-wrap:wrap;border-top:1px solid var(--line);padding:9px 14px;font:10px ui-monospace,monospace;color:#a7cfdb}
+.controls{padding:14px;display:grid;align-content:start;gap:13px}.control{display:grid;gap:6px}
+label{font:750 10px ui-monospace,monospace;color:#bad7e2}
+select,button{border:1px solid #497486;border-radius:7px;background:#10394e;color:#e4ffff;padding:10px;font:700 12px system-ui;cursor:pointer}
+input[type=range]{width:100%;accent-color:#71edda}
+output{color:#a2ffdf;font:800 12px ui-monospace,monospace}
+.check{display:flex;gap:8px;align-items:center}.buttons{display:flex;gap:9px}.buttons button{flex:1}
+.read{padding:11px;border:1px solid #35657a;background:#102b40;border-radius:8px}
+.read small{display:block;color:var(--muted);font:10px ui-monospace,monospace}
+.read strong{font:850 18px ui-monospace,monospace;color:#c3fff1;display:block}
+.probe{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.probe>div{padding:12px;background:#0d2b3b;border:1px solid #2e5869;border-radius:8px}
+.probe b{font:850 20px ui-monospace,monospace;display:block}
+.probe small{color:var(--muted);font:10px ui-monospace,monospace}
+.result{padding:10px;background:#112f3d;border-radius:8px;overflow-wrap:anywhere;font:11px/1.7 ui-monospace,monospace}
+.disc{color:var(--muted);font-size:11px;line-height:1.7}
+.extra{margin-top:13px;display:grid;grid-template-columns:1fr 1fr;gap:13px}.extra .content{padding:12px 14px}
+.test{border:1px solid #2c5164;border-radius:6px;padding:7px 9px;margin-bottom:6px;font:11px ui-monospace,monospace;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.test span:last-child{color:#a8ffe3;font-weight:800}
+.eq{white-space:pre-wrap;overflow-wrap:anywhere;font:11px/1.65 ui-monospace,monospace;color:#cae8f5}
+.swatch{display:inline-block;width:15px;height:15px;border-radius:50%;vertical-align:middle;border:1px solid #c7f7ff;margin-right:7px}
+@media(max-width:880px){.grid,.extra{grid-template-columns:1fr}canvas{height:400px}}@media(max-width:500px){canvas{height:320px}.probe{grid-template-columns:1fr 1fr}}
+</style></head><body><main>
+<header class="top"><strong>ROOT0 · GEN17 / TWO-ANGLE SPHERICAL INVARIANT</strong><nav><a href="./">SCALAR-ZERO LAB</a> · <a href="gravity-vortex.html">GEN16 VORTEX</a> · <a href="vector-field-732.html">732 VECTORS</a></nav></header>
+<h1>Does oscillation maintain a sphere?</h1>
+<p class="sub">The H/Og comparison keeps atomic identity separate from spatial stretch and rendered color. Two independent angular samplers cover a sphere; locking one angle is a deliberate negative control. This tests the proposed quanta geometry only—not physical hydrogen compression, element transmutation, or Higgs structure.</p>
+<div class="grid">
+<section class="panel"><div class="head"><b>01 · LIVE SPHERE / PHASE CONTROL</b><small id="modeStatus">TWO-ANGLE COHERENT COVERAGE</small></div>
+<canvas id="orbit" aria-label="Animated simulated sphere or phase-locked collapsed angular distribution for selected element identity"></canvas>
+<div class="foot"><span id="orbitalKey">H · Z=1</span><span>MODEL STRETCH 0–1</span><span>16,384 SAMPLING POINTS / MEASUREMENT</span></div>
+</section>
+<section class="panel"><div class="head"><b>02 · CONTROLS</b><small>DETERMINISTIC</small></div>
+<div class="controls">
+<div class="control"><label for="element">IDENTITY / Z (NOT INTERCHANGED)</label><select id="element"><option value="H">H · hydrogen · Z=1</option><option value="Og">Og · oganesson · Z=118</option></select></div>
+<div class="control"><label for="stretch">SCALAR STRETCH <output id="stretchValue">1.0000</output></label><input id="stretch" type="range" min="0" max="1" step=".0025" value="1"></div>
+<div class="control"><label for="motion">ANGULAR TEST</label><select id="motion"><option value="two">Two-angle spherical coverage</option><option value="locked">Locked phase · one-angle control</option></select></div>
+<div class="read"><small>REFERENCE RADIUS · NOT OBSERVED UNDER COMPRESSION</small><strong id="radiusRead">5.291772 × 10⁻¹¹ m</strong></div>
+<div class="read"><small>LOG10 INFORMATION DENSITY / RELATIVE TO STRETCH=1</small><strong id="densityRead">0.000 dex</strong></div>
+<div class="buttons"><button id="play" type="button">Ⅱ PAUSE</button><button id="run" type="button">RETEST</button></div>
+<div class="read"><small>PALETTE COLOR ≠ ELEMENT'S MEASURED EMISSION</small><strong id="paletteLine">H001</strong><div class="disc" id="emissionLine">Hydrogen's H-alpha line is red, not an orange flame rule.</div></div>
+<div class="result" id="verdict">Test status: loading…</div>
+</div></section>
+</div>
+<div class="extra">
+<section class="panel"><div class="head"><b>03 · INVARIANT MATRIX</b><small>10 CHECKS</small></div><div class="content"><div id="testRows"></div></div></section>
+<section class="panel"><div class="head"><b>04 · PHYSICS SEPARATION</b><small>OBSERVED / MODEL / UNKNOWN</small></div><div class="content">
+<div class="probe"><div><small>TWO-ANGLE ISOTROPY ERROR</small><b id="coherentError">—</b></div><div><small>PHASE-LOCKED ERROR</small><b id="lockedError">—</b></div><div><small>TWO-ANGLE OCTANT ENTROPY</small><b id="coherentEntropy">—</b></div><div><small>LOCKED OCTANT ENTROPY</small><b id="lockedEntropy">—</b></div></div>
+<pre class="eq">Identity: H=Z1, Og=Z118 (independent of stretch)
+R(s)=R_floor + s×(R_ref−R_floor)
+R_ref = 5.29177210903e−11 m (hydrogen reference)
+R_floor = 1.61615e−35 m (user's floor)
+D_relative = 3 log10[R_ref / R(s)]
+Two angles: u = frac((j+½)√2), v = frac((j+½)√3)
+z = 2u−1, φ=2πv; x=√(1−z²)cosφ; y=√(1−z²)sinφ
+Control: φ=0 → directional anisotropy.</pre>
+<p class="disc">The irrational-angle sampling is a deliberately engineered spherical distribution, not a derivation from the Standard Model. Equal unit-radius kinematics are used for both H and Og; **no physical Og radius or flame wavelength is assumed**. At scalar stretch zero the rendered radius is regularized by the reference floor, not an actual microscopic hydrogen or oganesson state. Relative density is geometric samples per hypothetical volume, not measured thermodynamic or quantum information density.</p>
+</div></section>
+</div>
+<footer class="disc" style="margin-top:15px">David Lee Wise / ROOT0 · .dlw · <a href="https://github.com/DavidWise01/photonic/blob/main/scalar-zero/spherical-invariant-gen17.js">GEN17 invariant source</a>. Physical H-alpha wavelength: <a href="https://physics.nist.gov/PhysRefData/Handbook/Tables/hydrogentable1_a.htm">NIST</a>; 2026 orange H-flame result: <a href="https://doi.org/10.1016/j.nxener.2026.100962">Next Energy</a>; oganesson properties: <a href="https://periodic-table.rsc.org/element/118/oganesson">RSC</a>.</footer>
+</main><script src="pinwheel-source-v94.js"></script><script src="spherical-invariant-gen17.js"></script>
+<script>
+"use strict";
+(function(){
+ const $=id=>document.getElementById(id),M=window.ROOT0_SPHERICAL_INVARIANT,C=window.ROOT0_PINWHEEL_366;
+ if(!M||!C||M.model.floorMeters!==1.61615e-35)throw Error("GEN17 prerequisites missing");
+ const cvs=$("orbit"),ctx=cvs.getContext("2d");let w=0,h=0,dpr=1,angle=0,last=0,playing=true,check=M.test();
+ function resize(){const b=cvs.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1);
+  if(w!==b.width||h!==b.height||d!==dpr){w=b.width;h=b.height;dpr=d;
+   cvs.width=Math.max(1,Math.round(w*d));cvs.height=Math.max(1,Math.round(h*d));ctx.setTransform(d,0,0,d,0,0)}
+ }
+ function update(){
+  const symbol=$("element").value,s=+$("stretch").value,og=symbol==="Og";
+  const state=M.compress(symbol,s,C.colorAt(og?118:1,"S").hex);
+  const shape=state.shape,source=state.identity,locked=$("motion").value==="locked",measure=locked?check.locked:check.coherent;
+  $("stretchValue").textContent=s.toFixed(4);
+  $("radiusRead").textContent=shape.radiusMeters.toExponential(6)+" m";
+  $("densityRead").textContent=shape.log10RelativeInformationDensity.toFixed(3)+" dex";
+  $("orbitalKey").textContent=symbol+" · Z="+source.Z+" · "+(locked?"LOCKED":"TWO-ANGLE");
+  $("modeStatus").textContent=locked?"ONE-ANGLE NEGATIVE CONTROL":"TWO-ANGLE SPHERICAL COVERAGE";
+  $("paletteLine").textContent=(og?"OG118":"H001")+" · "+state.paletteColorHex;
+  $("paletteLine").style.color=state.paletteColorHex;
+  $("emissionLine").textContent=og
+   ?"No measured Og flame/color. This is the OASIS HON v9.4 design swatch for element 118."
+   :"H-alpha is ~656.3 nm (red). An orange H flame often reflects sodium (~589 nm), not cooler H.";
+  $("verdict").textContent=(measure.pass?"PASS":"FAIL (EXPECTED NEGATIVE CONTROL)")+
+   " · "+symbol+" identity preserved (Z="+source.Z+") · isotropy error="+measure.isotropyError.toFixed(6)+
+   " · entropy="+measure.octantEntropyBits.toFixed(6)+" / 3 bits";
+  return {state,locked};
+ }
+ function renderTests(){
+  const root=$("testRows");root.replaceChildren();
+  for(const [label,pass] of Object.entries(check.checks)){
+   const row=document.createElement("div");row.className="test";
+   const name=document.createElement("span");name.textContent=label;
+   const val=document.createElement("span");val.textContent=pass?"PASS":"FAIL";
+   row.append(name,val);root.appendChild(row);
+  }
+  $("coherentError").textContent=check.coherent.isotropyError.toFixed(6);
+  $("lockedError").textContent=check.locked.isotropyError.toFixed(6);
+  $("coherentEntropy").textContent=check.coherent.octantEntropyBits.toFixed(6)+" bits";
+  $("lockedEntropy").textContent=check.locked.octantEntropyBits.toFixed(6)+" bits";
+ }
+ function draw(){
+  resize();if(w<1||h<1)return;
+  const {state,locked}=update(),s=state.shape.stretch,cx=w*.5,cy=h*.51;
+  const R=9+Math.min(w*.35,h*.38)*Math.sqrt(s),color=state.paletteColorHex;
+  ctx.clearRect(0,0,w,h);
+  ctx.strokeStyle="#4b809f54";ctx.lineWidth=1;
+  for(let k=1;k<=4;k++){ctx.beginPath();ctx.ellipse(cx,cy,R*k/4,R*k/4,0,0,Math.PI*2);ctx.stroke()}
+  ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.strokeStyle=color;ctx.lineWidth=1.4;ctx.stroke();
+  // Draw normalized direction occupancy as rotating 3D projection.
+  const ca=Math.cos(angle),sa=Math.sin(angle),cb=Math.cos(angle*.68),sb=Math.sin(angle*.68);
+  const pts=1100;
+  for(let j=0;j<pts;j++){
+   const p=M.unitPoint(j*14,locked),x1=p[0]*ca-p[2]*sa,z1=p[0]*sa+p[2]*ca;
+   const y1=p[1]*cb-z1*sb,z2=p[1]*sb+z1*cb;
+   const px=cx+x1*R,py=cy+y1*R,depth=(z2+1)/2;
+   ctx.globalAlpha=.16+depth*.65;ctx.fillStyle=color;
+   ctx.beginPath();ctx.arc(px,py,Math.max(.65,1.2*(.55+depth)),0,Math.PI*2);ctx.fill();
+  }
+  ctx.globalAlpha=1;
+  const gradient=ctx.createRadialGradient(cx,cy,0,cx,cy,15);
+  gradient.addColorStop(0,"#defdfc");gradient.addColorStop(.22,"#96d2e5");gradient.addColorStop(1,"#2b526400");
+  ctx.beginPath();ctx.arc(cx,cy,15,0,Math.PI*2);ctx.fillStyle=gradient;ctx.fill();
+  ctx.font="bold 11px ui-monospace,monospace";ctx.fillStyle="#d6f9ed";ctx.textAlign="center";
+  ctx.fillText(state.identity.symbol+" · {{i}}",cx,cy-20);
+  ctx.fillStyle="#9fc4d3";ctx.fillText("scalar stretch="+s.toFixed(3),cx,Math.min(h-15,cy+R+22));
+  ctx.textAlign="left";
+ }
+ for(const id of ["element","stretch","motion"])$(id).addEventListener(id==="stretch"?"input":"change",draw);
+ $("run").addEventListener("click",()=>{check=M.test();renderTests();draw()});
+ $("play").addEventListener("click",()=>{playing=!playing;$("play").textContent=playing?"Ⅱ PAUSE":"▶ RESUME"});
+ function frame(t){const dt=last?Math.min(.08,Math.max(0,(t-last)/1000)):0;last=t;
+  if(playing)angle+=dt*.6;draw();requestAnimationFrame(frame)}
+ function height(){if(window.parent!==window)window.parent.postMessage({kind:"root0-gen17-height",height:document.documentElement.scrollHeight},"*")}
+ if(typeof ResizeObserver==="function")new ResizeObserver(height).observe(document.body);
+ window.addEventListener("resize",height);
+ renderTests();draw();height();requestAnimationFrame(frame);
+})();
+</script></body></html>
