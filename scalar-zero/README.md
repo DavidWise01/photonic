@@ -650,3 +650,73 @@ GEN11 exact zero, signed finite \`10^-36\`–\`10^36\`, symbolic infinities, GEN
 - \`index.html\`: embeds the GEN14 standalone page as a separate section and adjusts iframe height on load.
 
 **Authorship:** David Lee Wise / ROOT0 · \`.dlw\`. These structures are symbolic/model-space geometries; verified JavaScript geometry is not physical verification.
+
+
+## GEN15 · Logarithmic generations into the reference floor (2026-10-28)
+
+The GEN14 funnel now **positions every generation at the correct vertical logarithmic length**, descending from the approximate atomic size **10^-10 m** to the author's GEN13 floor tile **1.61615 × 10^-35 m**. The shape's **vertical location** is calibrated in logarithmic reference units, while the funnel's **width, spirals, H/O/N colors, accretion disk, and sink** remain illustrative.
+
+### Full generational staircase — 26 stops
+
+\`\`\`text
+GEN 00            10^-10 m         atom-scale top
+GEN 01            10^-11 m
+...
+GEN 05            10^-15 m         nuclear scale
+...
+GEN 10            10^-20 m         quark substructure probe reference
+...
+GEN 24            10^-34 m
+GEN 25 (floor)    1.61615×10^-35 m     user-defined floor contact
+\`\`\`
+
+All integer powers **10^-10 through 10^-34** are included (25 levels), then the **exact floor value** is the 26th and final stop. The floor is not rounded down to 10^-35 or 10^-36.
+
+\`\`\`text
+topLog = log10(10^-10) = -10
+floorLog = log10(1.61615e-35) ≈ -34.791...
+t(length_m) = [topLog - log10(length_m)] / [topLog - floorLog]
+t = 0 at atomic top; t = 1 at the exact floor.
+vortex ring y = topY + t × (floorY − topY)
+vortex radius = R_neck + (R_mouth − R_neck) × (1 − t)^compression
+\`\`\`
+
+The renderer draws an additional cross-sectional ring at **every** generation. Rungs are equally spaced by logarithmic decade, rather than arbitrarily assigned physical vertical positions. The terminal floor is the sink and exact reference-tile pitch, not a measured shortest physical length.
+
+### Radiation, decay, Higgs and elementary-particle references
+
+Each reference has an explicit **quantity kind**, so a photon wavelength, particle's charge radius, calculated characteristic length, or experimental probe constraint is **never mislabeled as a measured diameter**. All positions are computed by the same \`t(length)\` function.
+
+| Marker | Reference value | Type / interpretation |
+|---|---:|---|
+| Atom | approximately \`10^-10 m\` | Representative atomic length |
+| X-ray | \`10^-11 m\` | Example X-ray **photon wavelength**, not size |
+| Gamma | \`10^-13 m\` | Example gamma **photon wavelength**, not size; X/gamma bands have no universal sharp separation |
+| Alpha decay | \`1.67824 × 10^-15 m\` | **Measured helium-4 nucleus RMS charge radius** (alpha particle), not a decay-process radius |
+| Nucleus | approximately \`10^-15 m\` | Representative nuclear length scale |
+| Proton | approximately \`0.84075 × 10^-15 m\` | Experimental RMS charge radius |
+| Higgs boson | approximately \`1.58 × 10^-18 m\` | **Calculated reduced Compton length**, \`ħc/(125 GeV)\`; NOT a Higgs radius |
+| Beta decay | \`10^-18 m\` | **Unresolved electron/positron size reference / probe context**, NOT its diameter; neutrino has no measured radius |
+| Elementary quark | \`10^-20 m\` | **CERN CMS 2026 benchmark probe / quark-substructure limit**, not a discovered quark radius |
+| Floor | \`1.61615 × 10^-35 m\` | Author-defined reference tile, not established fundamental spacetime discretization |
+
+Source evidence:
+
+- NASA HEASARC electromagnetic spectrum and ranges: https://heasarc.gsfc.nasa.gov/docs/heasarc/headates/spectrum.html
+- NASA clarification that X-ray and gamma boundaries overlap: https://imagine.gsfc.nasa.gov/ask_astro/xrays.html
+- Nature (2021) measured helium-4 charge radius: https://www.nature.com/articles/s41586-021-03183-1
+- U.S. DOE beta decay: https://www.energy.gov/science/doe-explainsbeta-decay
+- CERN CMS observation of Higgs mass near 125 GeV: https://cmsexperiment.web.cern.ch/physics/higgs-boson/observation-new-particle-mass-125-gev
+- CERN CMS quark substructure probe (April 2026), no detected structure at roughly \`10^-20 m\`: https://home.cern/cms-looks-deep-inside-quarks/
+- NIST CODATA 2022 Planck length \`1.616255(18) × 10^-35 m\`: https://physics.nist.gov/cuu/pdf/all.pdf
+
+### New components and GitHub Pages integration
+
+- **\`scalar-zero/scale-descent-gen15.js\`** — explicit 26 generations, 10 classified reference markers, pure \`t(length)\`, \`metersAt(t)\`, kind filters, nearest marker lookup and numerical invariants.
+- **\`scalar-zero/gravity-vortex.html\`** — updated GEN15 standalone viewer: draws 26 log-position cross-sections along the original shrinking vortex, with filters for measured/representative size, photon wavelength, calculated Compton length, unresolved/probe context and floor. Marker clicks show full label, scientific meaning and the original source; the terminal generation always selects the actual floor even when another filter was active.
+- **\`scalar-zero/vector-field-732.html\` / \`vector-field-732.js\`** — add a GEN15 scale overlay and selector to the same existing 732 independently pinnable vectors, retaining GEN11 signed metric and GEN12 six-beat animation. Marker positions share the vortex's \`ringAt(t)\` function. Vector JSON export includes the 26 stops and classified science references.
+- **\`scalar-zero/index.html\`** — updates the GEN14 standalone and vector-section navigation to GEN15 without replacing any previous GitHub source history.
+
+The logarithmic placement is *quantitatively correct with respect to the declared length values*, but this diagram **does not prove** gravity itself compresses in such a cone, that all particles have finite radii, or that Higgs, electron, gamma or neutrino particles occupy the shown physical diameters. Only the *reference-length coordinate* is calibrated. The displayed accretion colors come from OASIS HON v9.4 as a symbolic palette, not observed gamma/X-ray colors.
+
+**Authorship:** David Lee Wise / ROOT0 · \`.dlw\`. Existing GEN0–GEN14 source preserved in Git history.
