@@ -573,3 +573,40 @@ After beat 6, wrap to beat 1. The two 1 beats are intentionally **not collapsed*
 The rendered magnitude is a **bounded logarithmic level-of-detail projection**. No frame ever uses \`Infinity\` screen coordinates or claims spacetime is physically oscillating between Planck and macroscopic scales. Only the underlying normalized GEN11 model state changes in preview; all 366 HON hue values and 732 discrete source indices are retained. The explicit \`0\` beats pin to exactly D; the 10^-36 beat remains the smallest nonzero finite metric magnitude.
 
 **Author / attribution:** David Lee Wise / ROOT0 · \`.dlw\`. Git source and local user data remain separately versioned.
+
+
+## GEN13 · One-reference-tile floor beneath the 732-vector field (2026-10-28)
+
+GEN13 extends the GEN12 rolling 732-vector display with a visually explicit **floor plane**, using the author's requested **one-tile length**:
+
+\`\`\`text
+FLOOR PITCH = 1 × 1.61615 × 10^-35 meters
+D           = (0,0,0) model scalar reference
+GEN11       = 0 exact; ±10^e, e in [-36,+36]; symbolic ±∞
+GEN12       = -36 / 0 / +36 / 0 / 1 / 1 (six display beats)
+GEN13       = optional floor with 1, 13 or 27 tiles per axis
+
+one tile width             1.61615 × 10^-35 m
+13-tile span (one axis)    2.100995 × 10^-34 m
+27-tile span (one axis)    4.363605 × 10^-34 m
+\`\`\`
+
+### Boundary and provenance
+
+The numeric \`1.61615 × 10^-35 m\` is preserved **exactly as supplied** by the author, but it is not identical to the **CODATA 2022** recommended Planck length \`1.616255(18) × 10^-35 m\`. [NIST/CODATA 2022 constants](https://physics.nist.gov/cuu/pdf/all.pdf). The floor is accordingly described as a **Planck-like user-specified reference pitch**, never as a measured minimum length of the universe or a precisely calibrated Planck quantum.
+
+This scale appears in the interface as a **meters-per-tile annotation**. The existing GEN11 \`10^-36\` minimum finite *dimensionless magnitude* is **not clipped to the floor**, and physical meters must not be silently multiplied by model-space vector units. The zero coordinate remains a distinct exact scalar reference. The first user-specified 1× pitch does not imply spatial quantization has been experimentally observed.
+
+### Geometry and interaction
+
+- A pseudo-3D quadrilateral floor grid is drawn **under** the toroidal/circular 732-vector field, with a dashed, nonphysical coordinate tether from **D=0** to its floor projection.
+- One tile is one user-prescribed floor pitch. Viewers may choose **1×1**, **13×13**, or **27×27** tessellated floor tiles. The default is **13×13**; choosing a larger grid changes **only** the display grid and its reported width, not the source tile pitch or vector metric.
+- The floor plane can be toggled on/off. The 732-vector identities, 366 OASIS HON colors, six-beat roll, exact-zero state, ±36 exponent range, and symbolic infinity remain independent and unchanged.
+- JSON exports now record \`floor\` with the model pitch, CODATA comparison constant, grid dimension, visible state, axial span in meters and a scope disclaimer.
+- \`scalar-zero/field-floor-1lp.js\` is a new standalone geometry/calibration helper. \`scalar-zero/vector-field-732.js\` renders the floor and exports its provenance. \`scalar-zero/vector-field-732.html\` exposes the controls. \`scalar-zero/index.html\` keeps the existing embedded view and advertises GEN13.
+
+### Verification invariants
+
+\`oneTilePitchMeters = 1.61615e-35\`; \`span(n)=n×pitch\` for \`n=1,13,27\`; \`13×13\` yields **28 projected grid lines** (14 per dimension), \`27×27\` yields **56 lines**; \`floor.project(0,0,cx,cy,pitchPx) = (cx,cy)\`. No floor animation mutates persistent vector state or the append-only local event log.
+
+**Attribution:** David Lee Wise / ROOT0 · \`.dlw\`. The author's original scalar constant is retained verbatim; NIST comparison is presented separately.
