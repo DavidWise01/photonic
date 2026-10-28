@@ -153,6 +153,11 @@
     <iframe id="chemicalAtlasFrame" src="chemical-spectrum.html" title="Interactive H O N color wheel and 118-element periodic table" loading="eager" style="display:block;width:100%;height:1100px;border:0;background:#081321" referrerpolicy="no-referrer"></iframe>
     <div class="canvas-foot"><span>ROOT0 MODEL COLORS ≠ PHYSICAL EMISSION LINES</span><a href="chemical-spectrum.html">OPEN STANDALONE ATLAS</a></div>
   </section>
+  <section class="panel" style="margin-top:14px" id="gen4Toroid">
+    <div class="panel-head"><h2>10 · SCALAR-ZERO TOROIDAL CHEMICAL / ASTRAL FIELD</h2><span class="micro">GEN4 · 10 ELEMENTS · STRAIGHT EDGES · 5 GLOBULES</span></div>
+    <iframe id="gen4Frame" src="toroid-chem-astral.html" title="GEN4 three-dimensional scalar zero toroidal field with H through Ne chemical globules" loading="eager" style="display:block;width:100%;height:1120px;border:0;background:#07121f" referrerpolicy="no-referrer"></iframe>
+    <div class="canvas-foot"><span>H→NE CHEMICAL RECORDS · TOROIDAL GEOMETRY IS MODEL SPACE</span><a href="toroid-chem-astral.html">OPEN GEN4 STANDALONE</a></div>
+  </section>
   <footer class="foot"><p><strong>Scientific boundary.</strong> This is a deterministic, classical complex-field and Jones-polarization visualization; it does not propagate individual quantum states or establish BB84 security. The gravity well is schematic. GEN2 adds a separately computed photon gravitational redshift and static clock comparison for real Earth/Sun reference scales, not Planck-scale evidence. Predictions near or below the Planck length are not validated. The 81-pixel grid is a normalized visual space, not a nanometer-resolution representation of a 32 cm optical channel. Wavelength affects displayed color and a normalized spatial-frequency proxy. Three code paths in one simulation are not three independent physical instruments.</p><div class="dlw">.dlw / ROOT0</div></footer>
 </div>
 <script>
@@ -412,6 +417,12 @@ function knownRender(){
 }
 knownConfig();benchmarkKnown();
 
+window.addEventListener("message",function(event){
+ var tframe=document.getElementById("gen4Frame");
+ if(tframe&&event.source===tframe.contentWindow&&event.data&&event.data.kind==="root0-toroid-height"&&Number.isFinite(event.data.height)){
+  tframe.style.height=Math.max(670,Math.min(2400,Math.ceil(event.data.height+16)))+"px";
+ }
+});
 function tick(now){if(!last)last=now;var dt=Math.min(.05,(now-last)/1000);last=now;if(running)t+=dt*values.speed*2;renderField();renderLattice();renderGravity();knownRender();if(!window.__lastReadout||now-window.__lastReadout>120){refreshInspector();renderScope();knownOutput();window.__lastReadout=now}requestAnimationFrame(tick)}
 function invariant(ok,msg){if(!ok)throw Error("Invariant failed: "+msg)}
 invariant(nodes.length===27,"27 nodes");invariant(edges.length===54,"54 edges");invariant(SIZE*SIZE===6561,"81x81 field");invariant(nodes.filter(function(n){return n.x===0&&n.y===0&&n.z===0}).length===1,"scalar zero");invariant(currentReports().length===3,"three reports");invariant(Number.isFinite(rawIntensity(phasor(40,40,0))),"finite intensity");
