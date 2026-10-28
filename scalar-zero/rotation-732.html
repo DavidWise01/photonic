@@ -70,16 +70,17 @@ REGISTRY ONLY:   119...366</pre>
 <footer>.dlw · David Lee Wise / ROOT0 · Element names from the <a href="https://iupac.org/what-we-do/periodic-table-of-elements/">IUPAC Periodic Table</a>. All rotations, 366 coordinates, 732 phase events, H/O/N bands and nibble controls are model-space conventions. No evidence is asserted for chemical elements above Z=118 or for measured Planck-scale physics.</footer>
 </main>
 <script src="chem-data-head.js"></script><script src="chem-data-mid.js"></script><script src="chem-data-late.js"></script><script src="chem-data-heavy-a.js"></script><script src="chem-data-heavy-b.js"></script>
+<script src="pinwheel-source-v94.js"></script>
 <script>
 "use strict";
 (function(){
  const $=id=>document.getElementById(id),TAU=2*Math.PI;
  const ARM_COUNT=28,CELLS_PER_ARM=13,DATA_COUNT=364,REGISTER_COUNT=366,PHASE_COUNT=732,CTRL_BITS=4;
  const items=Array.from({length:REGISTER_COUNT},(_,i)=>{
-  const address=i+1,arm=address<=364?Math.floor(i/13)+1:null,cell=address<=364?i%13+1:null;
-  const color=address<=122?{key:"H",name:"hydrogen / red",casimir:"+1k",rgb:[242,91,100]}:
-    address<=244?{key:"O",name:"oxygen / green",casimir:"0k",rgb:[72,230,154]}:
-    {key:"N",name:"nitrogen / blue",casimir:"-1k",rgb:[96,143,249]};
+  const address=i+1,arm=address<=364?Math.floor(i/13)+1:null,cell=address<=364?i%13+1:null,sourceHue=window.ROOT0_PINWHEEL_366.colorAt(address,"S");
+  const color=address<=122?{key:"H",name:"hydrogen / red",casimir:"+1k",rgb:sourceHue.rgb,sourceHue:sourceHue.hue,sourceHex:sourceHue.hex}:
+    address<=244?{key:"O",name:"oxygen / green",casimir:"0k",rgb:sourceHue.rgb,sourceHue:sourceHue.hue,sourceHex:sourceHue.hex}:
+    {key:"N",name:"nitrogen / blue",casimir:"-1k",rgb:sourceHue.rgb,sourceHue:sourceHue.hue,sourceHex:sourceHue.hex};
   return{address,arm,cell,kind:address===365?"minus-terminal":address===366?"plus-terminal":"data",
    bit:address%2,shape:address%2?"toroid":"box",symbol:address<=118?CHEM_SYMBOLS[i]:null,
    elementName:address<=118?CHEM_NAMES[i]:null,knownElement:address<=118,color:color}
@@ -175,14 +176,15 @@ REGISTRY ONLY:   119...366</pre>
  for(let bit=3;bit>=0;bit--){const b=document.createElement("button");b.className="bit";b.type="button";b.dataset.bit=bit;b.setAttribute("aria-pressed","false");
    const title=document.createElement("strong"),sub=document.createElement("small");title.textContent="0";sub.textContent="b"+bit;b.append(title,sub);
    b.addEventListener("click",()=>{nibble^=1<<bit;nibbleRefresh()});$("nibble").appendChild(b)}
+ function notifySelection(){if(window.parent!==window)window.parent.postMessage({kind:"root0-gen8-selected",address:selected},"*")}
  for(let i=1;i<=32;i++){const b=document.createElement("button");b.type="button";b.className="channel"+(i>28?" control-channel":"");
    b.dataset.lane=String(i);b.textContent=i<=28?"A"+String(i).padStart(2,"0"):"b"+(32-i);
    b.title=i<=28?"13 data sites in arm "+i:"Nibble control bit b"+(32-i);
-   if(i<=28)b.addEventListener("click",()=>{selected=(i-1)*13+1;refresh()});
+   if(i<=28)b.addEventListener("click",()=>{selected=(i-1)*13+1;refresh();notifySelection()});
    else b.addEventListener("click",()=>{nibble^=1<<(32-i);nibbleRefresh()});
    $("channels").appendChild(b)}
  $("speed").addEventListener("input",()=>$("speedOut").textContent=$("speed").value);
- $("selected").addEventListener("input",()=>{selected=+$("selected").value;refresh()});
+ $("selected").addEventListener("input",()=>{selected=+$("selected").value;refresh();notifySelection()});
  $("tick").addEventListener("input",()=>{tickFloat=+$("tick").value;running=false;$("play").textContent="▶ RESUME";refresh()});
  $("play").addEventListener("click",()=>{running=!running;$("play").textContent=running?"Ⅱ PAUSE":"▶ RESUME";refresh()});
  $("reset").addEventListener("click",()=>{tickFloat=0;selected=1;nibble=0;running=false;$("play").textContent="▶ RESUME";nibbleRefresh();refresh()});
@@ -190,7 +192,7 @@ REGISTRY ONLY:   119...366</pre>
  canvas.addEventListener("click",e=>{
   const r=canvas.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;let best=null,d=14*14;
   for(const p of positions){const delta=(p.x-mx)**2+(p.y-my)**2;if(delta<d){d=delta;best=p}}
-  if(best){selected=best.id;refresh()}
+  if(best){selected=best.id;refresh();notifySelection()}
  });
  $("export").addEventListener("click",()=>{
   const payload={title:"ROOT0 GEN8 · 364/366/732",version:"GEN8",geometry:{arms:28,cellsPerArm:13,dataSites:364,axial:["-","+"],registers:366,
@@ -198,9 +200,14 @@ REGISTRY ONLY:   119...366</pre>
    phaseEventsPerTurn:732,phaseConvention:"two polarity samples at each of 366 registers, one conceptual 360-degree rotation"},
    scalarZero:0,knownChemicalElements:"Z=1..118 only",registry:items,
    H_O_N:{H:"1..122 / red / Casimir +1k model index",O:"123..244 / green / Casimir 0k model index",N:"245..366 / blue / Casimir -1k model index"},
-   selected,tick:scanner().tick,producedAt:new Date().toISOString(),physicalDisclaimer:"No element identities or measured chemical effects beyond Z=118; no experimental quanta/Planck results"};
+   selected,tick:scanner().tick,paletteSource:"oasis/n184/elemental-hon-color-operants/v94",producedAt:new Date().toISOString(),physicalDisclaimer:"No element identities or measured chemical effects beyond Z=118; no experimental quanta/Planck results"};
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}),u=URL.createObjectURL(blob),a=document.createElement("a");
   a.href=u;a.download="ROOT0_GEN8_28x13_366_732.json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);
+ });
+ window.addEventListener("message",event=>{
+  if(event.source!==window.parent||!event.data)return;
+  if(event.data.kind==="root0-gen8-set-address"&&Number.isInteger(event.data.address)&&event.data.address>=1&&event.data.address<=366){selected=event.data.address;refresh()}
+  if(event.data.kind==="root0-gen8-set-tick"&&Number.isInteger(event.data.tick)&&event.data.tick>=0&&event.data.tick<=731){tickFloat=event.data.tick;running=false;$("play").textContent="▶ RESUME";refresh()}
  });
  function loop(now){
   let delta=last?Math.min(.075,(now-last)/1000):0;last=now;
