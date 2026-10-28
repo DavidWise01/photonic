@@ -198,6 +198,7 @@
   ctx.textAlign="left";ctx.font="10px ui-monospace,monospace";ctx.fillStyle="#9dbfc8";ctx.fillText("SOURCE COLORS · GEN9 · "+strength,13,h-14);
  }
  canvas.addEventListener("pointerdown",e=>{
+  skipClick=false;
   if($("viewMode").value!=="disk")return;
   drag={x:e.clientX,y:e.clientY,rotate:diskRotation,tilt:+$("tilt").value,moved:false};
   if(canvas.setPointerCapture)canvas.setPointerCapture(e.pointerId);
