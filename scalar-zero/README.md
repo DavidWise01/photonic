@@ -476,3 +476,66 @@ Arithmetic test: \`732 = 366×2\`, all IDs 0..731 map bijectively to address-plu
 **Known physics:** Ordinary optical frequency/energy calculations and known element identities remain limited to earlier, independently marked sections. **ROOT0 model conventions:** 732 vectors, scalar zero pinning, model toroidal angles, display Casimir slots and formal infinities.
 
 **Authorship:** David Lee Wise / ROOT0 · \`.dlw\`. Source lineage: [OASIS HON v9.4](https://github.com/DavidWise01/oasis/blob/main/n184/elemental-hon-color-operants-v94/hon_core.mjs).
+
+
+## GEN11 · Signed power-of-ten metric for all 732 pinned vectors (2026-10-28)
+
+GEN11 corrects the **metric domain** used by GEN10, without changing its vector identities, HON source colors, scalar-zero reference, GitHub Pages URL or GEN0–GEN9 modules. The earlier mapping \`10^exponent − 1\`, with exponent limited to \`[0,36]\`, is **superseded by this explicit-zero signed-power metric**.
+
+### New authoritative scalar metric
+
+\`\`\`text
+vector ID:       0...731, unchanged
+HON address:     floor(vector_id / 2) + 1        -> 1...366
+phase:           vector_id even -> −; odd -> +
+origin:          D=(0,0), shared scalar zero
+
+metric state     {pinned, sign, zero, exponent, infinite}
+sign             −1 / +1                  (independent of −/+ phase)
+zero             true -> exact numeric 0
+finite           zero=false, infinite=false -> sign × 10^exponent
+exponent         −36 ... +36              (0.25 steps in slider)
+infinite         true -> symbolic signed ∞ (NOT a finite number)
+
+three distinct examples:
+zero=true         -> EXACT 0
+zero=false,e=−36  -> 10^−36       (smallest NONZERO finite magnitude)
+zero=false,e=0    -> 1           (unit scale, NOT zero)
+zero=false,e=36   -> 10^36       (largest finite magnitude)
+infinite=true     -> ±∞          (symbolic outer boundary only)
+\`\`\`
+
+The finite scalar domain is \`[−10^36,−10^−36] ∪ {0} ∪ [10^−36,10^36]\`, with **discrete quarter-exponent steps** in the UI. The positive and negative ranges never cross zero by sliding; the **SET EXACT ZERO** control selects zero explicitly. The **USE FINITE 10^e** control exits zero/infinity into the selected finite exponent, while **SET SIGNED ∞** preserves the independent sign.
+
+The display uses a finite *logarithmic level-of-detail projection*, not \`10^e\` pixels:
+
+\`\`\`text
+normalized display radius:
+  0,                      zero=true
+  0.08 + 0.86*(e+36)/72,  finite, e in [−36,+36]
+  1,                      infinite=true
+
+r_pixels = viewport_outer_radius × normalized_display_radius
+\`\`\`
+
+Thus **zero draws precisely at D**, \`10^−36\` is visible at nonzero radius 0.08, \`10^0\` at 0.51 and \`10^36\` at 0.94. Symbolic infinity alone reaches display ratio 1. The sign flips direction without changing magnitude. Parity remains address odd = ◉ toroid / even = □ box; source color remains the exact OASIS HON v9.4 color per address and is shared by each phase pair.
+
+### Local storage migration and rollback
+
+GEN10 v1 local storage is preserved unmodified under \`root0.gen10.vector-field.v1\`. GEN11 stores its new schema \`root0-vector732-metric-v2\` under \`root0.gen11.vector-field.metric.v2\`. The viewer loads v2 if present. Otherwise, if v1 exists, it migrates **all 732 states** and copies the saved event history, appending a labeled \`MIGRATION_V1_TO_METRIC_V2\` record.
+
+- The legacy \`10^e − 1\` magnitude zero maps to \`zero=true\`.
+- Legacy positive finite magnitudes are mapped to \`e_new = log10(10^e_old−1)\` and snapped to the nearest 0.25 exponent step, **so migration may approximate previous finite magnitudes**. The old unmodified data remains available for exact rollback or audit.
+- Legacy symbolic infinity keeps its sign and remains symbolic.
+- New state changes and JSON exports use v2, with the name \`ROOT0_GEN11_732_SIGNED_POWER10_METRIC.json\`.
+
+### Updated files
+
+- \`scalar-zero/vector-732-core.js\` — canonical v2 scale equation, exact zero bit, finite signed values, display-radius mapping and non-destructive v1 migration helper.
+- \`scalar-zero/vector-field-732.js\` — controls, migration, independent vector persistence, event ledger and v2 export.
+- \`scalar-zero/vector-field-732.html\` — the visible GEN11 signed metric (−36 to +36 exponent slider, exact-zero button, finite-mode button and numeric state readout).
+- \`scalar-zero/index.html\` — GEN11 banner and embedded field, preserving the GEN10 standalone route.
+
+**Boundary:** These are dimensionless simulation coordinates. The exponent \`10^−36\` is not a measured Planck-scale probe, and \`10^36\` and \`±∞\` are not claims of literal infinite physical distances or forces.
+
+**Attribution:** David Lee Wise / ROOT0 · \`.dlw\`. All previous code versions remain in Git commit history.
