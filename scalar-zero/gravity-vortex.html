@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ROOT0 GEN16 · 366-Color Vortex from 0 to 10^-35</title><meta name="theme-color" content="#050d1c">
+<title>ROOT0 GEN18 · 366, 370 or 999 Logarithmic Generations</title><meta name="theme-color" content="#050d1c">
 <meta name="description" content="A live Canvas2D gravity-vortex schematic from a 366-color accretion field to a 1.61615e-35 meter reference floor, with shrinking rings, spiral funnel and sink.">
 <style>
 :root{color-scheme:dark;--bg:#050d1c;--ink:#e8faff;--muted:#98b8c8;--edge:#2b4b63;--mint:#86fce0}
@@ -50,10 +50,10 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
 .gen-btn.active{background:#175850;border-color:#94f0d7}
 .gen-btn:last-child{grid-column:span 2;color:#b9ffe9;border-color:#73ac9d}
 </style></head><body><main>
-<header class="top"><strong>ROOT0 / GEN16 · COLOR STRETCH 0 → 10⁻³⁵ / GEN15 LOG DESCENT</strong><nav><a href="./">FULL SCALAR-ZERO LAB</a><a href="vector-field-732.html">732 VECTORS</a><a href="pinwheel-366.html">366 PINWHEEL</a></nav></header>
+<header class="top"><strong>ROOT0 / GEN18 · 366 / 370 / 999 LOG-SCALE STEPS / GEN16 COLORS</strong><nav><a href="./">FULL SCALAR-ZERO LAB</a><a href="vector-field-732.html">732 VECTORS</a><a href="pinwheel-366.html">366 PINWHEEL</a></nav></header>
 <h1>366 colors down the vortex <span style="color:#92ffe3">/|\</span></h1>
 <p class="lead">A rotating 366-color accretion-field mouth compresses into a narrowing vortex of concentric rings and twin spirals, terminating in a sink node on the existing scalar-floor grid. All 366 OASIS hues stretch along the whole shaft from color-axis zero to 10⁻³⁵ m. Independently, each scientific scale generation retains its logarithmic position from 10⁻¹⁰ m to the 1.61615×10⁻³⁵ m floor. Radiation is marked by wavelength, decay products by known sizes or limits, and elementary particles by documented probe or Compton scales—not invented particle diameters.</p>
-<div class="metrics"><div class="metric"><b>366</b><small>OASIS SOURCE COLORS</small></div><div class="metric"><b>732</b><small>−/+ PHASE VECTORS</small></div><div class="metric"><b id="ringMetric">26</b><small>LOGARITHMIC SCALE GENERATIONS</small></div><div class="metric"><b>1.61615×10<sup>−35</sup></b><small>FLOOR TILE PITCH · METERS</small></div></div>
+<div class="metrics"><div class="metric"><b>366</b><small>OASIS SOURCE COLORS</small></div><div class="metric"><b>732</b><small>−/+ PHASE VECTORS</small></div><div class="metric"><b id="ringMetric">371</b><small>LOG-SCALE POSITIONS · DEFAULT 370 INTERVALS</small></div><div class="metric"><b>1.61615×10<sup>−35</sup></b><small>FLOOR TILE PITCH · METERS</small></div></div>
 <div class="layout">
 <section class="panel"><div class="head"><h2>01 · 26 LOG-SCALE GENERATIONS TO THE FLOOR</h2><small>10⁻¹⁰ m → 1.61615 × 10⁻³⁵ m · TRUE LOG-VERTICAL MAPPING</small></div>
 <div class="scene"><canvas id="scene" aria-label="Animated gravity vortex: colored accretion disk, shrinking ring funnel, three scale markers and a grid floor sink"></canvas>
@@ -61,6 +61,10 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
 <div class="legend"><span>◉ 366 HON hues stretched mouth-to-floor</span><span>∿ 2 intertwined spiral threads</span><span>⬇ chromatic 0→10⁻³⁵ m / 26 log-size generations</span><span>◎ luminous/dark sink at floor</span></div></section>
 <aside class="panel"><div class="head"><h2>02 · VORTEX CONTROLLER</h2><small id="state">LIVE · CLOCKWISE</small></div><div class="side">
 <div class="control"><label for="compression">TAPER COMPRESSION <output id="compressionOut">1.40</output></label><input id="compression" type="range" min=".55" max="3.5" step=".05" value="1.4"></div>
+<div class="control"><label for="resolution">GEN18 FRACTIONAL-POWER RESOLUTION</label>
+<select id="resolution"><option value="366">366 intervals / 367 nodes</option><option value="370" selected>370 intervals / 371 nodes</option><option value="999">999 intervals / 1000 nodes</option></select></div>
+<div class="control"><label for="slice">LOGARITHMIC POSITION <output id="sliceOut">0 / 370</output></label><input id="slice" type="range" min="0" max="370" step="1" value="0"></div>
+<div class="readout"><small>CURRENT FRACTIONAL-POWER STEP</small><b id="sliceMeters">1.000000 × 10⁻¹⁰ m</b><div class="readgrid"><div><small>POWER EXPONENT</small><strong id="sliceExponent">−10.0000</strong></div><div><small>HON COLOR ADDRESS</small><strong id="sliceHON">H001</strong></div></div></div>
 <div class="control"><label for="rings">DECORATIVE SPIRAL RINGS <output id="ringsOut">26</output></label><input id="rings" type="range" min="4" max="64" value="26"></div>
 <div class="control"><label for="speed">ORBITAL SPEED <output id="speedOut">0.60</output></label><input id="speed" type="range" min="0" max="3" step=".05" value=".6"></div>
 <div class="control"><label for="direction">SPIN DIRECTION</label><select id="direction"><option value="1">Clockwise (+)</option><option value="-1">Counterclockwise (−)</option></select></div>
@@ -82,9 +86,9 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
 <section class="panel"><div class="head"><h2>03 · PARTICLE / DECAY / PHOTON REFERENCES</h2><small>CLICK TO HIGHLIGHT THE CORRESPONDING VORTEX LEVEL</small></div>
 <div class="inner"><div id="scienceMarkers" class="science-markers" role="group" aria-label="Particle and radiation scale references"></div>
 <p class="note">A wavelength, a charge radius, a reduced Compton length, and a scattering constraint are different quantities. Their positions are comparable lengths, not comparable measured diameters.</p></div></section>
-<section class="panel"><div class="head"><h2>04 · FULL GENERATION DESCENT</h2><small>10⁻¹⁰ TO FLOOR · 26 INDIVIDUAL STOPS</small></div>
+<section class="panel"><div class="head"><h2>04 · LOGARITHMIC GENERATION LANDMARKS</h2><small>26 WHOLE-POWER REFERENCE MARKERS RETAINED</small></div>
 <div class="inner"><div id="generations" class="generation-list" aria-label="Logarithmic 10-power scale generations"></div>
-<p class="note">Each successive decade occupies equal vertical distance. The last interval stops at your exact floor reference 1.61615×10⁻³⁵ m, not an invented 10⁻³⁶ m physical wall.</p></div></section></div>
+<p class="note">GEN18 interpolates 366, 370 or 999 fractional-power intervals across this exact same 26-marker length range. The final node lands at your floor reference 1.61615×10⁻³⁵ m.</p></div></section></div>
 <section class="panel" style="margin-top:12px">
 <div class="head"><h2>05 · ELEMENTARY PARTICLE CATALOGUE</h2><small>NO FINITE SPATIAL RADIUS ASSUMED</small></div>
 <div class="inner lines">
@@ -101,12 +105,13 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
 <script src="vector-732-core.js"></script>
 <script src="gravity-vortex-core.js"></script>
 <script src="scale-descent-gen15.js"></script>
+<script src="scale-generations-gen18.js"></script>
 <script>
 "use strict";
 (function(){
  const $=id=>document.getElementById(id),F=window.ROOT0_FIELD_FLOOR,H=window.ROOT0_PINWHEEL_366,
-  M=window.ROOT0_VECTOR_732,V=window.ROOT0_GRAVITY_VORTEX,S=window.ROOT0_SCALE_DESCENT,TAU=Math.PI*2;
- if(!F||!H||!M||!V||!S||F.geometry.oneTilePitchMeters!==1.61615e-35||S.floorMeters!==F.geometry.oneTilePitchMeters||M.count!==732)throw Error("Vortex dependencies missing");
+  M=window.ROOT0_VECTOR_732,V=window.ROOT0_GRAVITY_VORTEX,S=window.ROOT0_SCALE_DESCENT,E=window.ROOT0_SCALE_GENERATIONS,TAU=Math.PI*2;
+ if(!F||!H||!M||!V||!S||!E||F.geometry.oneTilePitchMeters!==1.61615e-35||S.floorMeters!==F.geometry.oneTilePitchMeters||M.count!==732)throw Error("Vortex dependencies missing");
  const cvs=$("scene"),ctx=cvs.getContext("2d");
  const colors=Array.from({length:366},(_,i)=>H.colorAt(i+1).hex);
  const stars=Array.from({length:180},(_,i)=>({x:((i*183.779)%991)/991,y:((i*397.1)%997)/997,r:i%5===0?1.1:.6}));
@@ -186,10 +191,37 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
   });
   refreshScaleSelection();
  }
+ function resolution(){return +$("resolution").value}
+ function updateSlice(index,renderNow=true){
+  const segments=resolution(),i=Math.min(segments,Math.max(0,Math.round(index)));
+  $("slice").max=String(segments);$("slice").value=String(i);
+  const r=E.level(i,segments);
+  $("sliceOut").textContent=i+" / "+segments;
+  $("sliceMeters").textContent=r.meters.toExponential(6)+" m";
+  $("sliceExponent").textContent=r.exponent.toFixed(6);
+  $("sliceHON").textContent=String(r.honAddress).padStart(3,"0")+" / 366";
+  if(renderNow)draw();
+ }
+ $("resolution").addEventListener("change",()=>updateSlice(0));
+ $("slice").addEventListener("input",()=>updateSlice(+$("slice").value));
+ updateSlice(0,false);
  function drawLogGenerations(o){
   if(!$("markersVisible").checked)return;
-  const gen=S.generations;
+  const gen=S.generations,steps=E.levels(resolution()),active=+$("slice").value;
   ctx.save();
+  // All fractional-power intervals are represented by exact log10-positioned
+  // cross-sections; the original 26 scientific decade landmarks stay legible.
+  ctx.beginPath();
+  for(const g of steps){
+   const r=V.ringAt(g.t,o);
+   ctx.moveTo(r.x+r.rx,r.y);
+   ctx.ellipse(r.x,r.y,Math.max(.25,r.rx),Math.max(.3,r.ry),0,0,TAU);
+  }
+  ctx.strokeStyle="#88dae738";ctx.lineWidth=.48;ctx.stroke();
+  const slice=steps[active]||steps[0],chosen=V.ringAt(slice.t,o);
+  ctx.beginPath();ctx.ellipse(chosen.x,chosen.y,Math.max(.25,chosen.rx),Math.max(.4,chosen.ry),0,0,TAU);
+  ctx.strokeStyle="#f9ffb5";ctx.lineWidth=2.6;ctx.stroke();
+
   ctx.textAlign="left";ctx.font="9px ui-monospace,monospace";
   const leftX=14;
   for(let i=0;i<gen.length;i++){
@@ -274,7 +306,7 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
   ctx.fillText("SINK / FLOOR CONTACT",cx,Math.min(h-6,floorY+19));
   $("mouth").textContent=geometry.mouthRadius.toFixed(1)+" px";
   $("neck").textContent=geometry.neckRadius.toFixed(2)+" px";
-  $("ringMetric").textContent=S.generations.length;
+  $("ringMetric").textContent=E.metadata(resolution()).nodes;
   $("firstAxialColor").textContent=colors[0]+" · H001";
   $("lastAxialColor").textContent=colors[365]+" · N366";
   $("scan").textContent="V"+String(phase).padStart(3,"0")+" / "+active.polarity;
@@ -288,12 +320,14 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
  $("pause").addEventListener("click",()=>{playing=!playing;$("pause").textContent=playing?"Ⅱ PAUSE":"▶ RESUME"});
  $("reset").addEventListener("click",()=>{spin=0;phase=0;phaseProgress=0;playing=false;
   $("compression").value="1.4";$("rings").value="23";$("speed").value=".6";$("direction").value="1";
-  $("grid").value="13";$("floorVisible").checked=true;$("markersVisible").checked=true;$("haloVisible").checked=true;$("axialColors").checked=true;
+  $("grid").value="13";$("resolution").value="370";updateSlice(0,false);$("floorVisible").checked=true;$("markersVisible").checked=true;$("haloVisible").checked=true;$("axialColors").checked=true;
   $("rings").value="26";selectedMarker="atom";selectedGeneration=0;refreshScaleSelection();
   $("phase").value="0";$("pause").textContent="▶ RESUME";sync();draw()});
  $("next").addEventListener("click",()=>{phase=(phase+1)%732;$("phase").value=phase;playing=false;$("pause").textContent="▶ RESUME";draw()});
  $("export").addEventListener("click",()=>{
-  const data={schema:"root0-gen16-hon366-axial-v1",view:"pure Canvas2D",
+  const data={schema:"root0-gen18-fractional-generations-v1",view:"pure Canvas2D",
+   fractionalGenerations:{...E.metadata(resolution()),selectedIndex:+$("slice").value,
+     selectedLevel:E.level(+$("slice").value,resolution()),resolutionIsLogarithmic:true},
    scaleDescent:{schema:S.schema,topMeters:S.mouthMeters,floorMeters:S.floorMeters,
     markers:S.setupMarkers(),generations:S.generations,selectedMarker,selectedGeneration,
     markerFilter:$("markerFilter").value,vertical:"logarithmic meters",width:"schematic geometry"},floor:{...F.geometry,gridSize:+$("grid").value,visible:$("floorVisible").checked},
@@ -307,7 +341,7 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
     benchmarkBands:V.markerBands},
    disclaimer:"Vertical scale is log10 true from atom 10^-10m to author floor 1.61615e-35m; funnel width is schematic; wave/Compton/probe markers are not physical particle diameters."};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="ROOT0_GEN16_HON_366_COLOR_STRETCH_0_TO_1E-35.json";
+  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="ROOT0_GEN18_366_370_999_FRACTIONAL_GENERATIONS.json";
   document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
  });
  function tick(now){
