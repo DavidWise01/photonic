@@ -53,7 +53,7 @@
    const d=M.decode(selected),v=vectors[selected],color=C.colorAt(d.address,"S");
    $("vector").value=selected;$("vectorOut").textContent=String(selected).padStart(3,"0")+" / 731";
    $("identity").textContent="V"+String(selected).padStart(3,"0")+" · "+String(d.address).padStart(3,"0")+" "+d.polarity;
-   $("label").textContent="OASIS "+color.rootSymbol+" · "+color.hex+" · HON local "+color.localAddress+"/122";
+   $("label").textContent="OASIS "+color.rootSymbol+" · "+color.hex+" · "+(d.bit?"◉ TOROID":"□ BOX")+" · HON "+color.localAddress+"/122";
    $("swatch").style.background=color.hex;
    $("pinState").textContent=v.pinned?"PINNED TO D":"FREE";
    $("signState").textContent=v.sign===1?"+":"−";
@@ -183,7 +183,9 @@
   ctx.strokeStyle=v.pinned?"#fff9cf":"#b7ccde";ctx.lineWidth=v.pinned?3:1.8;
   ctx.setLineDash(v.pinned?[]:[7,6]);ctx.shadowColor=colors[selected];ctx.shadowBlur=v.pinned?13:0;ctx.stroke();
   ctx.setLineDash([]);ctx.shadowBlur=0;
-  ctx.beginPath();ctx.arc(to.x,to.y,v.infinite?7:5,0,TAU);
+  ctx.beginPath();const nodeRadius=v.infinite?7:5;
+  if(d.bit)ctx.arc(to.x,to.y,nodeRadius,0,TAU);
+  else ctx.rect(to.x-nodeRadius,to.y-nodeRadius,nodeRadius*2,nodeRadius*2);
   ctx.strokeStyle="#ffdfac";ctx.lineWidth=2;ctx.fillStyle=v.pinned?colors[selected]:"#182c40";ctx.fill();ctx.stroke();
   if(v.infinite){
     ctx.fillStyle="#ffdda8";ctx.font="bold 13px ui-monospace,monospace";
