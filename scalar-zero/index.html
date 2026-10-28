@@ -173,6 +173,11 @@
     <iframe id="gen7Frame" src="mirror-13-1-13.html" title="GEN7 13 left one center 13 right: mirrored 27-cell scalar-zero geometry" loading="eager" style="display:block;width:100%;height:1860px;border:0;background:#081421" referrerpolicy="no-referrer"></iframe>
     <div class="canvas-foot"><span>20 SOURCE TOKENS · 27 CELLS · 13 MIRROR PAIRS · SI CENTER</span><a href="mirror-13-1-13.html">OPEN GEN7 STANDALONE</a></div>
   </section>
+  <section class="panel" style="margin-top:14px" id="gen8Rotation">
+    <div class="panel-head"><h2>14 · 28 × 13 = 364 / 366 REGISTER / 732 ROTATION</h2><span class="micro">GEN8 · FOUR-BIT NIBBLE · ± AXIAL PHASES · 32 LANES</span></div>
+    <iframe id="gen8Frame" src="rotation-732.html" title="GEN8 scalar zero twenty-eight arm by thirteen site chemical registry with 366 positions and 732 samples per turn" loading="eager" style="display:block;width:100%;height:1770px;border:0;background:#071421" referrerpolicy="no-referrer"></iframe>
+    <div class="canvas-foot"><span>364 DATA · 2 TERMINALS · 32 CONTROL LANES · 732 PHASE EVENTS</span><a href="rotation-732.html">OPEN GEN8 STANDALONE</a></div>
+  </section>
   <footer class="foot"><p><strong>Scientific boundary.</strong> This is a deterministic, classical complex-field and Jones-polarization visualization; it does not propagate individual quantum states or establish BB84 security. The gravity well is schematic. GEN2 adds a separately computed photon gravitational redshift and static clock comparison for real Earth/Sun reference scales, not Planck-scale evidence. Predictions near or below the Planck length are not validated. The 81-pixel grid is a normalized visual space, not a nanometer-resolution representation of a 32 cm optical channel. Wavelength affects displayed color and a normalized spatial-frequency proxy. Three code paths in one simulation are not three independent physical instruments.</p><div class="dlw">.dlw / ROOT0</div></footer>
 </div>
 <script>
@@ -454,6 +459,12 @@ window.addEventListener("message",function(event){
  var frame=document.getElementById("gen7Frame");
  if(frame&&event.source===frame.contentWindow&&event.data&&event.data.kind==="root0-gen7-height"&&Number.isFinite(event.data.height)){
   frame.style.height=Math.min(3900,Math.max(1100,Math.ceil(event.data.height+24)))+"px";
+ }
+});
+window.addEventListener("message",function(event){
+ var gen8Frame=document.getElementById("gen8Frame");
+ if(gen8Frame&&event.source===gen8Frame.contentWindow&&event.data&&event.data.kind==="root0-gen8-height"&&Number.isFinite(event.data.height)){
+   gen8Frame.style.height=Math.min(3800,Math.max(1100,Math.ceil(event.data.height+20)))+"px";
  }
 });
 function tick(now){if(!last)last=now;var dt=Math.min(.05,(now-last)/1000);last=now;if(running)t+=dt*values.speed*2;renderField();renderLattice();renderGravity();knownRender();if(!window.__lastReadout||now-window.__lastReadout>120){refreshInspector();renderScope();knownOutput();window.__lastReadout=now}requestAnimationFrame(tick)}
