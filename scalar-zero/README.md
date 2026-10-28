@@ -610,3 +610,43 @@ This scale appears in the interface as a **meters-per-tile annotation**. The exi
 \`oneTilePitchMeters = 1.61615e-35\`; \`span(n)=n×pitch\` for \`n=1,13,27\`; \`13×13\` yields **28 projected grid lines** (14 per dimension), \`27×27\` yields **56 lines**; \`floor.project(0,0,cx,cy,pitchPx) = (cx,cy)\`. No floor animation mutates persistent vector state or the append-only local event log.
 
 **Attribution:** David Lee Wise / ROOT0 · \`.dlw\`. The author's original scalar constant is retained verbatim; NIST comparison is presented separately.
+
+
+## GEN14 · Gravity vortex descending to reference floor (2026-10-28)
+
+A new **standalone interactive HTML/Canvas2D vortex** is at \`scalar-zero/gravity-vortex.html\` and embedded as section **17** of \`scalar-zero/index.html\`. The same geometric model is integrated into the 732-vector field at \`vector-field-732.html\`, replacing the **straight** D-to-floor tether when GEN14 vortex mode is enabled. No earlier source is removed from Git.
+
+### The four requested features
+
+1. The **GEN13 floor grid** remains beneath the field, with the exact author's floor pitch of \`1 × 1.61615 × 10^-35 m\`. Grid choices: 1, 13 or 27 tiles per axis.
+2. The straight scalar-zero projection is **replaced by a continuously narrowing gravity-vortex shaft**, beginning at a broad colored field and constricting toward the floor.
+3. The shaft carries **concentric shrinking rings, 14 meridian strands, and two continuously phase-rotating spirals**. Ring count, taper compression, direction, and speed are adjustable in the standalone viewer.
+4. The bottom terminates at a **small dark/luminous sink node** on the floor's projected scalar-zero reference.
+
+### Geometric boundary
+
+For normalized descent \`t∈[0,1]\`, all cross-sections share the same taper function:
+
+\`R(t) = R_neck + (R_mouth − R_neck) × (1 − t)^c\` with \`c>0\`.
+
+\`R(0)=R_mouth\`; \`R(1)=R_neck\`; and for every positive \`c\`, the radius is strictly decreasing before the floor. All circles are rendered as compressed ellipses in the two-dimensional projection. The floor sink has a finite radius, so no singular numerical canvas coordinates occur.
+
+### Size markers / scientific boundary
+
+- **~10^-10 m** — order-of-magnitude reference for an atom.
+- **~10^-15 m** — order-of-magnitude reference for a nucleus.
+- **10^-16 m ?** — exploratory subnuclear **length reference**, not an established elementary-particle radius.
+- **1.61615 × 10^-35 m** — user's exact floor pitch, distinct from the CODATA 2022 Planck-length recommendation, approximately \`1.616255 × 10^-35 m\`.
+
+Vertical positioning is schematic, not a logarithmically calibrated length scale or relativistic gravity calculation. No Schwarzschild/Kerr ray tracing, physical singularities, Planck-spacetime quantization or biological conclusions are asserted.
+
+GEN11 exact zero, signed finite \`10^-36\`–\`10^36\`, symbolic infinities, GEN12 six-beat \`-36/0/+36/0/1/1\`, all 732 vector identities, and 366 OASIS HON source hues remain intact.
+
+### Source and integrations
+
+- \`gravity-vortex-core.js\`: immutable length markers, monotonically narrowing taper and shared Canvas2D rendering. Exports \`ROOT0_GRAVITY_VORTEX\`.
+- \`gravity-vortex.html\`: standalone responsive vortex viewer with full 366-color accretion wheel, 732-phase scanner, floor choices, adjustable swirl/compression, visible length bands, and JSON export.
+- \`vector-field-732.html\` / \`vector-field-732.js\`: add a GEN14 toggle, compression/ring count controls, shrinking funnel over the original floor, and vortex configuration in the existing JSON snapshot. Turning the funnel off restores the prior straight reference tether.
+- \`index.html\`: embeds the GEN14 standalone page as a separate section and adjusts iframe height on load.
+
+**Authorship:** David Lee Wise / ROOT0 · \`.dlw\`. These structures are symbolic/model-space geometries; verified JavaScript geometry is not physical verification.
