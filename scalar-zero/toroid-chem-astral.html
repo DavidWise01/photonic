@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07111c"><title>ROOT0 GEN4 · Scalar-Zero Toroidal Chemical / Astral Lattice</title>
+<style>
+:root{color-scheme:dark;--bg:#07121f;--panel:#0d1f30;--line:#294960;--ink:#e9f7fb;--muted:#90b0c0;--cyan:#7af5ed;--mint:#80ffc6}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#14314b,#07111d 65%);color:var(--ink);font:13px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:1500px;margin:auto;padding:15px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:11px}.kicker{font:800 11px ui-monospace,monospace;letter-spacing:.18em;color:var(--mint)}.mini{font:11px ui-monospace,monospace;color:var(--muted)}a{color:#86dfff}.layout{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(270px,.65fr);gap:13px}
+.panel{border:1px solid var(--line);border-radius:13px;background:linear-gradient(135deg,#102436,#091827);overflow:hidden;min-width:0}.panelbar{padding:11px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:9px}.panelbar b{font-size:12px;letter-spacing:.1em}.stage{position:relative;min-height:480px;background:radial-gradient(ellipse at 50% 40%,#14324b,#091828 65%,#06101b 100%)}#torus{width:100%;height:480px;display:block;cursor:crosshair;touch-action:pan-y}
+.overlay{pointer-events:none;position:absolute;top:14px;left:17px;font:10px/1.7 ui-monospace,monospace;color:#99b8c8;text-shadow:0 2px 10px #000}
+.ribbon{font:11px/1.5 ui-monospace,monospace;background:#081522;border-top:1px solid #35516c;padding:12px 14px;overflow-wrap:anywhere;color:#ceeafa}
+.ribbon code{color:#d2a9fb;white-space:pre-wrap}.cards{padding:13px;display:grid;gap:11px}.datum{border:1px solid #355469;border-radius:10px;background:#0a1927;padding:11px}.datum label,.datum small{font:10px ui-monospace,monospace;color:var(--muted)}.datum strong{display:block;font:800 26px ui-monospace,monospace;letter-spacing:-.04em}.datum p{margin:5px 0 0;color:#abc9d8;font-size:11px}.kv{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}.kv>div{padding:7px;background:#10283b;border-radius:7px}.kv strong{font:700 13px ui-monospace,monospace}.kv small{display:block;font:10px ui-monospace,monospace;color:#9cb2c4}
+.controls{padding:13px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.control{display:grid;gap:5px}.control label{font:10px ui-monospace,monospace;color:#b2d5df}.control output{color:var(--mint)}input[type=range]{accent-color:#67dfbf;width:100%}.check{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted)}input[type=checkbox]{accent-color:#56dab7}button{cursor:pointer;border:1px solid #476a81;border-radius:7px;background:#173b4d;color:white;padding:8px;font:750 11px system-ui}button:hover{background:#225c62}button:focus-visible,input:focus-visible{outline:2px solid white;outline-offset:2px}
+.seq{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px;margin:10px 0}.seq button{padding:7px 0;position:relative}.seq button.active{outline:2px solid white;outline-offset:2px}.seq button.data{border-color:#f2ba87}.lower{margin-top:13px;display:grid;grid-template-columns:1fr 1fr;gap:13px}.read{padding:14px;color:var(--muted);font-size:11px;line-height:1.6}.read strong{color:var(--ink)}.legend{display:flex;gap:14px;flex-wrap:wrap;color:#adc1cd;font-size:11px;margin-top:5px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+@media(max-width:890px){.layout{grid-template-columns:1fr}.controls{grid-template-columns:repeat(2,1fr)}.seq{grid-template-columns:repeat(5,1fr)}.lower{grid-template-columns:1fr}.stage{min-height:350px}#torus{height:380px}}
+@media(max-width:480px){.controls{grid-template-columns:1fr}.stage{min-height:320px}#torus{height:320px}}
+</style></head>
+<body><main>
+<div class="top"><span class="kicker">ROOT0 · GEN4 / TOROIDAL CHEMICAL ASTRAL</span><span class="mini">SCALAR D = 0 · 10 ELEMENTS · 5 GLOBULES</span></div>
+<div class="layout">
+<section class="panel">
+ <div class="panelbar"><b>01 · TOROIDAL FIELD WITH LINEAR EDGES</b><span class="mini" id="motion">SPINNING</span></div>
+ <div class="stage"><canvas id="torus" role="img" aria-label="Animated three-dimensional toroidal lattice with ten chemical nodes, straight edges, data-rich globules and a scalar-zero center"></canvas><div class="overlay">TOROID = VISUAL COORDINATE<br>STRAIGHT LINES = DATA EDGES<br>GLOBULES = RICH NODE RECORDS<br>D = SCALAR-ZERO GROUND</div></div>
+ <div class="ribbon">INPUT GRAMMAR · <code id="grammar">{{ ([h]he)((li[be]\(b[c]))((n[o]f)){neon} }}</code></div>
+ <div class="controls">
+  <div class="control"><label for="spin">ORBITAL RATE <output id="spinV">0.50×</output></label><input id="spin" type="range" min="-2" max="2" step=".05" value=".5"></div>
+  <div class="control"><label for="minor">TORUS TUBE <output id="minorV">0.58</output></label><input id="minor" type="range" min=".22" max=".85" step=".01" value=".58"></div>
+  <div class="control"><label for="phase">PHASE <output id="phaseV">0°</output></label><input id="phase" type="range" min="0" max="360" step="1" value="0"></div>
+  <label class="check"><input id="astral" type="checkbox" checked>ASTRAL STARFIELD</label>
+  <label class="check"><input id="lines" type="checkbox" checked>LINEAR EDGES</label>
+  <label class="check"><input id="globules" type="checkbox" checked>DATA GLOBULES</label>
+  <button id="pause" type="button">Ⅱ PAUSE</button><button id="reset" type="button">◎ ZERO / RESET</button>
+  <button id="next" type="button">→ NEXT ELEMENT</button>
+ </div>
+</section>
+<aside class="panel">
+ <div class="panelbar"><b>02 · NODE / GLOBULE INSPECTOR</b><span class="mini">Z = 1–10</span></div>
+ <div class="cards">
+  <div class="datum"><label>CHEMICAL ENTITY</label><strong id="ident">1 · H</strong><div id="nodeName">Hydrogen</div><p id="nodeGroup">K shell / [H] data globule</p></div>
+  <div class="datum"><label>GLOBULE RECORD</label><div class="kv">
+     <div><small>ATOMIC NUMBER</small><strong id="z">1</strong></div><div><small>NEUTRAL ELECTRONS</small><strong id="electrons">1</strong></div>
+     <div><small>SHELL OCCUPANCY</small><strong id="shells">1</strong></div><div><small>GROUP SYMBOL</small><strong id="tag">[h]</strong></div>
+   </div></div>
+  <div class="datum"><label>MODEL COLOR / CASIMIR INDEX</label><div id="swatch" style="height:15px;border-radius:6px;background:#e83c43;margin:8px 0"></div><div id="family">H · Red / +1k</div><p>Custom H/O/N sectors are symbolic. They are not measured element emission spectra or physical Casimir temperature changes.</p></div>
+  <div class="datum"><label>TOPOLOGY</label><div id="topology">Node 1/10 · rail connections: He, Ne · scalar reference: D=0</div><p>The geometry is a classical visualization; “string” means drawn connector, not experimentally observed fundamental string.</p></div>
+ </div>
+</aside></div>
+<section class="panel" style="margin-top:13px;padding:13px"><div class="panelbar" style="padding:0 0 10px"><b>03 · H → Ne ELEMENT PATH</b><span class="mini">PRESS TO INSPECT / ROTATE HIGHLIGHT</span></div>
+<div class="seq" id="sequence"></div><div class="legend"><span><i class="dot" style="background:#edb980"></i>Brackets [ ] = data globules</span><span><i class="dot" style="background:#70ecca"></i>Edges = straight data connectors</span><span><i class="dot" style="background:#b29dfe"></i>( ) and { } = nested containment</span><span><i class="dot" style="background:#fff"></i>D = scalar-zero reference</span></div></section>
+<div class="lower">
+<section class="panel read"><strong>STRUCTURAL READING.</strong> The ten known elements H, He, Li, Be, B, C, N, O, F, Ne occupy ten positions around the toroid. The bracketed centers <code>[h]</code>, <code>[be]</code>, <code>[c]</code>, <code>[o]</code> and <code>{neon}</code> are expanded into larger globules containing element records. The visual connector set consists of straight chords; the colorful curved toroid is the coordinate scaffold.</section>
+<section class="panel read"><strong>OBSERVATIONAL BOUNDARY.</strong> Electron counts and shell occupancies are standard chemistry for neutral ground-state atoms Z=1–10. Scalar zero, angular H/O/N coloring, “Casimir slots,” cosmic background, and string/toroid mappings are explicit design conventions. No quantum-gravity or string-theory prediction is claimed.</section>
+</div>
+</main>
+<script>
+"use strict";
+(function(){
+ const $=id=>document.getElementById(id),TAU=2*Math.PI,RAD=Math.PI/180;
+ const data=[
+ ["H","Hydrogen",[1],"[h]",true,"H",60],
+ ["He","Helium",[2],"he",false,"H",60],
+ ["Li","Lithium",[2,1],"li",false,"H",6],
+ ["Be","Beryllium",[2,2],"[be]",true,"H",9],
+ ["B","Boron",[2,3],"b",false,"H",12],
+ ["C","Carbon",[2,4],"[c]",true,"H",15],
+ ["N","Nitrogen",[2,5],"n",false,"N",300],
+ ["O","Oxygen",[2,6],"[o]",true,"O",180],
+ ["F","Fluorine",[2,7],"f",false,"H",25],
+ ["Ne","Neon",[2,8],"{neon}",true,"H",28]
+ ].map((x,i)=>({z:i+1,sym:x[0],name:x[1],shells:x[2],tag:x[3],rich:x[4],sector:x[5],regAngle:x[6]}));
+ const colors={H:"#ee6568",O:"#50f3a2",N:"#76a8fc"},BGC="#081421";
+ let selected=0,theta=.35,t=0,last=0,playing=true;
+ const canvas=$("torus"),ctx=canvas.getContext("2d");let w=0,h=0,dpr=1,hit=[];
+ let stars=Array.from({length:160},(_,i)=>{let a=(i*73.827)%1000/1000,b=(i*179.17)%1000/1000;return{x:a,y:b,r:.45+(i%5)*.22,tw:i*1.55}});
+ function state(){return{spin:+$("spin").value,minor:+$("minor").value,phase:+$("phase").value*RAD,astral:$("astral").checked,lines:$("lines").checked,globules:$("globules").checked}}
+ function resize(){const b=canvas.getBoundingClientRect(),ratio=Math.min(window.devicePixelRatio||1,2);
+   if(w!==b.width||h!==b.height||dpr!==ratio){w=b.width;h=b.height;dpr=ratio;canvas.width=Math.max(1,Math.round(w*dpr));canvas.height=Math.max(1,Math.round(h*dpr));ctx.setTransform(dpr,0,0,dpr,0,0)}}
+ function point(a,b,R,minor){return{x:(R+minor*Math.cos(b))*Math.cos(a),y:(R+minor*Math.cos(b))*Math.sin(a),z:minor*Math.sin(b)}}
+ function rotate(p){let a=theta,b=.68;
+   let x=p.x*Math.cos(a)-p.y*Math.sin(a),y=p.x*Math.sin(a)+p.y*Math.cos(a),z=p.z;
+   return{x:x,y:y*Math.cos(b)-z*Math.sin(b),z:y*Math.sin(b)+z*Math.cos(b)}}
+ function proj(p){let q=rotate(p),scale=Math.min(w/5.8,h/5.2),f=3.5/(3.5-q.z*.13);return{x:w/2+q.x*scale*f,y:h*.52+q.y*scale*f,depth:q.z}}
+ function drawLine(a,b,color,width=1,alpha=1){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.globalAlpha=alpha;ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();ctx.globalAlpha=1}
+ function nodeCoord(i,s){let a=TAU*i/10+s.phase+Math.PI*.10,b=[-.55,0,.4,-.8,.65,-.15,.92,.25,-.6,0][i];return point(a,b,1.75,s.minor)}
+ function decorate(s){if(!s.astral)return;for(const p of stars){let x=p.x*w,y=p.y*h,blink=.55+.35*Math.sin(t*.3+p.tw);ctx.globalAlpha=blink;ctx.fillStyle="#b4dfef";ctx.fillRect(x,y,p.r,p.r)}ctx.globalAlpha=1}
+ function render(){
+  resize();if(!w||!h)return;ctx.clearRect(0,0,w,h);const s=state();
+  decorate(s);let rings=[];
+  for(let j=0;j<14;j++){let b=TAU*j/14;
+    for(let k=0;k<72;k++){let a=TAU*k/72,n=TAU*(k+1)/72;
+      let u=proj(point(a,b,1.75,s.minor)),v=proj(point(n,b,1.75,s.minor));
+      rings.push({a:u,b:v,depth:(u.depth+v.depth)/2,major:false})}}
+  for(let j=0;j<28;j++){let a=TAU*j/28;
+    for(let k=0;k<20;k++){let b=TAU*k/20,n=TAU*(k+1)/20;
+     let u=proj(point(a,b,1.75,s.minor)),v=proj(point(a,n,1.75,s.minor));
+     rings.push({a:u,b:v,depth:(u.depth+v.depth)/2,major:true})}}
+  rings.sort((a,b)=>a.depth-b.depth);
+  for(let e of rings){let alpha=.075+.1*(e.depth+1)/2;drawLine(e.a,e.b,e.major?"#7cb4cd":"#52769b",.8,alpha)}
+  const loc=data.map((_,i)=>proj(nodeCoord(i,s)));hit=loc;
+  if(s.lines){for(let i=0;i<loc.length;i++){drawLine(loc[i],loc[(i+1)%loc.length],i===selected?"#92ffe0":"#71c5c9",i===selected?2.6:1.65,.79)}
+    let piv=[0,3,5,7,9];for(let i of piv){drawLine(loc[i],proj({x:0,y:0,z:0}),colors[data[i].sector],1.1,.27)}
+    drawLine(loc[3],loc[5],"#d2a7fc",1.4,.55);drawLine(loc[7],loc[9],"#d2a7fc",1.4,.55)}
+  let ground=proj({x:0,y:0,z:0});ctx.beginPath();ctx.arc(ground.x,ground.y,7,0,TAU);ctx.strokeStyle="#fafefc";ctx.lineWidth=2;ctx.shadowColor="#ffffff";ctx.shadowBlur=14;ctx.stroke();ctx.shadowBlur=0;ctx.fillStyle="#effffd";ctx.font="bold 12px ui-monospace,monospace";ctx.fillText("D : 0",ground.x+12,ground.y-9);
+  loc.map((p,i)=>({p,i})).sort((a,b)=>a.p.depth-b.p.depth).forEach(({p,i})=>{
+    let n=data[i],r=n.rich&&s.globules?14:7,chosen=i===selected,c=colors[n.sector];
+    if(n.rich&&s.globules){let halo=ctx.createRadialGradient(p.x,p.y,1,p.x,p.y,r*2.5);halo.addColorStop(0,c+"9F");halo.addColorStop(1,c+"00");ctx.fillStyle=halo;ctx.beginPath();ctx.arc(p.x,p.y,r*2.5,0,TAU);ctx.fill()}
+    ctx.beginPath();ctx.arc(p.x,p.y,r+(chosen?3:0),0,TAU);ctx.fillStyle=c;ctx.shadowColor=c;ctx.shadowBlur=chosen?20:10;ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle=chosen?"#fff":"#0e2432";ctx.lineWidth=chosen?2.5:1;ctx.stroke();
+    if(n.rich&&s.globules){ctx.beginPath();ctx.arc(p.x,p.y,r*.55,0,TAU);ctx.strokeStyle="#ffffff70";ctx.lineWidth=.9;ctx.stroke()}
+    ctx.font=(chosen?"bold 13px":"11px")+" ui-monospace,monospace";ctx.fillStyle=chosen?"#fff":"#c3e3ec";ctx.fillText(n.sym,p.x+13,p.y-13)
+  });
+  ctx.font="11px ui-monospace,monospace";ctx.fillStyle="#86adbf";ctx.fillText("TEN ELEMENTS / ONE ZERO / MODEL SPACE",15,h-16);
+ }
+ function inspect(i){selected=(i+10)%10;let n=data[selected];$("ident").textContent=n.z+" · "+n.sym;$("nodeName").textContent=n.name;
+ $("nodeGroup").textContent=n.rich?"Expanded data globule":"Linear connector / element node";
+ $("z").textContent=n.z;$("electrons").textContent=n.z;$("shells").textContent=n.shells.join(" · ");$("tag").textContent=n.tag;
+ $("family").textContent=n.sector+" · "+(n.sector==="H"?"Red / +1k":n.sector==="O"?"Green / 0k":"Blue / −1k");
+ $("swatch").style.background=colors[n.sector];
+ let prev=data[(selected+9)%10],next=data[(selected+1)%10];
+ $("topology").textContent="Rail edges: "+prev.sym+" ↔ "+n.sym+" ↔ "+next.sym+" · D=0"+(n.rich?" · data-rich center":"");
+ document.querySelectorAll(".seq button").forEach((b,j)=>b.classList.toggle("active",j===selected))}
+ const seq=$("sequence");data.forEach((n,i)=>{let b=document.createElement("button");b.type="button";b.textContent=n.sym+" · "+n.z;b.className=n.rich?"data":"";b.style.background=colors[n.sector]+"30";b.title=n.name+" "+n.tag;b.addEventListener("click",()=>inspect(i));seq.appendChild(b)});
+ for(let id of ["spin","minor","phase"]){$(id).addEventListener("input",()=>{$("spinV").textContent=(+$("spin").value).toFixed(2)+"×";$("minorV").textContent=(+$("minor").value).toFixed(2);$("phaseV").textContent=$("phase").value+"°"})}
+ $("pause").addEventListener("click",()=>{playing=!playing;$("pause").textContent=playing?"Ⅱ PAUSE":"▶ RESUME";$("motion").textContent=playing?"SPINNING":"FROZEN"});
+ $("next").addEventListener("click",()=>inspect(selected+1));
+ $("reset").addEventListener("click",()=>{theta=.35;t=0;inspect(0);$("phase").value=0;$("phaseV").textContent="0°"});
+ canvas.addEventListener("click",e=>{let r=canvas.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,best=-1,dist=20*20;hit.forEach((p,i)=>{let d=(p.x-x)**2+(p.y-y)**2;if(d<dist){best=i;dist=d}});if(best>=0)inspect(best)});
+ let drag=null;
+ canvas.addEventListener("pointerdown",e=>{drag={x:e.clientX,start:theta};canvas.setPointerCapture(e.pointerId)});
+ canvas.addEventListener("pointermove",e=>{if(drag)theta=drag.start+(e.clientX-drag.x)*.007});
+ canvas.addEventListener("pointerup",()=>drag=null);canvas.addEventListener("pointercancel",()=>drag=null);
+ function tick(now){let dt=last?Math.min(.05,(now-last)/1000):0;last=now;if(playing){t+=dt;theta+=dt*state().spin*.28}render();requestAnimationFrame(tick)}
+ if(data.length!==10||data.filter(n=>n.rich).length!==5||data[9].sym!=="Ne"||data.every(n=>n.shells.reduce((a,b)=>a+b,0)===n.z)===false)throw Error("Chemical invariants failed");
+ inspect(0);requestAnimationFrame(tick);
+ if(parent!==window){function size(){parent.postMessage({kind:"root0-toroid-height",height:document.body.scrollHeight},"*")}
+ if(typeof ResizeObserver!=="undefined")new ResizeObserver(size).observe(document.body);size()}
+})();
+</script>
+</body></html>
