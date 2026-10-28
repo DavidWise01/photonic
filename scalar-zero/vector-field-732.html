@@ -34,6 +34,11 @@ button,select{border:1px solid #527284;border-radius:8px;background:#183d50;colo
 .floor-control .floor-meta{font:10px ui-monospace,monospace;color:#a9cad3}
 .floor-control .floor-switch{display:flex;gap:7px;align-items:center;color:#c1e0e4;font:11px ui-monospace,monospace}
 .floor-control select{width:100%;min-width:0}
+.vortex-control{border:1px solid #3e738d;background:linear-gradient(135deg,#102e46,#0b2235);border-radius:10px;padding:11px;display:grid;gap:9px}
+.vortex-control h3{margin:0;font:800 11px ui-monospace,monospace;color:#a9eefe;letter-spacing:.11em}
+.vortex-control .mini{font:10px/1.55 ui-monospace,monospace;color:#abcbd9}
+.vortex-control .tick{display:flex;align-items:center;gap:8px;font:11px ui-monospace,monospace;color:#c5e5e8}
+.vortex-control input[type=checkbox]{accent-color:#68e7d2}
 </style></head><body><main>
 <header class="top"><span class="kicker">ROOT0 / GEN13 FLOOR · GEN12 ROLL · 732 ADDRESSABLE −/+ VECTORS</span><nav><a href="./">SCALAR ZERO</a><a href="pinwheel-366.html">GEN9 DISK</a><a href="rotation-732.html">GEN8</a></nav></header>
 <h1>Pin to exact zero.<br>Scale ±10<sup>−36</sup> to ±10<sup>36</sup>.</h1>
@@ -55,6 +60,15 @@ button,select{border:1px solid #527284;border-radius:8px;background:#183d50;colo
 <div class="readgrid"><div><small>ONE TILE PITCH</small><b id="floorPitch">1.61615 × 10⁻³⁵ m</b></div><div><small>FLOOR SPAN / AXIS</small><b id="floorSpan">2.1010 × 10⁻³⁴ m</b></div></div>
 <div class="floor-meta">User-defined geometry pitch. CODATA 2022 Planck length ≈ 1.616255 × 10⁻³⁵ m; the two constants are not identical. Floor is an illustrative coordinate grid, not measured space quantization.</div>
 </section>
+<div class="vortex-control" id="gen14Vortex">
+<h3>GEN14 · NARROWING GRAVITY VORTEX /|\</h3>
+<label class="tick"><input id="vortexVisible" type="checkbox" checked> Replace straight D=0 floor tether with vortex</label>
+<div class="control"><label for="vortexCompression">SHAFT COMPRESSION <output id="vortexCompressionOut">1.40</output></label><input id="vortexCompression" type="range" min=".55" max="3.5" step=".05" value="1.4"></div>
+<div class="control"><label for="vortexRings">SHRINKING RINGS <output id="vortexRingsOut">23</output></label><input id="vortexRings" type="range" min="5" max="54" value="23"></div>
+<label class="tick"><input id="vortexMarkers" type="checkbox" checked> Show atom / nucleus / tentative 10⁻¹⁶ m bands</label>
+<div class="mini">Floor sink = projected D=0 at user-defined 1.61615×10⁻³⁵ m tile pitch. Physical size bands are qualitative reference markers, not a gravitational solution.</div>
+<a href="gravity-vortex.html" style="color:#9ff2ee;font:800 11px ui-monospace,monospace">OPEN FULL-SCREEN GRAVITY VORTEX</a>
+</div>
 <div class="roll-box" id="gen12Roll">
 <div class="roll-title">GEN12 · SIX-BEAT METRIC ROLL · −36 / 0 / +36 / 0 / 1 / 1</div>
 <div class="roll-beats" id="rollBeats" role="group" aria-label="Six-step roll sequence"></div>
@@ -96,5 +110,6 @@ screen radius = compressed, bounded LOD
 <div class="bottom">ROOT0 / .dlw · David Lee Wise · GEN13 floor of 1 × 1.61615 × 10⁻³⁵ m as reference tile · GEN11 power-of-ten metric: 0, ±10⁻³⁶ through ±10³⁶, then symbolic ±∞. GEN10 saved settings migrate to a new key; the original remains untouched. HON v9.4 colors and 732 vector identities remain unchanged.</div>
 </main>
 <script src="pinwheel-source-v94.js"></script><script src="vector-732-core.js"></script>
-<script src="field-floor-1lp.js"></script><script src="vector-field-732.js"></script>
+<script src="field-floor-1lp.js"></script>
+<script src="gravity-vortex-core.js"></script><script src="vector-field-732.js"></script>
 </body></html>
