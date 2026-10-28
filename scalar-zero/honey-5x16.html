@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#081320">
+<meta name="description" content="ROOT0 GEN19 HONEY five operators controlling one shared 4x4 operant plane. Four four-lane links, 256 distinct routes and explicit scalar-zero endpoint reachability.">
+<title>ROOT0 GEN19 · HONEY 5[4×4] · 5 Operators / 16 Operants</title>
+<style>
+:root{color-scheme:dark;--bg:#081320;--panel:#0e2232;--line:#32546b;--fg:#effbff;--dim:#abc8d8;--cyan:#7deddb}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#163449 0,#081320 67%);font:13px/1.5 system-ui,sans-serif;color:var(--fg)}
+main{max-width:1250px;margin:0 auto;padding:20px 14px 45px}
+a{color:#a5e4ff}.top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:0 0 12px;border-bottom:1px solid var(--line);font:700 11px ui-monospace,monospace}
+.top strong{letter-spacing:.13em;color:var(--cyan)}h1{font-size:clamp(26px,5vw,52px);letter-spacing:-.045em;margin:22px 0 10px}
+.lede{color:var(--dim);max-width:910px;margin:0 0 16px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:18px 0}
+.metric{border:1px solid var(--line);border-radius:9px;padding:12px;background:#10273a}
+.metric b{display:block;color:#a3ffe6;font:800 clamp(22px,4vw,37px) ui-monospace,monospace}
+.metric small{font:9px/1.4 ui-monospace,monospace;letter-spacing:.06em;color:var(--dim)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:11px;overflow:hidden}
+.head{display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:12px 15px;flex-wrap:wrap}
+.head b{font:800 12px ui-monospace,monospace}.head small{font:10px ui-monospace,monospace;color:var(--dim)}
+.content{padding:14px}.layout{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-top:12px}
+.layout.bottom{grid-template-columns:.8fr 1.2fr}
+.diagram{padding:16px;overflow-x:auto}
+.chain{display:flex;align-items:center;justify-content:space-between;min-width:640px;gap:0;padding:25px 5px 15px}
+.op{height:80px;min-width:80px;border:2px solid #6fbed0;background:#163d52;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative}
+.op strong{font:800 26px ui-monospace,monospace}.op small{font:8px ui-monospace,monospace;color:#cbe5ed}
+.op.on{border-color:#abffea;box-shadow:0 0 18px #7bfff326}.op.off{border-color:#fb957e}
+.link{height:55px;min-width:52px;flex:1;display:grid;grid-template-rows:repeat(4,1fr);gap:3px;padding:3px 5px}
+.link>span{height:3px;background:#36586e;opacity:.85;border-radius:10px}
+.link>span.on{background:#96fce8;box-shadow:0 0 10px #8cfbd6;opacity:1}
+.axis{border-top:1px solid var(--line);margin-top:13px;padding-top:9px;color:var(--dim);font:10px ui-monospace,monospace}
+.lanes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+label{display:block;color:var(--dim);font:750 10px/1.5 ui-monospace,monospace}
+select,button{color:var(--fg);background:#12364b;border:1px solid #4c7790;border-radius:7px;padding:9px;font:750 12px system-ui}
+button{cursor:pointer}button:hover{border-color:#a2fff1}select{width:100%;cursor:pointer}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:0 0 12px}
+.tab.active{background:#255d65;border-color:#7fead6}.tab{font:800 17px ui-monospace,monospace}
+.grid16{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;max-width:430px}
+.cell{min-height:66px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;background:#17364b}
+.cell span{font:800 13px ui-monospace,monospace}.cell small{font:9px ui-monospace,monospace;color:#adcad8}
+.cell.selected{border:2px solid #c3fff1;background:#1d555a}
+.cell.closed{background:#3c2932;border-color:#9a5368}.cell.unrouted{opacity:.62}
+.footnotes{color:var(--dim);font:11px/1.75 system-ui;margin-top:13px}
+.read{display:grid;gap:10px}
+.step{border:1px solid #34566a;border-radius:7px;padding:9px;display:grid;grid-template-columns:35px 1fr auto;align-items:center;gap:8px;font:11px ui-monospace,monospace}
+.step b{font-size:19px}.step span{color:var(--dim)}.step i{font-style:normal;color:#aafce8}.step i.block{color:#ffae9e}
+.note{padding:11px;border:1px solid #365a69;background:#102c3f;border-radius:8px;color:var(--dim)}
+.note b{color:#d4fff4}.result{font:800 13px ui-monospace,monospace;color:#9bffe1;padding:10px 12px;background:#163949;border:1px solid #437a79;border-radius:8px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.actions button{flex:1}
+.test{display:flex;justify-content:space-between;gap:9px;border:1px solid #2c5066;border-radius:6px;margin-top:5px;padding:8px 10px;font:11px ui-monospace,monospace}
+.test span:last-child{color:#a9ffe4}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:0;color:#d0eef5;font:11px/1.75 ui-monospace,monospace}
+footer{margin-top:16px;color:var(--dim);font:11px/1.7 system-ui}
+@media(max-width:850px){.layout,.layout.bottom{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:480px){.lanes{grid-template-columns:repeat(2,1fr)}.tabs{gap:2px}.cell{min-height:55px}.metric b{font-size:25px}}
+</style></head><body><main>
+<header class="top"><strong>ROOT0 · GEN19 / HONEY FIVE-OPERATOR FIELD</strong>
+<nav><a href="./">SCALAR-ZERO LAB</a> · <a href="gravity-vortex.html">GEN18 LOG VORTEX</a> · <a href="spherical-invariant.html">H/Og INVARIANT</a></nav></header>
+<h1>HONEY <span style="color:#fbd968">5[4×4]</span></h1>
+<p class="lede">Five operators <b>H · O · N · E · Y</b> act on <b>one shared 16-operant plane</b>. Four four-lane links connect the five operators. The scalar-zero origin <code>{{i}}</code> is a boundary reference, not an extra particle or force. Yellow is the <b>signal role</b>, not a claim that all energy or all matter emits yellow light.</p>
+<div class="metrics"><div class="metric"><b>5</b><small>OPERATORS</small></div><div class="metric"><b>16</b><small>SHARED OPERANTS / 4×4</small></div><div class="metric"><b>80</b><small>OPERATOR–OPERANT CONTROLS</small></div><div class="metric"><b>256</b><small>4⁴ LANE-ROUTE CHOICES</small></div></div>
+<section class="panel"><div class="head"><b>01 · TOPOLOGY · 1×4×1×4×1×4×1×4×1</b><small>4 INTERCONNECTS, 4 LANES EACH</small></div>
+<div class="diagram"><div class="chain" id="chain" aria-label="Five nodes H O N E Y connected through four links with four selectable lanes each"></div>
+<div class="axis">LEFT PIN: 0 / {{i}} · FOUR INDEPENDENT LANE SELECTIONS · RIGHT PIN: 0 / {{i}}. LINK VALUES ARE ROUTING CHOICES, NOT MATHEMATICAL MULTIPLICATION.</div></div></section>
+<div class="layout">
+<section class="panel"><div class="head"><b>02 · ROUTE SELECTOR</b><small>256 CHOICES</small></div><div class="content">
+<div class="lanes">
+<div><label for="lane0">H → O</label><select id="lane0"><option value="0">Lane 0</option><option value="1">Lane 1</option><option value="2">Lane 2</option><option value="3">Lane 3</option></select></div>
+<div><label for="lane1">O → N</label><select id="lane1"><option value="0">Lane 0</option><option value="1">Lane 1</option><option value="2">Lane 2</option><option value="3">Lane 3</option></select></div>
+<div><label for="lane2">N → E</label><select id="lane2"><option value="0">Lane 0</option><option value="1">Lane 1</option><option value="2">Lane 2</option><option value="3">Lane 3</option></select></div>
+<div><label for="lane3">E → Y</label><select id="lane3"><option value="0">Lane 0</option><option value="1">Lane 1</option><option value="2">Lane 2</option><option value="3">Lane 3</option></select></div>
+</div>
+<div style="margin-top:12px" class="result" id="routeVerdict" aria-live="polite">ROUTE PASS · 0 / 255</div>
+<div class="actions"><button type="button" id="prev">← PREVIOUS ROUTE</button><button type="button" id="next">NEXT ROUTE →</button></div>
+<div class="note" style="margin-top:12px"><b id="passCount">256 / 256 routes open</b><div id="routeText" style="margin-top:6px"></div></div>
+</div></section>
+<section class="panel"><div class="head"><b>03 · FIVE OPERATOR TRANSFERS</b><small>INCOMING → OUTGOING</small></div><div class="content"><div id="stages" class="read"></div></div></section>
+</div>
+<div class="layout bottom">
+<section class="panel"><div class="head"><b>04 · SHARED 16 OPERANTS</b><small>TOGGLE CONTROL BANKS</small></div><div class="content">
+<div class="tabs" id="operatorTabs" role="group" aria-label="Select operator control bank"></div>
+<div id="operantGrid" class="grid16" role="group" aria-label="Four by four operant activation switches"></div>
+<p class="footnotes" id="reachabilityNote"></p>
+<div class="actions"><button type="button" id="reset">RESET ALL 80 GATES</button><button type="button" id="export">EXPORT JSON</button></div>
+</div></section>
+<section class="panel"><div class="head"><b>05 · DETERMINISTIC TESTS</b><small>OBSERVED ROUTING / LIMITS</small></div><div class="content">
+<div id="testRows"></div>
+<div class="note" style="margin-top:12px"><b>Natural bound:</b> A 4×4 operant address is a transfer between incoming and outgoing lanes. Under scalar-zero endpoint pinning, H and Y each route through only 4 of their 16 control cells. O, N and E route through all 16. Hence <b>56 of the 80 operator-address pairs</b> appear along the current open chain. Extending either endpoint to full 16-cell route access requires an explicitly modeled external link or loopback—not an invented connection.</div>
+</div></section>
+</div>
+<section class="panel" style="margin-top:12px"><div class="head"><b>06 · CANONICAL ROUTING RULE</b><small>ABSTRACT MODEL / NO CHEMICAL CLAIMS</small></div><div class="content">
+<pre>Operators: H  O  N  E  Y                5 independent control banks
+Operants:  C[r,c], r,c ∈ {0,1,2,3}     16 shared operant addresses
+Controls:  Gate[operator][r,c]         5×16 = 80 independently editable states
+Links:     H→O→N→E→Y                   4 links, 4 lanes per link
+Routes:    [a,b,c,d]                   4⁴ = 256 possible lane selections
+Trace:     H[0,a] → O[a,b] → N[b,c] → E[c,d] → Y[d,0]
+Scalar 0:  {{i}}                        boundary reference / conserved label
+Pass:      AND of the five selected gate states
+</pre>
+<p class="footnotes">This is an exact logical routing invariant, not an experimentally observed H/O/N composition of all matter. The W/M/S interaction channels, stable chemical bonding and physical energy conservation require independent physical specifications before any chemical or Higgs predictions can be made.</p></div></section>
+<footer>David Lee Wise / ROOT0 · .dlw · <a href="https://github.com/DavidWise01/photonic/blob/main/scalar-zero/honey-5x16-gen19.js">Read the pure GEN19 source and self-test</a>. All controls are local and non-destructive; exporting saves a JSON snapshot of this page's state.</footer>
+</main>
+<script src="honey-5x16-gen19.js"></script>
+<script>
+"use strict";
+(function(){
+const M=window.ROOT0_HONEY_5x16;if(!M)throw Error("GEN19 engine not loaded");
+const $=id=>document.getElementById(id);
+let gates=M.initialState(),activeOperator="H",test=M.test();
+const ids=["lane0","lane1","lane2","lane3"];
+const text=(el,value)=>{el.textContent=value;return el};
+function make(tag,cls,content){const e=document.createElement(tag);if(cls)e.className=cls;if(content!==undefined)e.textContent=content;return e}
+function lanes(){return ids.map(id=>+$(id).value)}
+function currentRoute(){return M.encode(lanes())}
+function routeToIndex(id){const values=M.decode(id);values.forEach((v,i)=>$(ids[i]).value=String(v));render()}
+function isReachable(op,index){const i=M.operators.indexOf(op);
+ return i===0?Math.floor(index/4)===0:i===4?index%4===0:true}
+function render(){
+ const values=lanes(),result=M.walk(gates,M.encode(values));
+ const activeStage=result.stages[M.operators.indexOf(activeOperator)];
+ const chain=$("chain");chain.replaceChildren();
+ for(let i=0;i<M.operators.length;i++){
+  const stage=result.stages[i],node=make("div","op "+(stage.enabled?"on":"off"));
+  node.append(make("strong","",stage.operator),make("small","",stage.enabled?"OPEN":"BLOCKED"));
+  chain.appendChild(node);
+  if(i<M.linkCount){
+   const link=make("div","link");
+   for(let j=0;j<4;j++)link.appendChild(make("span",j===values[i]?"on":""));
+   chain.appendChild(link);
+  }
+ }
+ const stageBox=$("stages");stageBox.replaceChildren();
+ for(const step of result.stages){
+  const row=make("div","step"),op=make("b","",step.operator),
+    address=make("span","",step.incoming+" → "+step.outgoing+" · C"+String(step.operant).padStart(2,"0")),
+    status=make("i",step.enabled?"":"block",step.enabled?"OPEN":"BLOCKED");
+  row.append(op,address,status);stageBox.appendChild(row);
+ }
+ $("routeVerdict").textContent=(result.passed?"PASS":"BLOCKED")+" · ROUTE "+currentRoute()+" / 255 · "+values.join("·");
+ $("routeVerdict").style.color=result.passed?"#a3ffe1":"#ffb09f";
+ $("routeText").textContent=result.passed?"All five selected operator→operant controls permit this route.":"Blocked by "+result.blockedBy.join(", ")+". No chemical interaction is implied.";
+ let open=0;for(let i=0;i<M.routes;i++)if(M.walk(gates,i).passed)open++;
+ $("passCount").textContent=open+" / 256 routes open";
+ const tabs=$("operatorTabs");tabs.replaceChildren();
+ for(const op of M.operators){
+  const b=make("button","tab "+(op===activeOperator?"active":""),op);
+  b.type="button";b.setAttribute("aria-pressed",String(op===activeOperator));
+  b.addEventListener("click",()=>{activeOperator=op;render()});
+  tabs.appendChild(b);
+ }
+ const grid=$("operantGrid");grid.replaceChildren();
+ const i=M.operators.indexOf(activeOperator);
+ for(let k=0;k<16;k++){
+  const enabled=gates[i][k],isCurrent=activeStage.operant===k,reachable=isReachable(activeOperator,k);
+  const b=make("button","cell "+(isCurrent?"selected ":"")+(enabled?"":"closed ")+(reachable?"":"unrouted "));
+  b.type="button";b.setAttribute("aria-pressed",String(enabled));
+  b.setAttribute("aria-label",activeOperator+" operant "+k+", row "+Math.floor(k/4)+" column "+k%4+", "+(enabled?"open":"blocked"));
+  b.append(make("span","",String(k).padStart(2,"0")),make("small","",(enabled?"OPEN":"BLOCK")+" · "+Math.floor(k/4)+":"+k%4));
+  b.addEventListener("click",()=>{gates=M.setGate(gates,activeOperator,k,!enabled);render()});
+  grid.appendChild(b);
+ }
+ $("reachabilityNote").textContent=activeOperator+" · "+M.meanings[activeOperator]+". "+(i===0||i===4?
+  "Only 4 of 16 transfer addresses are reachable in the scalar-zero-pinned open chain; all 16 control addresses remain editable.":
+  "All 16 shared transfer addresses can be reached by the four-link chain.")+
+  " Selected route uses operant C"+String(activeStage.operant).padStart(2,"0")+".";
+}
+function renderTests(){
+ const root=$("testRows");root.replaceChildren();
+ for(const [name,pass] of Object.entries(test.checks)){
+  const row=make("div","test");row.append(make("span","",name),make("span","",pass?"PASS":"FAIL"));root.appendChild(row);
+ }
+}
+for(const id of ids)$(id).addEventListener("change",render);
+$("prev").addEventListener("click",()=>routeToIndex((currentRoute()+255)%256));
+$("next").addEventListener("click",()=>routeToIndex((currentRoute()+1)%256));
+$("reset").addEventListener("click",()=>{gates=M.initialState();activeOperator="H";routeToIndex(0)});
+$("export").addEventListener("click",()=>{
+ const exportState={schema:M.schema,notation:"1x4x1x4x1x4x1x4x1 / 5[4x4]",
+ author:"David Lee Wise / ROOT0",operators:M.operators,operatorMeanings:M.meanings,
+ sharedOperants:16,operatorControlAddresses:80,routes:256,
+ origin:"{{i}} scalar-zero boundary reference",currentRoute:currentRoute(),
+ laneSelections:lanes(),currentTrace:M.walk(gates,currentRoute()),gates:gates,
+ initialInvariant:test,census:M.census(),scope:"abstract logical routing; not chemical physics"};
+ const blob=new Blob([JSON.stringify(exportState,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob),anchor=document.createElement("a");
+ anchor.href=url;anchor.download="ROOT0_GEN19_HONEY_5x16_ROUTE_"+currentRoute()+".json";
+ document.body.appendChild(anchor);anchor.click();anchor.remove();URL.revokeObjectURL(url);
+});
+renderTests();render();
+})();
+</script></body></html>
