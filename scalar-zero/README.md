@@ -162,3 +162,35 @@ Sources: [IUPAC](https://iupac.org/what-we-do/periodic-table-of-elements/), [NAS
 
 **Independent verification boundary:** Element identities and physical conversion formulas are known. Three visual channels in a single browser do not become independent quantum witnesses. The Casimir levels and chemical gradients are explicit user-defined geometry.
 
+
+## GEN4 · Scalar-zero toroidal chemical / astral structure (2026-10-27)
+
+The original photonic 27-node lattice, classical 81×81 wavefield, gravity well, GR calibration, H/O/N gradient, full 118-element periodic table and three-report ledger remain unchanged.
+
+A new **visual / geometric** layer adds:
+
+- Embedded \`scalar-zero/toroid-chem-astral.html\` with an animated Canvas2D toroidal mesh and scalar-zero reference \`D=0\`.
+- Ten real element identities, from hydrogen (H, atomic number 1) through neon (Ne, number 10).
+- Straight **linear** connections between adjacent element nodes, with bracket-inspired extra connectors to the central reference and across grouped records.
+- Five **data-rich globules** for \`[h]\`, \`[be]\`, \`[c]\`, \`[o]\`, and \`{neon}\`. These expose atomic number, number of electrons in a neutral atom, and standard ground-state shell occupancies.
+- Interactive rotation / rate / phase / tube-radius controls, starfield toggle, edge toggle, globule toggle, point selection and a ten-element stepper.
+- The user's original glyph preserved literally: \`{{ ([h]he)((li[be]\\(b[c]))((n[o]f)){neon} }}\`.
+
+### Data model vs physics
+
+| Entity | Ground-state neutral electron shells | Symbol in user grammar |
+|---|---|---|
+| H | 1 | \`[h]\` |
+| He | 2 | \`he\` |
+| Li | 2,1 | \`li\` |
+| Be | 2,2 | \`[be]\` |
+| B | 2,3 | \`b\` |
+| C | 2,4 | \`[c]\` |
+| N | 2,5 | \`n\` |
+| O | 2,6 | \`[o]\` |
+| F | 2,7 | \`f\` |
+| Ne | 2,8 | \`{neon}\` |
+
+The toroidal geometry, center-zero convention, bracket-inspired connections, stringlike rails, starfield, element palette and signed Casimir indices are **model structure**, not experimental confirmation of string theory or a sub-Planck physical lattice. Electron identities and ground-state shell distributions are the standard chemistry layer.
+
+**Path:** \`scalar-zero/toroid-chem-astral.html\`. It runs without a CDN; the embedded copy is available from the original \`scalar-zero/index.html\` page. \`.dlw\` / ROOT0 attribution continues through repository and page history.
