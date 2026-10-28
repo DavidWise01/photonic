@@ -118,3 +118,47 @@ The real Pound–Rebka experiment used gamma rays, **not 550 nm green light**. T
 
 \`.dlw\` · ROOT0 attribution preserved.
 
+
+## GEN3 · Chemical colors, 118 elements and electromagnetic spectrum
+
+GEN3 adds an embedded atlas to \`scalar-zero/index.html\`, with a directly accessible standalone page at \`scalar-zero/chemical-spectrum.html\` and local CSS/JavaScript assets. GEN0 through GEN2 remain intact.
+
+### ROOT0 color registry (model-specific; **not** measured chemical emission)
+
+| Registry interval | Anchor label | Assigned appearance | Signed Casimir slot |
+|---|---|---|---|
+| 0–120 degrees | H / Hydrogen | red gradient | +1k |
+| 121–240 degrees | O / Oxygen | green gradient | 0k |
+| 241–360 degrees | N / Nitrogen | blue gradient | -1k |
+
+All 360 integer coordinates are accounted for. Color choice can optionally override **only the render color** of the original 81x81 classical wavefield, via parent/child browser messages. It does not change propagation, angular quantum polarization, particle identity, or the GEN2 gravitational equations. Here "Casimir slot" is a signed symbolic index and **not a kelvin temperature, force measurement, thermal Casimir correction, or physical prediction**. Negative Kelvin absolute temperature is not asserted.
+
+### Periodic register
+
+Includes IUPAC-recognized atomic numbers 1–118, symbols and names from H to Og, with familiar periods and 18 main groups plus separated lanthanoid and actinoid rows. Search by name, symbol or atomic number. Clicking an element moves to a **model-space color angle**; H, O and N are manually anchored at 60, 180 and 300 degrees. All other positions are a simple atomic-number interpolation, *not* a measured wavelength or element-specific spectral fingerprint.
+
+### Physical electromagnetic ruler
+
+Separate log10 wavelength slider (10^-13 to 10^-3 meters) with examples:
+
+- Infrared: 10^-5 m (10 micrometers).
+- Visible: 550 x 10^-9 m by default.
+- X-ray: 10^-10 m (0.1 nm).
+- Gamma: 10^-12 m (0.001 nm).
+
+The browser calculates \`frequency = c / wavelength\` and \`photon energy (eV) = h * c / (wavelength * e)\` using exact SI definitions of c, h and elementary charge e. Approximate band boundaries are from NASA/HEASARC and are not perfect separators; X-ray versus gamma also depends on the photon generation mechanism. No actual elemental emission lines or radiographic measurements are invented.
+
+### Assets and provenance
+
+- \`scalar-zero/chemical-spectrum.html\`
+- \`scalar-zero/chemical-spectrum.css\`
+- \`scalar-zero/chem-data-{head,mid,late,heavy-a,heavy-b}.js\` — full element names/symbols
+- \`scalar-zero/chem-core.js\` — color and table coordinates
+- \`scalar-zero/chem-ui.js\` — RGB model controls
+- \`scalar-zero/chem-table.js\` — periodic table
+- \`scalar-zero/chemical-spectrum.js\` — physical EM ruler and integration
+
+Sources: [IUPAC](https://iupac.org/what-we-do/periodic-table-of-elements/), [NASA/HEASARC](https://imagine.gsfc.nasa.gov/science/toolbox/spectrum_chart.html), [NIST constants](https://physics.nist.gov/cuu/Constants/).
+
+**Independent verification boundary:** Element identities and physical conversion formulas are known. Three visual channels in a single browser do not become independent quantum witnesses. The Casimir levels and chemical gradients are explicit user-defined geometry.
+
