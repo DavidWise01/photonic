@@ -6,8 +6,8 @@
  "use strict";
  const ADDRESSES=366,COUNT=732,MAX_EXP=36;
  function assertIndex(id){if(!Number.isInteger(id)||id<0||id>=COUNT)throw new RangeError("Vector index 0..731")}
- function decode(id){assertIndex(id);return Object.freeze({
-   id,address:Math.floor(id/2)+1,phase:id%2?"plus":"minus",polarity:id%2?"+":"−",
+ function decode(id){assertIndex(id);const address=Math.floor(id/2)+1;return Object.freeze({
+   id,address,bit:address%2,shape:address%2?"toroid":"box",phase:id%2?"plus":"minus",polarity:id%2?"+":"−",
    sign:id%2?1:-1,angleDegrees:id*360/COUNT,pair:id^1
  });}
  function encode(address,polarity){if(!Number.isInteger(address)||address<1||address>ADDRESSES)throw new RangeError("Address 1..366");
