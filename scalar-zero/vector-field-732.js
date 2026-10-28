@@ -1,12 +1,12 @@
 "use strict";
 (function(){
  const $=id=>document.getElementById(id);
- const M=window.ROOT0_VECTOR_732,C=window.ROOT0_PINWHEEL_366,F=window.ROOT0_FIELD_FLOOR,TAU=Math.PI*2;
- if(!M||!C||!F||M.count!==732||C.capacity!==366||F.geometry.oneTilePitchMeters!==1.61615e-35)throw Error("GEN13 field floor / vector / OASIS source missing");
+ const M=window.ROOT0_VECTOR_732,C=window.ROOT0_PINWHEEL_366,F=window.ROOT0_FIELD_FLOOR,G=window.ROOT0_GRAVITY_VORTEX,TAU=Math.PI*2;
+ if(!M||!C||!F||!G||M.count!==732||C.capacity!==366||F.geometry.oneTilePitchMeters!==1.61615e-35)throw Error("GEN13 field floor / vector / OASIS source missing");
  const STORE="root0.gen11.vector-field.metric.v2",LEGACY_STORE="root0.gen10.vector-field.v1";
  const defaults=()=>Array.from({length:732},()=>M.defaults());
  let vectors=defaults(),audit=[],selected=0,tilt=65,seq=0,last=0;
- let rollStep=0,rollElapsed=0,rollPlaying=true;
+ let rollStep=0,rollElapsed=0,rollPlaying=true,vortexSpin=0;
  const canvas=$("vectors"),ctx=canvas.getContext("2d");
  const colors=Array.from({length:732},(_,i)=>C.colorAt(M.decode(i).address,"S").hex);
  if(!Array.isArray(M.rollBeats)||M.rollBeats.length!==6||M.rollBeats.map(b=>b.code).join("/")!=="−36/0/+36/0/1/1")throw Error("GEN12 roll mapping not available");
@@ -19,6 +19,13 @@
  $("floorGrid").addEventListener("change",refreshFloor);
  $("showFloor").addEventListener("change",refreshFloor);
  refreshFloor();
+ function refreshVortex(){
+   $("vortexCompressionOut").textContent=(+$("vortexCompression").value).toFixed(2);
+   $("vortexRingsOut").textContent=$("vortexRings").value;
+ }
+ for(const id of ["vortexCompression","vortexRings"])$(id).addEventListener("input",refreshVortex);
+ for(const id of ["vortexVisible","vortexMarkers"])$(id).addEventListener("change",refreshVortex);
+ refreshVortex();
  const regions=Array.from({length:130},(_,i)=>({
     x:((i*73.743)%987)/987,y:((i*241.173)%991)/991,r:.25+(i%4)*.21
  }));
@@ -204,6 +211,9 @@
    phaseCount:732,colorAddresses:366,source:"DavidWise01/oasis N184 HON v9.4",
    floor:{...F.geometry,enabled:$("showFloor").checked,gridSize:+$("floorGrid").value,
       gridSpanMeters:F.span(+$("floorGrid").value),tetherFromD:true,
+      vortex:{schema:"root0-gen14-vortex-v1",enabled:$("vortexVisible").checked,
+       compression:+$("vortexCompression").value,rings:+$("vortexRings").value,
+       markersVisible:$("vortexMarkers").checked,scaleBands:G.markerBands,visualOnly:true},
       calibration:"user value, not CODATA 2022 exactly; not a physical spatial quantum"},
    roll:{schema:"root0-gen12-six-beat-v1",sequence:M.rollBeats.map(x=>({...x})),beat:rollStep+1,
     speedBeatsPerSecond:+$("rollSpeed").value,playing:rollPlaying,scope:$("rollScope").value,
@@ -247,11 +257,13 @@
    ctx.stroke();
    // Scalar D=0 belongs to the vector origin; its ground-floor projection is
    // an annotated tether, not a claim of gravitational acceleration.
+   if(!$("vortexVisible").checked){
    ctx.save();
    ctx.setLineDash([4,5]);
    ctx.strokeStyle="#defceb8f";ctx.lineWidth=1;
    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx,floorY);ctx.stroke();
    ctx.restore();
+   }
    ctx.fillStyle="#c8ffe4";ctx.beginPath();ctx.arc(cx,floorY,3.8,0,TAU);ctx.fill();
    ctx.textAlign="center";ctx.font="10px ui-monospace,monospace";
    ctx.fillStyle="#b5ffe9";
@@ -269,6 +281,13 @@
   const polar=(r,a)=>({x:cx+Math.cos(a)*r,y:cy+Math.sin(a)*r*tiltY});
   for(const s of regions){ctx.fillStyle="#a0c8da55";ctx.fillRect(s.x*w,s.y*h,s.r,s.r)}
   drawFloor(cx,cy,outer);
+  if($("showFloor").checked&&$("vortexVisible").checked){
+    G.draw(ctx,{cx,topY:cy+outer*.08,floorY:cy+outer*.73,
+      mouthRadius:outer*.54,neckRadius:2.3,
+      compression:+$("vortexCompression").value,ringCount:+$("vortexRings").value,
+      flatten:Math.max(.16,tiltY*.65),spin:vortexSpin,direction:1,
+      labels:$("vortexMarkers").checked});
+  }
   // Gray geometric field: neither a gravitational lens solution nor physical space.
   for(let ring=1;ring<=4;ring++){
     let r=inner+(outer-inner)*ring/4;ctx.beginPath();
@@ -343,6 +362,7 @@
  function loop(time){
    const dt=last?Math.max(0,Math.min(.1,(time-last)/1000)):0;last=time;
    if(rollPlaying){
+     vortexSpin+=dt*.55;
      rollElapsed+=dt*(+$("rollSpeed").value);
      if(rollElapsed>=1){
        const steps=Math.floor(rollElapsed);rollElapsed-=steps;
