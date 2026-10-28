@@ -178,6 +178,11 @@
     <iframe id="gen8Frame" src="rotation-732.html" title="GEN8 scalar zero twenty-eight arm by thirteen site chemical registry with 366 positions and 732 samples per turn" loading="eager" style="display:block;width:100%;height:1770px;border:0;background:#071421" referrerpolicy="no-referrer"></iframe>
     <div class="canvas-foot"><span>364 DATA · 2 TERMINALS · 32 CONTROL LANES · 732 PHASE EVENTS</span><a href="rotation-732.html">OPEN GEN8 STANDALONE</a></div>
   </section>
+  <section class="panel" style="margin-top:14px" id="gen9Pinwheel">
+    <div class="panel-head"><h2>15 · OASIS 366-COLOR PINWHEEL</h2><span class="micro">GEN9 · CANONICAL HON V9.4 · 122 × 3 · GEN8 REGISTER SYNC</span></div>
+    <iframe id="gen9Frame" src="pinwheel-366.html" title="OASIS 366 color pinwheel with synchronized HON palette and GEN8 address mapping" loading="eager" style="display:block;width:100%;height:1770px;border:0;background:#07121e" referrerpolicy="no-referrer"></iframe>
+    <div class="canvas-foot"><span>ORIGINAL H/O/N SOURCE HUES · 366 SEGMENTS · 732 PHASES</span><a href="pinwheel-366.html">OPEN GEN9 STANDALONE</a></div>
+  </section>
   <footer class="foot"><p><strong>Scientific boundary.</strong> This is a deterministic, classical complex-field and Jones-polarization visualization; it does not propagate individual quantum states or establish BB84 security. The gravity well is schematic. GEN2 adds a separately computed photon gravitational redshift and static clock comparison for real Earth/Sun reference scales, not Planck-scale evidence. Predictions near or below the Planck length are not validated. The 81-pixel grid is a normalized visual space, not a nanometer-resolution representation of a 32 cm optical channel. Wavelength affects displayed color and a normalized spatial-frequency proxy. Three code paths in one simulation are not three independent physical instruments.</p><div class="dlw">.dlw / ROOT0</div></footer>
 </div>
 <script>
@@ -465,6 +470,28 @@ window.addEventListener("message",function(event){
  var gen8Frame=document.getElementById("gen8Frame");
  if(gen8Frame&&event.source===gen8Frame.contentWindow&&event.data&&event.data.kind==="root0-gen8-height"&&Number.isFinite(event.data.height)){
    gen8Frame.style.height=Math.min(3800,Math.max(1100,Math.ceil(event.data.height+20)))+"px";
+ }
+});
+/* GEN9 · Bidirectional address/phase bridge between two same-origin visual frames.
+ * All values are range-checked; no external data requests or hidden writes. */
+window.addEventListener("message",function(event){
+ var parentGen8=document.getElementById("gen8Frame");
+ var parentGen9=document.getElementById("gen9Frame");
+ var data=event.data||{};
+ if(event.source===parentGen9?.contentWindow){
+  if(data.kind==="root0-pinwheel-height"&&Number.isFinite(data.height)){
+   parentGen9.style.height=Math.min(4000,Math.max(900,Math.ceil(data.height+24)))+"px";
+  }
+  if(data.kind==="root0-pinwheel-select"&&Number.isInteger(data.address)&&data.address>=1&&data.address<=366){
+   parentGen8?.contentWindow?.postMessage({kind:"root0-gen8-set-address",address:data.address},"*");
+  }
+  if(data.kind==="root0-pinwheel-tick"&&Number.isInteger(data.tick)&&data.tick>=0&&data.tick<732){
+   parentGen8?.contentWindow?.postMessage({kind:"root0-gen8-set-tick",tick:data.tick},"*");
+  }
+ }else if(event.source===parentGen8?.contentWindow){
+  if(data.kind==="root0-gen8-selected"&&Number.isInteger(data.address)&&data.address>=1&&data.address<=366){
+   parentGen9?.contentWindow?.postMessage({kind:"root0-pinwheel-set-address",address:data.address},"*");
+  }
  }
 });
 function tick(now){if(!last)last=now;var dt=Math.min(.05,(now-last)/1000);last=now;if(running)t+=dt*values.speed*2;renderField();renderLattice();renderGravity();knownRender();if(!window.__lastReadout||now-window.__lastReadout>120){refreshInspector();renderScope();knownOutput();window.__lastReadout=now}requestAnimationFrame(tick)}
