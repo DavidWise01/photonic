@@ -539,3 +539,37 @@ GEN10 v1 local storage is preserved unmodified under \`root0.gen10.vector-field.
 **Boundary:** These are dimensionless simulation coordinates. The exponent \`10^−36\` is not a measured Planck-scale probe, and \`10^36\` and \`±∞\` are not claims of literal infinite physical distances or forces.
 
 **Attribution:** David Lee Wise / ROOT0 · \`.dlw\`. All previous code versions remain in Git commit history.
+
+
+## GEN12 · Six-beat signed metric roll (2026-10-28)
+
+New **reversible six-step metric roll** on top of GEN11's exact-zero power-of-ten domain, retaining all 732 vector IDs, 366 HON color addresses, separate signed directions, current local state and OASIS source lineage.
+
+The user's exact source is \`-36/0/+36/0/1/1\`. As exponent/metric notation, it becomes:
+
+| Beat | Author token | GEN11 finite/zero state | Magnitude |
+|---|---|---|---|
+| 1 | \`-36\` | \`zero=false, exponent=-36\` | \`10^-36\` |
+| 2 | \`0\` | \`zero=true\` | **exact 0** |
+| 3 | \`+36\` | \`zero=false, exponent=36\` | \`10^36\` |
+| 4 | \`0\` | \`zero=true\` | **exact 0** |
+| 5 | \`1\` | \`zero=false, exponent=0\` | \`10^0 = 1\` |
+| 6 | \`1\` | \`zero=false, exponent=0\` | \`10^0 = 1\`, **second independent unit beat** |
+
+After beat 6, wrap to beat 1. The two 1 beats are intentionally **not collapsed**; they represent a two-beat unit-scale dwell. These stages refer to **unsigned magnitudes**; each saved vector's independent \`sign=±1\` still selects direction, while its \`−/+\` HON **phase address** remains unchanged. This is a software roll, not measured rotation, spectral emission or quantum oscillation.
+
+### Execution
+
+- \`vector-732-core.js\` now provides immutable \`rollBeats\`, \`rollBeat(index)\`, \`rollIndex(index)\` and \`rollState(index, base)\` with wraparound. Every \`rollState\` returns a **new normalized state** and never mutates the supplied base state.
+- \`vector-field-732.html\` gains GEN12 controls: six individually selectable beat buttons, default animated roll, pause/resume, single-step, reset, adjustable beats per second (0.25–8), scope switch, and **COMMIT BEAT TO SELECTED**.
+- **Preview scopes:** \`all\` (default, all 732 temporarily previewed pinned to D), \`selected\`, \`pinned\` (only states already saved as pinned), or \`saved\` (roll overlay off; show actual independent persisted states).
+- The rolling overlay never writes localStorage on animation ticks. Manual \`COMMIT BEAT TO SELECTED\` explicitly updates exactly one vector, marks it pinned, keeps its sign and address/parity, appends a timestamped \`COMMIT_GEN12_ROLL_BEAT\` audit entry and persists it in the GEN11 v2 storage key.
+- All noncommitted saved vector values, including symbolic ±∞, remain intact under the overlay. GEN10's legacy v1 key is unaffected. GEN12 does **not** assert that symbolic infinity is a finite roll beat.
+- \`scalar-zero/index.html\` advertises GEN12 within its existing GEN10/11 embedded section. No additional separate iframe or independent color registry is introduced.
+- Runtime invariant: \`rollBeats.length===6\`, token order \`−36/0/+36/0/1/1\`, stages 2/4 are exact zero, stages 5/6 are both unit magnitude, and \`rollIndex(6)===0\`.
+
+### Dimensional and visual boundaries
+
+The rendered magnitude is a **bounded logarithmic level-of-detail projection**. No frame ever uses \`Infinity\` screen coordinates or claims spacetime is physically oscillating between Planck and macroscopic scales. Only the underlying normalized GEN11 model state changes in preview; all 366 HON hue values and 732 discrete source indices are retained. The explicit \`0\` beats pin to exactly D; the 10^-36 beat remains the smallest nonzero finite metric magnitude.
+
+**Author / attribution:** David Lee Wise / ROOT0 · \`.dlw\`. Git source and local user data remain separately versioned.
