@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08121e"><meta name="description" content="ROOT0 GEN5: seven noble-gas closed toroidal rings, odd toroids, even boxes, 118 IUPAC elements and a scalar-zero ground.">
+<title>ROOT0 GEN5 · Noble-Gas Toroidal Closures</title><link rel="stylesheet" href="noble-closures.css"></head>
+<body><main>
+<header class="top"><div class="eyebrow">ROOT0 / GEN5 / SCALAR-ZERO CHEMICAL FIELD</div><nav><a href="./">SCALAR ZERO</a><a href="toroid-chem-astral.html">GEN4</a><a href="chemical-spectrum.html">CHEMICAL ATLAS</a></nav></header>
+<section class="hero"><div><h1>Odd toroids.<br>Even boxes.</h1><p>Atomic-number parity defines the glyph. Each periodic traversal stops at its group-18 noble gas and seals one logical ring. Seven rings, 118 named elements, one shared scalar-zero reference.</p></div>
+<div class="stats"><div><strong>118</strong><small>ELEMENTS</small></div><div><strong>7</strong><small>NOBLE CLOSURES</small></div><div><strong>59 / 59</strong><small>ODD / EVEN</small></div></div></section>
+<section class="grid">
+<div class="panel"><div class="heading"><h2>01 · SEVEN NESTED TOROIDAL FIELDS</h2><span id="state">LIVE / ALL PERIODS</span></div>
+<div class="stage"><canvas id="world" aria-label="Interactive rotating scalar-zero seven-ring toroidal lattice with 118 chemical nodes, odd toroidal and even box glyphs"></canvas>
+<div class="hud">SCALAR-ZERO · D=0<br>ODD Z: ◉ TOROID<br>EVEN Z: □ BOX<br>GAS: □ CLOSURE LID</div></div>
+<div class="legend"><span><i class="dot toroid"></i>Odd · toroid</span><span><i class="dot box"></i>Even · box</span><span><i class="dot lid"></i>Noble · lid</span><span><i class="dot center"></i>D · zero</span></div></div>
+<aside class="panel sidebar"><div class="heading"><h2>02 · FIELD OPERATORS</h2><span class="muted">CLASSICAL VISUAL</span></div><div class="body">
+<div class="control"><label for="view">LATTICE VIEW</label><select id="view"><option value="all">All seven nested rings</option><option value="focus">One ring · enlarged</option></select></div>
+<div class="control"><label for="rotate">ROTATION <output id="rotateValue">0.45×</output></label><input id="rotate" type="range" min="-2" max="2" step=".05" value=".45"></div>
+<div class="control"><label for="phase">TORSION PHASE <output id="phaseValue">0°</output></label><input id="phase" type="range" min="0" max="360" step="1" value="0"></div>
+<div class="control"><label for="tube">TORUS THICKNESS <output id="tubeValue">0.22</output></label><input id="tube" type="range" min=".08" max=".5" step=".01" value=".22"></div>
+<div class="checks"><label><input id="mesh" type="checkbox" checked> Toroidal mesh</label><label><input id="edges" type="checkbox" checked> Straight edges</label><label><input id="stars" type="checkbox" checked> Astral field</label><label><input id="globules" type="checkbox" checked> Data globules</label></div>
+<div class="actions"><button id="pause" type="button">Ⅱ PAUSE</button><button id="next" type="button">→ NEXT RING</button><button id="reset" type="button">◎ RESET</button><button id="export" type="button">↓ EXPORT JSON</button></div>
+<div class="readout"><small>ACTIVE ELEMENT</small><strong id="element">1 · H</strong><span id="elementName">Hydrogen</span><div class="values">
+<div><small>PARITY / SHAPE</small><b id="shape">ODD · TOROID</b></div><div><small>RING / TERMINAL</small><b id="closure">1 / He</b></div><div><small>NEUTRAL ELECTRONS</small><b id="electrons">1</b></div><div><small>H/O/N MODEL</small><b id="sector">H · +1k</b></div></div>
+<p id="elementNote">Selected record, not a physical claim about atomic geometry.</p></div>
+</div></aside></section>
+<section class="panel ribbons"><div class="heading"><h2>03 · NOBLE-GAS TERMINALS</h2><span class="muted">EACH RING STOPS AT GAS</span></div>
+<div class="ribbon" id="ringButtons" role="group" aria-label="Choose one of seven noble-gas-closed rings"></div>
+<div class="lineage"><div><small>SELECTED RING · ATOMIC NUMBERS</small><strong id="ringLabel">1–2 → He</strong></div><div><small>PERIOD LENGTH</small><strong id="ringCount">2</strong></div><div><small>TOPOLOGY</small><strong id="ringEdges">1 linear edge</strong></div></div>
+<div class="sequence" id="sequence" role="group" aria-label="Selectable elements in chosen noble-gas ring"></div>
+<div class="grammar">
+<div class="grammar-heading"><strong>GENERATED PARITY GRAMMAR</strong><button id="copy" type="button">COPY</button></div>
+<pre id="canonical">{{ (H) [He] }}</pre>
+</div>
+<div class="grammar authored"><strong>AUTHOR-SUPPLIED EXPRESSIONS · PRESERVED VERBATIM</strong>
+<pre id="authored"></pre><p>Authored parentheses and brackets are preserved as supplied, including unbalanced marks. The canonical line above is a separate, mechanically normalized rendering.</p></div>
+</section>
+<section class="panel doc"><div class="heading"><h2>04 · PHYSICS / MODEL BOUNDARIES</h2><span class="muted">KNOWN CHEMISTRY · MODEL GEOMETRY</span></div>
+<div class="twocol"><p><strong>Known:</strong> Element names, atomic numbers, the seven period endpoints, and the fact that a neutral atom has Z electrons. Oganesson is element 118 in group 18; many chemical properties of this very short-lived element remain uncertain.</p>
+<p><strong>Defined here:</strong> Odd atomic numbers as rings, even numbers as boxes, noble gases as lids, H/O/N color coordinates, ±Casimir slots, straight graph links and the nested toroidal space. These are visualization/registry conventions, not proven atomic shapes, temperatures, Casimir effects or string-theory results.</p></div></section>
+<footer>.dlw · David Lee Wise / ROOT0 · Sources: <a href="https://iupac.org/what-we-do/periodic-table-of-elements/" target="_blank" rel="noopener">IUPAC</a> · <a href="https://pubchem.ncbi.nlm.nih.gov/element/118" target="_blank" rel="noopener">PubChem / Oganesson</a>. Runs in Canvas2D with no external libraries. <a href="https://github.com/DavidWise01/photonic">Repository</a>.</footer>
+</main>
+<script src="chem-data-head.js"></script><script src="chem-data-mid.js"></script><script src="chem-data-late.js"></script><script src="chem-data-heavy-a.js"></script><script src="chem-data-heavy-b.js"></script><script src="chem-core.js"></script><script src="noble-closures.js"></script>
+</body></html>
