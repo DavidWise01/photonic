@@ -185,6 +185,7 @@ function project(f,deg){var c=Math.cos(deg*RAD),s=Math.sin(deg*RAD);var re=f.xr*
 function sampleField(){return phasor(40+selected.x*24,40+selected.y*24,t-selected.z*.42)}
 function normalized(v){return v/(sourceCount()*sourceCount())}
 var chemColorOverride=null;
+window.addEventListener("load",function(){var chemFrame=document.getElementById("chemicalAtlasFrame");if(chemFrame&&chemFrame.contentWindow)chemFrame.contentWindow.postMessage({kind:"root0-chem-request"},"*")});
 window.addEventListener("message",function(event){
  var frame=document.getElementById("chemicalAtlasFrame");
  if(!frame||event.source!==frame.contentWindow)return;
