@@ -720,3 +720,45 @@ Source evidence:
 The logarithmic placement is *quantitatively correct with respect to the declared length values*, but this diagram **does not prove** gravity itself compresses in such a cone, that all particles have finite radii, or that Higgs, electron, gamma or neutrino particles occupy the shown physical diameters. Only the *reference-length coordinate* is calibrated. The displayed accretion colors come from OASIS HON v9.4 as a symbolic palette, not observed gamma/X-ray colors.
 
 **Authorship:** David Lee Wise / ROOT0 · \`.dlw\`. Existing GEN0–GEN14 source preserved in Git history.
+
+
+## GEN16 · 366-color axial stretch from scalar 0 to 10^-35 (2026-10-28)
+
+GEN16 extends the shared GEN14/15 gravity vortex so that **all 366 individually addressed, original OASIS HON v9.4 hues span the entire vortex shaft**, rather than remaining confined to the broad rotating disk at its mouth. The geometry remains a narrowing funnel ending in the GEN13 reference floor sink. The existing source palette and 732 -/+ phase vector identities are not changed.
+
+### Canonical chromatic axis
+
+\`\`\`text
+top of funnel / scalar reference D:   color coordinate = 0
+bottom of funnel / sink:              color coordinate = 1 × 10^-35 m
+
+normalized descent t ∈ [0,1]
+chromatic_coordinate(t) = t × 10^-35 m
+source color address:  i=1...366
+color band i spans t ∈ [(i-1)/366, i/366]
+color address at a normalized coordinate t:
+  min(366, 1 + floor(366*t))
+first source color: OASIS HON v9.4 address 1 (H-red)
+last source color: OASIS HON v9.4 address 366 (N-violet, lid/stitch)
+\`\`\`
+
+**The word "meters" in the new chromatic coordinate is the author's label for a symbolic model axis.** It is not a photon wavelength, a physical color distance, a gravitational field strength, or an independently calibrated metric displacement.
+
+Three distinct mappings must not be conflated:
+
+1. **GEN16 chromatic coordinate:** scalar **0 to 10^-35**, mapped *linearly* along the entire shaft to allocate 366 original source hues.
+2. **GEN15 scientific length ladder:** approximately **10^-10 m to the author's reference floor 1.61615×10^-35 m**, mapped *logarithmically* by actual size, wavelength, Compton length or experimental probe context. Radiation wavelength and particle size remain different quantities.
+3. **GEN13 floor-tile pitch:** exactly **1.61615×10^-35 m per displayed reference tile**, which is **not numerically identical** to GEN16's 10^-35 color-coordinate endpoint, and is not the CODATA Planck-length recommendation.
+
+GEN11's independent vector scale and GEN12's six-beat roll **−36 / 0 / +36 / 0 / 1 / 1** are unchanged.
+
+### Implementation
+
+- **\`scalar-zero/gravity-vortex-core.js\`**: exports \`chromatic\`, \`chromaticCoordinate(t)\`, \`chromaticAddress(t)\`, \`chromaticTForAddress(address)\`. When given \`axialColors=true\` and an array of exactly 366 valid HON hex colors, it fills the entire tapered funnel with 366 consecutive, individually colored annular-width bands, maintaining the same shrinking radius at every height. It draws spiral strands, rings, and the dark sink above this axial color field. A disabled axial mode reverts to the previous translucent cyan shaft.
+- **\`scalar-zero/gravity-vortex.html\`**: enables the shaft color stretch by default, adds an independent chromatic-axis readout and toggle, retains the top 366-color accretion ring and all 26 GEN15 logarithmic generations, and exports the explicit chromatic axis with its two HON source endpoints.
+- **\`scalar-zero/vector-field-732.js\` / \`vector-field-732.html\`**: same 366-color full-height funnel inside the existing 732-vector editor, with independent toggle and JSON provenance. Both views take colors directly from the unchanged \`pinwheel-source-v94.js\`.
+- **\`scalar-zero/index.html\`**: displays GEN16 in its existing GEN15/14 and 732-vector sections. No additional source colors, mock chemical elements, server dependency, CDN or physical assertions were introduced.
+
+**Geometry:** \`t=0\` is the wide vortex mouth, \`t=1\` the sink on the floor. For every \`t\`, the radius is still \`R_neck+(R_mouth−R_neck)(1−t)^c\`; the bands narrow to the sink together, and all 366 remain addressable by their existing source index.
+
+**Attribution:** David Lee Wise / ROOT0 · \`.dlw\`. [Original OASIS HON v9.4 source](https://github.com/DavidWise01/oasis/blob/main/n184/elemental-hon-color-operants-v94/hon_core.mjs). All earlier generations remain available through Git commit history.
