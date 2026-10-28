@@ -3,7 +3,7 @@
  const $=id=>document.getElementById(id);
  const M=window.ROOT0_VECTOR_732,C=window.ROOT0_PINWHEEL_366,TAU=Math.PI*2;
  if(!M||!C||M.count!==732||C.capacity!==366)throw Error("GEN10 vector / OASIS source missing");
- const STORE="root0.gen10.vector-field.v1";
+ const STORE="root0.gen11.vector-field.metric.v2",LEGACY_STORE="root0.gen10.vector-field.v1";
  const defaults=()=>Array.from({length:732},()=>M.defaults());
  let vectors=defaults(),audit=[],selected=0,tilt=65,seq=0,last=0;
  const canvas=$("vectors"),ctx=canvas.getContext("2d");
@@ -13,17 +13,36 @@
  }));
  let dims={w:0,h:0,dpr:1},hit={cx:0,cy:0,inner:0,outer:0,tiltY:1,offset:-Math.PI/2};
  function validRecord(x){return x&&typeof x==="object"&&Number.isInteger(x.id)&&x.id>=0&&x.id<732}
+ // Never overwrite GEN10 v1 storage. New v2 saves under a distinct key.
+ // If v2 does not exist, migrate legacy 10^e−1 magnitudes into the new
+ // signed 10^e metric, rounding to the nearest 0.25 exponent.
+ let migrated=false;
  try{
-   const raw=JSON.parse(localStorage.getItem(STORE)||"null");
-   if(raw&&raw.schema==="root0-vector732-v1"&&Array.isArray(raw.states)&&raw.states.length===732){
-     vectors=raw.states.map(M.normalize);
-     if(Array.isArray(raw.events))audit=raw.events.filter(validRecord);
-     if(Number.isInteger(raw.selected)&&raw.selected>=0&&raw.selected<732)selected=raw.selected;
-     seq=audit.length;
+   const newer=JSON.parse(localStorage.getItem(STORE)||"null");
+   if(newer&&newer.schema==="root0-vector732-metric-v2"&&Array.isArray(newer.states)&&newer.states.length===732){
+     vectors=newer.states.map(M.normalize);
+     if(Array.isArray(newer.events))audit=newer.events.filter(validRecord);
+     if(Number.isInteger(newer.selected)&&newer.selected>=0&&newer.selected<732)selected=newer.selected;
+   }else{
+     const old=JSON.parse(localStorage.getItem(LEGACY_STORE)||"null");
+     if(old&&old.schema==="root0-vector732-v1"&&Array.isArray(old.states)&&old.states.length===732){
+       vectors=old.states.map(M.migrateV1);
+       if(Array.isArray(old.events))audit=old.events.filter(validRecord);
+       if(Number.isInteger(old.selected)&&old.selected>=0&&old.selected<732)selected=old.selected;
+       migrated=true;
+     }
    }
  }catch(_){}
+ seq=audit.reduce((max,e)=>Math.max(max,Number.isInteger(e.seq)?e.seq:0),0);
+ if(migrated){
+   audit.push({seq:++seq,id:selected,address:M.decode(selected).address,
+     polarity:M.decode(selected).polarity,kind:"MIGRATION_V1_TO_METRIC_V2",scope:"all_732",
+     time:new Date().toISOString(),state:{...vectors[selected]},
+     note:"Legacy 10^e−1 converted to exact zero or nearest quarter-exponent 10^e; v1 localStorage retained unchanged."});
+   save();
+ }
  function save(){
-  try{localStorage.setItem(STORE,JSON.stringify({schema:"root0-vector732-v1",states:vectors,
+  try{localStorage.setItem(STORE,JSON.stringify({schema:"root0-vector732-metric-v2",metric:M.metric,states:vectors,
     selected,events:audit}));return true}
   catch(e){$("audit").textContent="Browser storage unavailable; export JSON to retain these changes. "+String(e);return false}
  }
@@ -58,6 +77,7 @@
    $("pinState").textContent=v.pinned?"PINNED TO D":"FREE";
    $("signState").textContent=v.sign===1?"+":"−";
    $("magnitude").textContent=M.descriptor(v);
+   $("zeroState").textContent=v.zero?"EXACT 0":v.infinite?"SYMBOLIC ∞":"FINITE 10^e";
    $("pair").textContent="V"+String(d.pair).padStart(3,"0");
    $("exponent").value=v.exponent;$("expOut").textContent=v.exponent.toFixed(2);
    $("tilt").value=tilt;$("tiltOut").textContent=tilt+"°";
@@ -67,6 +87,8 @@
    $("positive").setAttribute("aria-pressed",String(v.sign===1));
    $("infinity").setAttribute("aria-pressed",String(v.infinite));
    $("infinity").textContent=v.infinite?"SIGNED ∞ SET":"SET SIGNED ∞";
+   $("zeroSelected").setAttribute("aria-pressed",String(v.zero));
+   $("finite").setAttribute("aria-pressed",String(!v.zero&&!v.infinite));
    stats();
  }
  function emitSelection(){
@@ -88,16 +110,16 @@
  $("vector").addEventListener("input",()=>pick(+$("vector").value));
  $("tilt").addEventListener("input",()=>{tilt=+$("tilt").value;refresh()});
  $("exponent").addEventListener("input",()=>{
-   vectors[selected]=M.normalize({...vectors[selected],exponent:+$("exponent").value,infinite:false});
+   vectors[selected]=M.normalize({...vectors[selected],exponent:+$("exponent").value,zero:false,infinite:false});
    refresh();
  });
  $("exponent").addEventListener("change",()=>logChange("SCALE_EXPONENT",selected));
  $("pin").addEventListener("click",()=>updateSelected({pinned:!vectors[selected].pinned},"PIN_TOGGLE"));
  $("negative").addEventListener("click",()=>updateSelected({sign:-1},"SIGN_MINUS"));
  $("positive").addEventListener("click",()=>updateSelected({sign:1},"SIGN_PLUS"));
- $("infinity").addEventListener("click",()=>updateSelected({infinite:!vectors[selected].infinite},"SYMBOLIC_INFINITY_TOGGLE"));
- $("finite").addEventListener("click",()=>updateSelected({infinite:false},"RETURN_TO_FINITE"));
- $("zeroSelected").addEventListener("click",()=>updateSelected({exponent:0,infinite:false},"SCALAR_ZERO_SCALE"));
+ $("infinity").addEventListener("click",()=>updateSelected({zero:false,infinite:!vectors[selected].infinite},"SYMBOLIC_INFINITY_TOGGLE"));
+ $("finite").addEventListener("click",()=>updateSelected({zero:false,infinite:false},"RETURN_TO_FINITE"));
+ $("zeroSelected").addEventListener("click",()=>updateSelected({zero:true,infinite:false},"EXACT_SCALAR_ZERO"));
  $("otherPhase").addEventListener("click",()=>pick(M.decode(selected).pair));
  // Each pin/unpin is a separately addressable vector; bulk commands log a compact
  // batch entry rather than falsely claiming 732 independent witnessed events.
@@ -114,13 +136,14 @@
    b.addEventListener("click",()=>pick(+b.dataset.jump));
  }
  $("export").addEventListener("click",()=>{
-  const out={schema:"root0-vector732-v1",name:"ROOT0 GEN10 732 independently pinned signed vectors",
-   coordinateSystem:"scalar D=(0,0), signed logarithmic model units; ±∞ are symbolic endpoints",
+  const out={schema:"root0-vector732-metric-v2",metric:M.metric,exponentRange:[M.minExponent,M.maxExponent],zeroMode:"independent exact zero",
+   name:"ROOT0 GEN11 signed power-of-ten metric for 732 independent vectors",
+   coordinateSystem:"scalar D=(0,0): 0 exact OR sign*10^e with e∈[-36,36] OR symbolic sign*∞",
    phaseCount:732,colorAddresses:366,source:"DavidWise01/oasis N184 HON v9.4",states:vectors.map((v,i)=>({vector:M.decode(i),...v,
     descriptor:M.descriptor(v),sourceHex:colors[i]})),events:audit.slice(),selected,generated:new Date().toISOString(),
    boundary:"No physical infinities, observed cosmic vector fields or quantum gravity claims"};
   const blob=new Blob([JSON.stringify(out,null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob),link=document.createElement("a");link.href=url;link.download="ROOT0_GEN10_732_SIGNED_VECTORS.json";
+  const url=URL.createObjectURL(blob),link=document.createElement("a");link.href=url;link.download="ROOT0_GEN11_732_SIGNED_POWER10_METRIC.json";
   document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
  });
  function resize(){
