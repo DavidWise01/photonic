@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ROOT0 GEN14 · Scalar-Zero Gravity Vortex</title><meta name="theme-color" content="#050d1c">
+<meta name="description" content="A live Canvas2D gravity-vortex schematic from a 366-color accretion field to a 1.61615e-35 meter reference floor, with shrinking rings, spiral funnel and sink.">
+<style>
+:root{color-scheme:dark;--bg:#050d1c;--ink:#e8faff;--muted:#98b8c8;--edge:#2b4b63;--mint:#86fce0}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% 0%,#10364d 0%,#060e1d 57%);font:13px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink)}
+main{max-width:1480px;margin:auto;padding:17px 15px 40px}
+a{color:#a4e4fd}.top{display:flex;flex-wrap:wrap;gap:13px;justify-content:space-between;align-items:center;padding-bottom:13px;border-bottom:1px solid var(--edge)}
+.top strong{font:800 11px ui-monospace,monospace;letter-spacing:.15em;color:var(--mint)}
+nav{display:flex;flex-wrap:wrap;gap:13px}nav a{font:11px ui-monospace,monospace;text-decoration:none}
+h1{font-size:clamp(28px,4.8vw,62px);letter-spacing:-.055em;line-height:1.07;margin:19px 0 9px}
+.lead{max-width:900px;color:var(--muted);margin:0 0 17px;font-size:14px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:13px}
+.metric{background:#0b2333;border:1px solid var(--edge);border-radius:10px;padding:11px}.metric b{display:block;font:850 clamp(16px,2.6vw,26px) ui-monospace,monospace}.metric small{color:var(--muted);font:10px ui-monospace,monospace;display:block}
+.layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(290px,.65fr);gap:12px}
+.panel{border-radius:12px;border:1px solid var(--edge);background:linear-gradient(145deg,#0a1e31,#081322);overflow:hidden;min-width:0}
+.head{padding:12px 15px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--edge)}
+.head h2{font:800 12px ui-monospace,monospace;letter-spacing:.08em;margin:0}.head small{font:10px ui-monospace,monospace;color:var(--muted)}
+.scene{height:720px;position:relative;background:radial-gradient(ellipse at center,#112a3e,#050d1c 76%);overflow:hidden}
+.scene canvas{display:block;width:100%;height:100%;cursor:crosshair;touch-action:pan-y}
+.hud{pointer-events:none;position:absolute;left:14px;top:13px;font:10px/1.8 ui-monospace,monospace;color:#b8dff1;text-shadow:0 2px 6px #000}
+.legend{display:flex;flex-wrap:wrap;gap:12px;border-top:1px solid var(--edge);padding:11px 15px;color:#a8c3d2;font:11px ui-monospace,monospace}
+.side{display:grid;align-content:start;gap:12px;padding:15px}
+.control{display:grid;gap:6px}.control label{display:flex;align-items:center;justify-content:space-between;gap:7px;font:10px ui-monospace,monospace;color:#b0ccda}
+.control output{color:var(--mint)}input[type=range]{width:100%;accent-color:#65edc4}
+select,button{background:#123649;border:1px solid #427082;border-radius:7px;color:#efffff;padding:9px;cursor:pointer;font:750 11px system-ui}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid white;outline-offset:2px}
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.checkrow{display:flex;gap:8px;align-items:center;color:#b3d9d8;font:11px ui-monospace,monospace}
+.checkrow input{accent-color:#76f7c6}
+.readout{padding:11px;border-radius:8px;border:1px solid #32586b;background:#092235}
+.readout b{display:block;font:850 20px ui-monospace,monospace}.readout small{color:var(--muted);font:10px ui-monospace,monospace}
+.readgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}
+.readgrid div{background:#102d40;border-radius:6px;padding:8px}.readgrid strong{font:750 11px ui-monospace,monospace}
+.chart{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:13px}
+.inner{padding:14px}.lines{display:grid;gap:9px}.line{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border:1px solid #2c4d62;border-radius:8px;padding:9px}.line b{font:800 12px ui-monospace,monospace}.line small{display:block;color:var(--muted);font-size:11px}
+code,pre{font:12px/1.7 ui-monospace,monospace;color:#b7ffe3}pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
+.note{font-size:11px;color:var(--muted);line-height:1.65;margin-top:10px}
+footer{font-size:11px;color:var(--muted);margin-top:16px}
+@media(max-width:1040px){.layout{grid-template-columns:1fr}.side{grid-template-columns:repeat(2,minmax(0,1fr))}.side .readout{grid-column:1/-1}.scene{height:650px}}
+@media(max-width:700px){.scene{height:520px}.metrics{grid-template-columns:1fr 1fr}.chart{grid-template-columns:1fr}.side{grid-template-columns:1fr}.side .readout{grid-column:auto}}
+</style></head><body><main>
+<header class="top"><strong>ROOT0 / GEN14 · DOWNWARD GRAVITY VORTEX</strong><nav><a href="./">FULL SCALAR-ZERO LAB</a><a href="vector-field-732.html">732 VECTORS</a><a href="pinwheel-366.html">366 PINWHEEL</a></nav></header>
+<h1>Gravity vortex <span style="color:#92ffe3">/|\</span> down to the floor</h1>
+<p class="lead">A rotating 366-color accretion-field mouth compresses into a narrowing vortex of concentric rings and twin spirals, terminating in a sink node on the existing scalar-floor grid. The logarithmic reference labels show representative orders of magnitude, not measured vertical gravitational distances.</p>
+<div class="metrics"><div class="metric"><b>366</b><small>OASIS SOURCE COLORS</small></div><div class="metric"><b>732</b><small>−/+ PHASE VECTORS</small></div><div class="metric"><b id="ringMetric">23</b><small>SHRINKING VORTEX RINGS</small></div><div class="metric"><b>1.61615×10<sup>−35</sup></b><small>FLOOR TILE PITCH · METERS</small></div></div>
+<div class="layout">
+<section class="panel"><div class="head"><h2>01 · LIVE CANVAS2D VORTEX / ACCRETION TO FLOOR</h2><small>WIDE MOUTH → CONSTRICTING SHAFT → FLOOR SINK</small></div>
+<div class="scene"><canvas id="scene" aria-label="Animated gravity vortex: colored accretion disk, shrinking ring funnel, three scale markers and a grid floor sink"></canvas>
+<div class="hud">SCALAR ORIGIN D = 0 · UPPER FIELD<br>INCREASING COMPRESSION ↓<br>FLOOR = 1 × 1.61615×10⁻³⁵ m PER TILE<br>SCHEMATIC GEOMETRY / NOT A RELATIVITY SIMULATION</div></div>
+<div class="legend"><span>◉ 366 HON spectral palette addresses</span><span>∿ 2 intertwined spiral threads</span><span>⬇ narrowing meridian field</span><span>◎ luminous/dark sink at floor</span></div></section>
+<aside class="panel"><div class="head"><h2>02 · VORTEX CONTROLLER</h2><small id="state">LIVE · CLOCKWISE</small></div><div class="side">
+<div class="control"><label for="compression">TAPER COMPRESSION <output id="compressionOut">1.40</output></label><input id="compression" type="range" min=".55" max="3.5" step=".05" value="1.4"></div>
+<div class="control"><label for="rings">CONCENTRIC RINGS <output id="ringsOut">23</output></label><input id="rings" type="range" min="4" max="64" value="23"></div>
+<div class="control"><label for="speed">ORBITAL SPEED <output id="speedOut">0.60</output></label><input id="speed" type="range" min="0" max="3" step=".05" value=".6"></div>
+<div class="control"><label for="direction">SPIN DIRECTION</label><select id="direction"><option value="1">Clockwise (+)</option><option value="-1">Counterclockwise (−)</option></select></div>
+<div class="control"><label for="grid">FLOOR GRID</label><select id="grid"><option value="1">1 × 1 tile</option><option value="13" selected>13 × 13 tiles</option><option value="27">27 × 27 tiles</option></select></div>
+<div class="control"><label for="phase">SCANNER PHASE <output id="phaseOut">0 / 731</output></label><input id="phase" type="range" min="0" max="731" value="0"></div>
+<label class="checkrow"><input id="floorVisible" type="checkbox" checked> Floor + sink contact enabled</label>
+<label class="checkrow"><input id="markersVisible" type="checkbox" checked> Atomic/nuclear scale markers</label>
+<label class="checkrow"><input id="haloVisible" type="checkbox" checked> Accretion halo / light traces</label>
+<div class="buttons"><button id="pause" type="button">Ⅱ PAUSE</button><button id="reset" type="button">◎ RESET</button><button id="export" type="button">↓ EXPORT JSON</button><button id="next" type="button">+1 PHASE</button></div>
+<div class="readout"><small>REFERENCE FLOOR</small><b>1.61615 × 10⁻³⁵ m</b><div class="readgrid">
+<div><small>GRID SPAN</small><strong id="span">2.100995 × 10⁻³⁴ m</strong></div><div><small>SELECTED PHASE</small><strong id="scan">V000 / −</strong></div><div><small>MOUTH RADIUS</small><strong id="mouth">—</strong></div><div><small>FLOOR NECK</small><strong id="neck">—</strong></div></div></div>
+<p class="note">The funnel is an illustrative field geometry. Scale labels are logarithmic reference bands; they do not assert a particular elementary particle size, a gravitational singularity, a physical minimum spacetime cell, or a computed Kerr geodesic.</p>
+</div></aside></div>
+<div class="chart">
+<section class="panel"><div class="head"><h2>03 · REFERENCE LENGTH BANDS</h2><small>PHYSICAL UNITS · DIAGRAM POSITIONS NOT TO SCALE</small></div><div class="inner lines">
+<div class="line"><span><b>ATOM · ~10⁻¹⁰ m</b><small>Representative atomic scale</small></span><span style="color:#7edfff">TOP</span></div>
+<div class="line"><span><b>NUCLEUS · ~10⁻¹⁵ m</b><small>Representative nuclear scale</small></span><span style="color:#ff9ebc">MID</span></div>
+<div class="line"><span><b>10⁻¹⁶ m ?</b><small>Subnuclear reference coordinate, not a known particle diameter</small></span><span style="color:#b5ffdb">LOWER</span></div>
+<div class="line"><span><b>1.61615 × 10⁻³⁵ m</b><small>User-defined floor tile pitch, not an observed minimal length</small></span><span style="color:#b5ffdb">FLOOR</span></div>
+</div></section>
+<section class="panel"><div class="head"><h2>04 · COMPLETE FIELD BOUNDARY</h2><small>GEN13 → GEN14</small></div><div class="inner">
+<pre>D = 0                 scalar field origin
+mouth radius > neck   continuously for all 0 ≤ t < 1
+R(t) = r_neck + (r_mouth - r_neck)(1-t)^c
+field threads = 2    helical, phase rotated
+floor sink = grid projected D reference
+phase addresses = 366 × (−/+) = 732
+floor pitch = 1 × 1.61615 × 10^-35 m
+GEN12 roll = −36 / 0 / +36 / 0 / 1 / 1</pre>
+<p class="note">Source geometry uses the existing GEN13 floor helper; color coordinates are the original OASIS HON v9.4 palette. Neither floor scale nor these conceptual vortex rings physically clamp the independent GEN11 signed 10⁻³⁶ ... 10³⁶ vector metric.</p></div></section>
+</div>
+<footer>.dlw / David Lee Wise / ROOT0 · <a href="https://github.com/DavidWise01/photonic/blob/main/scalar-zero/gravity-vortex-core.js">Source geometry</a> · <a href="https://github.com/DavidWise01/oasis/blob/main/n184/elemental-hon-color-operants-v94/hon_core.mjs">HON v9.4 source colors</a>. Accretion and lensing are visual metaphors; no live physical simulation or claim about particle substructure.</footer>
+</main>
+<script src="field-floor-1lp.js"></script>
+<script src="pinwheel-source-v94.js"></script>
+<script src="vector-732-core.js"></script>
+<script src="gravity-vortex-core.js"></script>
+<script>
+"use strict";
+(function(){
+ const $=id=>document.getElementById(id),F=window.ROOT0_FIELD_FLOOR,H=window.ROOT0_PINWHEEL_366,
+  M=window.ROOT0_VECTOR_732,V=window.ROOT0_GRAVITY_VORTEX,TAU=Math.PI*2;
+ if(!F||!H||!M||!V||F.geometry.oneTilePitchMeters!==1.61615e-35||M.count!==732)throw Error("Vortex dependencies missing");
+ const cvs=$("scene"),ctx=cvs.getContext("2d");
+ const colors=Array.from({length:366},(_,i)=>H.colorAt(i+1).hex);
+ const stars=Array.from({length:180},(_,i)=>({x:((i*183.779)%991)/991,y:((i*397.1)%997)/997,r:i%5===0?1.1:.6}));
+ let last=0,spin=0,phase=0,playing=true,frameIndex=0,dpr=0,width=0,height=0;
+ function resize(){let rect=cvs.getBoundingClientRect(),dpi=Math.min(window.devicePixelRatio||1,2);
+  if(rect.width!==width||rect.height!==height||dpi!==dpr){width=rect.width;height=rect.height;dpr=dpi;
+   cvs.width=Math.max(1,Math.round(width*dpi));cvs.height=Math.max(1,Math.round(height*dpi));ctx.setTransform(dpi,0,0,dpi,0,0)}
+ }
+ function floor(cx,fy,outer){
+  if(!$("floorVisible").checked)return;
+  const n=+$("grid").value,size=outer/(Math.max(5,n)*.76),h=n/2;
+  ctx.beginPath();let corners=[F.project(-h,-h,cx,fy,size),F.project(h,-h,cx,fy,size),F.project(h,h,cx,fy,size),F.project(-h,h,cx,fy,size)];
+  corners.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.closePath();ctx.fillStyle="#16465644";ctx.fill();ctx.strokeStyle="#4ac2de91";ctx.lineWidth=1.1;ctx.stroke();
+  ctx.beginPath();for(const [a,b] of F.projectedGrid(n,cx,fy,size)){ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y)}
+  ctx.strokeStyle="#54c8d35c";ctx.lineWidth=n>13?.45:.77;ctx.stroke();
+  ctx.textAlign="center";ctx.fillStyle="#a3f2e8";ctx.font="11px ui-monospace,monospace";
+  ctx.fillText("FLOOR / PITCH 1.61615×10⁻³⁵ m",cx,Math.min(height-18,fy+outer*.31));
+ }
+ function draw(){
+  resize();if(width<=0||height<=0)return;
+  const w=width,h=height,cx=w*.46,topY=h*.20,floorY=h*.82;
+  const mouth=Math.min(w*.275,h*.29),neck=Math.max(1.5,mouth*.013),n=+$("rings").value;
+  const options={cx,topY,floorY,mouthRadius:mouth,neckRadius:neck,compression:+$("compression").value,
+   ringCount:n,spin,direction:+$("direction").value,labels:$("markersVisible").checked,halo:$("haloVisible").checked,
+   flatten:.24};
+  ctx.clearRect(0,0,w,h);
+  for(const p of stars){ctx.fillStyle="#a2d9ee59";ctx.fillRect(p.x*w,p.y*h,p.r,p.r)}
+  floor(cx,floorY,mouth);
+  let geometry=V.draw(ctx,options);
+  // A 366-segment source-color disk at the wide mouth (not 366 new chemical elements).
+  const ellipseH=mouth*.22,base=spin*.12;
+  if($("haloVisible").checked){
+   const light=ctx.createRadialGradient(cx,topY,mouth*.3,cx,topY,mouth*1.19);
+   light.addColorStop(0,"#2cb4d400");light.addColorStop(.43,"#47d9fa30");light.addColorStop(1,"#6a96ff00");
+   ctx.beginPath();ctx.ellipse(cx,topY,mouth*1.2,ellipseH*1.6,0,0,TAU);ctx.fillStyle=light;ctx.fill();
+  }
+  for(let i=0;i<366;i++){
+   const a=base+TAU*i/366,b=base+TAU*(i+1)/366+.003;
+   ctx.beginPath();ctx.ellipse(cx,topY,mouth*.94,ellipseH,0,a,b);
+   ctx.strokeStyle=colors[i];ctx.lineWidth=Math.max(5,mouth*.044);ctx.stroke();
+  }
+  for(const frac of [.57,.75,1.035]){
+   ctx.beginPath();ctx.ellipse(cx,topY,mouth*frac,ellipseH*frac,0,0,TAU);
+   ctx.strokeStyle=frac===1.035?"#90dfff91":"#b7f9faae";ctx.lineWidth=frac===1.035?2.1:1.1;ctx.stroke();
+  }
+  // Color selection ties into the same 732-phase index as GEN8–GEN13.
+  const active=M.decode(phase),a=base+TAU*(active.address-.5)/366;
+  ctx.beginPath();ctx.arc(cx+Math.cos(a)*mouth*.94,topY+Math.sin(a)*ellipseH,4,0,TAU);
+  ctx.fillStyle="#fef3bc";ctx.shadowColor="#b1fffa";ctx.shadowBlur=16;ctx.fill();ctx.shadowBlur=0;
+  ctx.beginPath();ctx.arc(cx,topY,Math.max(8,mouth*.052),0,TAU);
+  ctx.fillStyle="#020d1c";ctx.strokeStyle="#b5f8ff";ctx.lineWidth=2;ctx.stroke();ctx.fill();
+  ctx.textAlign="center";ctx.fillStyle="#e2ffff";ctx.font="bold 13px ui-monospace,monospace";ctx.fillText("D = 0",cx,topY-17);
+  ctx.font="10px ui-monospace,monospace";ctx.fillStyle="#a1f0e5";
+  ctx.fillText("SINK / FLOOR CONTACT",cx,Math.min(h-6,floorY+19));
+  $("mouth").textContent=geometry.mouthRadius.toFixed(1)+" px";
+  $("neck").textContent=geometry.neckRadius.toFixed(2)+" px";
+  $("ringMetric").textContent=n;
+  $("scan").textContent="V"+String(phase).padStart(3,"0")+" / "+active.polarity;
+  $("span").textContent=F.span(+$("grid").value).toExponential(5)+" m";
+  $("phaseOut").textContent=phase+" / 731";
+  $("state").textContent=(playing?"LIVE":"PAUSED")+" · "+(+$("direction").value===1?"CLOCKWISE":"COUNTERCLOCKWISE");
+ }
+ function sync(){for(const id of ["compression","rings","speed"])$(id+"Out").textContent=(id==="rings"?$(id).value:(+$(id).value).toFixed(2));}
+ for(const id of ["compression","rings","speed"])$(id).addEventListener("input",sync);
+ $("phase").addEventListener("input",()=>{phase=+$("phase").value;playing=false;$("pause").textContent="▶ RESUME";draw()});
+ $("pause").addEventListener("click",()=>{playing=!playing;$("pause").textContent=playing?"Ⅱ PAUSE":"▶ RESUME"});
+ $("reset").addEventListener("click",()=>{spin=0;phase=0;playing=false;
+  $("compression").value="1.4";$("rings").value="23";$("speed").value=".6";$("direction").value="1";
+  $("grid").value="13";$("floorVisible").checked=true;$("markersVisible").checked=true;$("haloVisible").checked=true;
+  $("phase").value="0";$("pause").textContent="▶ RESUME";sync();draw()});
+ $("next").addEventListener("click",()=>{phase=(phase+1)%732;$("phase").value=phase;playing=false;$("pause").textContent="▶ RESUME";draw()});
+ $("export").addEventListener("click",()=>{
+  const data={schema:"root0-gen14-vortex-v1",view:"pure Canvas2D",floor:{...F.geometry,gridSize:+$("grid").value,visible:$("floorVisible").checked},
+   colorSource:"OASIS HON v9.4: 366 original hue addresses",vectorPhases:732,
+   phase,rollSequence:"-36/0/+36/0/1/1",gravityVortex:{
+    compression:+$("compression").value,ringCount:+$("rings").value,
+    spin,direction:+$("direction").value,markersVisible:$("markersVisible").checked,haloVisible:$("haloVisible").checked,
+    benchmarkBands:V.markerBands},
+   disclaimer:"Narrowing funnel and sink are schematic; scale bands are not vertically calibrated; 10^-16m is exploratory."};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="ROOT0_GEN14_GRAVITY_VORTEX.json";
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ });
+ function tick(now){
+  const dt=last?Math.max(0,Math.min(.08,(now-last)/1000)):0;last=now;
+  if(playing){spin+=dt*(+$("speed").value)*(+$("direction").value);phase=(phase+Math.floor(dt*24))%732;}
+  draw();requestAnimationFrame(tick);
+ }
+ function heightMessage(){if(window.parent!==window)window.parent.postMessage({kind:"root0-gen14-height",height:document.documentElement.scrollHeight},"*")}
+ if(typeof ResizeObserver==="function")new ResizeObserver(heightMessage).observe(document.body);
+ window.addEventListener("resize",heightMessage);
+ sync();draw();heightMessage();requestAnimationFrame(tick);
+})();
+</script></body></html>
