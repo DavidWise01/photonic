@@ -6,8 +6,10 @@
  const STORE="root0.gen11.vector-field.metric.v2",LEGACY_STORE="root0.gen10.vector-field.v1";
  const defaults=()=>Array.from({length:732},()=>M.defaults());
  let vectors=defaults(),audit=[],selected=0,tilt=65,seq=0,last=0;
+ let rollStep=0,rollElapsed=0,rollPlaying=true;
  const canvas=$("vectors"),ctx=canvas.getContext("2d");
  const colors=Array.from({length:732},(_,i)=>C.colorAt(M.decode(i).address,"S").hex);
+ if(!Array.isArray(M.rollBeats)||M.rollBeats.length!==6||M.rollBeats.map(b=>b.code).join("/")!=="−36/0/+36/0/1/1")throw Error("GEN12 roll mapping not available");
  const regions=Array.from({length:130},(_,i)=>({
     x:((i*73.743)%987)/987,y:((i*241.173)%991)/991,r:.25+(i%4)*.21
  }));
@@ -90,6 +92,57 @@
    $("zeroSelected").setAttribute("aria-pressed",String(v.zero));
    $("finite").setAttribute("aria-pressed",String(!v.zero&&!v.infinite));
    stats();
+ }
+ /* GEN12: The roll is a read-only, frame-local overlay.
+  * Saved states are never changed by an animation frame.
+  * All six stages use canonical GEN11 exact zero/10^exponent states. */
+ function previewState(id){
+   const base=vectors[id],scope=$("rollScope").value;
+   if(scope==="saved"||(scope==="selected"&&id!==selected)||
+     (scope==="pinned"&&!base.pinned))return base;
+   return {...M.rollState(rollStep,base),pinned:true};
+ }
+ function refreshRoll(){
+   const beat=M.rollBeat(rollStep);
+   $("rollIndex").textContent=(rollStep+1)+" / 6";
+   $("rollValue").textContent=beat.label;
+   $("rollMetric").textContent=beat.code==="0"?"EXACT SCALAR ZERO":beat.code==="1"?"10⁰ = 1 · UNIT BEAT":"10^"+beat.exponent+" · FINITE MAGNITUDE";
+   $("rollPlay").textContent=rollPlaying?"Ⅱ PAUSE ROLL":"▶ RESUME ROLL";
+   $("rollPlay").setAttribute("aria-pressed",String(rollPlaying));
+   for(const b of $("rollBeats").children){
+     b.classList.toggle("active",Number(b.dataset.step)===rollStep);
+     b.setAttribute("aria-pressed",String(Number(b.dataset.step)===rollStep));
+   }
+ }
+ function gotoRoll(n,pause=true){
+   rollStep=M.rollIndex(n);rollElapsed=0;
+   if(pause)rollPlaying=false;
+   refreshRoll();
+ }
+ function initRoll(){
+   M.rollBeats.forEach((beat,i)=>{
+     const b=document.createElement("button");
+     b.type="button";b.className=beat.zero?"zero":"";
+     b.dataset.step=String(i);b.textContent=beat.code;
+     b.title="Beat "+(i+1)+": "+beat.label;
+     b.addEventListener("click",()=>gotoRoll(i,true));
+     $("rollBeats").appendChild(b);
+   });
+   $("rollPlay").addEventListener("click",()=>{rollPlaying=!rollPlaying;refreshRoll()});
+   $("rollNext").addEventListener("click",()=>gotoRoll(rollStep+1,true));
+   $("rollReset").addEventListener("click",()=>gotoRoll(0,true));
+   $("rollSpeed").addEventListener("input",()=>{
+     $("rollSpeedOut").textContent=(+$("rollSpeed").value).toFixed(2);
+   });
+   $("rollScope").addEventListener("change",refreshRoll);
+   $("rollCommit").addEventListener("click",()=>{
+     const value=M.rollState(rollStep,vectors[selected]);
+     vectors[selected]={...value,pinned:true};
+     refresh();
+     logChange("COMMIT_GEN12_ROLL_BEAT",selected,
+       "Beat "+(rollStep+1)+"/6: "+M.rollBeat(rollStep).code+"; deliberate saved-state mutation");
+   });
+   refreshRoll();
  }
  function emitSelection(){
   if(window.parent!==window){
@@ -185,7 +238,7 @@
   // Pinned samples extend from D toward ± the logarithmically compressed tip.
   // Both axes point away from zero; negative values reverse the arrow orientation.
   for(let id=0;id<732;id++){
-    const v=vectors[id];if(!v.pinned||id===selected)continue;
+    const v=previewState(id);if(!v.pinned||id===selected)continue;
     const d=M.decode(id),frac=M.fraction(v),a=offset+d.angleDegrees*Math.PI/180+(v.sign<0?Math.PI:0),point=polar(frac*outer,a);
     ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(point.x,point.y);
     ctx.strokeStyle=colors[id];ctx.globalAlpha=v.infinite?.64:.28;ctx.lineWidth=v.infinite?1.5:.8;ctx.stroke();ctx.globalAlpha=1;
@@ -200,7 +253,7 @@
   ctx.textAlign="center";ctx.fillStyle="#f3fffd";ctx.font="bold "+Math.max(11,inner*.23)+"px ui-monospace,monospace";
   ctx.fillText("D = 0",cx,cy+4);
   // Selected vector always visible, even when currently unpinned (dashed preview).
-  const d=M.decode(selected),v=vectors[selected],a=offset+d.angleDegrees*Math.PI/180+(v.sign<0?Math.PI:0);
+  const d=M.decode(selected),v=previewState(selected),a=offset+d.angleDegrees*Math.PI/180+(v.sign<0?Math.PI:0);
   const frac=M.fraction(v),r=frac*outer,to=polar(v.pinned?r:outer,a);
   ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(to.x,to.y);
   ctx.strokeStyle=v.pinned?"#fff9cf":"#b7ccde";ctx.lineWidth=v.pinned?3:1.8;
@@ -215,7 +268,7 @@
     ctx.fillText(v.sign<0?"−∞":"+∞",to.x,to.y-12);
   }
   ctx.textAlign="left";ctx.fillStyle="#a0c4d2";ctx.font="10px ui-monospace,monospace";
-  ctx.fillText("V"+String(selected).padStart(3,"0")+" / "+d.polarity+" · HON "+d.address+" · "+v.sign,13,h-15);
+  ctx.fillText("V"+String(selected).padStart(3,"0")+" / "+d.polarity+" · HON "+d.address+" · "+v.sign+" · "+($("rollScope").value==="saved"?"SAVED":"ROLL "+(rollStep+1)+"/6"),13,h-15);
  }
  canvas.addEventListener("click",e=>{
   const rect=canvas.getBoundingClientRect(),dx=e.clientX-rect.left-hit.cx,dy=(e.clientY-rect.top-hit.cy)/(hit.tiltY||1);
@@ -233,9 +286,19 @@
   }
  });
  // Animation is for viewport drawing only: no background mutation of user pins.
- function loop(time){last=time;draw();requestAnimationFrame(loop)}
+ function loop(time){
+   const dt=last?Math.max(0,Math.min(.1,(time-last)/1000)):0;last=time;
+   if(rollPlaying){
+     rollElapsed+=dt*(+$("rollSpeed").value);
+     if(rollElapsed>=1){
+       const steps=Math.floor(rollElapsed);rollElapsed-=steps;
+       rollStep=M.rollIndex(rollStep+steps);refreshRoll();
+     }
+   }
+   draw();requestAnimationFrame(loop);
+ }
  const updateHeight=()=>{if(window.parent!==window)window.parent.postMessage({kind:"root0-vector-height",height:document.documentElement.scrollHeight},"*")};
  if(typeof ResizeObserver==="function")new ResizeObserver(updateHeight).observe(document.body);
  window.addEventListener("resize",updateHeight);
- drawAudit();refresh();updateHeight();requestAnimationFrame(loop);
+ initRoll();drawAudit();refresh();updateHeight();requestAnimationFrame(loop);
 })();
