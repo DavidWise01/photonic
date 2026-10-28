@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#071421"><meta name="description" content="ROOT0 GEN10 — 732 individually pinnable scalar-zero vectors with signed logarithmic scaling to symbolic positive and negative infinity."><title>ROOT0 GEN12 · Six-Beat Roll / 732 Vector Signed Metric</title>
+<meta name="theme-color" content="#071421"><meta name="description" content="ROOT0 GEN10 — 732 individually pinnable scalar-zero vectors with signed logarithmic scaling to symbolic positive and negative infinity."><title>ROOT0 GEN13 · 1.61615e-35m Field Floor / Six-Beat Roll</title>
 <style>
 :root{color-scheme:dark;--bg:#071421;--panel:#0c2332;--line:#31576a;--ink:#e7fafa;--muted:#91b4c2;--mint:#7dffcb;--amber:#ffd1a0;--blue:#78baff}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#194056,#071421 65%) fixed;color:var(--ink);font:13px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
@@ -28,19 +28,33 @@ button,select{border:1px solid #527284;border-radius:8px;background:#183d50;colo
 .roll-stage strong{display:block;color:#b8ffe6;font:800 20px ui-monospace,monospace}.roll-stage small{font:10px ui-monospace,monospace;color:#a2bdc9;display:block}
 .roll-scope{display:grid;grid-template-columns:1fr 1fr;gap:6px}.roll-scope select{min-width:0;width:100%}
 .roll-box button:focus-visible,.roll-box select:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.floor-control{border:1px solid #4f727b;border-radius:10px;padding:12px;background:linear-gradient(135deg,#102d3e,#0b2433);display:grid;gap:9px}
+.floor-control h3{font:800 11px ui-monospace,monospace;letter-spacing:.12em;color:#b8ffe7;margin:0}
+.floor-control .floor-number{font:800 17px ui-monospace,monospace;color:#c7ffe8}
+.floor-control .floor-meta{font:10px ui-monospace,monospace;color:#a9cad3}
+.floor-control .floor-switch{display:flex;gap:7px;align-items:center;color:#c1e0e4;font:11px ui-monospace,monospace}
+.floor-control select{width:100%;min-width:0}
 </style></head><body><main>
-<header class="top"><span class="kicker">ROOT0 / GEN12 ROLL · GEN11 SIGNED METRIC · 732 ADDRESSABLE −/+ VECTORS</span><nav><a href="./">SCALAR ZERO</a><a href="pinwheel-366.html">GEN9 DISK</a><a href="rotation-732.html">GEN8</a></nav></header>
+<header class="top"><span class="kicker">ROOT0 / GEN13 FLOOR · GEN12 ROLL · 732 ADDRESSABLE −/+ VECTORS</span><nav><a href="./">SCALAR ZERO</a><a href="pinwheel-366.html">GEN9 DISK</a><a href="rotation-732.html">GEN8</a></nav></header>
 <h1>Pin to exact zero.<br>Scale ±10<sup>−36</sup> to ±10<sup>36</sup>.</h1>
 <p class="lede">Each of the 366 original HON color addresses has two independent phase vectors: minus and plus. Every vector can be anchored to scalar <strong>D = 0</strong>, independently signed, and logarithmically scaled. Exact zero is a distinct state, <strong>10⁰ = 1</strong>, and infinity is a symbolic endpoint. All displayed screen coordinates stay finite.</p>
 <div class="stats"><div class="stat"><strong>732</strong><small>INDEPENDENT VECTOR STATES</small></div><div class="stat"><strong id="pinnedTotal">0</strong><small>VECTORS PINNED TO D = 0</small></div><div class="stat"><strong>366 × 2</strong><small>ORIGINAL COLORS / PHASES</small></div><div class="stat"><strong id="infiniteTotal">0</strong><small>SYMBOLIC INFINITY STATES</small></div><div class="stat"><strong>10<sup>−36</sup> … 10<sup>36</sup></strong><small>GEN11 SIGNED POWER-OF-TEN METRIC</small></div></div>
 <div class="grid">
-<section class="panel"><div class="head"><h2>01 · 732-VECTOR ACCRETION / TOROIDAL FIELD</h2><span id="modeLabel">GEN12 · SIX-BEAT ROLL · GEN11 SIGNED METRIC</span></div>
-<div class="view"><canvas id="vectors" aria-label="732 colored phase vectors, independently anchored to a scalar-zero center and scaled in signed directions"></canvas><div class="hud">D = 0 · COMMON ANCHOR<br>− / + = PHASE ADDRESS<br>VECTOR SIGN IS INDEPENDENT<br>RADIUS = COMPRESSED LOG SCALE</div></div>
-<div class="legend"><span><i class="pill m"></i>Minus phase</span><span><i class="pill p"></i>Plus phase</span><span><i class="pill pin"></i>Pinned vector</span><span><i class="pill d"></i>D = zero</span></div></section>
+<section class="panel"><div class="head"><h2>01 · 732-VECTOR ACCRETION / TOROIDAL FIELD</h2><span id="modeLabel">GEN13 · FLOOR 1.61615×10⁻³⁵ m · SIX-BEAT ROLL</span></div>
+<div class="view"><canvas id="vectors" aria-label="732 colored phase vectors, independently anchored to a scalar-zero center and scaled in signed directions"></canvas><div class="hud">D = 0 · COMMON ANCHOR<br>− / + = PHASE ADDRESS<br>VECTOR SIGN IS INDEPENDENT<br>RADIUS = COMPRESSED LOG SCALE<br>FLOOR PITCH = 1.61615×10⁻³⁵ m</div></div>
+<div class="legend"><span><i class="pill m"></i>Minus phase</span><span><i class="pill p"></i>Plus phase</span><span><i class="pill pin"></i>Pinned vector</span><span><i class="pill d"></i>D = zero</span><span>GRID = PHYSICAL REFERENCE ANNOTATION</span></div></section>
 <aside class="panel"><div class="head"><h2>02 · VECTOR PIN / SIGNED SCALING</h2><span>ALL 732 SELECTABLE</span></div><div class="side">
 <div class="control"><label for="vector">SELECT VECTOR INDEX <output id="vectorOut">000 / 731</output></label><input id="vector" type="range" min="0" max="731" step="1" value="0"></div>
 <div class="control"><label for="tilt">DISK TILT <output id="tiltOut">65°</output></label><input id="tilt" type="range" min="0" max="85" step="1" value="65"></div>
 <div class="control"><label for="exponent">LOG₁₀ MAGNITUDE · EXPONENT <output id="expOut">0.00</output></label><input id="exponent" type="range" min="-36" max="36" step=".25" value="0"></div>
+<section class="floor-control" id="gen13Floor">
+<h3>GEN13 · FLOOR TO THE SCALAR-ZERO FIELD</h3>
+<div class="floor-number">1 × 1.61615 × 10<sup>−35</sup> m</div>
+<label class="floor-switch"><input id="showFloor" type="checkbox" checked> Show reference floor and D=0 tether</label>
+<div class="control"><label for="floorGrid">FLOOR TILE GRID</label><select id="floorGrid"><option value="1">1 × 1 reference tile</option><option value="13" selected>13 × 13 reference tiles</option><option value="27">27 × 27 reference tiles</option></select></div>
+<div class="readgrid"><div><small>ONE TILE PITCH</small><b id="floorPitch">1.61615 × 10⁻³⁵ m</b></div><div><small>FLOOR SPAN / AXIS</small><b id="floorSpan">2.1010 × 10⁻³⁴ m</b></div></div>
+<div class="floor-meta">User-defined geometry pitch. CODATA 2022 Planck length ≈ 1.616255 × 10⁻³⁵ m; the two constants are not identical. Floor is an illustrative coordinate grid, not measured space quantization.</div>
+</section>
 <div class="roll-box" id="gen12Roll">
 <div class="roll-title">GEN12 · SIX-BEAT METRIC ROLL · −36 / 0 / +36 / 0 / 1 / 1</div>
 <div class="roll-beats" id="rollBeats" role="group" aria-label="Six-step roll sequence"></div>
@@ -79,7 +93,8 @@ screen radius = compressed, bounded LOD
 <section class="panel"><div class="head"><h2>04 · SOURCE ALIGNMENT / AUDIT LOG</h2><span>APPEND-ONLY BROWSER ENTRIES</span></div><div class="body">
 <div class="anchors"><button type="button" data-jump="0">V000<small>1 / −</small></button><button type="button" data-jump="1">V001<small>1 / +</small></button><button type="button" data-jump="730">V730<small>366 / −</small></button><button type="button" data-jump="731">V731<small>366 / +</small></button><button type="button" data-jump="244">V244<small>123 / −</small></button><button type="button" data-jump="488">V488<small>245 / −</small></button></div>
 <p class="small">The same vector index aligns with GEN8's 732-event scan and GEN9's 366-address color wheel. Edits are model state, never measured cosmic forces or actual sub-Planck lengths. Browser storage is user-editable; JSON export preserves each vector and its audit events.</p><div class="log" id="audit">No pin or scale changes yet.</div></div></section></div>
-<div class="bottom">ROOT0 / .dlw · David Lee Wise · GEN11 power-of-ten metric: 0, ±10⁻³⁶ through ±10³⁶, then symbolic ±∞. GEN10 saved settings migrate to a new key; the original remains untouched. HON v9.4 colors and 732 vector identities remain unchanged.</div>
+<div class="bottom">ROOT0 / .dlw · David Lee Wise · GEN13 floor of 1 × 1.61615 × 10⁻³⁵ m as reference tile · GEN11 power-of-ten metric: 0, ±10⁻³⁶ through ±10³⁶, then symbolic ±∞. GEN10 saved settings migrate to a new key; the original remains untouched. HON v9.4 colors and 732 vector identities remain unchanged.</div>
 </main>
-<script src="pinwheel-source-v94.js"></script><script src="vector-732-core.js"></script><script src="vector-field-732.js"></script>
+<script src="pinwheel-source-v94.js"></script><script src="vector-732-core.js"></script>
+<script src="field-floor-1lp.js"></script><script src="vector-field-732.js"></script>
 </body></html>
