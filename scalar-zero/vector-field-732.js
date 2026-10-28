@@ -1,8 +1,8 @@
 "use strict";
 (function(){
  const $=id=>document.getElementById(id);
- const M=window.ROOT0_VECTOR_732,C=window.ROOT0_PINWHEEL_366,F=window.ROOT0_FIELD_FLOOR,G=window.ROOT0_GRAVITY_VORTEX,S=window.ROOT0_SCALE_DESCENT,TAU=Math.PI*2;
- if(!M||!C||!F||!G||!S||M.count!==732||C.capacity!==366||F.geometry.oneTilePitchMeters!==1.61615e-35||S.floorMeters!==F.geometry.oneTilePitchMeters)throw Error("GEN13 field floor / vector / OASIS source missing");
+ const M=window.ROOT0_VECTOR_732,C=window.ROOT0_PINWHEEL_366,F=window.ROOT0_FIELD_FLOOR,G=window.ROOT0_GRAVITY_VORTEX,S=window.ROOT0_SCALE_DESCENT,E=window.ROOT0_SCALE_GENERATIONS,TAU=Math.PI*2;
+ if(!M||!C||!F||!G||!S||!E||M.count!==732||C.capacity!==366||F.geometry.oneTilePitchMeters!==1.61615e-35||S.floorMeters!==F.geometry.oneTilePitchMeters)throw Error("GEN13 field floor / vector / OASIS source missing");
  const STORE="root0.gen11.vector-field.metric.v2",LEGACY_STORE="root0.gen10.vector-field.v1";
  const defaults=()=>Array.from({length:732},()=>M.defaults());
  let vectors=defaults(),audit=[],selected=0,tilt=65,seq=0,last=0;
@@ -39,6 +39,12 @@
  $("gen15Select").addEventListener("change",updateScaleInfo);
  $("gen15Visible").addEventListener("change",updateScaleInfo);
  updateScaleInfo();
+ let fractionalLevels=E.levels(370);
+ $("gen18Resolution").addEventListener("change",()=>{
+  const resolution=+$("gen18Resolution").value;
+  fractionalLevels=E.levels(resolution);
+  $("gen18Step").textContent=resolution+" intervals · "+(resolution+1)+" sample rings · 26 scientific landmarks preserved.";
+ });
  const regions=Array.from({length:130},(_,i)=>({
     x:((i*73.743)%987)/987,y:((i*241.173)%991)/991,r:.25+(i%4)*.21
  }));
@@ -230,6 +236,7 @@
        chromatic:{...G.chromatic,enabled:$("vortexChromatic").checked,
          firstSourceHex:axialSourceColors[0],lastSourceHex:axialSourceColors[365],
          note:"linear symbolic color axis independent of log scale and GEN13 physical floor pitch"},
+       fractionalGenerations:{...E.metadata(+$("gen18Resolution").value),enabled:$("gen15Visible").checked},
        logarithmicDescent:{schema:S.schema,enabled:$("gen15Visible").checked,
         selectedMarker:$("gen15Select").value,topMeters:S.mouthMeters,floorMeters:S.floorMeters,
         generations:S.generations,scienceMarkers:S.setupMarkers(),interpretation:"logarithmic height, schematic funnel width"}},
@@ -311,6 +318,13 @@
       const cfg={cx,topY,floorY,mouthRadius:outer*.54,neckRadius:2.3,
         compression:+$("vortexCompression").value,ringCount:+$("vortexRings").value,
         spin:vortexSpin,flatten:Math.max(.16,tiltY*.65)};
+      ctx.save();ctx.beginPath();
+      for(const gen of fractionalLevels){
+        const r=G.ringAt(gen.t,cfg);
+        ctx.moveTo(r.x+r.rx,r.y);
+        ctx.ellipse(r.x,r.y,r.rx,r.ry,0,0,TAU);
+      }
+      ctx.lineWidth=.5;ctx.strokeStyle="#91dff13d";ctx.stroke();ctx.restore();
       for(const gen of S.generations){
         const r=G.ringAt(gen.t,cfg);
         ctx.beginPath();ctx.ellipse(r.x,r.y,r.rx,r.ry,0,0,TAU);
