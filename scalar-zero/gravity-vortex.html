@@ -116,6 +116,7 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
  const colors=Array.from({length:366},(_,i)=>H.colorAt(i+1).hex);
  const stars=Array.from({length:180},(_,i)=>({x:((i*183.779)%991)/991,y:((i*397.1)%997)/997,r:i%5===0?1.1:.6}));
  let last=0,spin=0,phase=0,phaseProgress=0,playing=true,dpr=0,width=0,height=0,selectedMarker="atom",selectedGeneration=0;
+ const generationCache=Object.fromEntries(E.modes.map(n=>[n,E.levels(n)]));
  function resize(){let rect=cvs.getBoundingClientRect(),dpi=Math.min(window.devicePixelRatio||1,2);
   if(rect.width!==width||rect.height!==height||dpi!==dpr){width=rect.width;height=rect.height;dpr=dpi;
    cvs.width=Math.max(1,Math.round(width*dpi));cvs.height=Math.max(1,Math.round(height*dpi));ctx.setTransform(dpi,0,0,dpi,0,0)}
@@ -207,7 +208,7 @@ footer{font-size:11px;color:var(--muted);margin-top:16px}
  updateSlice(0,false);
  function drawLogGenerations(o){
   if(!$("markersVisible").checked)return;
-  const gen=S.generations,steps=E.levels(resolution()),active=+$("slice").value;
+  const gen=S.generations,steps=generationCache[resolution()],active=+$("slice").value;
   ctx.save();
   // All fractional-power intervals are represented by exact log10-positioned
   // cross-sections; the original 26 scientific decade landmarks stay legible.
