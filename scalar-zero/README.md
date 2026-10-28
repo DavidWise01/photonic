@@ -813,3 +813,50 @@ References:
 - **scalar-zero/index.html:** section 18 embeds the GEN17 test and supports iframe height updates. GEN0–16 sources are not overwritten.
 
 **Attribution:** David Lee Wise / ROOT0 · .dlw. The term quanta here refers to the author's symbolic model, not demonstrated elementary-particle physics.
+
+
+## GEN18 · 366 / 370 / 999 fractional-power intervals (2026-10-28)
+
+GEN18 corrects the earlier interpretive mismatch: GEN15 listed **26 whole-power landmarks** (10^-10 through 10^-34 m plus the exact user-supplied floor 1.61615e-35 m). Those 26 anchors never restricted the number of model intervals. The vortex and H/Og compression sweep now expose **366 / 370 / 999 logarithmic intervals**, selected at runtime, with **370 default**. There are **367 / 371 / 1000 nodes**, respectively, because both endpoints are included. No new chemical elements, Standard Model particles, or photon colors are asserted.
+
+### Mathematics and exact endpoints
+
+For resolution N in {366,370,999}, index i in [0,N], t=i/N:
+
+- logTop = log10(1e-10 m) = -10.
+- logFloor = log10(1.61615e-35 m) ≈ -34.7915183334.
+- logMeters(i) = logTop + (logFloor - logTop) × i/N.
+- meters(i) = 10^(logMeters(i)), except endpoints are assigned exactly.
+- HON palette index(i) = 1 + min(365, floor(366 × i/N)).
+- The true GEN13 terminal floor remains **1.61615e-35 m**, not 1e-35 or 1e-36, and GEN16's independent color coordinate still spans 0 to 1e-35.
+- Exponent change per interval: at 366, approximately -0.06773639; at 370, -0.06700410; at 999, -0.02481633. These are **fractions of a power of ten**, not entire new decades.
+
+The 366 palette colors are source swatches and are never expanded to 370/999 invented colors; the high-resolution sample points reuse the appropriate existing HON addresses. The GEN15 26 whole-power and scientific marker positions remain unchanged.
+
+### H / Og independent compression sweep
+
+GEN17's two-angle isotropy versus locked-phase negative-control tests remain intact. GEN18 adds a distinct full **logarithmic radius sweep** at all N intervals, using the common abstract reference radius R_ref=5.29177210903e-11 m and floor R_floor=1.61615e-35 m:
+
+R(t)=exp((1−t) ln(R_ref) + t ln(R_floor)), with exact endpoints.
+
+The corresponding GEN17 stretch is s(t)=(R(t)−R_floor)/(R_ref−R_floor), which maps the logarithmic radius back onto the prior model API. For *both* H (Z=1) and Og (Z=118), every node must preserve the correct identity, produce finite positive radius and density indicator, and show strictly decreasing radius / strictly increasing model-relative density as i increases. This is **not an experimentally established physical atomic compression**, nor a measurement of Og's radius or flame spectrum.
+
+### Reproduced automated results
+
+| Model intervals | Nodes incl. endpoints | Physical floor | H identity | Og identity | Monotone log radius |
+|---:|---:|---|---|---|---|
+| 366 | 367 | exact 1.61615e-35 m | PASS | PASS | PASS |
+| 370 | 371 | exact 1.61615e-35 m | PASS | PASS | PASS |
+| 999 | 1,000 | exact 1.61615e-35 m | PASS | PASS | PASS |
+
+This checks the **mathematical discretization and conservation of assigned identity labels**, not physical particle structure or the genesis of a Higgs.
+
+### Implementation
+
+- **scale-generations-gen18.js:** new pure module, exports ROOT0_SCALE_GENERATIONS.level, levels, metadata, closestLevel, compressionSweep, and test; startup tests all three mode resolutions. It depends on GEN15's logarithmic reference and optionally GEN17's identity model when included.
+- **gravity-vortex.html:** high-resolution selectable intervals, active slice slider and scientific-label readouts; renders all 367, 371 or 1000 elliptical cross-section positions in a batched Canvas2D stroke, and preserves the 26 readable GEN15 landmarks and 366 GEN16 colors. Export declares mode, step count and exact endpoint.
+- **vector-field-732.html / vector-field-732.js:** resolution selector and fine rings in existing 732-vector signed metric viewer, independent of GEN12 roll and GEN16 color-axis.
+- **spherical-invariant.html:** matching 366/370/999 mode selector, exact log-radius step slider and complete H/Og step invariants. The legacy direct stretch slider and two-angle/locked control remain available.
+- **index.html:** links both GEN18 views; previous generations remain committed in history.
+
+**Attribution:** David Lee Wise / ROOT0 · .dlw.
