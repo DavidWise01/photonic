@@ -410,6 +410,19 @@ OASIS's v9.4 README also references an original \`MN_PRIME_366_EXPLORER.html\` w
 - **\`scalar-zero/index.html\`**: embeds the GEN9 viewer and bridges user address/phase selections between the GEN8 and GEN9 frames. Incoming address and tick values are checked against 1..366 and 0..731; echo loops are avoided because auto-forwarded selections are not re-emitted.
 - The original GEN0–GEN7 modules, the GEN8 count invariants and all earlier source versions remain available in prior commits. This is an additive integration with one intentional GEN8 color-rendering upgrade.
 
+### GEN9 accretion disk projection (2026-10-27)
+
+Inspired by the nearly edge-on wheel visible in the author's screenshot of the original **370-color Canvas 3D wheel**, the current **366-color HON viewer** now has a default **inclined accretion-disk presentation** as well as its previous fully visible face-on view.
+
+- **Disk mode:** Each of the 366 authentic OASIS HON v9.4 color addresses becomes an individually colored projected annulus segment. The data palette, brightness tiers and five symbolic display operants remain unchanged.
+- **Inclination:** 0° is face-on; 86° is nearly edge-on and produces a thin horizontal band like the original screenshot. Initial inclination is 68°. Drag horizontally to rotate the disk, vertically to adjust inclination, or use the slider.
+- **Center:** An opaque dark silhouette and brighter inner rim display the scalar-zero reference \`D=0\` as a black-hole/accretion-disk **visual metaphor**.
+- **Optional halo:** Decorative lensing-style arcs evoke a gravitationally distorted far side. These curves are **not computed photon geodesics**, measured gravitational lensing, event horizon radii, or a calibrated Schwarzschild/Kerr spacetime.
+- **Preservation:** Flat original pinwheel remains selectable; GEN8 phase/index bridge remains active, all 366 HON colors still match OASIS v9.4; all 118 recognized chemistry records remain separate from the symbolic carrier registry. The original \`oasis/apps/i-color-370/index.html\` is unchanged.
+- **Export:** GEN9 JSON now includes display mode, inclination and illustrative halo state, as well as exact source HON colors.
+
+This is a **projection / visualization** built from known circular geometry and the frozen HON color registry, not an astrophysical ray tracer. The light emitted by a real astrophysical accretion disk is determined by temperature, composition, velocities, opacity and spacetime, **not** by the ROOT0 H/O/N mnemonic palette.
+
 ### Model versus observation
 
 The pinwheel's **color calculations are deterministic and reproduce the documented OASIS palette math**, but the choice of H/O/N colors, three sectors and 366 cells is symbolic geometry. The five operants are *not physical effects of gravity, expansion, compression, containment or explosion*. The displayed wheel and 732-phase scanner are simulated animations, not measured optical frequencies, Casimir forces or newly identified elements.
