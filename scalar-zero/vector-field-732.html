@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#071421"><meta name="description" content="ROOT0 GEN10 — 732 individually pinnable scalar-zero vectors with signed logarithmic scaling to symbolic positive and negative infinity."><title>ROOT0 GEN13 · 1.61615e-35m Field Floor / Six-Beat Roll</title>
+<meta name="theme-color" content="#071421"><meta name="description" content="ROOT0 GEN10 — 732 individually pinnable scalar-zero vectors with signed logarithmic scaling to symbolic positive and negative infinity."><title>ROOT0 GEN15 · Logarithmic Generations to Scalar Floor</title>
 <style>
 :root{color-scheme:dark;--bg:#071421;--panel:#0c2332;--line:#31576a;--ink:#e7fafa;--muted:#91b4c2;--mint:#7dffcb;--amber:#ffd1a0;--blue:#78baff}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#194056,#071421 65%) fixed;color:var(--ink);font:13px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
@@ -40,12 +40,12 @@ button,select{border:1px solid #527284;border-radius:8px;background:#183d50;colo
 .vortex-control .tick{display:flex;align-items:center;gap:8px;font:11px ui-monospace,monospace;color:#c5e5e8}
 .vortex-control input[type=checkbox]{accent-color:#68e7d2}
 </style></head><body><main>
-<header class="top"><span class="kicker">ROOT0 / GEN13 FLOOR · GEN12 ROLL · 732 ADDRESSABLE −/+ VECTORS</span><nav><a href="./">SCALAR ZERO</a><a href="pinwheel-366.html">GEN9 DISK</a><a href="rotation-732.html">GEN8</a></nav></header>
+<header class="top"><span class="kicker">ROOT0 / GEN15 DESCENT · GEN14 VORTEX · 732 ADDRESSABLE −/+ VECTORS</span><nav><a href="./">SCALAR ZERO</a><a href="pinwheel-366.html">GEN9 DISK</a><a href="rotation-732.html">GEN8</a></nav></header>
 <h1>Pin to exact zero.<br>Scale ±10<sup>−36</sup> to ±10<sup>36</sup>.</h1>
 <p class="lede">Each of the 366 original HON color addresses has two independent phase vectors: minus and plus. Every vector can be anchored to scalar <strong>D = 0</strong>, independently signed, and logarithmically scaled. Exact zero is a distinct state, <strong>10⁰ = 1</strong>, and infinity is a symbolic endpoint. All displayed screen coordinates stay finite.</p>
 <div class="stats"><div class="stat"><strong>732</strong><small>INDEPENDENT VECTOR STATES</small></div><div class="stat"><strong id="pinnedTotal">0</strong><small>VECTORS PINNED TO D = 0</small></div><div class="stat"><strong>366 × 2</strong><small>ORIGINAL COLORS / PHASES</small></div><div class="stat"><strong id="infiniteTotal">0</strong><small>SYMBOLIC INFINITY STATES</small></div><div class="stat"><strong>10<sup>−36</sup> … 10<sup>36</sup></strong><small>GEN11 SIGNED POWER-OF-TEN METRIC</small></div></div>
 <div class="grid">
-<section class="panel"><div class="head"><h2>01 · 732-VECTOR ACCRETION / TOROIDAL FIELD</h2><span id="modeLabel">GEN13 · FLOOR 1.61615×10⁻³⁵ m · SIX-BEAT ROLL</span></div>
+<section class="panel"><div class="head"><h2>01 · 732-VECTOR ACCRETION / TOROIDAL FIELD</h2><span id="modeLabel">GEN15 · 26 LOG SCALE GENERATIONS · FLOOR AT 1.61615×10⁻³⁵ m</span></div>
 <div class="view"><canvas id="vectors" aria-label="732 colored phase vectors, independently anchored to a scalar-zero center and scaled in signed directions"></canvas><div class="hud">D = 0 · COMMON ANCHOR<br>− / + = PHASE ADDRESS<br>VECTOR SIGN IS INDEPENDENT<br>RADIUS = COMPRESSED LOG SCALE<br>FLOOR PITCH = 1.61615×10⁻³⁵ m</div></div>
 <div class="legend"><span><i class="pill m"></i>Minus phase</span><span><i class="pill p"></i>Plus phase</span><span><i class="pill pin"></i>Pinned vector</span><span><i class="pill d"></i>D = zero</span><span>GRID = PHYSICAL REFERENCE ANNOTATION</span></div></section>
 <aside class="panel"><div class="head"><h2>02 · VECTOR PIN / SIGNED SCALING</h2><span>ALL 732 SELECTABLE</span></div><div class="side">
@@ -69,6 +69,14 @@ button,select{border:1px solid #527284;border-radius:8px;background:#183d50;colo
 <div class="mini">Floor sink = projected D=0 at user-defined 1.61615×10⁻³⁵ m tile pitch. Physical size bands are qualitative reference markers, not a gravitational solution.</div>
 <a href="gravity-vortex.html" style="color:#9ff2ee;font:800 11px ui-monospace,monospace">OPEN FULL-SCREEN GRAVITY VORTEX</a>
 </div>
+<section class="vortex-control" id="gen15Descent">
+<h3>GEN15 · LOG GENERATIONS TO THE 1.61615 × 10⁻³⁵ m FLOOR</h3>
+<label class="tick"><input id="gen15Visible" type="checkbox" checked> Plot all 26 logarithmic generation rings</label>
+<div class="control"><label for="gen15Select">SCIENCE REFERENCE AT CORRECT LOG-HEIGHT</label><select id="gen15Select"></select></div>
+<div class="mini" id="gen15Detail">Reference lengths and category-specific meanings remain distinct.</div>
+<div class="mini">Radiation: wavelength · Alpha: helium-4 charge radius · Beta/quark: unresolved structure / probe · Higgs: reduced Compton length.</div>
+<a href="gravity-vortex.html" style="color:#9ff2ee;font:800 11px ui-monospace,monospace">OPEN FULL GEN15 DESCENT</a>
+</section>
 <div class="roll-box" id="gen12Roll">
 <div class="roll-title">GEN12 · SIX-BEAT METRIC ROLL · −36 / 0 / +36 / 0 / 1 / 1</div>
 <div class="roll-beats" id="rollBeats" role="group" aria-label="Six-step roll sequence"></div>
@@ -111,5 +119,6 @@ screen radius = compressed, bounded LOD
 </main>
 <script src="pinwheel-source-v94.js"></script><script src="vector-732-core.js"></script>
 <script src="field-floor-1lp.js"></script>
-<script src="gravity-vortex-core.js"></script><script src="vector-field-732.js"></script>
+<script src="gravity-vortex-core.js"></script>
+<script src="scale-descent-gen15.js"></script><script src="vector-field-732.js"></script>
 </body></html>
