@@ -63,6 +63,26 @@
   return{x:origin.x+Math.cos(a)*r,y:origin.y+Math.sin(a)*r*flatten,distanceRatio:f,
     direction:a,pinned:v.pinned,zero:v.zero,infinite:v.infinite,rawValue:signedValue(v)};
  }
+ /* Six discrete metric beats, in the exact authored order.
+  * The trailing 1/1 is a deliberate two-beat unit-scale dwell.
+  * Sign and HON phase address remain independent of the exponent sequence. */
+ const ROLL_BEATS=Object.freeze([
+  Object.freeze({code:"−36",label:"10⁻³⁶",zero:false,exponent:-36,infinite:false}),
+  Object.freeze({code:"0",label:"EXACT 0",zero:true,exponent:0,infinite:false}),
+  Object.freeze({code:"+36",label:"10³⁶",zero:false,exponent:36,infinite:false}),
+  Object.freeze({code:"0",label:"EXACT 0",zero:true,exponent:0,infinite:false}),
+  Object.freeze({code:"1",label:"1 · FIRST",zero:false,exponent:0,infinite:false}),
+  Object.freeze({code:"1",label:"1 · SECOND",zero:false,exponent:0,infinite:false})
+ ]);
+ function rollIndex(index){
+  if(!Number.isFinite(index))throw new RangeError("Roll index must be finite");
+  return ((Math.floor(index)%ROLL_BEATS.length)+ROLL_BEATS.length)%ROLL_BEATS.length;
+ }
+ function rollBeat(index){return ROLL_BEATS[rollIndex(index)]}
+ function rollState(index,base){
+  const beat=rollBeat(index);
+  return normalize({...normalize(base),zero:beat.zero,exponent:beat.exponent,infinite:beat.infinite});
+ }
  function model(){return Array.from({length:COUNT},(_,id)=>({...decode(id),value:defaults()}))}
  if(model().length!==732||encode(366,"+")!==731||encode(1,"−")!==0||
    !model().every(x=>encode(x.address,x.polarity)===x.id)||
@@ -71,9 +91,16 @@
    magnitude({zero:false,exponent:0})!==1||
    magnitude({zero:false,exponent:36})!==1e36||
    fraction({zero:true})!==0||
-   !(fraction({zero:false,exponent:-36})>0&&fraction({infinite:true})===1))
+   !(fraction({zero:false,exponent:-36})>0&&fraction({infinite:true})===1)||
+   ROLL_BEATS.length!==6||
+   ROLL_BEATS.map(b=>b.code).join("/")!=="−36/0/+36/0/1/1"||
+   rollState(1).zero!==true||rollState(3).zero!==true||
+   rollState(4).zero!==false||magnitude(rollState(4))!==1||
+   magnitude(rollState(0))!==1e-36||magnitude(rollState(2))!==1e36||
+   magnitude(rollState(5))!==1||rollIndex(-1)!==5)
   throw new Error("ROOT0 GEN11 metric boundary failed");
  global.ROOT0_VECTOR_732=Object.freeze({metric:"root0-gen11-signed-power10-v2",count:COUNT,addresses:ADDRESSES,
   minExponent:MIN_EXP,maxExponent:MAX_EXP,maxExponentV1:36,step:STEP,
-  decode,encode,normalize,migrateV1,defaults,descriptor,magnitude,signedValue,fraction,tip,model});
+  decode,encode,normalize,migrateV1,defaults,descriptor,magnitude,signedValue,fraction,tip,model,
+  rollBeats:ROLL_BEATS,rollIndex,rollBeat,rollState});
 })(typeof window!=="undefined"?window:this);
