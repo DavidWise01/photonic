@@ -46,7 +46,7 @@ button,select{border:1px solid #527284;border-radius:8px;background:#183d50;colo
 <div class="roll-beats" id="rollBeats" role="group" aria-label="Six-step roll sequence"></div>
 <div class="roll-stage"><small>CURRENT BEAT <output id="rollIndex">1 / 6</output></small><strong id="rollValue">10⁻³⁶</strong><small id="rollMetric">10^-36 · FIRST BEAT</small></div>
 <div class="control"><label for="rollSpeed">BEATS PER SECOND <output id="rollSpeedOut">1.00</output></label><input id="rollSpeed" type="range" min=".25" max="8" step=".25" value="1"></div>
-<div class="control"><label for="rollScope">PREVIEW SCOPE</label><select id="rollScope"><option value="all">All 732 vectors · preview pinned to D</option><option value="selected">Selected vector only</option><option value="pinned">Saved pinned vectors only</option></select></div>
+<div class="control"><label for="rollScope">PREVIEW SCOPE</label><select id="rollScope"><option value="all">All 732 vectors · preview pinned to D</option><option value="selected">Selected vector only</option><option value="pinned">Saved pinned vectors only</option><option value="saved">OFF · show saved states</option></select></div>
 <div class="buttons"><button id="rollPlay" type="button" aria-pressed="true">Ⅱ PAUSE ROLL</button><button id="rollNext" type="button">+1 BEAT</button></div>
 <div class="buttons"><button id="rollReset" type="button">RESET TO −36</button><button id="rollCommit" type="button">COMMIT BEAT TO SELECTED</button></div>
 <p class="small" style="margin:0">A reversible display roll: all six stops are exact metric states; both trailing 1 beats equal 10⁰ = 1. The overlay does not overwrite any saved vector. Commit explicitly to store a beat on the selected vector. Saved sign is independent of the −/+ HON phase.</p>
