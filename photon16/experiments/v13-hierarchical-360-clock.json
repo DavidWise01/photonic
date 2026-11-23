@@ -1,0 +1,75 @@
+{
+  "id": "PHOTON16-V13-360-CLOCK",
+  "date": "2026-11-23",
+  "version": "0.13",
+  "status": "BROWSER_TEST_PASS",
+  "hierarchy": {
+    "ticksPerCycle": 360,
+    "sectors": 3,
+    "ticksPerSector": 120,
+    "quadsPerSector": 4,
+    "totalQuads": 12,
+    "ticksPerQuad": 30,
+    "domainsPerQuad": 8,
+    "totalDomains": 96,
+    "agentsPerDomain": 16,
+    "totalLogicalAgents": 1536,
+    "agentCoverage": "Exactly once per cycle",
+    "addressing": "At tick t, sector=floor(t/120), quad=floor((t mod 120)/30). Within each 30-tick quad, assign address window [floor(localTick*128/30), floor((localTick+1)*128/30)), plus quad*128.",
+    "agentsPerTick": {
+      "four": 264,
+      "five": 96
+    },
+    "clarification": "360 ticks and 1536 agents are discrete and not evenly divisible; a tick touches 4 or 5 addresses. Counts represent logical scheduled addresses, not 1536 physical optical channels."
+  },
+  "browser": {
+    "tool": "Playwright Chromium headless set_content",
+    "testResults": {
+      "fullCoverage": true,
+      "all1536Unique": true,
+      "ticks": 360,
+      "duplicateAddresses": 0,
+      "clockErrors": 0,
+      "jsExceptions": 0,
+      "energyInvariant": true,
+      "homeostasisLedgerRows": 360,
+      "sha256ChainIntegrity": true,
+      "detectorReadings": 2880
+    },
+    "homeostasis": {
+      "meanOpenLoopMSE": 0.0006242697211080222,
+      "meanClosedLoopMSE": 0.000004411233586397442,
+      "eventCount": 3,
+      "eventsRecoveredUnderExistingGate": 3,
+      "recoveryLatencies": [
+        4,
+        4,
+        4
+      ],
+      "routerBurstStepEvents": 45,
+      "ledgerHead": "1a71391acf1c0eb30c4fa39e0384b9e9364ed8aa50093fdefbc8a3456b0bd38d"
+    }
+  },
+  "preserved": {
+    "eightLegTun": "4 hydrogen hot orange, 4 nitrogen cold blue, oxygen neutral green body, electron cloud depiction",
+    "register": "{{r8!,b8!,g8!}} x 4 = 96 software bits",
+    "opticalModes": 16,
+    "couplers": 48,
+    "trainablePhases": 32,
+    "priorVersion": "photon16/v12.html"
+  },
+  "limitations": [
+    "The hierarchical schedule is a software addressing scheme. No 1536-agent physical optical chip exists in this artifact.",
+    "The 16-mode optical model is unchanged; scheduled logical agent IDs are represented in the homeostasis evidence, not 1536 separate optical network computations.",
+    "Original v0.12 homeostasis drift sequence adapted to 3 sector boundaries, 360 logical ticks, same permissive recovery gate.",
+    "SHA-256 test on about:blank used a Python hashlib-backed WebCrypto equivalent because local file browsing is restricted; hosted GitHub Pages offers secure origin crypto.subtle.",
+    "Recovery results are synthetic deterministic and not physically calibrated."
+  ],
+  "source": {
+    "repository": "DavidWise01/photonic",
+    "implementation_commit": "9a3d712306c46568c7433d5d4a4ce543311530a7",
+    "landing_commit": "dc5796facc9424e0d5e9c50692cd54d441936616",
+    "page": "photon16/index.html"
+  },
+  "next": "PHOTON-16 v0.14: introduce per-domain workloads, time-sliced agent actions, and assess throughput/queuing across 360 ticks with the 16 optical modes."
+}
