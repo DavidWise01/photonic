@@ -1,0 +1,67 @@
+{
+  "id": "PHOTON16-V10-PHASE-COUPLING",
+  "date": "2026-11-23",
+  "version": "0.10",
+  "status": "BROWSER_TEST_PASS",
+  "configuration": {
+    "colorRegister": "{{r8!,b8!,g8!}} × 4",
+    "bits": 96,
+    "bankOrder": "RBG",
+    "banks": 4,
+    "modes": 16,
+    "modesPerBank": 4,
+    "hotLegs": 4,
+    "coldLegs": 4,
+    "oxygenBody": 1
+  },
+  "physics_model": {
+    "inputPhaseRadians": "pi*(R8-B8)/510 + calibrated compensation + modeOffset*pi/7",
+    "unnormalizedInputGain": "0.35 + 0.65*G8/255",
+    "normalization": "Input field normalized to unit total power before the passive unitary optical mesh",
+    "forward": "Frozen zero-phase 16x16 network with original 48 lossless couplers; display-only attenuation handled separately",
+    "feedback": "Deterministic intensity-only coordinate descent, four bank compensation phases, no direct read of hidden phase target",
+    "reference": "Explicit neutral R=B=128 G=255 reference; later color register retains packet-driven values"
+  },
+  "browser": {
+    "engine": "system Chromium headless Playwright set_content",
+    "javascript_errors": 0,
+    "simulation_test_pass": true,
+    "energy_invariant_pass": true,
+    "color_register_test_pass": true,
+    "router_invariant_pass": true,
+    "maximum_power_error_64_cases": 5.551115123125783e-16,
+    "chromatic_color_perturbation_output_mse": 0.000011616233365650307,
+    "calibration_test": {
+      "steps": 200,
+      "initial_reference_error_mse": 0.0030651753252166434,
+      "final_reference_error_mse": 0.0000013254580211820483,
+      "relative_reduction_percent": 99.9568
+    },
+    "routed_packet_case": {
+      "first_ingress_register_hex": "300000000000000000000000",
+      "initial_measured_error_mse": 0.00026025785928596195,
+      "after_25_feedback_steps_error_mse": 5.7221484512470096e-8
+    },
+    "optical_learning_regression": {
+      "epochs": 10,
+      "train_mse": 0.000013139299767675974,
+      "unseen_mse": 0.000020839964045061525
+    }
+  },
+  "limitations": [
+    "Synthetic and fully deterministic software simulation; not a fabricated or Planck-scale optical processor",
+    "96-bit RBG register encodes four 24-bit software banks, not 96 independent photon channels",
+    "Feedback tests use a fixed passive mesh transfer matrix; learned 32-phase network is preserved as a separate existing UI subsystem",
+    "The compensator optimizes a measured intensity reference, not necessarily the unique original complex field",
+    "Calibration score is in-family and not a physical detector noise or drift measurement",
+    "Energy normalization removes information about absolute pre-normalization power; green amplitude ratios still modify normalized interference"
+  ],
+  "history": {
+    "archivedPrevious": "photon16/v09.html",
+    "canonical": "photon16/index.html",
+    "repo": "DavidWise01/photonic",
+    "source_commit": "453049d9ae868513a0f4620a1823765f790f6052",
+    "landing_commit": "be7e521eb26a8d316ddaf2e49af15ae9e5ab488d"
+  },
+  "next": "PHOTON-16 v0.11: couple learned phase mesh to RBG field while freezing separate reference calibration; adversarial drifting input and held-out phase profiles."
+}
