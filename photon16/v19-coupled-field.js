@@ -10,7 +10,7 @@ const gate={qed:0.75,qcd:0.90};
 const presets={
  mixed:[{tick:60,phase:1.6,color:0},{tick:180,phase:0,color:1.1},{tick:300,phase:1.4,color:1.25}],
  nominal:[],
- unrecovered:[{tick:300,phase:2.6,color:2.5}],
+ unrecovered:[{tick:350,phase:2.6,color:2.5}],
  phase:[{tick:180,phase:2,color:0}],
  color:[{tick:180,phase:0,color:1.7}]
 };
