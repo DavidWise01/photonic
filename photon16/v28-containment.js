@@ -24,7 +24,7 @@ function compute(c){
   const ticks=simulation.observations.map(ob=>{
    if(!ob.passed){streak++;if(firstFailure===null)firstFailure=ob.tick}else streak=0;
    // Trigger is applied as soon as the second/third observed failure arrives.
-   if(trigger===null&&streak>=c.streak)trigger=ob.tick;
+   if(startingAuthority&&trigger===null&&streak>=c.streak)trigger=ob.tick;
    const authorityActive=startingAuthority&&trigger===null;
    if(startingAuthority&&!ob.passed)baselineExposure++;
    if(authorityActive&&!ob.passed)guardExposure++;
