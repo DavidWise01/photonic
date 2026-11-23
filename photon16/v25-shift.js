@@ -84,7 +84,7 @@ async function verify(rows=copy(observations),states=copy(generations),claimedHe
   if(state.carryOut.length>state.windowAfter)errors.push('window overflow '+g);
   if(state.permission&&(!state.interval||state.interval.lower<20||state.revokedAtStart))errors.push('unauthorized prediction '+g);
   // Only completed history may be used for the forecast or calibration.
-  if(state.calibrationCount>g-1)errors.push('future calibration '+g);
+  if(state.calibrationCount>Math.max(0,g-1))errors.push('future calibration '+g);
  }
  return {ok:!errors.length,complete:rows.length===c.count*360,checked:rows.length,errors};
 }
