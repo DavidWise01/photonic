@@ -1,0 +1,72 @@
+{
+  "id": "PHOTON16-V12-CONTINUOUS-HOMEOSTASIS",
+  "version": "0.12",
+  "date": "2026-11-23",
+  "status": "BROWSER_TEST_PASS",
+  "model": "deterministic software simulator; 16 optical spatial modes and frozen 32-phase mesh, four 24-bit RBG banks, eight visual legs, one oxygen-neutral shared body",
+  "test": {
+    "engine": "Chromium headless via Playwright page.set_content",
+    "browserErrors": 0,
+    "ticks": 240,
+    "totalDetectorMeasurements": 1920,
+    "measurementsPerTick": 8,
+    "feedbackProbesPerTick": 6,
+    "diagnosticReadingsPerTick": 2,
+    "meanOpenLoopMSE": 0.0006048201554983281,
+    "meanClosedLoopMSE": 0.000007827786743135206,
+    "relativeMeanErrorReductionPercent": 98.7058,
+    "scheduledEvents": 5,
+    "eventTimes": [
+      0,
+      48,
+      96,
+      144,
+      192
+    ],
+    "recoveredWithinGate": 5,
+    "unrecovered": 0,
+    "recoveryGateMSE": 0.0005,
+    "requiredConsecutiveTicks": 5,
+    "recoveryLatencies": [
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "routingBurstStepEvents": 30,
+    "observedLedgerEntries": 240,
+    "hashAlgorithm": "SHA-256 via WebCrypto on secured origin; browser test on about:blank uses Python hashlib-backed test-only WebCrypto shim",
+    "ledgerHead": "86fe13275c814a1b3a1d4f9a66ef0bafbe59c32ee902b60847c6849abff374ba",
+    "verification": "PASS",
+    "javascriptErrors": 0
+  },
+  "protocol": {
+    "hiddenEnvironment": "deterministic four-bank phase drift with sinusoidal changes, reversals at 48-tick intervals, and software RBG load changes",
+    "controllerInput": "detector intensities for current tick only; does not read future drift sequence or direct drift value",
+    "controlAction": "one of four bank phase compensators selected each tick, with six bounded candidate probes and hold option",
+    "budget": "exactly eight detector intensity measurements per tick",
+    "openLoopComparison": "same tick, same environmental drift, zero compensation",
+    "reference": "frozen trained phase mesh, neutral RBG register, zero compensator and zero disturbance",
+    "provenance": "append-only in-memory SHA-256-linked sequence with genesis parent 64 zeroes; allows export to a JSON file",
+    "timing": "recovery latency 4 ticks reflects minimum five-eligible-reading condition and permissive error gate; do not generalize to difficult drift"
+  },
+  "limitations": [
+    "The set of drift reversals is predefined; this does not establish recovery under genuinely unforeseen drift.",
+    "The 5e-4 MSE recovery gate is permissive relative to the observed average closed-loop MSE; reported 4-tick latencies reflect five-in-a-row rule and are not independently optimized physical response times.",
+    "The model calls a synthetic intensity oracle eight times per tick. This assumes probes could be executed within one control interval.",
+    "Continuous ticks are logical simulation steps; no measured real-time physical control throughput.",
+    "WebCrypto requires a secure origin for the production SHA-256 ledger. The browser test on about:blank used an equivalent SHA-256 callback shim for hashing.",
+    "A JavaScript in-memory ledger is tamper-evident to post-hoc edits when independently anchored, not immutable against an adversarial script with full memory access.",
+    "Routing activity count is the number of burst/step calls, not verified packets delivered.",
+    "Normalized unit input and passive optical network conserve model energy; they do not measure physical efficiency."
+  ],
+  "source": {
+    "repo": "DavidWise01/photonic",
+    "source_commit": "292bc156bb9d13a88fce8b50c7dbd6737e89de0c",
+    "landing_commit": "e419e7ef30ecbbd7eb8955f0dc0898e0696e08a6",
+    "canonical": "photon16/index.html",
+    "archived_previous": "photon16/v11.html"
+  },
+  "next": "PHOTON-16 v0.13: pre-register stricter disturbance families, threshold-based decision reliability, physically plausible probe budgets, and holdout-vs-tuned calibration."
+}
