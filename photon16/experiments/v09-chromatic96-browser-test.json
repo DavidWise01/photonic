@@ -1,0 +1,74 @@
+{
+  "id": "PHOTON16-V09-CHROMATIC96",
+  "date": "2026-11-23",
+  "version": "0.9",
+  "status": "BROWSER_TEST_PASS",
+  "register": {
+    "formula": "{{r8!,b8!,g8!}} × 4",
+    "bit_width": 96,
+    "bytes": 12,
+    "bank_count": 4,
+    "bytes_per_bank": 3,
+    "wire_order": "RBG",
+    "logical_color": "four independent RGB channels with byte serialization in red-blue-green order",
+    "physical_caveat": "96 bits are four logical 24-bit registers, not a claim of 96-bit optical wavelength depth"
+  },
+  "coupling": {
+    "leg_pairs": [
+      [
+        "H0",
+        "N0"
+      ],
+      [
+        "H1",
+        "N1"
+      ],
+      [
+        "H2",
+        "N2"
+      ],
+      [
+        "H3",
+        "N3"
+      ]
+    ],
+    "ingress_hydrogen": "increments red channel by 48 on leg's bank, saturating at 255",
+    "ingress_nitrogen": "increments blue channel by 48 on leg's bank, saturating at 255",
+    "oxygen_egress": "increments green channel by 32 on associated bank, saturating at 255",
+    "reset": "resets register when router resets",
+    "routing": "v0.8 router unchanged aside from deterministic ingress/egress event publication"
+  },
+  "browser": {
+    "framework": "Playwright headless Chromium",
+    "result": "PASS",
+    "banks_rendered": 4,
+    "register_bits": 96,
+    "register_bytes": 12,
+    "pack_roundtrip": true,
+    "route_packets_generated": 64,
+    "route_packets_delivered": 64,
+    "unexplained_losses": 0,
+    "expected_saturated_payload": "FF FF FF FF FF FF FF FF FF FF FF FF",
+    "mapping_example": {
+      "after_H0_ingress": [
+        48,
+        0,
+        0
+      ],
+      "after_H0_egress": [
+        48,
+        0,
+        32
+      ]
+    },
+    "optical_training_mse_before": 0.0012992758839190312,
+    "optical_training_mse_after_10_epochs": 0.000013139299767675974,
+    "energy_selftest": "PASS",
+    "browser_errors": 0
+  },
+  "previous_preserved": "photon16/v08.html",
+  "canonical": "photon16/index.html",
+  "source_commit": "5598a58f4476d9a9a11e37115a7eded87a364eec",
+  "homepage_commit": "a22bcc7ce0d9310e86cb54e2b92fe924fe78fd62",
+  "next": "v0.10 use four RBG banks to gate optical phase/intensity in a calibrated non-color-only model; test stability and conservation."
+}
