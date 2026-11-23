@@ -22,7 +22,7 @@ function calculate(c){
  const shifts=[c.first,c.second],detected=[],grants=[],exposure=[];
  for(let g=0;g<c.count;g++){
   const index=g<c.first?0:g<c.second?1:2,regime=regimes[index],truthTransition=(g===c.first||g===c.second)&&regimes[index]!==regimes[index-1];
-  const predicted=prediction(history),errorThreshold=Math.max(2,...previousErrors.slice(-3));
+  const predicted=prediction(history),errorThreshold=Math.max(2,...previousErrors.slice(-2));
   const usedAuthority=authorized&&fresh.length>=c.required;
   const applied=usedAuthority&&predicted!==null&&predicted>=20?Math.max(1,window-1):window;
   const carryIn=memory.slice(-applied),run=CORE.simulate(g,carryIn,{count:c.count,window:applied,mode:regime,intent:c.intent}),observed=run.summary.faults;
@@ -143,7 +143,8 @@ function draw(){
  }
  for(const g of [c.first,c.second]){let x=25+g*step-2;ctx.strokeStyle='#f5d47d';ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(x,36);ctx.lineTo(x,h-25);ctx.stroke();ctx.setLineDash([])}
  ctx.fillStyle='#c9d8e8';ctx.font='12px monospace';ctx.fillText('Yellow dashed = ground-truth shift (scoring only) · Red = observed detection · Green = authority earned',18,h-12);
- const metrics=n&&valid(c)?calculate(c).metrics:null;
+ const allMetrics=n&&valid(c)?calculate(c).metrics:null;
+ const metrics=allMetrics?{...allMetrics,detections:allMetrics.detections.filter(g=>g<n),exposure:allMetrics.exposure.filter(g=>g<n),shifts:allMetrics.shifts.map(m=>m.boundary>=n?{...m,detectedAt:null,delay:null}:m)}:null;
  $('v27-progress').textContent=n+'/'+c.count+' generations · '+records.length+'/'+(c.count*360)+' ticks';
  $('v27-detections').textContent=metrics?metrics.detections.join(', ')||'None':'—';
  $('v27-delays').textContent=metrics?metrics.shifts.filter(x=>x.changed).map(x=>x.delay===null?'missed':x.delay+' gen').join(' / ')||'No actual shift':'—';
