@@ -1,0 +1,59 @@
+{
+  "id": "PHOTON16-V04-BROWSER-TEST",
+  "version": "0.4",
+  "date": "2026-11-22",
+  "kind": "deterministic software model",
+  "model": {
+    "channels": 16,
+    "logical_display_states": 16,
+    "coupler_layers": 6,
+    "couplers_per_layer": 8,
+    "total_couplers": 48,
+    "trainable_phase_parameters": 32,
+    "train_examples": 32,
+    "heldout_examples": 16,
+    "unitarity": "lossless passive 2x2 couplers, coherent complex amplitude model",
+    "energy_conservation": "pre-loss output power = input power within floating point tolerance"
+  },
+  "browser": {
+    "environment": "Chromium headless, local HTML loaded via set_content",
+    "controls_tested": [
+      "TRAIN +100 EPOCHS",
+      "INVARIANT TESTS"
+    ],
+    "matrix_cells": 256,
+    "state_buttons": 16,
+    "javascript_exceptions": 0,
+    "initial_training_mse": 0.0012992758839190312,
+    "initial_unseen_mse": 0.001605278260402779,
+    "after_100_epochs_training_mse": 3.441633688862537e-7,
+    "after_100_epochs_unseen_mse": 6.749283717242163e-7,
+    "epochs": 100,
+    "pass": true
+  },
+  "invariants": {
+    "power_conservation_random_cases": 40,
+    "threshold": 1e-10,
+    "deterministic_replay": true,
+    "train_and_unseen_sample_sizes": [
+      32,
+      16
+    ],
+    "result": "PASS"
+  },
+  "limitations": [
+    "Training target is generated from same programmable network family, so this verifies an in-family software fitting task only.",
+    "Unseen samples use new input vectors but share target transform and generator family.",
+    "Output intensities do not uniquely identify all complex phase parameters.",
+    "Loss is applied as uniform scalar attenuation only after unitary network.",
+    "This is not a fabricated silicon photonic device or a general neuromorphic processor.",
+    "User-visible RGB color swatches denote spatial inputs, not independent optical wavelengths."
+  ],
+  "publishing": {
+    "repo": "DavidWise01/photonic",
+    "entry": "photon16/index.html",
+    "archived_previous": "photon16/v03.html",
+    "homepage": "index.html"
+  },
+  "next": "PHOTON-16 v0.5: heldout out-of-family mesh targets, drift-aware training, finite-difference calibration losses."
+}
