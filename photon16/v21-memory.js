@@ -62,27 +62,36 @@ async function run(){
 async function verify(source=clone(rows),checkpoints=clone(generations),claimedHead=head,c=locked){
  const errors=[];if(!c||!valid(c))return {ok:false,errors:['missing configuration'],checked:0};
  if(source.length>c.count*T||checkpoints.length>c.count)errors.push('range');
- let prev=SEED,memory=[];
- for(let g=0;g<checkpoints.length;g++){
-  const expected=simulate(g,memory,c),record=checkpoints[g];
-  for(const key of Object.keys(expected.summary))if(JSON.stringify(record[key])!==JSON.stringify(expected.summary[key]))errors.push('summary '+g+':'+key);
-  if(record.recordCount!==(g+1)*T||record.head!==source[(g+1)*T-1]?.hash)errors.push('checkpoint '+g);
-  if(expected.summary.internal!==144||expected.summary.external!==216)errors.push('2/5:3/5 '+g);
-  memory=clone(expected.summary.memoryAfter);
+ // Recompute every generation from the original anchor and validated carry only.
+ // Never trust checkpoint memoryBefore/carryIn as an independent input.
+ let memory=[],expectedRows=[],expectedSummaries=[];
+ for(let g=0;g<c.count;g++){
+  const run=simulate(g,memory,c);
+  expectedRows.push(...run.observations);
+  expectedSummaries.push(run.summary);
+  memory=clone(run.summary.memoryAfter);
  }
- memory=[];
+ let prev=SEED,checkpointIndex=0;
  for(let i=0;i<source.length;i++){
-  const g=Math.floor(i/T),t=i%T;
-  if(t===0){const computed=simulate(g,memory,c);memory=computed.summary.memoryAfter}
-  // Independent carry must be computed from previous generations, never from evidence fields.
-  let prior=[];for(let k=0;k<g;k++)prior=simulate(k,prior,c).summary.memoryAfter;
-  const expected=observe(g,t,vector(prior),c),record=source[i];
-  for(const key of Object.keys(expected))if(record[key]!==expected[key])errors.push('observation '+i+':'+key);
-  if(record.previousHash!==prev)errors.push('parent '+i);
-  const {hash:digest,...payload}=record;if(await hash(payload)!==digest)errors.push('hash '+i);
+  const r=source[i],expected=expectedRows[i];
+  if(!expected){errors.push('excess observation '+i);break}
+  for(const key of Object.keys(expected))if(r[key]!==expected[key])errors.push('observation '+i+':'+key);
+  if(r.previousHash!==prev)errors.push('parent '+i);
+  const {hash:digest,...payload}=r;if(await hash(payload)!==digest)errors.push('hash '+i);
   prev=digest;
+  if(i%T===T-1){
+   const checkpoint=checkpoints[checkpointIndex],summary=expectedSummaries[checkpointIndex];
+   if(!checkpoint)errors.push('missing checkpoint '+checkpointIndex);
+   else{
+    for(const key of Object.keys(summary))if(JSON.stringify(checkpoint[key])!==JSON.stringify(summary[key]))errors.push('summary '+checkpointIndex+':'+key);
+    if(checkpoint.recordCount!==i+1||checkpoint.head!==digest)errors.push('checkpoint '+checkpointIndex);
+   }
+   if(summary.internal!==144||summary.external!==216)errors.push('clock split '+checkpointIndex);
+   checkpointIndex++;
+  }
  }
  if(prev!==claimedHead)errors.push('head mismatch');
+ if(checkpoints.length!==Math.floor(source.length/T))errors.push('checkpoint count');
  if(source.length===c.count*T&&checkpoints.length!==c.count)errors.push('missing generation checkpoints');
  return {ok:errors.length===0,complete:source.length===c.count*T,checked:source.length,generations:checkpoints.length,errors};
 }
