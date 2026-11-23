@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>PHOTON-16 v0.11 · 96-Bit Chromatic Register</title>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>PHOTON-16 v0.12 · 96-Bit Chromatic Register</title>
 <style>
 :root{color-scheme:dark;--bg:#080c17;--panel:#101b2b;--panel2:#0d1524;--border:#2b3b58;--ink:#eff8ff;--muted:#9eafc7;--cyan:#51efd9;--orange:#ff963d;--violet:#ae89ff;--rose:#ff68b6;--good:#65e6b2}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% -5%,#183442 0%,transparent 40%),radial-gradient(ellipse at 90% 5%,#302044 0%,transparent 45%),var(--bg);font:14px/1.5 system-ui,sans-serif;color:var(--ink)}main{max-width:1540px;margin:auto;padding:18px}.heading{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:12px}.eyebrow{color:var(--cyan);font:700 11px ui-monospace,monospace;letter-spacing:.2em}.heading h1{margin:2px 0;font-size:clamp(26px,3.5vw,43px);letter-spacing:-.045em}.heading h1 span{color:var(--orange)}.sub{color:var(--muted);font-size:13px}.status{border:1px solid #3e7c71;color:#a9ffe7;padding:8px 13px;border-radius:40px;font:11px ui-monospace,monospace}.layout{display:grid;grid-template-columns:minmax(400px,1.35fr) minmax(340px,1fr);gap:13px}.panel{min-width:0;padding:15px;background:linear-gradient(145deg,#101d30,#0c1424);border:1px solid var(--border);border-radius:15px;box-shadow:0 15px 30px #0002}.wide{grid-column:1/-1}.panel h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#c7d9ed;display:flex;justify-content:space-between;align-items:center;margin:0 0 12px;gap:8px}.panel h2 small{color:var(--muted);font:10px ui-monospace,monospace;letter-spacing:0}canvas{width:100%;display:block;background:#07111d;border:1px solid #28415c;border-radius:11px}#hero{height:310px}#mesh{height:420px}#chart{height:260px}.buttons{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}button{font:11px ui-monospace,monospace;color:var(--ink);background:#15273b;border:1px solid #456580;border-radius:8px;padding:8px 10px;cursor:pointer}button:hover,button:focus-visible{border-color:var(--cyan);color:white}button.major{border-color:#b56b37;color:#ffdbb5;background:#292334}button:disabled{opacity:.5;cursor:wait}.metricgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.metric{background:#0b1728;border:1px solid #2e4460;border-radius:10px;padding:9px;min-width:0}.metric small{font-size:10px;color:#a9bbd1;display:block}.metric strong{font:clamp(15px,1.5vw,21px) ui-monospace,monospace;overflow-wrap:anywhere}.matrix{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:3px;overflow:hidden}.cell{aspect-ratio:1;min-width:0;border-radius:3px;border:1px solid #263954;cursor:pointer}.cell:hover{outline:1px solid white}.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.ctrl{background:#0a1627;border:1px solid #2b3e59;border-radius:9px;padding:9px}.ctrl label{font:11px ui-monospace,monospace;color:#c8d8e7;display:flex;justify-content:space-between;gap:5px}.ctrl output{color:var(--orange)}input[type=range]{width:100%;accent-color:#ff963d;margin:10px 0 0}.stategrid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}.state{padding:5px 2px;min-height:45px;text-align:center;display:grid;place-items:center;gap:1px}.state.on{outline:2px solid var(--cyan)}.swatch{width:17px;height:17px;border-radius:50%;background:var(--c);box-shadow:0 0 9px var(--c)}.state span{font:10px ui-monospace,monospace;color:#bfcde0}.bars{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:4px;height:110px;align-items:end;padding:5px 2px 0}.bar{height:var(--h);background:linear-gradient(0deg,#7552c4,var(--cyan));border-radius:4px 4px 0 0;min-height:2px}.hint{font-size:11px;color:#a2b5c9;margin:9px 0}.split{display:grid;grid-template-columns:1.2fr .8fr;gap:13px}.log{white-space:pre-wrap;overflow:auto;height:210px;color:#c0dbf3;font:11px/1.6 ui-monospace,monospace;padding:10px;background:#071323;border:1px solid #2d4360;border-radius:9px}.legend{display:flex;gap:13px;font:11px ui-monospace,monospace;color:#b8c8d8;flex-wrap:wrap}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}.foo{color:#91adc5;font:11px ui-monospace,monospace;margin-top:14px}.warn{color:#ffc183}.ok{color:#70f6c9}a{color:#93e7eb}select{font:11px ui-monospace,monospace;background:#16253b;color:var(--ink);border:1px solid #47617e;border-radius:7px;padding:6px}.formula{font:12px/1.8 ui-monospace,monospace;color:#b5fbe8}.kv{display:flex;justify-content:space-between;gap:8px;color:#aac3d8;font:11px ui-monospace,monospace;padding:3px 0;border-bottom:1px solid #1b3047}.kv strong{color:#d5eafd}@media(max-width:930px){.layout{grid-template-columns:1fr}.wide{grid-column:auto}}@media(max-width:620px){main{padding:9px}.panel{padding:11px}#mesh{height:300px}.metricgrid{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}.stategrid{grid-template-columns:repeat(8,1fr)}}
 #routecanvas{height:370px} .routes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:10px 0} .route-k{border:1px solid #30516c;border-radius:10px;background:#0b1a2b;padding:9px} .route-k small{display:block;color:#a3bed3;font:10px monospace} .route-k strong{font:20px monospace;color:#d7f8f0} #packetlog{height:150px} .route-note{color:#b4ccdc;font:12px/1.6 monospace} @media(max-width:650px){.routes{grid-template-columns:repeat(2,minmax(0,1fr))} #routecanvas{height:270px}}
 
 #chromatic96{scroll-margin-top:14px}.chrom96{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.bank96{background:#0c1b2e;border:1px solid #35506b;border-radius:13px;padding:12px;min-width:0}.bank96-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;color:#d9eaff;font:700 12px ui-monospace,monospace}.chip96{height:42px;border-radius:9px;border:1px solid #53718e;box-shadow:inset 0 0 30px #ffffff19,0 0 12px #ffffff20}.channel96{display:grid;grid-template-columns:22px 1fr 42px;gap:7px;align-items:center;margin:7px 0;font:11px ui-monospace,monospace}.channel96 meter{width:100%;height:10px}.byte96{font:11px ui-monospace,monospace;color:#9ed1cf;word-break:break-word}.bank96-note{font:10px ui-monospace,monospace;color:#9db2ca}.color96-foot{font:12px ui-monospace,monospace;color:#b9d5eb;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between}.code96{white-space:pre-wrap;word-break:break-all;background:#071323;border:1px solid #24435f;padding:10px;border-radius:10px;color:#9af1cf;font:12px/1.8 ui-monospace,monospace}.chip96-title{font:12px ui-monospace,monospace;color:#ffd7b7}@media(max-width:860px){.chrom96{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:460px){.chrom96{grid-template-columns:1fr}}
-</style></head><body><main><header class="heading"><div><div class="eyebrow">ROOT 0 // PHOTON LAB // 0.11</div><h1>PHOTON<span>—16</span> · 96-BIT CHROMATIC TUN</h1><div class="sub">{{r8!,b8!,g8!}} × 4 = 96 bits · 4 H/hot/orange legs + 4 N/cold/blue legs · O/neutral/green shared body</div></div><div class="status">ANIMATED GIT PAGES STYLE · EMERGENT PHOTONIC JELLYFISH · SOFTWARE MODEL</div></header>
+</style></head><body><main><header class="heading"><div><div class="eyebrow">ROOT 0 // PHOTON LAB // 0.12</div><h1>PHOTON<span>—16</span> · 96-BIT CHROMATIC TUN</h1><div class="sub">{{r8!,b8!,g8!}} × 4 = 96 bits · 4 H/hot/orange legs + 4 N/cold/blue legs · O/neutral/green shared body</div></div><div class="status">ANIMATED GIT PAGES STYLE · EMERGENT PHOTONIC JELLYFISH · SOFTWARE MODEL</div></header>
 <div class="layout">
 <section class="panel wide" id="chromatic96"><h2>Chromatic tun register <small>exact 96-bit logical payload · {{r8!,b8!,g8!}} × 4</small></h2>
 <div class="color96-foot"><span>4 independent banks × 3 unsigned 8-bit channels = <strong>12 bytes / 96 bits</strong></span><span>wire order: <strong>R → B → G</strong> (not RGB)</span><span>bank i corresponds to paired <strong>Hi + Ni</strong> legs</span></div>
@@ -30,11 +30,17 @@
 <canvas id="phase-canvas" width="1320" height="365" aria-label="Live 16 channel phase-modulated photonic interference measured against an intensity reference"></canvas>
 <p class="hint">For each of four banks, <b>R8−B8</b> sets a relative coherent phase; <b>G8</b> sets a positive amplitude gain. Each bank drives four of the 16 spatial modes. The resulting normalized 16-mode field propagates through the current trained 32-phase optical mesh, frozen when the reference is captured. A separate hidden drift profile perturbs input phase; calibration uses detector intensity errors, never direct drift values. The <b>phase compensator</b> updates from observed output intensities only; the calibration objective never reads hidden target phase offsets. Packet-driven bank updates are real software events. The 96 bits do not represent 96 physical photonic wavelength channels. Stress tests preserve unchanged pretrained mesh phases and report unsuccessful recoveries rather than suppressing them.</p>
 <div class="kv"><span>FROZEN LEARNED PHASES</span><strong id="phase-frozen">—</strong></div><div class="kv"><span>DRIFT PROFILE</span><strong id="phase-drift">0.0°</strong></div><div class="kv"><span>HELD-OUT STRESS RESULT</span><strong id="phase-stress-result">NOT RUN</strong></div><div class="kv"><span>CHROMATIC BANK PHASES (rad)</span><strong id="phase-register">—</strong></div><div class="kv"><span>FEEDBACK COMPENSATORS (rad)</span><strong id="phase-compensator">—</strong></div><div class="kv"><span>REFERENCE / DRIFT</span><strong id="phase-reference">CAPTURE TO BEGIN</strong></div><div class="formula" id="phase-teststatus">PHASE INVARIANT TESTS: PENDING</div></section>
+<section class="panel wide" id="homeostasis12"><h2>Continuous optical homeostasis · v0.12 <small>240 consecutive ticks · causal detector-only feedback · SHA-256 chain</small></h2>
+<div class="buttons"><button id="home12-run" class="major">RUN 240-TICK HOMEOSTASIS</button><button id="home12-step">STEP +1 TICK</button><button id="home12-reset">RESET CONTINUOUS RUN</button><button id="home12-export">EXPORT OBSERVATION LEDGER</button><button id="home12-test">VERIFY LEDGER & INVARIANTS</button></div>
+<div class="metricgrid"><div class="metric"><small>CONTINUOUS TICKS</small><strong id="home12-ticks">0 / 240</strong></div><div class="metric"><small>OPEN / CLOSED MEAN MSE</small><strong id="home12-errors">—</strong></div><div class="metric"><small>DETECTOR MEASUREMENTS</small><strong id="home12-cost">0</strong></div><div class="metric"><small>RECOVERED / FAILED EVENTS</small><strong id="home12-recovery">—</strong></div></div>
+<canvas id="home12-plot" width="1320" height="300" aria-label="Continuous optical error, open loop and feedback, over 240 observed ticks"></canvas>
+<div class="kv"><span>DRIFT / CONGESTION EVENTS</span><strong id="home12-events">0</strong></div><div class="kv"><span>ROUTER BURST / STEP EVENTS</span><strong id="home12-packets">0</strong></div><div class="kv"><span>APPEND-ONLY SHA256 HEAD</span><strong id="home12-head">GENESIS</strong></div><div class="kv"><span>OBSERVATION GATE / AUDIT</span><strong id="home12-audit">NOT RUN</strong></div>
+<p class="hint">An uninterrupted synthetic run imposes hidden, time-varying four-bank phase drift plus deterministic RBG input changes. The controller can request only detector intensities for the current tick: one baseline measurement and six bounded counterfactual probes, then one phase update. It cannot read future profiles or hidden phase values. The observation ledger chains every sampled tick with SHA-256 and preserves all failures. Recovery means five consecutive ticks with MSE below the predeclared 5×10⁻⁴ gate after a perturbation; events that never recover are explicit failures. Power remains normalized at each simulated input. This is a software model, not physical Planck-scale hardware.</p></section>
 <section class="panel"><h2>16-channel optical lattice <small>six coupler layers · two trainable phase layers</small></h2><canvas id="mesh" width="1080" height="560" aria-label="16-channel network with phase shifters and beam splitters"></canvas><div class="buttons"><button id="train" class="major">TRAIN +10 EPOCHS</button><button id="batch">TRAIN +100 EPOCHS</button><button id="pause">AUTO TRAIN · OFF</button><button id="reset">RESET LEARNER</button><button id="target">NEW TARGET (SEEDED)</button></div><div class="metricgrid"><div class="metric"><small>TRAIN ERROR</small><strong id="trainerr">—</strong></div><div class="metric"><small>UNSEEN ERROR</small><strong id="testerr">—</strong></div><div class="metric"><small>ENERGY ERROR</small><strong id="energy" class="ok">—</strong></div><div class="metric"><small>EPOCH / STEPS</small><strong id="epoch">0</strong></div></div><p class="hint">Complex coherent amplitudes propagate through a unitary mesh of 48 fixed 50:50 couplers and 32 trainable phases. Training minimizes measured intensity differences. The unseen set is never used for phase updates.</p></section>
 <section class="panel"><h2>4 × 4 output register <small>16 independently addressed spatial modes</small></h2><div id="stategrid" class="stategrid"></div><div class="controls" style="margin:11px 0"><div class="ctrl"><label>TRAIN STEP <output id="stepval">0.20 rad</output></label><input id="step" type="range" min="0.03" max="0.50" step="0.01" value="0.20"></div><div class="ctrl"><label>PROPAGATION LOSS <output id="lossval">6%</output></label><input id="loss" type="range" min="0" max="35" step="1" value="6"></div><div class="ctrl"><label>OPTICAL COUPLING <output id="angleval">45°</output></label><input id="angle" type="range" min="25" max="65" step="1" value="45"></div><div class="ctrl"><label>TARGET SEED <output id="seedval">42</output></label><input id="seed" type="range" min="1" max="200" step="1" value="42"></div></div><h2>16 output photodetectors <small>normalized coherent intensity</small></h2><div class="bars" id="bars"></div><p class="hint">Click a register input to inspect the learned transformation. The 16 labels are spatial channels; orange, purple, gray and WHITE remain display mixtures, not invented optical frequencies.</p><div class="kv"><span>OPTICAL INPUT POWER</span><strong id="inputpower">1.000</strong></div><div class="kv"><span>PRE-LOSS OUTPUT POWER</span><strong id="outpower">1.000</strong></div><div class="kv"><span>POST-LOSS POWER</span><strong id="postpower">0.940</strong></div><div class="kv"><span>GENERALIZATION GAP</span><strong id="gap">—</strong></div></section>
 <section class="panel"><h2>Learned transfer: 16 × 16 <small>basis-input power matrix</small></h2><div class="matrix" id="transfer"></div><p class="hint">Cell (output, input) displays |U<sub>out,in</sub>|². Columns sum to one before loss. Unlike the complex U matrix, this intensity map alone does not contain all phase information.</p></section>
 <section class="panel"><h2>Learning trace <small>measured loss on train / unseen sets</small></h2><canvas id="chart" width="760" height="370" aria-label="Learning history for training and holdout intensity error"></canvas><div class="legend"><span><i class="dot" style="background:var(--orange)"></i>TRAIN</span><span><i class="dot" style="background:var(--cyan)"></i>UNSEEN (read only)</span></div><p class="hint">Training: 16 basis states plus 16 coherent superpositions. Unseen validation: 16 fixed separate coherent superpositions. Deterministic coordinate search with frozen target and no lookahead.</p></section>
-<section class="panel wide"><div class="split"><div><h2>Audit ledger <small>deterministic, no random external state</small></h2><div id="ledger" class="log" aria-live="polite">PHOTON-16 v0.11 optical controller ready.</div></div><div><h2>Model boundary <small>what this tests</small></h2><div class="formula">E<sub>out</sub> = U<sub>mesh</sub>(φ,θ) E<sub>in</sub><br>P<sub>j</sub> = |E<sub>out,j</sub>|²<br>Σ P<sub>out</sub> = Σ P<sub>in</sub> (before loss)</div><p class="hint">This is a passive, linear, coherent optical model with software learning; it does not implement optical nonlinear activation, photodiode dynamics, true 16-wavelength separation, or a fabricated neural accelerator. The target is generated by the same mesh family; out-of-family generalization remains a future test.</p><div id="tests" class="formula">TESTS: PENDING</div><div class="buttons"><button id="selftest">RUN INVARIANT TESTS</button><a href="v10.html">Previous: PHOTON-16 v0.10</a></div></div></div></section>
+<section class="panel wide"><div class="split"><div><h2>Audit ledger <small>deterministic, no random external state</small></h2><div id="ledger" class="log" aria-live="polite">PHOTON-16 v0.12 optical controller ready.</div></div><div><h2>Model boundary <small>what this tests</small></h2><div class="formula">E<sub>out</sub> = U<sub>mesh</sub>(φ,θ) E<sub>in</sub><br>P<sub>j</sub> = |E<sub>out,j</sub>|²<br>Σ P<sub>out</sub> = Σ P<sub>in</sub> (before loss)</div><p class="hint">This is a passive, linear, coherent optical model with software learning; it does not implement optical nonlinear activation, photodiode dynamics, true 16-wavelength separation, or a fabricated neural accelerator. The target is generated by the same mesh family; out-of-family generalization remains a future test.</p><div id="tests" class="formula">TESTS: PENDING</div><div class="buttons"><button id="selftest">RUN INVARIANT TESTS</button><a href="v11.html">Previous: PHOTON-16 v0.11</a></div></div></div></section>
 </div><footer>hydrogen+hot+or ×4 · oxygen+neutral+green ×1 body · nitrogen+cold+blue ×4 · e-cloud shell · 1×8×8×8×8×{[(1)]}×8×8×8×8×1 · 96-bit {{r8!,b8!,g8!}} × 4 · {{i}} · .dlw · 2026-11-23</footer></main>
 <script>
 (()=>{'use strict';
@@ -381,5 +387,99 @@ $('phase-stress').onclick=()=>{const result=stress();$('phase-teststatus').textC
 window.addEventListener('photon-route',()=>render());window.addEventListener('photon-router-reset',()=>render());
 window.PHOTON_PHASE11={synth,measure,error,calibrate,capture,render,reset,test,stress,profiles,stats:()=>({steps,error:error(),compensation:compensation.slice(),meshFrozen:!!frozenMesh,meshPhases:frozen().slice(),testResult,stressReport})};
 capture();setInterval(()=>{if(auto)calibrate(1);},240);
+})();
+</script><script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id), P=window.PHOTON_PHASE11, C=window.PHOTON_COLOR96, R=window.PHOTON_ROUTER;
+const T=240, GATE=5e-4, MAX_PROBES=6, STEP=[-.18,-.08,-.03,.03,.08,.18], ZERO=[0,0,0,0];
+const neutral=()=>Array.from({length:4},()=>[128,128,255]);
+let sim=null,busy=false,report=null;
+function gen(t){
+ const segments=Math.floor(t/48), d=[0,1,2,3].map(k=>
+  (segments%2===0?1:-1)*(.13+.06*k)+.18*Math.sin(t*.038+k*1.7)+.06*Math.sin(t*.12+k*.9));
+ const banks=neutral().map((v,k)=>{
+  let r=128+Math.round(10*Math.sin(t*.067+k)),b=128+Math.round(9*Math.cos(t*.053+k*1.5)),g=255-(segments===2||segments===4?10+5*k:0);
+  return [Math.max(0,Math.min(255,r)),Math.max(0,Math.min(255,b)),g];
+ });
+ return {drift:d,banks,event:t===0?'initial':t%48===0?'drift_reversal_and_load':'none'};
+}
+const loss=(a,b)=>a.reduce((q,v,i)=>q+(v-b[i])**2,0)/a.length;
+const power=x=>x.reduce((n,z)=>n+z*z,0);
+const digest=async text=>{const data=new TextEncoder().encode(text);const hash=await crypto.subtle.digest('SHA-256',data);return Array.from(new Uint8Array(hash)).map(x=>x.toString(16).padStart(2,'0')).join('')};
+function newSim(){
+ const mesh=P.stats().meshPhases.slice(),ref=P.synth(neutral(),ZERO,ZERO,mesh).intensities;
+ sim={t:0,comp:ZERO.slice(),mesh,ref,ledger:[],head:'0'.repeat(64),measurementCount:0,openSum:0,closedSum:0,events:[],routerActivities:0};report=null;
+ show();return sim;
+}
+function sense(env,comp){sim.measurementCount++;return P.synth(env.banks,comp,env.drift,sim.mesh).intensities;}
+async function tick(){if(!sim)newSim();if(sim.t>=T)return null;
+ const t=sim.t,env=gen(t),previous=sim.comp.slice();
+ const open=sense(env,ZERO),measured=sense(env,previous);
+ // Exactly one actionable observed detector vector, plus six bounded probe vectors.
+ // Two diagnostic readings are counted too (8 readings/tick total).
+ let best=loss(measured,sim.ref),newComp=previous.slice(),bestAction='hold';
+ const j=t%4;
+ for(const delta of STEP){const tryComp=previous.slice();tryComp[j]=Math.max(-2.2,Math.min(2.2,tryComp[j]+delta));
+   const read=sense(env,tryComp),err=loss(read,sim.ref);
+   if(err+1e-15<best){best=err;newComp=tryComp;bestAction='adjust_'+delta.toFixed(2)}
+ }
+ sim.comp=newComp;
+ // Keep actual observed post-action intensity distinct from prediction: the best
+ // probe has already measured this exact vector if action changed.
+ const openError=loss(open,sim.ref),closedError=best;
+ sim.openSum+=openError;sim.closedSum+=closedError;
+ const event=env.event;
+ if(event!=='none')sim.events.push({tick:t,type:event,recoveredAt:null,recoveryLatency:null});
+ const data={tick:t,openMSE:Number(openError.toPrecision(12)),closedMSE:Number(closedError.toPrecision(12)),
+  detectorReads:MAX_PROBES+2,coordinate:j,action:bestAction,comp:sim.comp.map(x=>Number(x.toFixed(6))),event,
+  banks:env.banks.map(v=>v.slice()),inputPower:1,outputPower:1};
+ // The hash chain commits the observed event and previous hash, never the hidden drift.
+ const head=await digest(JSON.stringify({...data,previousHash:sim.head}));
+ sim.ledger.push({...data,previousHash:sim.head,hash:head});sim.head=head;sim.t++;
+ // A recovery is only credited if the five readings available so far are below gate.
+ for(const e of sim.events)if(e.recoveredAt===null&&sim.t>=e.tick+5){
+  const last=sim.ledger.slice(-5);
+  if(last.every(x=>x.tick>=e.tick&&x.closedMSE<GATE)){e.recoveredAt=t;e.recoveryLatency=t-e.tick;}
+ }
+ if(t%8===0){R.burst();R.step();sim.routerActivities++;}
+ report=null;show();return data;
+}
+function summary(){if(!sim)return null;const recovered=sim.events.filter(e=>e.recoveredAt!==null),failed=sim.events.filter(e=>e.recoveredAt===null);
+ return {ticks:sim.t,measurements:sim.measurementCount,meanOpenMSE:sim.t?sim.openSum/sim.t:0,
+ meanClosedMSE:sim.t?sim.closedSum/sim.t:0,events:sim.events.length,recovered:recovered.length,unrecovered:failed.length,
+ eventLatencies:sim.events.map(x=>({...x})),routerActivityEvents:sim.routerActivities,head:sim.head,ledgerCount:sim.ledger.length};}
+function plot(){const c=$('home12-plot'),ctx=c.getContext('2d'),W=c.width,H=c.height;ctx.clearRect(0,0,W,H);ctx.fillStyle='#071322';ctx.fillRect(0,0,W,H);
+ if(!sim||!sim.ledger.length)return;const pts=sim.ledger,m=45,bottom=H-28,top=20,max=Math.max(.0007,...pts.map(x=>x.openMSE),...pts.map(x=>x.closedMSE));
+ for(const tick of [48,96,144,192]){const x=m+tick/T*(W-m-22);ctx.strokeStyle='#39506a';ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,bottom);ctx.stroke()}
+ for(const [name,col] of [['openMSE','#ff9e62'],['closedMSE','#66f2c5']]){ctx.strokeStyle=col;ctx.lineWidth=2.3;ctx.beginPath();pts.forEach((r,i)=>{const x=m+(r.tick/T)*(W-m-22),y=bottom-(r[name]/max)*(bottom-top);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke()}
+ ctx.fillStyle='#bad2eb';ctx.font='12px monospace';ctx.fillText('OPEN-LOOP (ORANGE) vs CLOSED-LOOP (GREEN) · observed detector MSE',20,16);
+ ctx.fillText('0',m,bottom+17);ctx.fillText(String(T),W-45,bottom+17);
+ ctx.strokeStyle='#416e61';ctx.setLineDash([3,6]);const gateY=bottom-GATE/max*(bottom-top);ctx.beginPath();ctx.moveTo(m,gateY);ctx.lineTo(W-18,gateY);ctx.stroke();ctx.setLineDash([]);
+}
+function show(){if(!sim)return;const r=summary();$('home12-ticks').textContent=r.ticks+' / '+T;
+ $('home12-errors').textContent=r.ticks?r.meanOpenMSE.toExponential(2)+' / '+r.meanClosedMSE.toExponential(2):'—';
+ $('home12-cost').textContent=r.measurements+' detector reads';$('home12-recovery').textContent=r.recovered+' / '+r.unrecovered;
+ $('home12-events').textContent=String(r.events);$('home12-packets').textContent=String(r.routerActivityEvents);
+ $('home12-head').textContent=r.head.slice(0,20)+'…';plot();}
+async function run(){if(busy)return;busy=true;$('home12-run').disabled=true;
+ try{if(!sim||sim.t===T)newSim();while(sim.t<T){await tick();if(sim.t%40===0)await new Promise(resolve=>setTimeout(resolve,0))}
+ const audit=await verify();$('home12-audit').textContent=audit.ok?'PASS · '+audit.checked+' events':'FAIL · '+audit.errors.join(', ');
+ }finally{busy=false;$('home12-run').disabled=false;}}
+async function verify(){const errors=[];if(!sim)return {ok:false,errors:['no ledger']};let prev='0'.repeat(64);
+ const frozen=JSON.parse(JSON.stringify(sim.ledger));for(let i=0;i<frozen.length;i++){
+  const row=frozen[i],h=row.hash;delete row.hash;
+  if(row.tick!==i||row.previousHash!==prev)errors.push('chain parent '+i);
+  const got=await digest(JSON.stringify(row));if(got!==h)errors.push('digest '+i);prev=h;
+  if(row.detectorReads!==8||row.inputPower!==1||row.outputPower!==1)errors.push('budget/power '+i);
+ }
+ if(prev!==sim.head)errors.push('head mismatch');if(sim.measurementCount!==8*sim.t)errors.push('measurement count');
+ if(sim.ledger.length!==sim.t)errors.push('lost ledger rows');
+ report={ok:!errors.length,checked:sim.t,errors,summary:summary()};$('home12-audit').textContent=report.ok?'PASS · '+report.checked+' chained ticks':'FAIL · '+errors.join(', ');return report;}
+function exportLedger(){if(!sim)return;const obj={schema:'PHOTON16-v12-append-only-ledger',model:'synthetic software',referenceFrozen:true,gate:GATE,probeBudget:8,summary:summary(),events:sim.ledger};
+ const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='photon16-v12-ledger.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+$('home12-run').onclick=run;$('home12-step').onclick=async()=>{if(!busy){await tick();await verify()}};
+$('home12-reset').onclick=()=>{if(!busy)newSim()};$('home12-export').onclick=exportLedger;$('home12-test').onclick=verify;
+window.PHOTON_HOME12={run,tick,reset:newSim,verify,summary,ledger:()=>sim?JSON.parse(JSON.stringify(sim.ledger)):[],parameters:{ticks:T,recoveryGate:GATE,readsPerTick:8}};
+newSim();
 })();
 </script></body></html>
