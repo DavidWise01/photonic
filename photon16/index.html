@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>PHOTON-16 v0.9 · 96-Bit Chromatic Register</title>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>PHOTON-16 v0.10 · 96-Bit Chromatic Register</title>
 <style>
 :root{color-scheme:dark;--bg:#080c17;--panel:#101b2b;--panel2:#0d1524;--border:#2b3b58;--ink:#eff8ff;--muted:#9eafc7;--cyan:#51efd9;--orange:#ff963d;--violet:#ae89ff;--rose:#ff68b6;--good:#65e6b2}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% -5%,#183442 0%,transparent 40%),radial-gradient(ellipse at 90% 5%,#302044 0%,transparent 45%),var(--bg);font:14px/1.5 system-ui,sans-serif;color:var(--ink)}main{max-width:1540px;margin:auto;padding:18px}.heading{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:12px}.eyebrow{color:var(--cyan);font:700 11px ui-monospace,monospace;letter-spacing:.2em}.heading h1{margin:2px 0;font-size:clamp(26px,3.5vw,43px);letter-spacing:-.045em}.heading h1 span{color:var(--orange)}.sub{color:var(--muted);font-size:13px}.status{border:1px solid #3e7c71;color:#a9ffe7;padding:8px 13px;border-radius:40px;font:11px ui-monospace,monospace}.layout{display:grid;grid-template-columns:minmax(400px,1.35fr) minmax(340px,1fr);gap:13px}.panel{min-width:0;padding:15px;background:linear-gradient(145deg,#101d30,#0c1424);border:1px solid var(--border);border-radius:15px;box-shadow:0 15px 30px #0002}.wide{grid-column:1/-1}.panel h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#c7d9ed;display:flex;justify-content:space-between;align-items:center;margin:0 0 12px;gap:8px}.panel h2 small{color:var(--muted);font:10px ui-monospace,monospace;letter-spacing:0}canvas{width:100%;display:block;background:#07111d;border:1px solid #28415c;border-radius:11px}#hero{height:310px}#mesh{height:420px}#chart{height:260px}.buttons{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}button{font:11px ui-monospace,monospace;color:var(--ink);background:#15273b;border:1px solid #456580;border-radius:8px;padding:8px 10px;cursor:pointer}button:hover,button:focus-visible{border-color:var(--cyan);color:white}button.major{border-color:#b56b37;color:#ffdbb5;background:#292334}button:disabled{opacity:.5;cursor:wait}.metricgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.metric{background:#0b1728;border:1px solid #2e4460;border-radius:10px;padding:9px;min-width:0}.metric small{font-size:10px;color:#a9bbd1;display:block}.metric strong{font:clamp(15px,1.5vw,21px) ui-monospace,monospace;overflow-wrap:anywhere}.matrix{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:3px;overflow:hidden}.cell{aspect-ratio:1;min-width:0;border-radius:3px;border:1px solid #263954;cursor:pointer}.cell:hover{outline:1px solid white}.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.ctrl{background:#0a1627;border:1px solid #2b3e59;border-radius:9px;padding:9px}.ctrl label{font:11px ui-monospace,monospace;color:#c8d8e7;display:flex;justify-content:space-between;gap:5px}.ctrl output{color:var(--orange)}input[type=range]{width:100%;accent-color:#ff963d;margin:10px 0 0}.stategrid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}.state{padding:5px 2px;min-height:45px;text-align:center;display:grid;place-items:center;gap:1px}.state.on{outline:2px solid var(--cyan)}.swatch{width:17px;height:17px;border-radius:50%;background:var(--c);box-shadow:0 0 9px var(--c)}.state span{font:10px ui-monospace,monospace;color:#bfcde0}.bars{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:4px;height:110px;align-items:end;padding:5px 2px 0}.bar{height:var(--h);background:linear-gradient(0deg,#7552c4,var(--cyan));border-radius:4px 4px 0 0;min-height:2px}.hint{font-size:11px;color:#a2b5c9;margin:9px 0}.split{display:grid;grid-template-columns:1.2fr .8fr;gap:13px}.log{white-space:pre-wrap;overflow:auto;height:210px;color:#c0dbf3;font:11px/1.6 ui-monospace,monospace;padding:10px;background:#071323;border:1px solid #2d4360;border-radius:9px}.legend{display:flex;gap:13px;font:11px ui-monospace,monospace;color:#b8c8d8;flex-wrap:wrap}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}.foo{color:#91adc5;font:11px ui-monospace,monospace;margin-top:14px}.warn{color:#ffc183}.ok{color:#70f6c9}a{color:#93e7eb}select{font:11px ui-monospace,monospace;background:#16253b;color:var(--ink);border:1px solid #47617e;border-radius:7px;padding:6px}.formula{font:12px/1.8 ui-monospace,monospace;color:#b5fbe8}.kv{display:flex;justify-content:space-between;gap:8px;color:#aac3d8;font:11px ui-monospace,monospace;padding:3px 0;border-bottom:1px solid #1b3047}.kv strong{color:#d5eafd}@media(max-width:930px){.layout{grid-template-columns:1fr}.wide{grid-column:auto}}@media(max-width:620px){main{padding:9px}.panel{padding:11px}#mesh{height:300px}.metricgrid{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}.stategrid{grid-template-columns:repeat(8,1fr)}}
 #routecanvas{height:370px} .routes{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:10px 0} .route-k{border:1px solid #30516c;border-radius:10px;background:#0b1a2b;padding:9px} .route-k small{display:block;color:#a3bed3;font:10px monospace} .route-k strong{font:20px monospace;color:#d7f8f0} #packetlog{height:150px} .route-note{color:#b4ccdc;font:12px/1.6 monospace} @media(max-width:650px){.routes{grid-template-columns:repeat(2,minmax(0,1fr))} #routecanvas{height:270px}}
 
 #chromatic96{scroll-margin-top:14px}.chrom96{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.bank96{background:#0c1b2e;border:1px solid #35506b;border-radius:13px;padding:12px;min-width:0}.bank96-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;color:#d9eaff;font:700 12px ui-monospace,monospace}.chip96{height:42px;border-radius:9px;border:1px solid #53718e;box-shadow:inset 0 0 30px #ffffff19,0 0 12px #ffffff20}.channel96{display:grid;grid-template-columns:22px 1fr 42px;gap:7px;align-items:center;margin:7px 0;font:11px ui-monospace,monospace}.channel96 meter{width:100%;height:10px}.byte96{font:11px ui-monospace,monospace;color:#9ed1cf;word-break:break-word}.bank96-note{font:10px ui-monospace,monospace;color:#9db2ca}.color96-foot{font:12px ui-monospace,monospace;color:#b9d5eb;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between}.code96{white-space:pre-wrap;word-break:break-all;background:#071323;border:1px solid #24435f;padding:10px;border-radius:10px;color:#9af1cf;font:12px/1.8 ui-monospace,monospace}.chip96-title{font:12px ui-monospace,monospace;color:#ffd7b7}@media(max-width:860px){.chrom96{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:460px){.chrom96{grid-template-columns:1fr}}
-</style></head><body><main><header class="heading"><div><div class="eyebrow">ROOT 0 // PHOTON LAB // 0.9</div><h1>PHOTON<span>—16</span> · 96-BIT CHROMATIC TUN</h1><div class="sub">{{r8!,b8!,g8!}} × 4 = 96 bits · 4 H/hot/orange legs + 4 N/cold/blue legs · O/neutral/green shared body</div></div><div class="status">ANIMATED GIT PAGES STYLE · EMERGENT PHOTONIC JELLYFISH · SOFTWARE MODEL</div></header>
+</style></head><body><main><header class="heading"><div><div class="eyebrow">ROOT 0 // PHOTON LAB // 0.10</div><h1>PHOTON<span>—16</span> · 96-BIT CHROMATIC TUN</h1><div class="sub">{{r8!,b8!,g8!}} × 4 = 96 bits · 4 H/hot/orange legs + 4 N/cold/blue legs · O/neutral/green shared body</div></div><div class="status">ANIMATED GIT PAGES STYLE · EMERGENT PHOTONIC JELLYFISH · SOFTWARE MODEL</div></header>
 <div class="layout">
 <section class="panel wide" id="chromatic96"><h2>Chromatic tun register <small>exact 96-bit logical payload · {{r8!,b8!,g8!}} × 4</small></h2>
 <div class="color96-foot"><span>4 independent banks × 3 unsigned 8-bit channels = <strong>12 bytes / 96 bits</strong></span><span>wire order: <strong>R → B → G</strong> (not RGB)</span><span>bank i corresponds to paired <strong>Hi + Ni</strong> legs</span></div>
@@ -24,11 +24,17 @@
 
 <section class="panel wide"><h2>Plank bubble / tun organism <small>4 p-legs + 4 n-legs · oxygen core body · e-cloud shell</small></h2><canvas id="hero" width="1480" height="420" aria-label="Animated eight-leg photonic jellyfish, central shared port, directional nested ingress and egress"></canvas><div class="buttons"><button id="morph">MORPH MODE · TUN</button><button id="pulse">PULSE FIELD</button><button id="direction">PORT FLOW · INGRESS {{u}}</button><button id="freezehero">FREEZE ANIMATION · OFF</button></div><div class="metricgrid"><div class="metric"><small>EMERGENT SHAPE</small><strong id="morphlabel">PLANK BUBBLE / TUN</strong></div><div class="metric"><small>LATTICE</small><strong>1 × 8⁴ × {[(1)]} × 8⁴ × 1</strong></div><div class="metric"><small>PULSE RATE</small><strong id="pulserate">0.80 Hz</strong></div><div class="metric"><small>LEG SETS</small><strong>4 HOT + 4 COLD</strong></div></div><p class="hint">This form is a plank bubble / tun. Four hydrogen + hot + orange legs occupy the positive branch set, and four nitrogen + cold + blue legs occupy the negative branch set. The oxygen / neutral / green body contains one ingress and one egress, while the surrounding shell is the animated e-cloud. The 8⁴ branches on each side remain logical address tiers, not literal physical limbs.</p></section>
 
+<section class="panel wide" id="phase-panel"><h2>96-bit → coherent optical field <small>R/B = phase, G = amplitude · four banks × four spatial modes</small></h2>
+<div class="buttons"><button id="phase-baseline" class="major">CAPTURE REFERENCE</button><button id="phase-perturb">INJECT 8 ROUTED PACKETS</button><button id="phase-calibrate">CALIBRATE +25 STEPS</button><button id="phase-auto">AUTO CALIBRATE · OFF</button><button id="phase-reset">RESET PHASE COMPENSATORS</button><button id="phase-test">RUN PHASE INVARIANTS</button></div>
+<div class="metricgrid"><div class="metric"><small>REFERENCE INTENSITY ERROR</small><strong id="phase-error">—</strong></div><div class="metric"><small>INPUT POWER / OUTPUT POWER</small><strong id="phase-energy">—</strong></div><div class="metric"><small>CALIBRATION STEPS</small><strong id="phase-steps">0</strong></div><div class="metric"><small>LAST CALIBRATION CHANGE</small><strong id="phase-improvement">—</strong></div></div>
+<canvas id="phase-canvas" width="1320" height="365" aria-label="Live 16 channel phase-modulated photonic interference measured against an intensity reference"></canvas>
+<p class="hint">For each of four banks, <b>R8−B8</b> sets a relative coherent phase; <b>G8</b> sets a positive amplitude gain. Each bank drives four of the 16 spatial modes. The resulting normalized 16-mode field propagates through the original lossless coherent transfer matrix. The <b>phase compensator</b> updates from observed output intensities only; the calibration objective never reads hidden target phase offsets. Packet-driven bank updates are real software events. The 96 bits do not represent 96 physical photonic wavelength channels.</p>
+<div class="kv"><span>CHROMATIC BANK PHASES (rad)</span><strong id="phase-register">—</strong></div><div class="kv"><span>FEEDBACK COMPENSATORS (rad)</span><strong id="phase-compensator">—</strong></div><div class="kv"><span>REFERENCE / DRIFT</span><strong id="phase-reference">CAPTURE TO BEGIN</strong></div><div class="formula" id="phase-teststatus">PHASE INVARIANT TESTS: PENDING</div></section>
 <section class="panel"><h2>16-channel optical lattice <small>six coupler layers · two trainable phase layers</small></h2><canvas id="mesh" width="1080" height="560" aria-label="16-channel network with phase shifters and beam splitters"></canvas><div class="buttons"><button id="train" class="major">TRAIN +10 EPOCHS</button><button id="batch">TRAIN +100 EPOCHS</button><button id="pause">AUTO TRAIN · OFF</button><button id="reset">RESET LEARNER</button><button id="target">NEW TARGET (SEEDED)</button></div><div class="metricgrid"><div class="metric"><small>TRAIN ERROR</small><strong id="trainerr">—</strong></div><div class="metric"><small>UNSEEN ERROR</small><strong id="testerr">—</strong></div><div class="metric"><small>ENERGY ERROR</small><strong id="energy" class="ok">—</strong></div><div class="metric"><small>EPOCH / STEPS</small><strong id="epoch">0</strong></div></div><p class="hint">Complex coherent amplitudes propagate through a unitary mesh of 48 fixed 50:50 couplers and 32 trainable phases. Training minimizes measured intensity differences. The unseen set is never used for phase updates.</p></section>
 <section class="panel"><h2>4 × 4 output register <small>16 independently addressed spatial modes</small></h2><div id="stategrid" class="stategrid"></div><div class="controls" style="margin:11px 0"><div class="ctrl"><label>TRAIN STEP <output id="stepval">0.20 rad</output></label><input id="step" type="range" min="0.03" max="0.50" step="0.01" value="0.20"></div><div class="ctrl"><label>PROPAGATION LOSS <output id="lossval">6%</output></label><input id="loss" type="range" min="0" max="35" step="1" value="6"></div><div class="ctrl"><label>OPTICAL COUPLING <output id="angleval">45°</output></label><input id="angle" type="range" min="25" max="65" step="1" value="45"></div><div class="ctrl"><label>TARGET SEED <output id="seedval">42</output></label><input id="seed" type="range" min="1" max="200" step="1" value="42"></div></div><h2>16 output photodetectors <small>normalized coherent intensity</small></h2><div class="bars" id="bars"></div><p class="hint">Click a register input to inspect the learned transformation. The 16 labels are spatial channels; orange, purple, gray and WHITE remain display mixtures, not invented optical frequencies.</p><div class="kv"><span>OPTICAL INPUT POWER</span><strong id="inputpower">1.000</strong></div><div class="kv"><span>PRE-LOSS OUTPUT POWER</span><strong id="outpower">1.000</strong></div><div class="kv"><span>POST-LOSS POWER</span><strong id="postpower">0.940</strong></div><div class="kv"><span>GENERALIZATION GAP</span><strong id="gap">—</strong></div></section>
 <section class="panel"><h2>Learned transfer: 16 × 16 <small>basis-input power matrix</small></h2><div class="matrix" id="transfer"></div><p class="hint">Cell (output, input) displays |U<sub>out,in</sub>|². Columns sum to one before loss. Unlike the complex U matrix, this intensity map alone does not contain all phase information.</p></section>
 <section class="panel"><h2>Learning trace <small>measured loss on train / unseen sets</small></h2><canvas id="chart" width="760" height="370" aria-label="Learning history for training and holdout intensity error"></canvas><div class="legend"><span><i class="dot" style="background:var(--orange)"></i>TRAIN</span><span><i class="dot" style="background:var(--cyan)"></i>UNSEEN (read only)</span></div><p class="hint">Training: 16 basis states plus 16 coherent superpositions. Unseen validation: 16 fixed separate coherent superpositions. Deterministic coordinate search with frozen target and no lookahead.</p></section>
-<section class="panel wide"><div class="split"><div><h2>Audit ledger <small>deterministic, no random external state</small></h2><div id="ledger" class="log" aria-live="polite">PHOTON-16 v0.9 optical controller ready.</div></div><div><h2>Model boundary <small>what this tests</small></h2><div class="formula">E<sub>out</sub> = U<sub>mesh</sub>(φ,θ) E<sub>in</sub><br>P<sub>j</sub> = |E<sub>out,j</sub>|²<br>Σ P<sub>out</sub> = Σ P<sub>in</sub> (before loss)</div><p class="hint">This is a passive, linear, coherent optical model with software learning; it does not implement optical nonlinear activation, photodiode dynamics, true 16-wavelength separation, or a fabricated neural accelerator. The target is generated by the same mesh family; out-of-family generalization remains a future test.</p><div id="tests" class="formula">TESTS: PENDING</div><div class="buttons"><button id="selftest">RUN INVARIANT TESTS</button><a href="v08.html">Previous: PHOTON-16 v0.8</a></div></div></div></section>
+<section class="panel wide"><div class="split"><div><h2>Audit ledger <small>deterministic, no random external state</small></h2><div id="ledger" class="log" aria-live="polite">PHOTON-16 v0.10 optical controller ready.</div></div><div><h2>Model boundary <small>what this tests</small></h2><div class="formula">E<sub>out</sub> = U<sub>mesh</sub>(φ,θ) E<sub>in</sub><br>P<sub>j</sub> = |E<sub>out,j</sub>|²<br>Σ P<sub>out</sub> = Σ P<sub>in</sub> (before loss)</div><p class="hint">This is a passive, linear, coherent optical model with software learning; it does not implement optical nonlinear activation, photodiode dynamics, true 16-wavelength separation, or a fabricated neural accelerator. The target is generated by the same mesh family; out-of-family generalization remains a future test.</p><div id="tests" class="formula">TESTS: PENDING</div><div class="buttons"><button id="selftest">RUN INVARIANT TESTS</button><a href="v09.html">Previous: PHOTON-16 v0.9</a></div></div></div></section>
 </div><footer>hydrogen+hot+or ×4 · oxygen+neutral+green ×1 body · nitrogen+cold+blue ×4 · e-cloud shell · 1×8×8×8×8×{[(1)]}×8×8×8×8×1 · 96-bit {{r8!,b8!,g8!}} × 4 · {{i}} · .dlw · 2026-11-23</footer></main>
 <script>
 (()=>{'use strict';
@@ -249,4 +255,109 @@ $('colorreset').addEventListener('click',clear);$('colortest').addEventListener(
 window.PHOTON_COLOR96={width:REGISTER_BITS,channelsPerBank:3,channelOrder:'RBG',bankCount:BANKS,set,apply,clear,snapshot,bytes,pack,bits,selftest};render();selftest();
 })();
 </script>
-</body></html>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id),N=16,PI=Math.PI;
+const model=window.PHOTON16,color=window.PHOTON_COLOR96,router=window.PHOTON_ROUTER;
+if(!model||!color||!router){$('phase-teststatus').textContent='PHASE MODULE INIT FAILED: missing optical/router/color core';return;}
+const cmod=(a,b)=>[a[0]*b[0]-a[1]*b[1],a[0]*b[1]+a[1]*b[0]];
+const cphase=angle=>[Math.cos(angle),Math.sin(angle)];
+const magnitude=x=>x[0]*x[0]+x[1]*x[1];
+const power=x=>x.reduce((n,z)=>n+magnitude(z),0);
+const baseline=Object.freeze([128,128,255]);
+const direct=()=>color.snapshot().banks.map(b=>Array.from(b));
+let compensation=[0,0,0,0],reference=null,referenceSource=null,steps=0,auto=false,lastImprovement=0;
+let testResult=null;
+function synth(banks,comp=compensation){
+ if(banks.length!==4)throw Error('four-bank register required');
+ const input=[];for(let channel=0;channel<N;channel++){
+  const bank=Math.floor(channel/4),offset=channel%4,[r,b,g]=banks[bank];
+  const ph=PI*(r-b)/510 + comp[bank] + offset*PI/7;
+  const gain=.35+.65*g/255;
+  input.push([gain*Math.cos(ph),gain*Math.sin(ph)]);
+ }
+ const before=power(input),normalized=input.map(v=>[v[0]/Math.sqrt(before),v[1]/Math.sqrt(before)]);
+ const out=model.network(normalized,Array(32).fill(0));
+ return {input:normalized,intensities:out.map(magnitude),inPower:power(normalized),outPower:power(out),phase:banks.map(v=>PI*(v[0]-v[1])/510)};
+}
+function mse(a,b){if(!b)return NaN;return a.reduce((x,y,i)=>x+(y-b[i])**2,0)/a.length;}
+function capture(){
+ // A reference is an observed output taken from an explicitly neutral 96-bit baseline,
+ // not a hidden direct phase solution or an inferred absolute complex field.
+ referenceSource=Array.from({length:4},()=>baseline.slice());
+ reference=synth(referenceSource,[0,0,0,0]).intensities;
+ render();return reference.slice();
+}
+function measure(comp=compensation){return synth(direct(),comp)}
+function error(comp=compensation){return mse(measure(comp).intensities,reference)}
+function calibrate(count=25){if(!reference)capture();const before=error();
+ for(let j=0;j<count;j++){
+  const i=steps%4;let candidate=compensation[i],best=error(),chosen=candidate;
+  // Deterministic intensity-only coordinate search; no color-register phase read.
+  for(const delta of [-.20,-.10,-.05,.05,.10,.20]){
+   const probe=compensation.slice();probe[i]=candidate+delta;
+   const loss=mse(measure(probe).intensities,reference);
+   if(loss+1e-15<best){best=loss;chosen=probe[i]}
+  }
+  compensation[i]=chosen;steps++;
+ }
+ lastImprovement=before-error();render();return {before,after:error(),steps,lastImprovement};
+}
+function draw(current){const canvas=$('phase-canvas'),ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
+ ctx.clearRect(0,0,W,H);ctx.fillStyle='#071322';ctx.fillRect(0,0,W,H);
+ ctx.fillStyle='#bfd6ed';ctx.font='14px monospace';ctx.fillText('REFERENCE (teal) / MEASURED (orange) · 16 DETECTORS',20,26);
+ const start=54,usable=W-90,w=usable/16,scale=.93*(H-85)/Math.max(...current.intensities,...(reference||[0]),.001);
+ for(let i=0;i<N;i++){const x=start+i*w,yr=H-53;
+  if(reference){ctx.fillStyle='#50e4cf';ctx.fillRect(x+4,yr-reference[i]*scale,w*.30,reference[i]*scale)}
+  ctx.fillStyle=i<4?'#ffad65':i<8?'#7fb8ff':i<12?'#ad8fff':'#8af4b3';
+  const v=current.intensities[i];ctx.fillRect(x+w*.44,yr-v*scale,w*.30,v*scale);
+  ctx.font='12px monospace';ctx.fillStyle='#a8c7da';ctx.fillText(String(i).padStart(2,'0'),x+w*.36,yr+20);
+ }
+ ctx.strokeStyle='#41627b';ctx.beginPath();ctx.moveTo(30,H-53);ctx.lineTo(W-15,H-53);ctx.stroke();
+}
+function render(){const current=measure(),e=error();$('phase-error').textContent=Number.isFinite(e)?e.toExponential(3):'—';
+ $('phase-energy').textContent=current.inPower.toFixed(4)+' / '+current.outPower.toFixed(4);
+ $('phase-steps').textContent=steps;$('phase-improvement').textContent=lastImprovement.toExponential(2);
+ $('phase-register').textContent=current.phase.map(v=>v.toFixed(2)).join(' · ');
+ $('phase-compensator').textContent=compensation.map(v=>v.toFixed(2)).join(' · ');
+ $('phase-reference').textContent=reference?'NEUTRAL REFERENCE STORED · CURRENT COLOR96 IS LIVE':'CAPTURE TO BEGIN';
+ draw(current);return {error:e,inputPower:current.inPower,outputPower:current.outPower};
+}
+function reset(){compensation=[0,0,0,0];steps=0;lastImprovement=0;render()}
+function test(){
+ const saved=compensation.slice(),savedSteps=steps,savedImp=lastImprovement,savedRef=reference&&reference.slice();
+ const beforeRegister=color.snapshot().banks.map(b=>Array.from(b));let outcome;
+ try{
+  const rounds=[];
+  for(let i=0;i<64;i++){
+   const banks=Array.from({length:4},(_,k)=>[(i*37+k*19)%256,(i*53+k*31)%256,(i*17+k*23)%256]);
+   const x=synth(banks,[i*.01,-i*.003,i*.005,-i*.008]);rounds.push(Math.abs(x.outPower-x.inPower));
+  }
+  const maxEnergy=Math.max(...rounds);
+  // Two defined control changes must create a different observable 16-output intensity distribution.
+  const ref=synth(Array.from({length:4},()=>baseline.slice()),[0,0,0,0]);
+  const pert=Array.from({length:4},()=>baseline.slice());pert[0][0]=240;pert[2][1]=6;
+  const diff=mse(synth(pert,[0,0,0,0]).intensities,ref.intensities);
+  // Capture and test intensity-only recovery from a known disturbed register.
+  color.set(0,255,0,255);color.set(1,128,128,255);color.set(2,128,128,255);color.set(3,128,128,255);
+  compensation=[0,0,0,0];steps=0;capture();const initial=error();
+  const result=calibrate(200),final=error();
+  const ok=maxEnergy<1e-10&&diff>1e-7&&final<initial&&Number.isFinite(final);
+  outcome={ok,maxEnergyError:maxEnergy,detectableColorPerturbation:diff,initialError:initial,finalError:final,calibrationSteps:200};
+ }finally{
+  beforeRegister.forEach((v,k)=>color.set(k,v[0],v[1],v[2]));compensation=saved;steps=savedSteps;lastImprovement=savedImp;reference=savedRef;render();
+ }
+ testResult=outcome;$('phase-teststatus').textContent='PHASE TESTS: '+(outcome.ok?'PASS':'FAIL')+' · Δenergy '+outcome.maxEnergyError.toExponential(2)+' · drift MSE '+outcome.initialError.toExponential(2)+' → '+outcome.finalError.toExponential(2);
+ return outcome;
+}
+$('phase-baseline').onclick=capture;
+$('phase-perturb').onclick=()=>{router.burst();router.step();render()};
+$('phase-calibrate').onclick=()=>calibrate(25);
+$('phase-auto').onclick=()=>{auto=!auto;$('phase-auto').textContent='AUTO CALIBRATE · '+(auto?'ON':'OFF')};
+$('phase-reset').onclick=reset;
+$('phase-test').onclick=test;
+window.addEventListener('photon-route',()=>render());window.addEventListener('photon-router-reset',()=>render());
+window.PHOTON_PHASE10={synth,measure,error,calibrate,capture,render,reset,test,stats:()=>({steps,error:error(),compensation:compensation.slice(),testResult})};
+capture();test();setInterval(()=>{if(auto)calibrate(1);},240);
+})();
+</script></body></html>
