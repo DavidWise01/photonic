@@ -1,236 +1,58 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PHOTON-16 v0.3 | Self-Correcting Optical Matrix</title>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>PHOTON-16 v0.4 · Programmable Neural Mesh</title>
 <style>
-:root{color-scheme:dark;--bg:#070b14;--panel:#11182a;--panel2:#0d1424;--line:#293b57;--ink:#eaf2ff;--muted:#9dadc6;--cyan:#4af6dc;--orange:#ff9e44;--violet:#b78bff;--red:#fe746c;--green:#56e4a5;--blue:#74a5ff}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 20% 0%,#172c3c 0%,transparent 54%),radial-gradient(ellipse at 90% 0%,#2b193e 0%,transparent 45%),var(--bg);font:14px/1.5 system-ui,sans-serif;color:var(--ink)}.shell{max-width:1450px;padding:20px;margin:auto}.top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px}.eyebrow{font:700 11px ui-monospace,monospace;color:var(--cyan);letter-spacing:.20em}.top h1{font-size:clamp(25px,4vw,42px);margin:2px 0;letter-spacing:-.05em}.top h1 span{color:var(--orange)}.sub{color:var(--muted)}.pill{font:11px ui-monospace,monospace;padding:8px 12px;color:#89f8dc;border:1px solid #2d746b;border-radius:99px}.layout{display:grid;grid-template-columns:minmax(510px,1.45fr) minmax(350px,1fr);gap:14px}.panel{border:1px solid var(--line);background:linear-gradient(145deg,#121d2f,#0b1221);border-radius:16px;padding:16px;box-shadow:0 10px 28px #0003;min-width:0}.panel h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#c7d2e7;margin:0 0 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}.panel h2 small{font:10px ui-monospace,monospace;color:var(--muted)}.wide{grid-column:1/-1}canvas{width:100%;display:block;background:#090f1c;border:1px solid #263d58;border-radius:12px;aspect-ratio:1.55/1}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}button{background:#19253b;color:var(--ink);border:1px solid #3a5674;border-radius:9px;padding:8px 11px;font:12px ui-monospace,monospace;cursor:pointer}button:hover,button:focus-visible{border-color:var(--cyan)}button.primary{color:#ffe0bb;border-color:#af693a}.numbers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:12px}.number{background:#0c172a;border:1px solid #2e435b;border-radius:11px;padding:9px}.number label{display:block;color:var(--muted);font-size:10px}.number strong{font:clamp(13px,1.7vw,20px) ui-monospace,monospace;white-space:nowrap}.modegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.mode{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:69px;padding:6px 3px;background:#11192b}.mode.selected{outline:2px solid var(--cyan);background:#172e40}.orb{width:17px;height:17px;background:var(--c);border-radius:100%;box-shadow:0 0 13px var(--c);border:1px solid #ffffff50}.mode em{font-style:normal;font:10px ui-monospace,monospace;color:#e5eafb}.mode small{font-size:9px;color:#b3bed0}.controls{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}.control{padding:9px 10px;background:#0a1527;border:1px solid #2c3d56;border-radius:10px}.control label{font:11px ui-monospace,monospace;display:flex;justify-content:space-between;gap:5px;color:#c8d7e9}.control label output{color:var(--orange)}input[type=range]{width:100%;accent-color:#ff9e44;margin:8px 0 1px}.help{color:#9eacc4;font-size:11px;margin:10px 0 0}.outputs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.detector{background:#0a1425;border:1px solid #34425f;border-radius:12px;padding:10px}.detector .heading{font:11px ui-monospace,monospace;color:#b7c9e3}.detector strong{font:18px ui-monospace,monospace}.track{height:7px;background:#1b293f;border-radius:99px;overflow:hidden;margin:8px 0}.fill{height:100%;width:0;background:var(--c);transition:width .2s}.detector small{font:10px ui-monospace,monospace;color:var(--muted)}.matrix{display:grid;grid-template-columns:36px repeat(4,minmax(0,1fr));gap:5px;align-items:stretch}.matrix>div{font:10px ui-monospace,monospace;text-align:center;display:flex;align-items:center;justify-content:center}.matrix .cell{height:65px;display:flex;flex-direction:column;justify-content:center;gap:4px;background:rgba(79,245,222,var(--a));border:1px solid #4b6e77;border-radius:7px}.matrix .cell strong{font-size:12px;color:#f4fbff}.matrix .cell span{font-size:10px;color:#d2e0ef}.bottom{display:grid;grid-template-columns:1fr 1fr;gap:14px}.log{font:11px/1.6 ui-monospace,monospace;white-space:pre-wrap;background:#070f1e;border:1px solid #293b56;padding:11px;border-radius:10px;min-height:104px;max-height:160px;overflow:auto;color:#c2fce9}.good{color:#61f3c0}.warn{color:#ffbf7c}.key{color:var(--cyan)}.summary{padding:12px 14px;background:#0a1526;border-left:2px solid var(--cyan);border-radius:8px}.summary p{margin:3px 0 7px;color:#b8c8db;font-size:12px}.formula{font:12px ui-monospace,monospace;color:#b8ffeb}footer{font:11px ui-monospace,monospace;color:#90a7bc;margin-top:15px} @media(max-width:910px){.layout{grid-template-columns:1fr}.wide{grid-column:auto}}@media(max-width:550px){.shell{padding:10px}.controls{grid-template-columns:1fr 1fr}.numbers{grid-template-columns:repeat(2,1fr)}.bottom{grid-template-columns:1fr}.detector strong{font-size:14px}.panel{padding:12px}}
-
-.feedback-panel{grid-column:1/-1;border-color:#4f6d88;background:linear-gradient(125deg,#132337,#140e29 70%,#0b1425)}
-.feedback-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:16px}
-.feedback-graph{width:100%;height:225px;aspect-ratio:auto;background:#071221;border:1px solid #304967;border-radius:11px}
-.feedstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0}
-.feedstat{padding:9px;background:#08172b;border:1px solid #36536d;border-radius:9px;min-width:0}
-.feedstat small{display:block;color:#9db4d0;font:10px ui-monospace,monospace}
-.feedstat strong{font:clamp(13px,1.7vw,20px) ui-monospace,monospace;overflow-wrap:anywhere}
-.feedcontrol{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
-.feedback-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.feedback-actions .active{border-color:#66e9d3;background:#183c43;color:#b9fff0}
-.mini-ledger{height:88px;overflow:auto;background:#081327;border:1px solid #2c405c;border-radius:9px;padding:10px;white-space:pre-wrap;font:11px/1.55 ui-monospace,monospace;color:#bbdbef}
-@media(max-width:850px){.feedback-grid{grid-template-columns:1fr}}@media(max-width:550px){.feedstats{grid-template-columns:repeat(2,1fr)}}
-</style></head><body><main class="shell"><header class="top"><div><div class="eyebrow">ROOT 0 // PHOTON LAB // VERSION 0.3</div><h1>PHOTON<span>—16</span></h1><div class="sub">16 logical states · 4×4 coherent matrix · closed-loop phase stabilization</div></div><div class="pill">DETERMINISTIC SIMULATION · NOT A FABRICATED CHIP</div></header>
+:root{color-scheme:dark;--bg:#080c17;--panel:#101b2b;--panel2:#0d1524;--border:#2b3b58;--ink:#eff8ff;--muted:#9eafc7;--cyan:#51efd9;--orange:#ff963d;--violet:#ae89ff;--rose:#ff68b6;--good:#65e6b2}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% -5%,#183442 0%,transparent 40%),radial-gradient(ellipse at 90% 5%,#302044 0%,transparent 45%),var(--bg);font:14px/1.5 system-ui,sans-serif;color:var(--ink)}main{max-width:1540px;margin:auto;padding:18px}.heading{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:12px}.eyebrow{color:var(--cyan);font:700 11px ui-monospace,monospace;letter-spacing:.2em}.heading h1{margin:2px 0;font-size:clamp(26px,3.5vw,43px);letter-spacing:-.045em}.heading h1 span{color:var(--orange)}.sub{color:var(--muted);font-size:13px}.status{border:1px solid #3e7c71;color:#a9ffe7;padding:8px 13px;border-radius:40px;font:11px ui-monospace,monospace}.layout{display:grid;grid-template-columns:minmax(400px,1.35fr) minmax(340px,1fr);gap:13px}.panel{min-width:0;padding:15px;background:linear-gradient(145deg,#101d30,#0c1424);border:1px solid var(--border);border-radius:15px;box-shadow:0 15px 30px #0002}.wide{grid-column:1/-1}.panel h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#c7d9ed;display:flex;justify-content:space-between;align-items:center;margin:0 0 12px;gap:8px}.panel h2 small{color:var(--muted);font:10px ui-monospace,monospace;letter-spacing:0}canvas{width:100%;display:block;background:#07111d;border:1px solid #28415c;border-radius:11px}#mesh{height:420px}#chart{height:260px}.buttons{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}button{font:11px ui-monospace,monospace;color:var(--ink);background:#15273b;border:1px solid #456580;border-radius:8px;padding:8px 10px;cursor:pointer}button:hover,button:focus-visible{border-color:var(--cyan);color:white}button.major{border-color:#b56b37;color:#ffdbb5;background:#292334}button:disabled{opacity:.5;cursor:wait}.metricgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.metric{background:#0b1728;border:1px solid #2e4460;border-radius:10px;padding:9px;min-width:0}.metric small{font-size:10px;color:#a9bbd1;display:block}.metric strong{font:clamp(15px,1.5vw,21px) ui-monospace,monospace;overflow-wrap:anywhere}.matrix{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:3px;overflow:hidden}.cell{aspect-ratio:1;min-width:0;border-radius:3px;border:1px solid #263954;cursor:pointer}.cell:hover{outline:1px solid white}.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.ctrl{background:#0a1627;border:1px solid #2b3e59;border-radius:9px;padding:9px}.ctrl label{font:11px ui-monospace,monospace;color:#c8d8e7;display:flex;justify-content:space-between;gap:5px}.ctrl output{color:var(--orange)}input[type=range]{width:100%;accent-color:#ff963d;margin:10px 0 0}.stategrid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}.state{padding:5px 2px;min-height:45px;text-align:center;display:grid;place-items:center;gap:1px}.state.on{outline:2px solid var(--cyan)}.swatch{width:17px;height:17px;border-radius:50%;background:var(--c);box-shadow:0 0 9px var(--c)}.state span{font:10px ui-monospace,monospace;color:#bfcde0}.bars{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:4px;height:110px;align-items:end;padding:5px 2px 0}.bar{height:var(--h);background:linear-gradient(0deg,#7552c4,var(--cyan));border-radius:4px 4px 0 0;min-height:2px}.hint{font-size:11px;color:#a2b5c9;margin:9px 0}.split{display:grid;grid-template-columns:1.2fr .8fr;gap:13px}.log{white-space:pre-wrap;overflow:auto;height:210px;color:#c0dbf3;font:11px/1.6 ui-monospace,monospace;padding:10px;background:#071323;border:1px solid #2d4360;border-radius:9px}.legend{display:flex;gap:13px;font:11px ui-monospace,monospace;color:#b8c8d8;flex-wrap:wrap}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}.foo{color:#91adc5;font:11px ui-monospace,monospace;margin-top:14px}.warn{color:#ffc183}.ok{color:#70f6c9}a{color:#93e7eb}select{font:11px ui-monospace,monospace;background:#16253b;color:var(--ink);border:1px solid #47617e;border-radius:7px;padding:6px}.formula{font:12px/1.8 ui-monospace,monospace;color:#b5fbe8}.kv{display:flex;justify-content:space-between;gap:8px;color:#aac3d8;font:11px ui-monospace,monospace;padding:3px 0;border-bottom:1px solid #1b3047}.kv strong{color:#d5eafd}@media(max-width:930px){.layout{grid-template-columns:1fr}.wide{grid-column:auto}}@media(max-width:620px){main{padding:9px}.panel{padding:11px}#mesh{height:300px}.metricgrid{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}.stategrid{grid-template-columns:repeat(8,1fr)}}
+</style></head><body><main><header class="heading"><div><div class="eyebrow">ROOT 0 // PHOTON LAB // 0.4</div><h1>PHOTON<span>—16</span> · NEURAL MESH</h1><div class="sub">16 coherent waveguides · 4 × 4 topology · programmable phase masks · supervised target transformation</div></div><div class="status">SOFTWARE MODEL · PASSIVE OPTICS · NOT A FABRICATED CHIP</div></header>
 <div class="layout">
-<section class="panel"><h2><span>Optical propagation / four input waveguides</span><small id="frame">FRAME 00000</small></h2><canvas id="scope" width="920" height="580" aria-label="Optical input channels passing through six unitary couplers into four output detectors"></canvas><div class="actions"><button class="primary" id="pulse">INJECT PULSE</button><button id="preset">BALANCED BEAMSPLITTERS</button><button id="calibrate">CALIBRATE DETECTORS</button><button id="reset">RESET</button><button id="animate">PAUSE</button></div><div class="numbers"><div class="number"><label>INPUT POWER</label><strong id="pin">0.000</strong></div><div class="number"><label>BEFORE LOSS</label><strong id="pideal">0.000</strong></div><div class="number"><label>DETECTED POWER</label><strong id="pdet">0.000</strong></div><div class="number"><label>CONSERVATION ERROR</label><strong id="error" class="good">0.0e+0</strong></div></div><p class="help">The six beam splitters are modeled as lossless 2×2 unitary couplers. An independent per-output attenuation stage follows. RGB and displayed colors label logical source combinations; no simulated wavelength conversion occurs.</p></section>
-<section class="panel"><h2><span>Four-bit implicit state register</span><small>RGB × RELATIVE PHASE</small></h2><div id="modes" class="modegrid"></div><div class="controls"><div class="control"><label>INPUT INTENSITY <output id="intensityText">0.80</output></label><input id="intensity" type="range" min="0" max="1" step=".01" value=".8"></div><div class="control"><label>REFERENCE PORT <output id="referenceText">0.30</output></label><input id="reference" type="range" min="0" max="1" step=".01" value=".3"></div><div class="control"><label>COUPLING θ <output id="couplingText">45°</output></label><input id="coupling" type="range" min="0" max="90" step="1" value="45"></div><div class="control"><label>PROPAGATION LOSS <output id="lossText">8%</output></label><input id="loss" type="range" min="0" max="40" step="1" value="8"></div><div class="control"><label>R PHASE <output id="rText">0°</output></label><input id="r" type="range" min="-180" max="180" step="5" value="0"></div><div class="control"><label>G PHASE <output id="gText">0°</output></label><input id="g" type="range" min="-180" max="180" step="5" value="0"></div><div class="control"><label>B PHASE <output id="bText">0°</output></label><input id="b" type="range" min="-180" max="180" step="5" value="0"></div><div class="control"><label>REF PHASE <output id="refphaseText">0°</output></label><input id="refphase" type="range" min="-180" max="180" step="5" value="0"></div></div><p class="help">Mode bits: <code>[phase][B][G][R]</code>. The fourth optical input is a reference, active when an RGB component is on. Phase bit flips the reference by π. State 0 and state 8 are both dark: phase is not measurable without light.</p></section>
-<section class="panel"><h2><span>4 × 4 transfer matrix</span><small>|U<sub>out,in</sub>|² &amp; phase</small></h2><div id="matrix" class="matrix"></div><p class="help">Matrix values arise from multiplying six unitary beam-splitter rotations. Each cell shows the power transfer from one input to one output, and the complex phase. Column sums should equal one (before loss).</p></section>
-<section class="panel"><h2><span>Four calibrated output detectors</span><small>MEASURED POST-LOSS SIGNAL</small></h2><div class="outputs" id="detectors"></div><div class="numbers"><div class="number"><label>RAW DETECTOR SUM</label><strong id="raw">0.000</strong></div><div class="number"><label>CALIBRATED SUM</label><strong id="calibrated">—</strong></div><div class="number"><label>LOSS FRACTION</label><strong id="lossfraction">0.00%</strong></div><div class="number"><label>CALIBRATION STATE</label><strong id="calstate" class="warn">UNCAL</strong></div></div><p class="help">Raw detectors include fixed gain errors and dark offsets. Calibration removes those electronic distortions using reference measurements; it does <strong>not</strong> reverse optical propagation loss.</p></section>
-<section class="panel feedback-panel" id="stabilizer"><h2><span>Closed-loop optical stabilization</span><small>SG-style PREFIX → OBSERVE → CORRECT</small></h2>
-<div class="feedback-grid"><div>
-<canvas id="history" class="feedback-graph" width="760" height="300" aria-label="Error history showing open-loop deviation and corrected closed-loop error"></canvas>
-<div class="feedstats">
-<div class="feedstat"><small>OPEN-LOOP RMS</small><strong id="openerr">0.0000</strong></div>
-<div class="feedstat"><small>CLOSED-LOOP RMS</small><strong id="closederr" class="good">0.0000</strong></div>
-<div class="feedstat"><small>ERROR REDUCTION</small><strong id="improve">—</strong></div>
-<div class="feedstat"><small>CONTROL CYCLE</small><strong id="cycle">0000</strong></div>
-</div>
-<div class="mini-ledger" id="feedbacklog" aria-live="polite">READY // lock target and inject drift</div>
-</div><div>
-<div class="feedcontrol">
-<div class="control"><label>PHASE DRIFT <output id="driftText">25°</output></label><input id="drift" type="range" min="0" max="60" step="1" value="25"></div>
-<div class="control"><label>DETECTOR NOISE <output id="noiseText">1.0%</output></label><input id="noise" type="range" min="0" max="5" step=".1" value="1"></div>
-<div class="control"><label>FEEDBACK STEP <output id="gainText">12°</output></label><input id="gain" type="range" min="1" max="30" step="1" value="12"></div>
-<div class="control"><label>PHASE ESTIMATE <output id="phaseText">0.0°</output></label><div class="help" id="phases" style="margin-top:12px;color:#c4bbff">R +0° / G +0° / B +0° / REF +0°</div></div>
-</div>
-<div class="feedback-actions"><button id="locktarget">LOCK REFERENCE</button><button class="primary" id="stepfeedback">ONE CONTROL CYCLE</button><button id="autofeedback" class="active">AUTO FEEDBACK · ON</button><button id="injectdrift">INJECT DRIFT</button></div>
-<p class="help">The controller measures four post-loss detector intensities and searches phase-shifter corrections; it cannot read the simulated hidden drift. The reference is captured at zero drift, and fixed gain/dark offsets are calibrated first. Noise is a deterministic seeded sample, not entropy from the browser. Feedback is not a proof of universal convergence.</p>
-</div></div></section>
-<section class="panel wide"><div class="bottom"><div><h2><span>Deterministic audit trace</span><small>DETERMINISTIC SEEDED NOISE</small></h2><div id="log" class="log"></div></div><div><h2><span>Model limits and next physical gate</span><small>OBSERVATION ≠ FABRICATION</small></h2><div class="summary"><div class="formula">E<sub>out</sub> = U(θ) · E<sub>in</sub>; &nbsp; P<sub>j</sub> = |E<sub>j</sub>|²</div><p>Input phase differences cause constructive/destructive interference. Simulated drifting phases now perturb those inputs; feedback phase shifters minimize a measured output-error objective while preserving pre-loss conservation.</p><p>For hardware: specify wavelength, waveguide platform, phase shifters, loss budget, detector-noise model, photodiode responsivity, thermal crosstalk, control bandwidth and a real calibration procedure.</p><div id="selftest" class="formula">INVARIANTS: CHECKING</div></div></div></div></section>
-</div><footer>{r,g,b[or,pu,gray,yellow,black,(WHITE)]} · |4 × 4| optical network · 16 logical states · drift / feedback / noise · {{i}} · .dlw</footer></main>
+<section class="panel"><h2>16-channel optical lattice <small>six coupler layers · two trainable phase layers</small></h2><canvas id="mesh" width="1080" height="560" aria-label="16-channel network with phase shifters and beam splitters"></canvas><div class="buttons"><button id="train" class="major">TRAIN +10 EPOCHS</button><button id="batch">TRAIN +100 EPOCHS</button><button id="pause">AUTO TRAIN · OFF</button><button id="reset">RESET LEARNER</button><button id="target">NEW TARGET (SEEDED)</button></div><div class="metricgrid"><div class="metric"><small>TRAIN ERROR</small><strong id="trainerr">—</strong></div><div class="metric"><small>UNSEEN ERROR</small><strong id="testerr">—</strong></div><div class="metric"><small>ENERGY ERROR</small><strong id="energy" class="ok">—</strong></div><div class="metric"><small>EPOCH / STEPS</small><strong id="epoch">0</strong></div></div><p class="hint">Complex coherent amplitudes propagate through a unitary mesh of 48 fixed 50:50 couplers and 32 trainable phases. Training minimizes measured intensity differences. The unseen set is never used for phase updates.</p></section>
+<section class="panel"><h2>4 × 4 output register <small>16 independently addressed spatial modes</small></h2><div id="stategrid" class="stategrid"></div><div class="controls" style="margin:11px 0"><div class="ctrl"><label>TRAIN STEP <output id="stepval">0.20 rad</output></label><input id="step" type="range" min="0.03" max="0.50" step="0.01" value="0.20"></div><div class="ctrl"><label>PROPAGATION LOSS <output id="lossval">6%</output></label><input id="loss" type="range" min="0" max="35" step="1" value="6"></div><div class="ctrl"><label>OPTICAL COUPLING <output id="angleval">45°</output></label><input id="angle" type="range" min="25" max="65" step="1" value="45"></div><div class="ctrl"><label>TARGET SEED <output id="seedval">42</output></label><input id="seed" type="range" min="1" max="200" step="1" value="42"></div></div><h2>16 output photodetectors <small>normalized coherent intensity</small></h2><div class="bars" id="bars"></div><p class="hint">Click a register input to inspect the learned transformation. The 16 labels are spatial channels; orange, purple, gray and WHITE remain display mixtures, not invented optical frequencies.</p><div class="kv"><span>OPTICAL INPUT POWER</span><strong id="inputpower">1.000</strong></div><div class="kv"><span>PRE-LOSS OUTPUT POWER</span><strong id="outpower">1.000</strong></div><div class="kv"><span>POST-LOSS POWER</span><strong id="postpower">0.940</strong></div><div class="kv"><span>GENERALIZATION GAP</span><strong id="gap">—</strong></div></section>
+<section class="panel"><h2>Learned transfer: 16 × 16 <small>basis-input power matrix</small></h2><div class="matrix" id="transfer"></div><p class="hint">Cell (output, input) displays |U<sub>out,in</sub>|². Columns sum to one before loss. Unlike the complex U matrix, this intensity map alone does not contain all phase information.</p></section>
+<section class="panel"><h2>Learning trace <small>measured loss on train / unseen sets</small></h2><canvas id="chart" width="760" height="370" aria-label="Learning history for training and holdout intensity error"></canvas><div class="legend"><span><i class="dot" style="background:var(--orange)"></i>TRAIN</span><span><i class="dot" style="background:var(--cyan)"></i>UNSEEN (read only)</span></div><p class="hint">Training: 16 basis states plus 16 coherent superpositions. Unseen validation: 16 fixed separate coherent superpositions. Deterministic coordinate search with frozen target and no lookahead.</p></section>
+<section class="panel wide"><div class="split"><div><h2>Audit ledger <small>deterministic, no random external state</small></h2><div id="ledger" class="log" aria-live="polite">PHOTON-16 v0.4 ready.</div></div><div><h2>Model boundary <small>what this tests</small></h2><div class="formula">E<sub>out</sub> = U<sub>mesh</sub>(φ,θ) E<sub>in</sub><br>P<sub>j</sub> = |E<sub>out,j</sub>|²<br>Σ P<sub>out</sub> = Σ P<sub>in</sub> (before loss)</div><p class="hint">This is a passive, linear, coherent optical model with software learning; it does not implement optical nonlinear activation, photodiode dynamics, true 16-wavelength separation, or a fabricated neural accelerator. The target is generated by the same mesh family; out-of-family generalization remains a future test.</p><div id="tests" class="formula">TESTS: PENDING</div><div class="buttons"><button id="selftest">RUN INVARIANT TESTS</button><a href="../v03.html">Previous: PHOTON-16 v0.3</a></div></div></div></section>
+</div><footer>{r,g,b[or,pu,gray,yellow,black,(WHITE)]} · 16 spatial modes · {{i}} · .dlw · 2026-11-22</footer></main>
 <script>
 (()=>{'use strict';
-const $=id=>document.getElementById(id),tau=2*Math.PI,rad=Math.PI/180;
-const palette=['#0e1525','#ff746f','#48df95','#ffe16b','#679cff','#c48aff','#59e5f4','#f2f6ff'];
-const names=['BLACK','RED','GREEN','YELLOW','BLUE','PURPLE','CYAN','WHITE'];
-const C=(re=0,im=0)=>({re,im}),add=(a,b)=>C(a.re+b.re,a.im+b.im),scale=(z,s)=>C(z.re*s,z.im*s),mul=(a,b)=>C(a.re*b.re-a.im*b.im,a.re*b.im+a.im*b.re),abs2=z=>z.re*z.re+z.im*z.im,phasor=a=>C(Math.cos(a),Math.sin(a));
-let state=7,power=.8,reference=.3,theta=45,loss=.08,phase=[0,0,0,0],calibration=null,animate=true,frame=0,pulse=0,lastMetrics=null;
-const actualGain=[.91,1.07,.96,1.12],dark=[.008,.011,.006,.010];
-// The environment is hidden from the feedback controller. Drift is injected into the optical plant.
-let driftDegrees=25, noisePercent=1, feedbackGain=12, environmentStep=0, feedbackAuto=true;
-let correctors=[0,0,0,0], referenceTarget=null, traceHistory=[], lastOpen=0,lastClosed=0;
-let sensorStep=0, feedbackCycle=0, perturbScale=1, feedbackTimer=0;
-function hiddenPhase(j){
- if(j===3)return 0; // reference waveguide is the phase anchor
- const a=[.73,.91,1.0][j],freq=[.10,.075,.058][j],bias=[.5,1.2,2.1][j];
- return perturbScale*driftDegrees*a*(Math.sin(environmentStep*freq+bias)-Math.sin(bias));
-}
-function seededNoise(port,step){
- // deterministic simulated noise, exactly the same for finite-difference trials at one step
- const a=Math.sin((step+1)*79.17+(port+1)*31.71)*43758.5453;
- return 2*(a-Math.floor(a)) - 1;
-}
-
-function registerName(i){return i===11?'ORANGE':i===15?'GRAY':names[i&7]}
-function matrix(){let A=Array.from({length:4},(_,i)=>Array.from({length:4},(_,j)=>C(i===j?1:0,0)));
- // A passive 50:50 coupler has t=cosθ and reflection=i sinθ. Six layers connect all ports.
- const s=Math.sin(theta*rad),c=Math.cos(theta*rad);
- for(const [a,b] of [[0,1],[2,3],[1,2],[0,1],[2,3],[1,2]]){
-  for(let k=0;k<4;k++){
-   const x=A[a][k],y=A[b][k];A[a][k]=add(scale(x,c),mul(C(0,s),y));A[b][k]=add(mul(C(0,s),x),scale(y,c));
-  }
+const $=id=>document.getElementById(id),pi=Math.PI,tau=2*pi;
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+function rng(seed){let x=(seed>>>0)||1;return ()=>{x^=x<<13;x^=x>>>17;x^=x<<5;return(x>>>0)/4294967296}}
+const z=(re=0,im=0)=>[re,im],add=(a,b)=>[a[0]+b[0],a[1]+b[1]],mul=(a,b)=>[a[0]*b[0]-a[1]*b[1],a[0]*b[1]+a[1]*b[0]],scale=(a,b)=>[a[0]*b,a[1]*b],pow=a=>a[0]*a[0]+a[1]*a[1],phase=x=>[Math.cos(x),Math.sin(x)];
+const pairings=[[[0,1],[2,3],[4,5],[6,7],[8,9],[10,11],[12,13],[14,15]],[[0,4],[1,5],[2,6],[3,7],[8,12],[9,13],[10,14],[11,15]],[[1,2],[3,0],[5,6],[7,4],[9,10],[11,8],[13,14],[15,12]],[[0,8],[1,9],[2,10],[3,11],[4,12],[5,13],[6,14],[7,15]],[[0,1],[2,3],[4,5],[6,7],[8,9],[10,11],[12,13],[14,15]],[[0,4],[1,5],[2,6],[3,7],[8,12],[9,13],[10,14],[11,15]]];
+let angles=45,loss=.06,rate=.2,seed=42,selected=7,params=Array(32).fill(0),goal=Array(32).fill(0),trainSamples=[],testSamples=[],epochs=0,hist=[],auto=false,frame=0,loglines=[];
+function record(s){loglines.unshift(String(s));loglines=loglines.slice(0,13);$('ledger').textContent=loglines.join('\n')}
+function network(input,p,theta=angles){const a=input.map(q=>q.slice());const c=Math.cos(theta*pi/180),s=Math.sin(theta*pi/180);for(let layer=0;layer<6;layer++){
+ if(layer===2||layer===4){const offset=layer===2?0:16;for(let j=0;j<16;j++)a[j]=mul(a[j],phase(p[offset+j]))}
+ for(const [i,j] of pairings[layer]){const x=a[i],y=a[j];a[i]=[c*x[0]-s*y[1],c*x[1]+s*y[0]];a[j]=[c*y[0]-s*x[1],c*y[1]+s*x[0]]}
+ }return a}
+function norm(x){let s=0;for(const q of x)s+=pow(q);return s}
+function intensity(x){return network(x,params).map(pow)}
+function makeInput(r,basis){let arr=Array.from({length:16},()=>z());if(basis){arr[basis.index]=z(1,0);return arr}
+ const ids=Array.from({length:16},(_,i)=>i);for(let i=15;i>0;i--){let k=Math.floor(r()*(i+1));[ids[i],ids[k]]=[ids[k],ids[i]]}
+ for(let k=0;k<4;k++)arr[ids[k]]=scale(phase(tau*r()),.5);return arr}
+function error(samples,p){let total=0;for(const ex of samples){const got=network(ex.input,p).map(pow);for(let j=0;j<16;j++){let d=got[j]-ex.want[j];total+=d*d}}return total/(samples.length*16)}
+function initTarget(){const r=rng(seed*1729+15),rtrain=rng(seed*987+91),rtest=rng(seed*1361+139);goal=Array.from({length:32},()=>((r()-.5)*1.25));trainSamples=[];testSamples=[];
+ for(let i=0;i<16;i++){const input=makeInput(rtrain,{index:i});trainSamples.push({input,want:network(input,goal).map(pow)})}
+ for(let i=0;i<16;i++){const input=makeInput(rtrain);trainSamples.push({input,want:network(input,goal).map(pow)})}
+ for(let i=0;i<16;i++){const input=makeInput(rtest);testSamples.push({input,want:network(input,goal).map(pow)})}
+ params=Array(32).fill(0);epochs=0;hist=[];record('NEW TARGET · seeded '+seed+' · 32 train / 16 untouched unseen samples');snapshot(true)}
+function epoch(){let current=error(trainSamples,params);let changes=0;const rotated=epochs%32;for(let k=0;k<32;k++){const idx=(k+rotated)%32,old=params[idx];let best=old,bestLoss=current;for(const dir of [-1,1]){params[idx]=old+dir*rate;const e=error(trainSamples,params);if(e<bestLoss-1e-13){best=old+dir*rate;bestLoss=e}}params[idx]=best;if(best!==old){current=bestLoss;changes++}}epochs++;if(epochs%25===0||changes===0)rate=Math.max(.01,rate*.96);snapshot();return changes}
+function snapshot(force=false){let e=error(trainSamples,params),h=error(testSamples,params);if(force||!hist.length||epochs!==hist[hist.length-1].epoch)hist.push({epoch:epochs,train:e,test:h});if(hist.length>250)hist.shift();$('trainerr').textContent=e.toFixed(6);$('testerr').textContent=h.toFixed(6);$('gap').textContent=(h-e).toFixed(6);$('epoch').textContent=epochs;$('stepval').textContent=rate.toFixed(2)+' rad';$('step').value=rate;render()}
+function basisInput(id){const x=Array.from({length:16},()=>z());x[id]=z(1,0);return x}
+const colors=['#131c31','#ff755d','#49dda6','#f9d45c','#6196ff','#a47bfd','#4be3e4','#ffffff','#262b45','#ff9b55','#5bcb94','#ffa64a','#6079c6','#ae78da','#62d3c4','#a0a8b8'];
+function render(){const a=basisInput(selected),o=network(a,params),powers=o.map(pow),total=powers.reduce((x,y)=>x+y,0);$('inputpower').textContent=norm(a).toFixed(5);$('outpower').textContent=total.toFixed(5);$('postpower').textContent=(total*(1-loss)).toFixed(5);$('energy').textContent=Math.abs(total-norm(a)).toExponential(1);
+ $('bars').innerHTML=powers.map((v,i)=>'<div class="bar" title="channel '+i+': '+v.toFixed(5)+'" style="--h:'+Math.max(1,Math.round(100*v/Math.max(...powers,1e-8)))+'%"></div>').join('');
+ const grid=$('stategrid');grid.innerHTML=colors.map((color,i)=>'<button class="state '+(selected===i?'on':'')+'" data-id="'+i+'" aria-label="Optical spatial channel '+i+'"><i class="swatch" style="--c:'+color+'"></i><span>'+i+'</span></button>').join('');grid.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{selected=+b.dataset.id;render()}));
+ const units=Array.from({length:16},(_,i)=>network(basisInput(i),params).map(pow));$('transfer').innerHTML=Array.from({length:16},(_,out)=>Array.from({length:16},(_,i)=>{const v=units[i][out];return '<div class="cell" title="output '+out+' ← input '+i+': '+v.toFixed(5)+'" style="background:rgba(76,234,224,'+clamp(.06+v*1.8,.06,1).toFixed(3)+')"></div>'}).join('')).join('');drawMesh(powers);drawHistory()}
+function drawMesh(powers){const c=$('mesh'),ctx=c.getContext('2d'),W=c.width,H=c.height;ctx.clearRect(0,0,W,H);ctx.fillStyle='#081221';ctx.fillRect(0,0,W,H);const left=65,right=W-70,top=35,dy=(H-70)/15,dx=(right-left)/8;
+ for(let j=0;j<16;j++){const y=top+j*dy;ctx.strokeStyle='#26485c';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();ctx.font='12px monospace';ctx.fillStyle=colors[j];ctx.fillText(String(j).padStart(2,'0'),20,y+4);ctx.fillStyle='#bcefe3';ctx.fillText(powers[j].toFixed(2),right+9,y+4)}
+ pairings.forEach((layer,k)=>{const x=left+(k+1)*dx;for(const [i,j] of layer){ctx.strokeStyle=k%2?'#b67aff':'#ff9b47';ctx.lineWidth=1.7;ctx.globalAlpha=.7;ctx.beginPath();ctx.moveTo(x-14,top+i*dy);ctx.lineTo(x+14,top+j*dy);ctx.moveTo(x-14,top+j*dy);ctx.lineTo(x+14,top+i*dy);ctx.stroke();ctx.globalAlpha=1}ctx.fillStyle='#8faeca';ctx.font='10px monospace';ctx.fillText('L'+(k+1),x-11,14)});
+ for(const [k,offset] of [[2,0],[4,16]]){const x=left+(k+0.45)*dx;for(let j=0;j<16;j++){const ph=params[offset+j];ctx.fillStyle='rgba(123,90,255,'+(.2+.25*Math.abs(Math.sin(ph)))+')';ctx.strokeStyle='#aa85ff';ctx.fillRect(x-6,top+j*dy-6,12,12);ctx.strokeRect(x-6,top+j*dy-6,12,12)}}
+ const moving=(frame++%240)/240;ctx.fillStyle='#5cffe1';ctx.shadowBlur=18;ctx.shadowColor='#4be5df';ctx.beginPath();ctx.arc(left+(right-left)*moving,top+selected*dy,3.5,0,tau);ctx.fill();ctx.shadowBlur=0;
  }
- return A;
-}
-function inputs(){const bits=state&7,flip=(state&8)?Math.PI:0;
- let o=Array.from({length:4},()=>C());for(let j=0;j<3;j++)if(bits&(1<<j))o[j]=scale(phasor((phase[j]+correctors[j]+hiddenPhase(j))*rad),Math.sqrt(power));
- if(bits)o[3]=scale(phasor((phase[3]+correctors[3]+hiddenPhase(3))*rad+flip),Math.sqrt(reference));return o;
-}
-function calculate(){const U=matrix(),a=inputs();const b=U.map(row=>row.reduce((sum,x,k)=>add(sum,mul(x,a[k])),C()));
- const src=a.map(abs2),ideal=b.map(abs2),post=ideal.map(x=>x*(1-loss));
- const raw=post.map((x,j)=>actualGain[j]*x+dark[j]+(noisePercent/100)*Math.max(.05,x)*seededNoise(j,sensorStep));const corrected=calibration?raw.map((x,j)=>(x-calibration.dark[j])/calibration.gain[j]):null;
- const input=src.reduce((s,x)=>s+x,0),out=ideal.reduce((s,x)=>s+x,0),det=post.reduce((s,x)=>s+x,0);
- return {U,a,b,src,ideal,post,raw,corrected,input,out,det,error:Math.abs(out-input),lossRate:input?100*(input-det)/input:0};
-}
-function log(line){const el=$('log');el.textContent='> '+line+'\n'+el.textContent.slice(0,1800)}
-function text(id,value){$(id).textContent=value}
-function updateControls(){for(const [id,value,unit] of [['intensity',power.toFixed(2),''],['reference',reference.toFixed(2),''],['coupling',theta,'°'],['loss',Math.round(loss*100),'%'],['r',phase[0],'°'],['g',phase[1],'°'],['b',phase[2],'°'],['refphase',phase[3],'°']]){ $(id).value=value; text(id+'Text',value+unit)} }
-function drawModes(){const box=$('modes');box.replaceChildren();for(let i=0;i<16;i++){const b=document.createElement('button'),bits=i&7,color=i===11?'#ff9f44':i===15?'#8993a3':palette[bits];b.className='mode'+(i===state?' selected':'');b.innerHTML='<span class="orb" style="--c:'+color+'"></span><em>'+i.toString(2).padStart(4,'0')+'</em><small>'+registerName(i)+(i&8?' π':' 0')+'</small>';
- b.onclick=()=>{state=i;resetReference();drawModes();recompute();log('state → '+i.toString(2).padStart(4,'0')+' '+registerName(i))};box.appendChild(b)}}
-function matrixView(U){const box=$('matrix');box.replaceChildren();const label=(v)=>{const d=document.createElement('div');d.textContent=v;return d};box.appendChild(label('OUT \\ IN'));for(const a of ['R','G','B','REF'])box.appendChild(label(a));for(let i=0;i<4;i++){box.appendChild(label('D'+i));for(let j=0;j<4;j++){const power=abs2(U[i][j]),a=Math.atan2(U[i][j].im,U[i][j].re)/rad;const d=document.createElement('div');d.className='cell';d.style.setProperty('--a',(.05+power*.7).toFixed(3));d.innerHTML='<strong>'+power.toFixed(3)+'</strong><span>'+Math.round(a)+'°</span>';box.appendChild(d)}}}
-function detectorView(m){const box=$('detectors');box.replaceChildren();for(let i=0;i<4;i++){let el=document.createElement('div');el.className='detector';el.innerHTML='<div class="heading">PORT D'+i+'</div><strong>'+m.post[i].toFixed(3)+'</strong><div class="track"><div class="fill" style="--c:'+['#ff8a74','#74eab1','#8bc0ff','#d6a6ff'][i]+';width:'+Math.min(100,m.post[i]*100).toFixed(1)+'%"></div></div><small>RAW '+m.raw[i].toFixed(3)+(m.corrected?' · CAL '+m.corrected[i].toFixed(3):'')+'</small>';box.appendChild(el)}}
-function recompute(){const m=calculate();lastMetrics=m;text('pin',m.input.toFixed(3));text('pideal',m.out.toFixed(3));text('pdet',m.det.toFixed(3));text('error',m.error.toExponential(1));text('raw',m.raw.reduce((a,b)=>a+b,0).toFixed(3));text('calibrated',m.corrected?m.corrected.reduce((a,b)=>a+b,0).toFixed(3):'—');text('lossfraction',m.lossRate.toFixed(2)+'%');text('calstate',calibration?'VALID':'UNCAL');$('calstate').className=calibration?'good':'warn';matrixView(m.U);detectorView(m);return m}
-const cv=$('scope'),ctx=cv.getContext('2d');function segment(x,y,X,Y,color,width=2,blur=0){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(X,Y);ctx.lineWidth=width;ctx.strokeStyle=color;ctx.shadowColor=color;ctx.shadowBlur=blur;ctx.stroke();ctx.shadowBlur=0}
-function render(){if(animate){frame++;pulse*=.95}const w=cv.width,h=cv.height,m=lastMetrics||calculate();ctx.clearRect(0,0,w,h);ctx.fillStyle='#090f1c';ctx.fillRect(0,0,w,h);
- for(let x=0;x<w;x+=36)segment(x,0,x,h,'#14263a',.5);for(let y=0;y<h;y+=36)segment(0,y,w,y,'#14263a',.5);
- const yPos=[100,225,350,475],cols=['#ff7867','#57e6a9','#7ea9ff','#eed2ff'];
- for(let i=0;i<4;i++){const y=yPos[i];ctx.fillStyle='#c6d8ee';ctx.textAlign='center';ctx.font='14px ui-monospace,monospace';ctx.fillText(['R','G','B','REF'][i],55,y-34);segment(75,y,285,y,cols[i],1.5+2.5*Math.sqrt(m.src[i]),13);ctx.beginPath();ctx.arc(75,y,8+10*Math.sqrt(m.src[i])+pulse*4,0,tau);ctx.fillStyle=cols[i];ctx.globalAlpha=m.src[i]>.001?.95:.12;ctx.shadowColor=cols[i];ctx.shadowBlur=22;ctx.fill();ctx.globalAlpha=1;ctx.shadowBlur=0;
- segment(660,y,820,y,cols[i],1.5+2.5*Math.sqrt(m.post[i]),13);ctx.beginPath();ctx.arc(829,y,12+Math.min(12,7*Math.sqrt(m.post[i])),0,tau);ctx.fillStyle=cols[i];ctx.globalAlpha=.2+.7*Math.min(1,m.post[i]);ctx.shadowBlur=22;ctx.shadowColor=cols[i];ctx.fill();ctx.globalAlpha=1;ctx.shadowBlur=0;ctx.fillStyle='#d8e7ff';ctx.fillText('D'+i,874,y+5)}
- // Graphical network is schematic: physical unitary matrix above is authoritative.
- const layers=[[0,1],[2,3],[1,2],[0,1],[2,3],[1,2]],xx=[315,377,439,501,563,625];
- for(let i=0;i<layers.length;i++){const [a,b]=layers[i],x=xx[i],ya=yPos[a],yb=yPos[b];segment(x,ya,x,yb,'#9d7bda',2+Math.sin(theta*rad)*2,9);ctx.fillStyle='#d5a5ff';ctx.shadowColor='#c695ff';ctx.shadowBlur=13;ctx.fillRect(x-10,(ya+yb)/2-10,20,20);ctx.shadowBlur=0;ctx.fillStyle='#f1e6ff';ctx.textAlign='center';ctx.font='10px ui-monospace,monospace';ctx.fillText('C'+(i+1),x,(ya+yb)/2+27);}
- ctx.fillStyle='#91b3d3';ctx.font='12px ui-monospace,monospace';ctx.textAlign='left';ctx.fillText('SOURCES',23,36);ctx.fillText('6 × UNITARY COUPLERS',312,36);ctx.fillText('DETECTORS',765,36);text('frame','FRAME '+String(frame).padStart(5,'0'));if(animate&&feedbackAuto&&frame%12===0)correctionCycle();requestAnimationFrame(render)}
-function calibrate(){// Two known fixture levels at each detector establish dark offset and effective electronic gain.
- calibration={gain:actualGain.slice(),dark:dark.slice()};recompute();log('two-point detector calibration: offsets removed, gains normalized; optical loss remains')}
-
-function measuredVector(m){
- // Uses only calibrated detector readings; never inspects hidden phase in the feedback objective.
- if(!calibration)throw Error('Detector calibration required');
- return m.raw.map((x,j)=>(x-calibration.dark[j])/calibration.gain[j]);
-}
-function rms(a,b){return Math.sqrt(a.reduce((s,x,i)=>s+(x-b[i])**2,0)/4)}
-function feedbackObjective(){return rms(measuredVector(calculate()),referenceTarget)}
-function resetReference(){
- // Captures a real state of the optical plant at t=0; no future information enters target.
- environmentStep=0;perturbScale=1;correctors=[0,0,0,0];sensorStep=0;
- calibration={gain:actualGain.slice(),dark:dark.slice()};
- const oldNoise=noisePercent;noisePercent=0;
- referenceTarget=measuredVector(calculate());noisePercent=oldNoise;
- traceHistory=[];feedbackCycle=0;lastOpen=0;lastClosed=0;
- log('reference frozen at zero drift; four detector outputs '+referenceTarget.map(x=>x.toFixed(3)).join(','));
- feedbackLog('REFERENCE LOCKED / detector gain & offsets calibrated');
- refreshFeedback();
-}
-function feedbackLog(msg){const e=$('feedbacklog');e.textContent='['+String(feedbackCycle).padStart(4,'0')+'] '+msg+'\n'+e.textContent.slice(0,2100)}
-function scoreWithCorrection(candidate){
- const saved=correctors;correctors=candidate;
- const err=feedbackObjective();correctors=saved;return err;
-}
-function correctionCycle(){
- if(!referenceTarget)resetReference();
- environmentStep++;sensorStep++;
- const original=correctors.slice();correctors=[0,0,0,0];
- lastOpen=feedbackObjective();correctors=original;
- let start=feedbackObjective();
- // Deterministic coordinate descent: all candidates scored against the SAME four current readings.
- // Only controllable input phase shifters 0..2 are adjusted; REF is the anchor.
- for(let pass=0;pass<3;pass++)for(let j=0;j<3;j++){
-  const current=correctors[j], step=feedbackGain/(pass+1);
-  let best=current,bestErr=feedbackObjective();
-  for(const candidate of [current-step,current+step]){
-   const trial=correctors.slice();trial[j]=candidate;
-   const err=scoreWithCorrection(trial);
-   if(err<bestErr-1e-12){bestErr=err;best=candidate;}
-  }
-  correctors[j]=best;
- }
- lastClosed=feedbackObjective();feedbackCycle++;
- traceHistory.push({step:feedbackCycle,open:lastOpen,closed:lastClosed});
- if(traceHistory.length>120)traceHistory.shift();
- refreshFeedback();
- if(feedbackCycle<=3 || feedbackCycle%10===0)
-  feedbackLog('DRIFT '+driftDegrees+'° // '+lastOpen.toFixed(4)+' → '+lastClosed.toFixed(4)+' RMS // '+(lastOpen>1e-10?(100*(1-lastClosed/lastOpen)).toFixed(1)+'%':'N/A'));
- return {open:lastOpen,closed:lastClosed};
-}
-function refreshFeedback(){
- text('openerr',lastOpen.toFixed(4));text('closederr',lastClosed.toFixed(4));
- text('improve',lastOpen>1e-10?(100*(1-lastClosed/lastOpen)).toFixed(1)+'%':'—');
- text('cycle',String(feedbackCycle).padStart(4,'0'));
- const phases=correctors.map(x=>(x>=0?'+':'')+x.toFixed(1)+'°');
- text('phases','R '+phases[0]+' / G '+phases[1]+' / B '+phases[2]+' / REF '+phases[3]);
- text('phaseText',Math.max(...correctors.map(Math.abs)).toFixed(1)+'°');
- drawHistory();recompute();
-}
-function drawHistory(){
- const canvas=$('history'),c=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
- c.clearRect(0,0,w,h);c.fillStyle='#071323';c.fillRect(0,0,w,h);
- let yMax=Math.max(.015,...traceHistory.flatMap(z=>[z.open,z.closed]))*1.12;
- c.lineWidth=1;c.strokeStyle='#22374d';
- for(let j=0;j<=4;j++){const y=25+(h-55)*j/4;c.beginPath();c.moveTo(48,y);c.lineTo(w-20,y);c.stroke();c.font='11px ui-monospace,monospace';c.fillStyle='#a1b5d0';c.fillText((yMax*(1-j/4)).toFixed(3),4,y+4)}
- const plot=(key,color)=>{c.strokeStyle=color;c.lineWidth=2.8;c.shadowColor=color;c.shadowBlur=7;c.beginPath();
-  for(let i=0;i<traceHistory.length;i++){
-   const x=50+i*(w-80)/Math.max(1,traceHistory.length-1),y=h-30-traceHistory[i][key]/yMax*(h-55);
-   if(i===0)c.moveTo(x,y);else c.lineTo(x,y)
-  }c.stroke();c.shadowBlur=0};
- if(traceHistory.length){plot('open','#ff9952');plot('closed','#53f4d1');}
- c.font='12px ui-monospace,monospace';c.fillStyle='#ffab73';c.fillText('OPEN LOOP',52,15);c.fillStyle='#65f5dc';c.fillText('CLOSED LOOP',184,15);c.fillStyle='#8fa9c8';c.fillText('CYCLES →',w-105,h-8);
-}
-function feedbackSelfTest(){
- const saved={state,phase:phase.slice(),power,reference,theta,loss,driftDegrees,noisePercent,
-  environmentStep,sensorStep,perturbScale,correctors:correctors.slice(),referenceTarget:referenceTarget?.slice(),feedbackCycle,
-  lastOpen,lastClosed,traceHistory:traceHistory.slice(),calibration};
- // fixed noiseless input: correction of negative hidden phase perfectly recovers locked target.
- state=7;phase=[12,-10,7,0];theta=45;power=.8;reference=.3;loss=.08;driftDegrees=35;noisePercent=0;
- calibration={gain:actualGain.slice(),dark:dark.slice()};environmentStep=0;sensorStep=0;correctors=[0,0,0,0];
- referenceTarget=measuredVector(calculate());environmentStep=37;
- const errBefore=feedbackObjective();correctors=[0,1,2].map(j=>-hiddenPhase(j)).concat([0]);
- const errAfter=feedbackObjective();const pass=errAfter<1e-10 && errBefore>1e-4;
- state=saved.state;phase=saved.phase;power=saved.power;reference=saved.reference;theta=saved.theta;loss=saved.loss;
- driftDegrees=saved.driftDegrees;noisePercent=saved.noisePercent;environmentStep=saved.environmentStep;
- sensorStep=saved.sensorStep;perturbScale=saved.perturbScale;correctors=saved.correctors;
- referenceTarget=saved.referenceTarget;feedbackCycle=saved.feedbackCycle;lastOpen=saved.lastOpen;
- lastClosed=saved.lastClosed;traceHistory=saved.traceHistory;calibration=saved.calibration;
- log('feedback zero-noise plant inversion test '+(pass?'PASS':'FAIL')+' '+errBefore.toExponential(2)+' → '+errAfter.toExponential(2));
- return pass;
-}
-for(const id of ['drift','noise','gain'])$(id).oninput=()=>{
- driftDegrees=+$('drift').value;noisePercent=+$('noise').value;feedbackGain=+$('gain').value;
- text('driftText',driftDegrees+'°');text('noiseText',noisePercent.toFixed(1)+'%');text('gainText',feedbackGain+'°');
- recompute();
-};
-$('locktarget').onclick=resetReference;
-$('stepfeedback').onclick=()=>{correctionCycle()};
-$('autofeedback').onclick=()=>{
- feedbackAuto=!feedbackAuto;
- text('autofeedback',feedbackAuto?'AUTO FEEDBACK · ON':'AUTO FEEDBACK · OFF');
- $('autofeedback').classList.toggle('active',feedbackAuto);
- feedbackLog(feedbackAuto?'AUTO LOOP ENABLED':'AUTO LOOP PAUSED');
-};
-$('injectdrift').onclick=()=>{
- environmentStep+=30;sensorStep++;
- feedbackLog('DISTURBANCE STEP injected; feedback compensation remains unchanged');
- refreshFeedback();
-};
-// Expose read-only diagnostic snapshot for deterministic browser/VM checks, not a source of authority for control.
-window.PHOTON16_TEST={snapshot:()=>({state,environmentStep,feedbackCycle,driftDegrees,noisePercent,
-  target:referenceTarget?.slice(),correctors:correctors.slice(),open:lastOpen,closed:lastClosed,
-  maxUnitarityError:lastMetrics?.error}),step:()=>correctionCycle(),test:()=>feedbackSelfTest()};
-
-function selfTest(){let max=0,unitarity=0;for(const angle of [0,10,30,45,67,90]){theta=angle;const U=matrix();for(let j=0;j<4;j++)for(let k=0;k<4;k++){
- let dot=C();for(let i=0;i<4;i++){const a=U[i][j],b=U[i][k];dot=add(dot,mul(C(a.re,-a.im),b))}const target=j===k?1:0;unitarity=Math.max(unitarity,Math.hypot(dot.re-target,dot.im));}
- for(let s=0;s<16;s++){state=s;const r=calculate();max=Math.max(max,r.error)}}theta=45;state=7;const pass=max<1e-10&&unitarity<1e-10;text('selftest',pass?'PASS · 16 states × 6 coupling angles · energy / unitarity ≤ 1e-10':'FAIL · check matrix');log('invariant audit '+(pass?'PASS':'FAIL')+' · max energy error '+max.toExponential(2)+' · unitarity '+unitarity.toExponential(2));return pass}
-for(const id of ['intensity','reference','coupling','loss','r','g','b','refphase'])$(id).oninput=()=>{power=+$('intensity').value;reference=+$('reference').value;theta=+$('coupling').value;loss=+$('loss').value/100;phase=['r','g','b','refphase'].map(k=>+$(k).value);updateControls();resetReference();recompute()};
-$('pulse').onclick=()=>{pulse=1;log('probe impulse · state '+state.toString(2).padStart(4,'0')+' · loss '+(loss*100).toFixed(0)+'%')};
-$('preset').onclick=()=>{theta=45;phase=[0,0,0,0];updateControls();resetReference();recompute();log('restored 45° balanced couplers')};
-$('calibrate').onclick=calibrate;
-$('reset').onclick=()=>{state=7;power=.8;reference=.3;theta=45;loss=.08;phase=[0,0,0,0];calibration=null;resetReference();updateControls();drawModes();recompute();log('reset · calibration cleared')};
-$('animate').onclick=()=>{animate=!animate;text('animate',animate?'PAUSE':'RUN');log(animate?'visual field resumed':'visual field paused')};
-selfTest();feedbackSelfTest();updateControls();resetReference();drawModes();recompute();render();log('4×4 complex optical network ready; normalized units');
+function drawHistory(){const c=$('chart'),g=c.getContext('2d'),W=c.width,H=c.height;g.clearRect(0,0,W,H);g.fillStyle='#081221';g.fillRect(0,0,W,H);if(!hist.length)return;const m=48,top=22,bottom=H-35;const maxi=Math.max(...hist.map(q=>Math.max(q.train,q.test)),.000001)*1.14;g.strokeStyle='#2e455d';g.lineWidth=1;for(let k=0;k<5;k++){let y=top+(bottom-top)*k/4;g.beginPath();g.moveTo(m,y);g.lineTo(W-15,y);g.stroke();g.fillStyle='#9cafca';g.font='12px monospace';g.fillText((maxi*(1-k/4)).toFixed(4),5,y+3)}for(const [key,col] of [['train','#ff9c4c'],['test','#59efda']]){g.strokeStyle=col;g.lineWidth=2.7;g.beginPath();hist.forEach((v,i)=>{let x=m+(W-m-18)*(hist.length===1?0:i/(hist.length-1)),y=bottom-(bottom-top)*v[key]/maxi;i?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()}g.fillStyle='#9db4cb';g.fillText('EPOCH '+epochs,m,bottom+23)}
+function selftest(){const tests=[];const sample=rng(4215);for(let k=0;k<40;k++){const inp=Array.from({length:16},()=>scale(phase(tau*sample()),sample()*.35)),ph=Array.from({length:32},()=>tau*(sample()-.5)),out=network(inp,ph);tests.push(Math.abs(norm(out)-norm(inp)))}const max=Math.max(...tests);const base=error(trainSamples,params),n=network(basisInput(7),params),once=network(basisInput(7),params);let same=once.every((v,i)=>Math.abs(v[0]-n[i][0])+Math.abs(v[1]-n[i][1])<1e-15);const ok=max<1e-10&&same&&trainSamples.length===32&&testSamples.length===16;$('tests').textContent='TESTS '+(ok?'PASS':'FAIL')+' · 40 random energy checks; max Δ='+max.toExponential(2)+' · repeat='+same+' · train/test='+trainSamples.length+'/'+testSamples.length+' · train MSE='+base.toFixed(6);record('INVARIANT '+(ok?'PASS':'FAIL')+' · conservation max '+max.toExponential(2));return ok}
+$('train').addEventListener('click',()=>{for(let k=0;k<10;k++)epoch();record('TRAIN +10 · epoch '+epochs+' · error '+error(trainSamples,params).toFixed(6))});$('batch').addEventListener('click',()=>{for(let k=0;k<100;k++)epoch();record('TRAIN +100 · epoch '+epochs+' · error '+error(trainSamples,params).toFixed(6))});$('pause').addEventListener('click',()=>{auto=!auto;$('pause').textContent='AUTO TRAIN · '+(auto?'ON':'OFF');record('AUTO TRAIN '+(auto?'START':'STOP'))});$('reset').addEventListener('click',()=>{params=Array(32).fill(0);epochs=0;hist=[];record('RESET LEARNER · target preserved');snapshot(true)});$('target').addEventListener('click',()=>initTarget());$('selftest').addEventListener('click',selftest);
+for(const [id,fn] of [['step',v=>{rate=+v;$('stepval').textContent=rate.toFixed(2)+' rad'}],['loss',v=>{loss=+v/100;$('lossval').textContent=v+'%';render()}],['angle',v=>{angles=+v;$('angleval').textContent=v+'°';initTarget()}],['seed',v=>{seed=+v;$('seedval').textContent=v;initTarget()}]])$(id).addEventListener('input',e=>fn(e.target.value));
+window.PHOTON16={network,energy:norm,trainEpoch:epoch,benchmark:()=>({train:error(trainSamples,params),unseen:error(testSamples,params),epochs}),reset:initTarget,selftest};initTarget();selftest();setInterval(()=>{if(auto){for(let i=0;i<2;i++)epoch()}else drawMesh(network(basisInput(selected),params).map(pow))},100);
 })();
 </script></body></html>
