@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>PHOTON-16 v0.5 · Emergent Jelly Mesh</title>
+<style>
+:root{color-scheme:dark;--bg:#080c17;--panel:#101b2b;--panel2:#0d1524;--border:#2b3b58;--ink:#eff8ff;--muted:#9eafc7;--cyan:#51efd9;--orange:#ff963d;--violet:#ae89ff;--rose:#ff68b6;--good:#65e6b2}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% -5%,#183442 0%,transparent 40%),radial-gradient(ellipse at 90% 5%,#302044 0%,transparent 45%),var(--bg);font:14px/1.5 system-ui,sans-serif;color:var(--ink)}main{max-width:1540px;margin:auto;padding:18px}.heading{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:12px}.eyebrow{color:var(--cyan);font:700 11px ui-monospace,monospace;letter-spacing:.2em}.heading h1{margin:2px 0;font-size:clamp(26px,3.5vw,43px);letter-spacing:-.045em}.heading h1 span{color:var(--orange)}.sub{color:var(--muted);font-size:13px}.status{border:1px solid #3e7c71;color:#a9ffe7;padding:8px 13px;border-radius:40px;font:11px ui-monospace,monospace}.layout{display:grid;grid-template-columns:minmax(400px,1.35fr) minmax(340px,1fr);gap:13px}.panel{min-width:0;padding:15px;background:linear-gradient(145deg,#101d30,#0c1424);border:1px solid var(--border);border-radius:15px;box-shadow:0 15px 30px #0002}.wide{grid-column:1/-1}.panel h2{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#c7d9ed;display:flex;justify-content:space-between;align-items:center;margin:0 0 12px;gap:8px}.panel h2 small{color:var(--muted);font:10px ui-monospace,monospace;letter-spacing:0}canvas{width:100%;display:block;background:#07111d;border:1px solid #28415c;border-radius:11px}#hero{height:310px}#mesh{height:420px}#chart{height:260px}.buttons{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}button{font:11px ui-monospace,monospace;color:var(--ink);background:#15273b;border:1px solid #456580;border-radius:8px;padding:8px 10px;cursor:pointer}button:hover,button:focus-visible{border-color:var(--cyan);color:white}button.major{border-color:#b56b37;color:#ffdbb5;background:#292334}button:disabled{opacity:.5;cursor:wait}.metricgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.metric{background:#0b1728;border:1px solid #2e4460;border-radius:10px;padding:9px;min-width:0}.metric small{font-size:10px;color:#a9bbd1;display:block}.metric strong{font:clamp(15px,1.5vw,21px) ui-monospace,monospace;overflow-wrap:anywhere}.matrix{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:3px;overflow:hidden}.cell{aspect-ratio:1;min-width:0;border-radius:3px;border:1px solid #263954;cursor:pointer}.cell:hover{outline:1px solid white}.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.ctrl{background:#0a1627;border:1px solid #2b3e59;border-radius:9px;padding:9px}.ctrl label{font:11px ui-monospace,monospace;color:#c8d8e7;display:flex;justify-content:space-between;gap:5px}.ctrl output{color:var(--orange)}input[type=range]{width:100%;accent-color:#ff963d;margin:10px 0 0}.stategrid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}.state{padding:5px 2px;min-height:45px;text-align:center;display:grid;place-items:center;gap:1px}.state.on{outline:2px solid var(--cyan)}.swatch{width:17px;height:17px;border-radius:50%;background:var(--c);box-shadow:0 0 9px var(--c)}.state span{font:10px ui-monospace,monospace;color:#bfcde0}.bars{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:4px;height:110px;align-items:end;padding:5px 2px 0}.bar{height:var(--h);background:linear-gradient(0deg,#7552c4,var(--cyan));border-radius:4px 4px 0 0;min-height:2px}.hint{font-size:11px;color:#a2b5c9;margin:9px 0}.split{display:grid;grid-template-columns:1.2fr .8fr;gap:13px}.log{white-space:pre-wrap;overflow:auto;height:210px;color:#c0dbf3;font:11px/1.6 ui-monospace,monospace;padding:10px;background:#071323;border:1px solid #2d4360;border-radius:9px}.legend{display:flex;gap:13px;font:11px ui-monospace,monospace;color:#b8c8d8;flex-wrap:wrap}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}.foo{color:#91adc5;font:11px ui-monospace,monospace;margin-top:14px}.warn{color:#ffc183}.ok{color:#70f6c9}a{color:#93e7eb}select{font:11px ui-monospace,monospace;background:#16253b;color:var(--ink);border:1px solid #47617e;border-radius:7px;padding:6px}.formula{font:12px/1.8 ui-monospace,monospace;color:#b5fbe8}.kv{display:flex;justify-content:space-between;gap:8px;color:#aac3d8;font:11px ui-monospace,monospace;padding:3px 0;border-bottom:1px solid #1b3047}.kv strong{color:#d5eafd}@media(max-width:930px){.layout{grid-template-columns:1fr}.wide{grid-column:auto}}@media(max-width:620px){main{padding:9px}.panel{padding:11px}#mesh{height:300px}.metricgrid{grid-template-columns:repeat(2,1fr)}.split{grid-template-columns:1fr}.stategrid{grid-template-columns:repeat(8,1fr)}}
+</style></head><body><main><header class="heading"><div><div class="eyebrow">ROOT 0 // PHOTON LAB // 0.5</div><h1>PHOTON<span>—16</span> · EMERGENT JELLY MESH</h1><div class="sub">16 coherent waveguides · emergent jellyfish morphology · 1 × 8 × 8 × 1 lattice · programmable phase masks</div></div><div class="status">ANIMATED GIT PAGES STYLE · EMERGENT PHOTONIC JELLYFISH · SOFTWARE MODEL</div></header>
+<div class="layout">
+<section class="panel wide"><h2>Emergent photonic organism <small>animated jellyfish / 1 × 8 × 8 × 1 emergence map</small></h2><canvas id="hero" width="1480" height="420" aria-label="Animated emergent photonic jellyfish"></canvas><div class="buttons"><button id="morph">MORPH MODE · JELLYFISH</button><button id="pulse">PULSE FIELD</button><button id="freezehero">FREEZE ANIMATION · OFF</button></div><div class="metricgrid"><div class="metric"><small>EMERGENT SHAPE</small><strong id="morphlabel">JELLYFISH</strong></div><div class="metric"><small>LATTICE</small><strong>1 × 8 × 8 × 1</strong></div><div class="metric"><small>PULSE RATE</small><strong id="pulserate">0.80 Hz</strong></div><div class="metric"><small>CHANNEL CLUSTERS</small><strong>16</strong></div></div><p class="hint">This animated header treats the photonic processor as a living optical organism. In jellyfish mode, the 16 channels cohere into a glowing bell with tendrils. In lattice mode, the same channels occupy a 1×8×8×1 emergence mesh. The motion is decorative but driven by the current trained amplitudes and output powers.</p></section>
+
+<section class="panel"><h2>16-channel optical lattice <small>six coupler layers · two trainable phase layers</small></h2><canvas id="mesh" width="1080" height="560" aria-label="16-channel network with phase shifters and beam splitters"></canvas><div class="buttons"><button id="train" class="major">TRAIN +10 EPOCHS</button><button id="batch">TRAIN +100 EPOCHS</button><button id="pause">AUTO TRAIN · OFF</button><button id="reset">RESET LEARNER</button><button id="target">NEW TARGET (SEEDED)</button></div><div class="metricgrid"><div class="metric"><small>TRAIN ERROR</small><strong id="trainerr">—</strong></div><div class="metric"><small>UNSEEN ERROR</small><strong id="testerr">—</strong></div><div class="metric"><small>ENERGY ERROR</small><strong id="energy" class="ok">—</strong></div><div class="metric"><small>EPOCH / STEPS</small><strong id="epoch">0</strong></div></div><p class="hint">Complex coherent amplitudes propagate through a unitary mesh of 48 fixed 50:50 couplers and 32 trainable phases. Training minimizes measured intensity differences. The unseen set is never used for phase updates.</p></section>
+<section class="panel"><h2>4 × 4 output register <small>16 independently addressed spatial modes</small></h2><div id="stategrid" class="stategrid"></div><div class="controls" style="margin:11px 0"><div class="ctrl"><label>TRAIN STEP <output id="stepval">0.20 rad</output></label><input id="step" type="range" min="0.03" max="0.50" step="0.01" value="0.20"></div><div class="ctrl"><label>PROPAGATION LOSS <output id="lossval">6%</output></label><input id="loss" type="range" min="0" max="35" step="1" value="6"></div><div class="ctrl"><label>OPTICAL COUPLING <output id="angleval">45°</output></label><input id="angle" type="range" min="25" max="65" step="1" value="45"></div><div class="ctrl"><label>TARGET SEED <output id="seedval">42</output></label><input id="seed" type="range" min="1" max="200" step="1" value="42"></div></div><h2>16 output photodetectors <small>normalized coherent intensity</small></h2><div class="bars" id="bars"></div><p class="hint">Click a register input to inspect the learned transformation. The 16 labels are spatial channels; orange, purple, gray and WHITE remain display mixtures, not invented optical frequencies.</p><div class="kv"><span>OPTICAL INPUT POWER</span><strong id="inputpower">1.000</strong></div><div class="kv"><span>PRE-LOSS OUTPUT POWER</span><strong id="outpower">1.000</strong></div><div class="kv"><span>POST-LOSS POWER</span><strong id="postpower">0.940</strong></div><div class="kv"><span>GENERALIZATION GAP</span><strong id="gap">—</strong></div></section>
+<section class="panel"><h2>Learned transfer: 16 × 16 <small>basis-input power matrix</small></h2><div class="matrix" id="transfer"></div><p class="hint">Cell (output, input) displays |U<sub>out,in</sub>|². Columns sum to one before loss. Unlike the complex U matrix, this intensity map alone does not contain all phase information.</p></section>
+<section class="panel"><h2>Learning trace <small>measured loss on train / unseen sets</small></h2><canvas id="chart" width="760" height="370" aria-label="Learning history for training and holdout intensity error"></canvas><div class="legend"><span><i class="dot" style="background:var(--orange)"></i>TRAIN</span><span><i class="dot" style="background:var(--cyan)"></i>UNSEEN (read only)</span></div><p class="hint">Training: 16 basis states plus 16 coherent superpositions. Unseen validation: 16 fixed separate coherent superpositions. Deterministic coordinate search with frozen target and no lookahead.</p></section>
+<section class="panel wide"><div class="split"><div><h2>Audit ledger <small>deterministic, no random external state</small></h2><div id="ledger" class="log" aria-live="polite">PHOTON-16 v0.4 ready.</div></div><div><h2>Model boundary <small>what this tests</small></h2><div class="formula">E<sub>out</sub> = U<sub>mesh</sub>(φ,θ) E<sub>in</sub><br>P<sub>j</sub> = |E<sub>out,j</sub>|²<br>Σ P<sub>out</sub> = Σ P<sub>in</sub> (before loss)</div><p class="hint">This is a passive, linear, coherent optical model with software learning; it does not implement optical nonlinear activation, photodiode dynamics, true 16-wavelength separation, or a fabricated neural accelerator. The target is generated by the same mesh family; out-of-family generalization remains a future test.</p><div id="tests" class="formula">TESTS: PENDING</div><div class="buttons"><button id="selftest">RUN INVARIANT TESTS</button><a href="v04.html">Previous: PHOTON-16 v0.4</a></div></div></div></section>
+</div><footer>{r,g,b[or,pu,gray,yellow,black,(WHITE)]} · 16 spatial modes · emergent jellyfish / 1×8×8×1 · {{i}} · .dlw · 2026-11-22</footer></main>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id),pi=Math.PI,tau=2*pi;
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+function rng(seed){let x=(seed>>>0)||1;return ()=>{x^=x<<13;x^=x>>>17;x^=x<<5;return(x>>>0)/4294967296}}
+const z=(re=0,im=0)=>[re,im],add=(a,b)=>[a[0]+b[0],a[1]+b[1]],mul=(a,b)=>[a[0]*b[0]-a[1]*b[1],a[0]*b[1]+a[1]*b[0]],scale=(a,b)=>[a[0]*b,a[1]*b],pow=a=>a[0]*a[0]+a[1]*a[1],phase=x=>[Math.cos(x),Math.sin(x)];
+const pairings=[[[0,1],[2,3],[4,5],[6,7],[8,9],[10,11],[12,13],[14,15]],[[0,4],[1,5],[2,6],[3,7],[8,12],[9,13],[10,14],[11,15]],[[1,2],[3,0],[5,6],[7,4],[9,10],[11,8],[13,14],[15,12]],[[0,8],[1,9],[2,10],[3,11],[4,12],[5,13],[6,14],[7,15]],[[0,1],[2,3],[4,5],[6,7],[8,9],[10,11],[12,13],[14,15]],[[0,4],[1,5],[2,6],[3,7],[8,12],[9,13],[10,14],[11,15]]];
+let angles=45,loss=.06,rate=.2,seed=42,selected=7,params=Array(32).fill(0),goal=Array(32).fill(0),trainSamples=[],testSamples=[],epochs=0,hist=[],auto=false,frame=0,loglines=[];
+function record(s){loglines.unshift(String(s));loglines=loglines.slice(0,13);$('ledger').textContent=loglines.join('\n')}
+function network(input,p,theta=angles){const a=input.map(q=>q.slice());const c=Math.cos(theta*pi/180),s=Math.sin(theta*pi/180);for(let layer=0;layer<6;layer++){
+ if(layer===2||layer===4){const offset=layer===2?0:16;for(let j=0;j<16;j++)a[j]=mul(a[j],phase(p[offset+j]))}
+ for(const [i,j] of pairings[layer]){const x=a[i],y=a[j];a[i]=[c*x[0]-s*y[1],c*x[1]+s*y[0]];a[j]=[c*y[0]-s*x[1],c*y[1]+s*x[0]]}
+ }return a}
+function norm(x){let s=0;for(const q of x)s+=pow(q);return s}
+function intensity(x){return network(x,params).map(pow)}
+function makeInput(r,basis){let arr=Array.from({length:16},()=>z());if(basis){arr[basis.index]=z(1,0);return arr}
+ const ids=Array.from({length:16},(_,i)=>i);for(let i=15;i>0;i--){let k=Math.floor(r()*(i+1));[ids[i],ids[k]]=[ids[k],ids[i]]}
+ for(let k=0;k<4;k++)arr[ids[k]]=scale(phase(tau*r()),.5);return arr}
+function error(samples,p){let total=0;for(const ex of samples){const got=network(ex.input,p).map(pow);for(let j=0;j<16;j++){let d=got[j]-ex.want[j];total+=d*d}}return total/(samples.length*16)}
+function initTarget(){const r=rng(seed*1729+15),rtrain=rng(seed*987+91),rtest=rng(seed*1361+139);goal=Array.from({length:32},()=>((r()-.5)*1.25));trainSamples=[];testSamples=[];
+ for(let i=0;i<16;i++){const input=makeInput(rtrain,{index:i});trainSamples.push({input,want:network(input,goal).map(pow)})}
+ for(let i=0;i<16;i++){const input=makeInput(rtrain);trainSamples.push({input,want:network(input,goal).map(pow)})}
+ for(let i=0;i<16;i++){const input=makeInput(rtest);testSamples.push({input,want:network(input,goal).map(pow)})}
+ params=Array(32).fill(0);epochs=0;hist=[];record('NEW TARGET · seeded '+seed+' · 32 train / 16 untouched unseen samples');snapshot(true)}
+function epoch(){let current=error(trainSamples,params);let changes=0;const rotated=epochs%32;for(let k=0;k<32;k++){const idx=(k+rotated)%32,old=params[idx];let best=old,bestLoss=current;for(const dir of [-1,1]){params[idx]=old+dir*rate;const e=error(trainSamples,params);if(e<bestLoss-1e-13){best=old+dir*rate;bestLoss=e}}params[idx]=best;if(best!==old){current=bestLoss;changes++}}epochs++;if(epochs%25===0||changes===0)rate=Math.max(.01,rate*.96);snapshot();return changes}
+function snapshot(force=false){let e=error(trainSamples,params),h=error(testSamples,params);if(force||!hist.length||epochs!==hist[hist.length-1].epoch)hist.push({epoch:epochs,train:e,test:h});if(hist.length>250)hist.shift();$('trainerr').textContent=e.toFixed(6);$('testerr').textContent=h.toFixed(6);$('gap').textContent=(h-e).toFixed(6);$('epoch').textContent=epochs;$('stepval').textContent=rate.toFixed(2)+' rad';$('step').value=rate;render()}
+function basisInput(id){const x=Array.from({length:16},()=>z());x[id]=z(1,0);return x}
+const colors=['#131c31','#ff755d','#49dda6','#f9d45c','#6196ff','#a47bfd','#4be3e4','#ffffff','#262b45','#ff9b55','#5bcb94','#ffa64a','#6079c6','#ae78da','#62d3c4','#a0a8b8'];
+function render(){const a=basisInput(selected),o=network(a,params),powers=o.map(pow),total=powers.reduce((x,y)=>x+y,0);$('inputpower').textContent=norm(a).toFixed(5);$('outpower').textContent=total.toFixed(5);$('postpower').textContent=(total*(1-loss)).toFixed(5);$('energy').textContent=Math.abs(total-norm(a)).toExponential(1);
+ $('bars').innerHTML=powers.map((v,i)=>'<div class="bar" title="channel '+i+': '+v.toFixed(5)+'" style="--h:'+Math.max(1,Math.round(100*v/Math.max(...powers,1e-8)))+'%"></div>').join('');
+ const grid=$('stategrid');grid.innerHTML=colors.map((color,i)=>'<button class="state '+(selected===i?'on':'')+'" data-id="'+i+'" aria-label="Optical spatial channel '+i+'"><i class="swatch" style="--c:'+color+'"></i><span>'+i+'</span></button>').join('');grid.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{selected=+b.dataset.id;render()}));
+ const units=Array.from({length:16},(_,i)=>network(basisInput(i),params).map(pow)); drawHero(); $('transfer').innerHTML=Array.from({length:16},(_,out)=>Array.from({length:16},(_,i)=>{const v=units[i][out];return '<div class="cell" title="output '+out+' ← input '+i+': '+v.toFixed(5)+'" style="background:rgba(76,234,224,'+clamp(.06+v*1.8,.06,1).toFixed(3)+')"></div>'}).join('')).join('');drawMesh(powers);drawHistory()}
+function drawMesh(powers){const c=$('mesh'),ctx=c.getContext('2d'),W=c.width,H=c.height;ctx.clearRect(0,0,W,H);ctx.fillStyle='#081221';ctx.fillRect(0,0,W,H);const left=65,right=W-70,top=35,dy=(H-70)/15,dx=(right-left)/8;
+ for(let j=0;j<16;j++){const y=top+j*dy;ctx.strokeStyle='#26485c';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();ctx.font='12px monospace';ctx.fillStyle=colors[j];ctx.fillText(String(j).padStart(2,'0'),20,y+4);ctx.fillStyle='#bcefe3';ctx.fillText(powers[j].toFixed(2),right+9,y+4)}
+ pairings.forEach((layer,k)=>{const x=left+(k+1)*dx;for(const [i,j] of layer){ctx.strokeStyle=k%2?'#b67aff':'#ff9b47';ctx.lineWidth=1.7;ctx.globalAlpha=.7;ctx.beginPath();ctx.moveTo(x-14,top+i*dy);ctx.lineTo(x+14,top+j*dy);ctx.moveTo(x-14,top+j*dy);ctx.lineTo(x+14,top+i*dy);ctx.stroke();ctx.globalAlpha=1}ctx.fillStyle='#8faeca';ctx.font='10px monospace';ctx.fillText('L'+(k+1),x-11,14)});
+ for(const [k,offset] of [[2,0],[4,16]]){const x=left+(k+0.45)*dx;for(let j=0;j<16;j++){const ph=params[offset+j];ctx.fillStyle='rgba(123,90,255,'+(.2+.25*Math.abs(Math.sin(ph)))+')';ctx.strokeStyle='#aa85ff';ctx.fillRect(x-6,top+j*dy-6,12,12);ctx.strokeRect(x-6,top+j*dy-6,12,12)}}
+ const moving=(frame++%240)/240;ctx.fillStyle='#5cffe1';ctx.shadowBlur=18;ctx.shadowColor='#4be5df';ctx.beginPath();ctx.arc(left+(right-left)*moving,top+selected*dy,3.5,0,tau);ctx.fill();ctx.shadowBlur=0;
+ }
+function drawHistory(){const c=$('chart'),g=c.getContext('2d'),W=c.width,H=c.height;g.clearRect(0,0,W,H);g.fillStyle='#081221';g.fillRect(0,0,W,H);if(!hist.length)return;const m=48,top=22,bottom=H-35;const maxi=Math.max(...hist.map(q=>Math.max(q.train,q.test)),.000001)*1.14;g.strokeStyle='#2e455d';g.lineWidth=1;for(let k=0;k<5;k++){let y=top+(bottom-top)*k/4;g.beginPath();g.moveTo(m,y);g.lineTo(W-15,y);g.stroke();g.fillStyle='#9cafca';g.font='12px monospace';g.fillText((maxi*(1-k/4)).toFixed(4),5,y+3)}for(const [key,col] of [['train','#ff9c4c'],['test','#59efda']]){g.strokeStyle=col;g.lineWidth=2.7;g.beginPath();hist.forEach((v,i)=>{let x=m+(W-m-18)*(hist.length===1?0:i/(hist.length-1)),y=bottom-(bottom-top)*v[key]/maxi;i?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()}g.fillStyle='#9db4cb';g.fillText('EPOCH '+epochs,m,bottom+23)}
+function selftest(){const tests=[];const sample=rng(4215);for(let k=0;k<40;k++){const inp=Array.from({length:16},()=>scale(phase(tau*sample()),sample()*.35)),ph=Array.from({length:32},()=>tau*(sample()-.5)),out=network(inp,ph);tests.push(Math.abs(norm(out)-norm(inp)))}const max=Math.max(...tests);const base=error(trainSamples,params),n=network(basisInput(7),params),once=network(basisInput(7),params);let same=once.every((v,i)=>Math.abs(v[0]-n[i][0])+Math.abs(v[1]-n[i][1])<1e-15);const ok=max<1e-10&&same&&trainSamples.length===32&&testSamples.length===16;$('tests').textContent='TESTS '+(ok?'PASS':'FAIL')+' · 40 random energy checks; max Δ='+max.toExponential(2)+' · repeat='+same+' · train/test='+trainSamples.length+'/'+testSamples.length+' · train MSE='+base.toFixed(6);record('INVARIANT '+(ok?'PASS':'FAIL')+' · conservation max '+max.toExponential(2));return ok}
+$('train').addEventListener('click',()=>{for(let k=0;k<10;k++)epoch();record('TRAIN +10 · epoch '+epochs+' · error '+error(trainSamples,params).toFixed(6))});$('batch').addEventListener('click',()=>{for(let k=0;k<100;k++)epoch();record('TRAIN +100 · epoch '+epochs+' · error '+error(trainSamples,params).toFixed(6))});$('pause').addEventListener('click',()=>{auto=!auto;$('pause').textContent='AUTO TRAIN · '+(auto?'ON':'OFF');record('AUTO TRAIN '+(auto?'START':'STOP'))});$('reset').addEventListener('click',()=>{params=Array(32).fill(0);epochs=0;hist=[];record('RESET LEARNER · target preserved');snapshot(true)});$('target').addEventListener('click',()=>initTarget());$('selftest').addEventListener('click',selftest);
+for(const [id,fn] of [['step',v=>{rate=+v;$('stepval').textContent=rate.toFixed(2)+' rad'}],['loss',v=>{loss=+v/100;$('lossval').textContent=v+'%';render()}],['angle',v=>{angles=+v;$('angleval').textContent=v+'°';initTarget()}],['seed',v=>{seed=+v;$('seedval').textContent=v;initTarget()}]])$(id).addEventListener('input',e=>fn(e.target.value));
+
+let heroMode='jellyfish',heroFrozen=false,heroPulse=0.8,heroTick=0;
+function drawHero(){
+ const c=$('hero'),ctx=c.getContext('2d'),W=c.width,H=c.height;ctx.clearRect(0,0,W,H);
+ ctx.fillStyle='#07111d';ctx.fillRect(0,0,W,H);
+ const g=ctx.createRadialGradient(W*0.5,H*0.4,10,W*0.5,H*0.45,H*0.48);g.addColorStop(0,'rgba(91,231,228,.18)');g.addColorStop(.4,'rgba(171,122,255,.12)');g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ const amps=network(basisInput(selected),params).map(pow);const mx=Math.max(...amps,1e-9);
+ const pulse=(1+0.12*Math.sin(heroTick*heroPulse*2*Math.PI))/1.12;
+ if(heroMode==='jellyfish'){
+   const cx=W*0.5,cy=H*0.33,base=120+70*pulse;
+   ctx.save();ctx.translate(cx,cy);
+   for(let i=0;i<16;i++){
+     const a=(i/16)*Math.PI*2, r=base*(0.55+0.45*amps[i]/mx);
+     const x=Math.cos(a)*r, y=Math.sin(a)*r*0.55;
+     ctx.strokeStyle=`rgba(${80+Math.round(140*amps[i]/mx)},${170+Math.round(70*amps[i]/mx)},255,0.78)`;
+     ctx.lineWidth=2+4*amps[i]/mx;
+     ctx.beginPath(); ctx.moveTo(0,0); ctx.quadraticCurveTo(x*0.45,y*0.45,x,y); ctx.stroke();
+   }
+   // bell
+   ctx.beginPath();
+   for(let i=0;i<=120;i++){
+     const t=i/120*Math.PI; const rr=base*(0.82+0.06*Math.sin(5*t+heroTick*5));
+     const x=Math.cos(t-Math.PI)*rr; const y=Math.sin(t-Math.PI)*rr*0.62;
+     if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+   }
+   ctx.closePath();
+   const bell=ctx.createLinearGradient(0,-base*0.7,0,base*0.4); bell.addColorStop(0,'rgba(255,152,61,.72)'); bell.addColorStop(.45,'rgba(161,125,255,.45)'); bell.addColorStop(1,'rgba(81,239,217,.18)');
+   ctx.fillStyle=bell;ctx.strokeStyle='rgba(196,245,255,.9)';ctx.lineWidth=2;ctx.fill();ctx.stroke();
+   // tendrils
+   for(let i=0;i<8;i++){
+     const anchor=(i/7-0.5)*base*1.2;
+     ctx.strokeStyle=`rgba(96,233,224,${0.35+0.4*(i/8)})`;ctx.lineWidth=1.5+2*(i%2);
+     ctx.beginPath();ctx.moveTo(anchor,base*0.08);
+     for(let j=1;j<=28;j++){
+       const yy=base*0.08 + j*7.4;
+       const xx=anchor + Math.sin(j*0.45 + i + heroTick*3)* (10 + i*1.2) + Math.sin(heroTick*2+i)*8;
+       ctx.lineTo(xx,yy);
+     }
+     ctx.stroke();
+   }
+   ctx.restore();
+ } else {
+   const left=W*0.15, top=H*0.12, gw=W*0.7, gh=H*0.68, cols=8, rows=8;
+   const cw=gw/(cols-1), ch=gh/(rows-1);
+   ctx.strokeStyle='rgba(79,140,180,.32)';ctx.lineWidth=1;
+   for(let r=0;r<rows;r++) for(let c2=0;c2<cols;c2++){
+     const x=left+c2*cw+(r%2?8:-8)*Math.sin(heroTick*2+r*0.3); const y=top+r*ch;
+     if(c2<cols-1){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(left+(c2+1)*cw+((r)%2?8:-8)*Math.sin(heroTick*2+r*0.3),y);ctx.stroke()}
+     if(r<rows-1){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(left+c2*cw+((r+1)%2?8:-8)*Math.sin(heroTick*2+(r+1)*0.3),top+(r+1)*ch);ctx.stroke()}
+   }
+   let idx=0;
+   for(let r=0;r<rows;r++) for(let c2=0;c2<cols;c2++){
+     const x=left+c2*cw+(r%2?8:-8)*Math.sin(heroTick*2+r*0.3); const y=top+r*ch;
+     const v=amps[idx%16]/mx; idx++;
+     ctx.fillStyle=`rgba(${255-Math.round(70*v)},${140+Math.round(100*v)},${220+Math.round(35*v)},${0.35+0.65*v})`;
+     ctx.beginPath();ctx.arc(x,y,4+11*v*(0.65+0.35*Math.sin(heroTick*5+idx)),0,Math.PI*2);ctx.fill();
+   }
+   ctx.fillStyle='rgba(218,239,255,.9)';ctx.font='bold 18px monospace';ctx.fillText('1 × 8 × 8 × 1', left, H-24);
+ }
+ // common labels
+ ctx.fillStyle='rgba(225,242,255,.9)';ctx.font='12px monospace';ctx.fillText('Emergent photonic processor',20,24);
+ ctx.fillText('Mode: '+heroMode.toUpperCase(),W-170,24);
+ ctx.fillText('Pulse field: '+heroPulse.toFixed(2)+' Hz',W-170,42);
+}
+function hookHero(){
+ $('morph').addEventListener('click',()=>{heroMode=heroMode==='jellyfish'?'lattice':'jellyfish';$('morph').textContent='MORPH MODE · '+(heroMode==='jellyfish'?'JELLYFISH':'1×8×8×1');$('morphlabel').textContent=heroMode==='jellyfish'?'JELLYFISH':'1×8×8×1';drawHero()});
+ $('pulse').addEventListener('click',()=>{heroPulse=heroPulse>=1.6?0.5:heroPulse+0.3;$('pulserate').textContent=heroPulse.toFixed(2)+' Hz';drawHero()});
+ $('freezehero').addEventListener('click',()=>{heroFrozen=!heroFrozen;$('freezehero').textContent='FREEZE ANIMATION · '+(heroFrozen?'ON':'OFF')});
+}
+
+window.PHOTON16={network,energy:norm,trainEpoch:epoch,benchmark:()=>({train:error(trainSamples,params),unseen:error(testSamples,params),epochs}),reset:initTarget,selftest};hookHero();initTarget();selftest();setInterval(()=>{if(auto){for(let i=0;i<2;i++)epoch()}else drawMesh(network(basisInput(selected),params).map(pow)); if(!heroFrozen){heroTick+=0.016;} drawHero();},100);
+})();
+</script></body></html>
