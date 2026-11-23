@@ -1,0 +1,56 @@
+{
+  "id": "PHOTON16-V06-SHARED-PORT",
+  "date": "2026-11-23",
+  "version": "0.6",
+  "status": "BROWSER_TEST_PASS",
+  "geometry": "1 × 8 × 8 × 8 × 8 × {[(1)]} × 8 × 8 × 8 × 8 × 1",
+  "port": {
+    "shared": true,
+    "center": "{[(1)]}",
+    "ingress": "{{u}}",
+    "egress": "{{n}}",
+    "leg_count": 8,
+    "paired_modes_per_leg": 2,
+    "simulated_spatial_modes": 16,
+    "levels_each_side": 4,
+    "branch_factor": 8,
+    "address_count_each_side": 4096,
+    "direction_of_flow": "user switchable; ing/eg are logical traffic directions on a shared central port",
+    "physical_caveat": "8^4 represents logical addresses per side, not actual independent physical optical channels, and flow is animated representation"
+  },
+  "software": {
+    "underlying": "16-mode coherent unitary matrix, 48 beam splitters, 32 learned phases",
+    "visual": "jellyfish with 8 tentacles, and schematic 4-level repeated eightfold path view"
+  },
+  "browser_tests": {
+    "result": "PASS",
+    "browser": "Chromium headless",
+    "js_errors": 0,
+    "modes": [
+      "jellyfish",
+      "lattice"
+    ],
+    "direction_toggle": [
+      "u",
+      "n"
+    ],
+    "pulse_control": true,
+    "freeze_control": true,
+    "visible_legs": 8,
+    "train_epochs": 10,
+    "training_mse_before": 0.0012992758839190312,
+    "training_mse_after": 0.000013139299767675974,
+    "unseen_mse_after": 0.000020839964045061525,
+    "energy_selftest": true,
+    "register_buttons": 16,
+    "matrix_cells": 256
+  },
+  "historical_preservation": {
+    "v05": "photon16/v05.html",
+    "v04": "photon16/v04.html",
+    "v03": "photon16/v03.html"
+  },
+  "source_commit": "86f749089b7f22ac0794b080944de47e861dd792",
+  "homepage_commit": "f4b60b286590a5653852433e16d809ab783aa2a9",
+  "next": "v0.7 add directional shared-port time-multiplexing and address/phase measurements rather than purely animated flow; test the asserted architecture computationally, including contention and throughput."
+}
