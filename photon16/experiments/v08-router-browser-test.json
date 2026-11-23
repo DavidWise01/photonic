@@ -1,0 +1,113 @@
+{
+  "id": "PHOTON16-V08-OXYGEN-BODY-ROUTER",
+  "date": "2026-11-23",
+  "status": "BROWSER_TEST_PASS",
+  "geometry": "1 × 8 × 8 × 8 × 8 × {[(1)]} × 8 × 8 × 8 × 8 × 1",
+  "visual": {
+    "leg_count": 8,
+    "hot": {
+      "count": 4,
+      "identity": "hydrogen+hot+orange",
+      "labels": [
+        "H0",
+        "H1",
+        "H2",
+        "H3"
+      ]
+    },
+    "cold": {
+      "count": 4,
+      "identity": "nitrogen+cold+blue",
+      "labels": [
+        "N0",
+        "N1",
+        "N2",
+        "N3"
+      ]
+    },
+    "body": "oxygen+neutral+green",
+    "shell": "e cloud",
+    "ports": {
+      "ingress": 1,
+      "egress": 1
+    }
+  },
+  "routing_model": {
+    "algorithm": "Deterministic round-robin across eight per-leg bounded FIFO queues; one admitted through oxygen ingress per tick, one previously admitted packet leaves oxygen egress per tick",
+    "identity": "source leg, family, unique packet ID, destination preserved",
+    "capacity": "One packet per tick per ingress and egress",
+    "queue_limits": [
+      8,
+      16,
+      32
+    ],
+    "metrics": [
+      "ticks",
+      "delivered",
+      "backlog",
+      "contentions",
+      "drops",
+      "throughput"
+    ],
+    "packet_loss": "Queue overflow explicitly logged; no silent loss claimed"
+  },
+  "browser": {
+    "engine": "system Chromium headless Playwright page.set_content",
+    "js_errors": 0,
+    "mode": "full HTML browser with original optical simulation",
+    "single_burst": {
+      "generated": 8,
+      "delivered": 8,
+      "drop": 0,
+      "steps": 10,
+      "all_source_legs": 8
+    },
+    "congestion": {
+      "generated": 48,
+      "delivered": 48,
+      "dropped": 0,
+      "steps": 60,
+      "contentions": 47
+    },
+    "overflow": {
+      "generated": 80,
+      "delivered": 64,
+      "dropped": 16,
+      "queue_limit": 8,
+      "steps": 66
+    },
+    "invariants": {
+      "unique_packet_ids": true,
+      "no_unaccounted_packets": true,
+      "egress_later_than_ingress": true,
+      "max_egress_per_tick": 1,
+      "round_robin_legs": true,
+      "source_family_preserved": true,
+      "success": true
+    },
+    "optical": {
+      "selftest": "PASS",
+      "train_mse_before": 0.0012992758839190312,
+      "train_mse_after_10_epochs": 0.000013139299767675974
+    },
+    "passed": true
+  },
+  "preserved": {
+    "previous_archives": [
+      "photon16/v06.html",
+      "photon16/v07.html"
+    ],
+    "existing_optical_network": "16 spatial modes / 48 couplers / 32 trainable phases",
+    "previous_pages_untouched": true
+  },
+  "limitations": [
+    "The routing engine is software scheduling, not observed photonic carrier dynamics.",
+    "Hot hydrogen, cold nitrogen, neutral oxygen are categorical identities/colors, not measured chemical or thermal operations.",
+    "The eightfold 8^4 levels are logical address geometry, not separately fabricated waveguides.",
+    "One shared oxygen body includes separate modeled ingress and egress stages; full-duplex behavior is simulated.",
+    "No physical Planck-scale bubble established."
+  ],
+  "source_commit": "22309dc69246a8344a0ea490dac495ed6f367c61",
+  "landing_commit": "1aa6679f08678ca509bef62429effd76ece43eaa",
+  "next": "v0.9 drive optical phase and intensity by actually routed packet load and test congestion-induced phase sensitivity"
+}
