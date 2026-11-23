@@ -1,0 +1,39 @@
+{
+  "id": "PHOTON16-V05-BROWSER-TEST",
+  "date": "2026-11-22",
+  "version": "0.5",
+  "status": "BROWSER_TEST_PASS",
+  "description": "Animated jellyfish ↔ 1 × 8 × 8 × 1 processor presentation over preserved 16 spatial-mode neural mesh",
+  "prototype_not_hardware": true,
+  "model": {
+    "spatial_modes": 16,
+    "complex_linear_unitary_coupling": true,
+    "trainable_phase_parameters": 32,
+    "matrix_cells": 256,
+    "display_lattice": "1 × 8 × 8 × 1 (64 visualization nodes, mapped cyclically to 16 model outputs)",
+    "visual_caveat": "Jellyfish and emergence are animated depictions driven by modeled optical intensities; not claimed physical emergent behavior"
+  },
+  "browser": {
+    "platform": "headless Chromium via Playwright",
+    "test_result": "PASS",
+    "javaScript_errors": 0,
+    "energy_conservation_max_delta": "3.33e-16",
+    "invariant_checks": 40,
+    "morph_start": "JELLYFISH",
+    "morph_after_toggle": "1×8×8×1",
+    "pulse_after_click": "1.10 Hz",
+    "freeze_after_click": "FREEZE ANIMATION · ON",
+    "training_after_100_epochs_mse": 3.441633688862537e-7,
+    "unseen_after_100_epochs_mse": 6.749283717242163e-7,
+    "trained_epochs": 100
+  },
+  "published": {
+    "canonical": "photon16/index.html",
+    "previous_version": "photon16/v04.html",
+    "landing": "index.html",
+    "repo": "DavidWise01/photonic",
+    "source_commit": "9ca58acee4ec214e971a655a7654461e5f7e9022",
+    "landing_commit": "1ecc13583bf6a9cb1c389e98397bf5cebfaa1f20"
+  },
+  "next": "PHOTON-16 v0.6 map spatial patterns to phase dynamics and test morphic stability with drift and controlled perturbations"
+}
