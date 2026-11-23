@@ -1,0 +1,91 @@
+{
+  "id": "PHOTON16-V11-TRAINED-MESH-STRESS",
+  "version": "0.11",
+  "date": "2026-11-23",
+  "status": "BROWSER_TEST_PASS",
+  "architecture": {
+    "color_register": "{{r8!,b8!,g8!}} x 4 = 96 bits",
+    "eight_legs": "4 hot hydrogen orange + 4 cold nitrogen blue",
+    "body": "oxygen neutral green shared ingress/egress",
+    "shell": "e-cloud visual envelope",
+    "optical": "16 spatial modes, 48 passive couplers, 32 trainable mesh phases",
+    "checkpoint": "meshPhases snapshot freezes network used for reference and feedback; new training affects unfrozen mesh but not existing calibration"
+  },
+  "browser": {
+    "headless": "Chromium Playwright set_content",
+    "js_errors": 0,
+    "train_epochs": 10,
+    "training_mse": 0.000013139299767675974,
+    "unseen_mse": 0.000020839964045061525,
+    "trained_phase_nonzero": true,
+    "energy_max_error_64_cases": 6.661338147750939e-16,
+    "measurable_chromatic_separation_mse": 0.00011227337518673724,
+    "calibration": {
+      "steps": 200,
+      "initial_mse": 0.0030420828571905705,
+      "final_mse": 0.00012753714174539393
+    },
+    "stress": {
+      "fixed_external_profiles": 8,
+      "steps_per_profile": 160,
+      "improved_profiles": 8,
+      "average_initial_mse": 0.0053650719724664345,
+      "average_final_mse": 0.00014456590870627365,
+      "relative_reduction_percent": 97.305,
+      "profiles": [
+        {
+          "initial": 0.0005245587416089636,
+          "final": 0.00003150611354698516
+        },
+        {
+          "initial": 0.00026101261203228507,
+          "final": 0.00005149244453439756
+        },
+        {
+          "initial": 0.0053756512480602784,
+          "final": 0.00014038982820271037
+        },
+        {
+          "initial": 0.011195170354816188,
+          "final": 0.00008706350719990542
+        },
+        {
+          "initial": 0.009968189614244033,
+          "final": 0.0007358384983602701
+        },
+        {
+          "initial": 0.00388598147239143,
+          "final": 0.00003887834871366525
+        },
+        {
+          "initial": 0.005125717942537501,
+          "final": 0.00004161977607348254
+        },
+        {
+          "initial": 0.006584293794040794,
+          "final": 0.000029738753018773024
+        }
+      ]
+    },
+    "color_test": true,
+    "router_test": true
+  },
+  "limitations": [
+    "Simulated deterministic optical transfer only, not fabricated hardware",
+    "Stress loads are predefined software 96-bit register states rather than real external detector traces",
+    "Calibration sees only intensity mismatch but test harness defines underlying synthetic perturbation",
+    "Each profile is evaluated against a fixed neutral reference through a frozen trained mesh; full out-of-generator generalization not established",
+    "Optical phase is not uniquely identifiable from intensity alone",
+    "Stress profiles are disclosed to auditor but not directly read by calibration optimizer"
+  ],
+  "paths": {
+    "live": "photon16/index.html",
+    "previous": "photon16/v10.html",
+    "home": "index.html"
+  },
+  "commits": {
+    "source": "5b8bd34654f09f2fb38cb99e144f4511e1dbeed3",
+    "landing": "8a7fbd34138a19ef6ae463769580504ccd53d10b"
+  },
+  "next": "PHOTON-16 v0.12: streaming adaptive calibration under time-varying drift with strict observation-only causal measurements and resource budget."
+}
