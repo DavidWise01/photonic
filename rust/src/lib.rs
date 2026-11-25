@@ -1,4 +1,4 @@
-//! PHOTON-16 v0.87 — native dimensional kernel. .dlw
+//! PHOTON-16 v0.88 — native dimensional kernel. .dlw
 const RATES: [f64;4] = [0.0625,0.125,0.25,0.5];
 const WIDTHS: [u8;4] = [8,16,32,64];
 #[derive(Clone)]
@@ -19,17 +19,20 @@ fn signal(c:usize,l:usize,t:usize,g:usize)->f64{let p=t as f64*std::f64::consts:
 struct Epoch{widths:[u8;8],rates:[usize;8],bytes:usize,mae:f64,seal:Seal}
 #[derive(Debug,PartialEq)]
 struct Run{epochs:Vec<Epoch>,count:usize,updates:usize,traffic:usize,stages:usize,lineage:u32}
-fn run()->Run{
+fn run()->Run{run_order(0)}
+fn run_order(order:usize)->Run{
  let paths=paths();let mut mem:[Buffer;8]=std::array::from_fn(|_|Buffer::new(64));let mut applied:[[Option<usize>;8];8]=[[None;8];8];let mut rates=[1usize;8];let mut out=Run{epochs:vec![],count:0,updates:0,traffic:0,stages:0,lineage:2166136261};
  for g in 0..8{
  let widths=std::array::from_fn(|c|mem[c].width());let mut loss=[[0.;4];8];let mut probe=[[0.;4];8];let mut samples=[0usize;8];let mut errors=[0.;8];let mut counts=[0usize;8];
  for t in 0..360{
  let mut pending=PendingTick::new(g,t);
  // Read phase: no writes to predictor storage until every path has observed this tick.
- for (slot,&(c,f,e,l0,l1)) in paths.iter().enumerate(){let l=if t%2==0{l0}else{l1};let x=signal(c,l,t,g);let m=mem[c].get(l);let obs=Observation{id:CodonId{g,t,c,f,e,l},value:x,prior:m};let stages=reciprocal(&obs);for stage in &stages{assert_eq!(stage.parent,obs.id);out.lineage=(out.lineage ^ stage.code()).wrapping_mul(16777619);out.stages+=1;}errors[c]+=(x-m).abs();counts[c]+=1;out.count+=1;pending.observe(slot,&obs,&paths);
+ for i in 0..192{let slot=match order{1=>191-i,2=>(i*37+g+t)%192,_=>i};let(c,f,e,l0,l1)=paths[slot];let l=if t%2==0{l0}else{l1};let x=signal(c,l,t,g);let m=mem[c].get(l);let obs=Observation{id:CodonId{g,t,c,f,e,l},value:x,prior:m};pending.observe(slot,&obs,&paths);}
+ let records=pending.seal();let mut sum=[[0.;8];8];let mut n=[[0usize;8];8];
+ for obs in records {let c=obs.id.c;let l=obs.id.l;let x=obs.value;let m=obs.prior;let stages=reciprocal(&obs);for stage in &stages{assert_eq!(stage.parent,obs.id);out.lineage=(out.lineage ^ stage.code()).wrapping_mul(16777619);out.stages+=1;}errors[c]+=(x-m).abs();counts[c]+=1;out.count+=1;sum[c][l]+=x;n[c][l]+=1;
  if let Some(a)=applied[c][l]{for k in 0..4{loss[c][k]+=(x-(m+(RATES[k]-RATES[a])*mem[c].get(8+l))).abs();}}}
  // Consume the observation accumulator before acquiring mutable predictor access.
- let (sum,n)=pending.close();
+ // Canonical records have been fully consumed.
  // Write phase: each address updated once, after observation completes.
  for c in 0..8{for l in 0..8{if n[c][l]==0{continue}let m=mem[c].get(l);let d=sum[c][l]/n[c][l] as f64-m;let ideal=m+RATES[rates[c]]*d;samples[c]+=1;for(k,&b)in WIDTHS.iter().enumerate(){probe[c][k]+=(quant(ideal,1.,b)-ideal).abs()+0.5*(quant(d,2.,b)-d).abs();}mem[c].set(l,ideal);mem[c].set(8+l,d);applied[c][l]=Some(rates[c]);out.updates+=1;}}
  }
@@ -63,11 +66,12 @@ impl Stage{fn code(&self)->u32{let p=self.parent;let mut h=0u32;for v in [p.g,p.
 fn reciprocal(obs:&Observation)->[Stage;8]{let d=(obs.value-obs.prior).clamp(-1.,1.);std::array::from_fn(|i|{let inward=i>=4;let dimension=if inward{8-i}else{i+1} as u8;let scope=match dimension{1=>obs.id.e,2=>obs.id.f,3=>obs.id.c,_=>0};Stage{parent:obs.id,dimension,inward,scope,guidance:if inward{d}else{obs.value}}})}
 #[cfg(test)]mod lineage_tests{use super::*;#[test]fn lineage(){let obs=Observation{id:CodonId{g:0,t:0,c:0,f:0,e:0,l:0},value:0.5,prior:0.25};let s=reciprocal(&obs);assert_eq!(s.map(|x|x.dimension),[1,2,3,4,4,3,2,1]);assert!(s[..4].iter().all(|x|!x.inward&&x.guidance==0.5));assert!(s[4..].iter().all(|x|x.inward&&x.guidance==0.25));assert!(s.iter().all(|x|x.parent==obs.id));let r=run();assert_eq!(r.stages,4423680);assert_eq!(r.lineage,run().lineage);}}
 
-struct PendingTick{g:usize,t:usize,sum:[[f64;8];8],n:[[usize;8];8],count:usize,coverage:[u64;3]}
+struct PendingTick{g:usize,t:usize,records:[Option<Observation>;192],count:usize,coverage:[u64;3]}
 impl PendingTick{
- fn new(g:usize,t:usize)->Self{Self{g,t,sum:[[0.;8];8],n:[[0;8];8],count:0,coverage:[0;3]}}
- fn observe(&mut self,slot:usize,o:&Observation,paths:&[(usize,usize,usize,usize,usize)]){assert_eq!((o.id.g,o.id.t),(self.g,self.t));assert!(slot<192 && paths.len()==192);let(c,f,e,l0,l1)=paths[slot];let l=if self.t%2==0{l0}else{l1};assert_eq!((o.id.c,o.id.f,o.id.e,o.id.l),(c,f,e,l));assert!(o.value.is_finite()&&o.prior.is_finite());let mask=1u64<<(slot%64);assert_eq!(self.coverage[slot/64]&mask,0,"duplicate codon");self.coverage[slot/64]|=mask;self.sum[o.id.c][o.id.l]+=o.value;self.n[o.id.c][o.id.l]+=1;self.count+=1;}
- fn close(self)->([[f64;8];8],[[usize;8];8]){assert_eq!(self.count,192);assert_eq!(self.coverage,[u64::MAX;3]);(self.sum,self.n)}
+ fn new(g:usize,t:usize)->Self{Self{g,t,records:[None;192],count:0,coverage:[0;3]}}
+ fn observe(&mut self,slot:usize,o:&Observation,paths:&[(usize,usize,usize,usize,usize)]){assert_eq!((o.id.g,o.id.t),(self.g,self.t));assert!(slot<192 && paths.len()==192);let(c,f,e,l0,l1)=paths[slot];let l=if self.t%2==0{l0}else{l1};assert_eq!((o.id.c,o.id.f,o.id.e,o.id.l),(c,f,e,l));assert!(o.value.is_finite()&&o.prior.is_finite());let mask=1u64<<(slot%64);assert_eq!(self.coverage[slot/64]&mask,0,"duplicate codon");self.coverage[slot/64]|=mask;self.records[slot]=Some(*o);self.count+=1;}
+ fn seal(self)->[Observation;192]{assert_eq!(self.count,192);assert_eq!(self.coverage,[u64::MAX;3]);self.records.map(|o|o.expect("missing identity"))}
+ #[cfg(test)] fn close(self)->([[f64;8];8],[[usize;8];8]){let mut sum=[[0.;8];8];let mut n=[[0;8];8];for o in self.seal(){sum[o.id.c][o.id.l]+=o.value;n[o.id.c][o.id.l]+=1;}(sum,n)}
 }
 fn fold(h:u32,v:u32)->u32{(h^v).wrapping_mul(16777619)}
 #[derive(Debug,PartialEq,Eq)]
@@ -92,3 +96,5 @@ fn obs(p:&[(usize,usize,usize,usize,usize)],slot:usize,t:usize)->Observation{let
 #[test]#[should_panic]fn missing_last(){let p=paths();let mut a=PendingTick::new(0,0);for i in 0..191{a.observe(i,&obs(&p,i,0),&p);}a.close();}
 #[test]#[should_panic]fn out_of_range(){let p=paths();PendingTick::new(0,0).observe(192,&obs(&p,0,0),&p);}
 }
+
+#[cfg(test)]mod ordering_tests{use super::*;#[test]fn full_run_order_invariance(){let a=run_order(0);assert_eq!(a,run_order(1));assert_eq!(a,run_order(2));}}
