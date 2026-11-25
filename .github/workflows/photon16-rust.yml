@@ -1,0 +1,17 @@
+name: PHOTON-16 Rust
+on:
+  push:
+    paths:
+      - 'rust/**'
+      - '.github/workflows/photon16-rust.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup toolchain install stable
+      - run: cargo +stable test --manifest-path rust/Cargo.toml
+      - run: cargo +stable run --release --manifest-path rust/Cargo.toml
