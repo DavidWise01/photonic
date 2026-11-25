@@ -32,12 +32,7 @@ jobs:
           node --version > verified/NODE_VERSION
           git ls-files -s rust photon16/v83-rust-wasm.js .github/workflows/photon16-wasm.yml > verified/SOURCE_INDEX
           printf '%s\n' 'native-tests=PASS' 'wasm-verifier=PASS' 'browser-acceptance=UNVERIFIED' > verified/QUALIFICATION
-      - uses: actions/upload-artifact@v4
-        with:
-          name: photon16-wasm
-          path: verified/
       - name: Stage complete tracked site
-        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || inputs.publish_pages)
         run: |
           mkdir site
           git archive HEAD | tar -x -C site
@@ -45,6 +40,20 @@ jobs:
           mkdir -p site/photon16/wasm
           cp verified/* site/photon16/wasm/
           touch site/.nojekyll
+      - name: Install pinned browser test runner
+        run: |
+          npm install --prefix rust --no-save --no-package-lock playwright@1.51.1
+          rust/node_modules/.bin/playwright install --with-deps chromium
+      - name: Blocking Chromium acceptance
+        run: node rust/verify-browser.cjs site
+      - name: Finalize qualification evidence
+        run: |
+          printf '%s\n' 'native-tests=PASS' 'wasm-verifier=PASS' 'browser-acceptance=PASS' > verified/QUALIFICATION
+          cp verified/* site/photon16/wasm/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: photon16-wasm
+          path: verified/
       - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || inputs.publish_pages)
         with:
