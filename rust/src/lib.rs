@@ -1,4 +1,4 @@
-//! PHOTON-16 v0.97 — native dimensional kernel. .dlw
+//! PHOTON-16 v0.98 — native dimensional kernel. .dlw
 const RATES: [f64;4] = [0.0625,0.125,0.25,0.5];
 const WIDTHS: [u8;4] = [8,16,32,64];
 #[derive(Clone)]
@@ -183,4 +183,19 @@ impl<const N:usize> StoragePool<N>{
  fn checkpoint(&self){let s=self.snapshot();assert_eq!(s.active,0);assert_eq!(s.allocated,s.evicted+s.idle);assert_eq!(s.allocations+s.reuses,s.returns);}
 }
 #[cfg(test)]mod telemetry_tests{use super::*;#[test]fn homogeneous_ledger(){let r=run();for(g,e)in r.epochs.iter().enumerate(){let s=e.storage;assert_eq!((s.allocations,s.evictions,s.allocated,s.evicted,s.active,s.idle,s.peak),(1,0,448,0,0,448,448));assert_eq!(s.returns,(g+1)*360);assert_eq!(s.reuses+1,s.returns);}}#[test]fn promotion_ledger(){let mut p=StoragePool::<56>::default();let a=p.take_base();let b=p.take_full();assert_eq!(p.snapshot().peak,1984);p.return_base(a);p.return_full(b);p.trim(1536,true);p.checkpoint();assert_eq!(p.snapshot().evicted,448);assert_eq!(p.snapshot().idle,1536);}}
+}
+
+const RESOURCE_BUDGETS:[usize;4]=[0,448,1536,1984];
+#[derive(Clone,Copy,Debug,PartialEq,Eq)]
+struct ResourceTrial{budget:usize,allocations:usize,evictions:usize,residency:usize,peak:usize,cost:usize,digest:u32}
+fn resource_trial(pattern:usize,budget:usize,weight:usize)->ResourceTrial{
+ let paths=paths();let mem:[Buffer;8]=std::array::from_fn(|_|Buffer::new(64));let mut pool=StoragePool::<56>::default();let mut policy=CapacityPolicy::default();let mut residency=0;let mut digest=2166136261;
+ for t in 0..96{let diverse=match pattern{0=>false,1=>(t%32)>=4&&(t%32)<12,2=>t>=4&&t<80,_=>t%3==1};let mut a=PendingTick::<56,true>::recycled(0,t,&mem,&mut pool,policy.expanded);for i in 0..192{let slot=(i*37+t)%192;let(c,f,e,lo,hi)=paths[slot];let l=if t%2==0{lo}else{hi};let value=if diverse{slot as f64/192.}else{(l+t)as f64/128.};a.observe_recycled(slot,&Observation{id:CodonId{g:0,t,c,f,e,l},value,prior:mem[c].get(l)},&paths,&mut pool);}
+ assert_eq!(a.diverse(&paths),diverse);policy.finish(diverse);let mut sealed=a.finish(&paths);for(slot,o)in sealed.by_ref().enumerate(){let expected=if diverse{slot as f64/192.}else{(o.id.l+t)as f64/128.};assert_eq!(o.value.to_bits(),expected.to_bits());let bits=o.value.to_bits();digest=fold(fold(fold(digest,slot as u32),bits as u32),(bits>>32)as u32);}sealed.recycle(&mut pool);pool.trim(budget,policy.expanded);pool.checkpoint();residency+=pool.idle_bytes();}
+ let stats=pool.snapshot();ResourceTrial{budget,allocations:stats.allocations,evictions:stats.evictions,residency,peak:stats.peak,cost:residency+weight*stats.allocations,digest}
+}
+fn resource_trials(pattern:usize,weight:usize)->[ResourceTrial;4]{let trials=RESOURCE_BUDGETS.map(|b|resource_trial(pattern,b,weight));assert!(trials.iter().all(|r|r.digest==trials[0].digest));trials}
+fn resource_winner(trials:&[ResourceTrial;4])->usize{(0..4).min_by_key(|&i|(trials[i].cost,trials[i].budget)).unwrap()}
+#[no_mangle]pub extern "C" fn photon_resource(pattern:u32,weight:u32,index:u32,metric:u32)->f64{if pattern>3||weight>65536||index>3{return f64::NAN}let trials=resource_trials(pattern as usize,weight as usize);let r=trials[index as usize];match metric{0=>r.budget as f64,1=>r.allocations as f64,2=>r.evictions as f64,3=>r.residency as f64,4=>r.peak as f64,5=>r.cost as f64,6=>r.digest as f64,7=>resource_winner(&trials)as f64,_=>f64::NAN}}
+#[cfg(test)]mod resource_tests{use super::*;#[test]fn all_policies_preserve_evidence(){for pattern in 0..4{let trials=resource_trials(pattern,2048);let w=resource_winner(&trials);assert!(trials.iter().all(|r|r.cost>=trials[w].cost));assert_eq!(trials,resource_trials(pattern,2048));}}#[test]fn cost_extremes(){let low=resource_trials(0,0);assert_eq!(resource_winner(&low),0);let high=resource_trials(0,65536);assert_eq!(resource_winner(&high),1);assert_eq!(high[0].allocations,96);assert_eq!(high[1].allocations,1);}}
 }
