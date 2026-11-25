@@ -1,4 +1,4 @@
-//! PHOTON-16 v0.83 — native dimensional kernel. .dlw
+//! PHOTON-16 v0.85 — native dimensional kernel. .dlw
 const RATES: [f64;4] = [0.0625,0.125,0.25,0.5];
 const WIDTHS: [u8;4] = [8,16,32,64];
 #[derive(Clone)]
@@ -18,15 +18,15 @@ fn signal(c:usize,l:usize,t:usize,g:usize)->f64{let p=t as f64*std::f64::consts:
 #[derive(Debug,PartialEq)]
 struct Epoch{widths:[u8;8],rates:[usize;8],bytes:usize,mae:f64}
 #[derive(Debug,PartialEq)]
-struct Run{epochs:Vec<Epoch>,count:usize,updates:usize,traffic:usize}
+struct Run{epochs:Vec<Epoch>,count:usize,updates:usize,traffic:usize,stages:usize,lineage:u32}
 fn run()->Run{
- let paths=paths();let mut mem:[Buffer;8]=std::array::from_fn(|_|Buffer::new(64));let mut applied:[[Option<usize>;8];8]=[[None;8];8];let mut rates=[1usize;8];let mut out=Run{epochs:vec![],count:0,updates:0,traffic:0};
+ let paths=paths();let mut mem:[Buffer;8]=std::array::from_fn(|_|Buffer::new(64));let mut applied:[[Option<usize>;8];8]=[[None;8];8];let mut rates=[1usize;8];let mut out=Run{epochs:vec![],count:0,updates:0,traffic:0,stages:0,lineage:2166136261};
  for g in 0..8{
  let widths=std::array::from_fn(|c|mem[c].width());let mut loss=[[0.;4];8];let mut probe=[[0.;4];8];let mut samples=[0usize;8];let mut errors=[0.;8];let mut counts=[0usize;8];
  for t in 0..360{
  let mut sum=[[0.;8];8];let mut n=[[0usize;8];8];
  // Read phase: no writes to predictor storage until every path has observed this tick.
- for &(c,_f,_e,l0,l1) in &paths{let l=if t%2==0{l0}else{l1};let x=signal(c,l,t,g);let m=mem[c].get(l);errors[c]+=(x-m).abs();counts[c]+=1;out.count+=1;sum[c][l]+=x;n[c][l]+=1;
+ for &(c,f,e,l0,l1) in &paths{let l=if t%2==0{l0}else{l1};let x=signal(c,l,t,g);let m=mem[c].get(l);let obs=Observation{id:CodonId{g,t,c,f,e,l},value:x,prior:m};let stages=reciprocal(&obs);for stage in &stages{assert_eq!(stage.parent,obs.id);out.lineage=(out.lineage ^ stage.code()).wrapping_mul(16777619);out.stages+=1;}errors[c]+=(x-m).abs();counts[c]+=1;out.count+=1;sum[c][l]+=x;n[c][l]+=1;
  if let Some(a)=applied[c][l]{for k in 0..4{loss[c][k]+=(x-(m+(RATES[k]-RATES[a])*mem[c].get(8+l))).abs();}}}
  // Write phase: each address updated once, after observation completes.
  for c in 0..8{for l in 0..8{if n[c][l]==0{continue}let m=mem[c].get(l);let d=sum[c][l]/n[c][l] as f64-m;let ideal=m+RATES[rates[c]]*d;samples[c]+=1;for(k,&b)in WIDTHS.iter().enumerate(){probe[c][k]+=(quant(ideal,1.,b)-ideal).abs()+0.5*(quant(d,2.,b)-d).abs();}mem[c].set(l,ideal);mem[c].set(8+l,d);applied[c][l]=Some(rates[c]);out.updates+=1;}}
@@ -48,5 +48,15 @@ mod tests{use super::*;
 thread_local! { static RESULT: std::cell::RefCell<Option<Run>> = const { std::cell::RefCell::new(None) }; }
 #[no_mangle] pub extern "C" fn photon_run()->u32 { let r=run(); let count=r.count as u32; RESULT.with(|s| *s.borrow_mut()=Some(r)); count }
 #[no_mangle] pub extern "C" fn photon_abi()->u32 { 83 }
-#[no_mangle] pub extern "C" fn photon_metric(g:u32,kind:u32,c:u32)->f64 { RESULT.with(|s| { let s=s.borrow(); let Some(r)=s.as_ref() else{return f64::NAN}; if kind==4{return r.count as f64} if kind==5{return r.updates as f64} if kind==6{return r.traffic as f64} let Some(e)=r.epochs.get(g as usize) else{return f64::NAN}; match kind {0=>e.mae,1=>e.bytes as f64,2=>e.widths.get(c as usize).map_or(f64::NAN,|v|*v as f64),3=>e.rates.get(c as usize).map_or(f64::NAN,|v|*v as f64),_=>f64::NAN} }) }
+#[no_mangle] pub extern "C" fn photon_metric(g:u32,kind:u32,c:u32)->f64 { RESULT.with(|s| { let s=s.borrow(); let Some(r)=s.as_ref() else{return f64::NAN}; if kind==4{return r.count as f64} if kind==5{return r.updates as f64} if kind==6{return r.traffic as f64} if kind==7{return r.stages as f64} if kind==8{return r.lineage as f64} let Some(e)=r.epochs.get(g as usize) else{return f64::NAN}; match kind {0=>e.mae,1=>e.bytes as f64,2=>e.widths.get(c as usize).map_or(f64::NAN,|v|*v as f64),3=>e.rates.get(c as usize).map_or(f64::NAN,|v|*v as f64),_=>f64::NAN} }) }
 #[cfg(test)] mod bridge_tests {use super::*; #[test] fn bridge(){assert_eq!(photon_abi(),83);assert!(photon_metric(0,0,0).is_nan());assert_eq!(photon_run(),552960);assert_eq!(photon_metric(7,5,0),161280.);assert!(photon_metric(99,0,0).is_nan());assert!(photon_metric(0,2,99).is_nan());}}
+
+#[derive(Clone,Copy,Debug,PartialEq,Eq)]
+struct CodonId{g:usize,t:usize,c:usize,f:usize,e:usize,l:usize}
+#[derive(Clone,Copy)]
+struct Observation{id:CodonId,value:f64,prior:f64}
+#[derive(Clone,Copy)]
+struct Stage{parent:CodonId,dimension:u8,inward:bool,scope:usize,guidance:f64}
+impl Stage{fn code(&self)->u32{let p=self.parent;let mut h=0u32;for v in [p.g,p.t,p.c,p.f,p.e,p.l,self.dimension as usize,self.inward as usize,self.scope]{h=h.wrapping_mul(31).wrapping_add(v as u32);}h}}
+fn reciprocal(obs:&Observation)->[Stage;8]{let d=(obs.value-obs.prior).clamp(-1.,1.);std::array::from_fn(|i|{let inward=i>=4;let dimension=if inward{8-i}else{i+1} as u8;let scope=match dimension{1=>obs.id.e,2=>obs.id.f,3=>obs.id.c,_=>0};Stage{parent:obs.id,dimension,inward,scope,guidance:if inward{d}else{obs.value}}})}
+#[cfg(test)]mod lineage_tests{use super::*;#[test]fn lineage(){let obs=Observation{id:CodonId{g:0,t:0,c:0,f:0,e:0,l:0},value:0.5,prior:0.25};let s=reciprocal(&obs);assert_eq!(s.map(|x|x.dimension),[1,2,3,4,4,3,2,1]);assert!(s[..4].iter().all(|x|!x.inward&&x.guidance==0.5));assert!(s[4..].iter().all(|x|x.inward&&x.guidance==0.25));assert!(s.iter().all(|x|x.parent==obs.id));let r=run();assert_eq!(r.stages,4423680);assert_eq!(r.lineage,run().lineage);}}
