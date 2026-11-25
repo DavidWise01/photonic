@@ -2,16 +2,12 @@ name: PHOTON-16 WASM
 on:
   push:
     branches: [main]
-    paths:
-      - 'rust/**'
-      - '.github/workflows/photon16-wasm.yml'
-      - 'photon16/v83-rust-wasm.js'
   workflow_dispatch:
     inputs:
       publish_pages:
         description: 'Publish complete tracked site (requires Pages source = GitHub Actions)'
         type: boolean
-        default: false
+        default: true
 permissions:
   contents: read
 concurrency:
@@ -37,7 +33,7 @@ jobs:
           name: photon16-wasm
           path: verified/
       - name: Stage complete tracked site
-        if: github.event_name == 'workflow_dispatch' && inputs.publish_pages && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || inputs.publish_pages)
         run: |
           mkdir site
           git archive HEAD | tar -x -C site
@@ -46,11 +42,11 @@ jobs:
           cp verified/* site/photon16/wasm/
           touch site/.nojekyll
       - uses: actions/upload-pages-artifact@v3
-        if: github.event_name == 'workflow_dispatch' && inputs.publish_pages && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || inputs.publish_pages)
         with:
           path: site
   deploy:
-    if: github.event_name == 'workflow_dispatch' && inputs.publish_pages && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || inputs.publish_pages)
     needs: build
     runs-on: ubuntu-latest
     permissions:
