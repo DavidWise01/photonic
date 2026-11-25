@@ -1,4 +1,4 @@
-//! PHOTON-16 v0.92 — native dimensional kernel. .dlw
+//! PHOTON-16 v0.93 — native dimensional kernel. .dlw
 const RATES: [f64;4] = [0.0625,0.125,0.25,0.5];
 const WIDTHS: [u8;4] = [8,16,32,64];
 #[derive(Clone)]
@@ -20,13 +20,14 @@ struct Epoch{widths:[u8;8],rates:[usize;8],bytes:usize,mae:f64,seal:Seal}
 #[derive(Debug,PartialEq)]
 struct Run{epochs:Vec<Epoch>,count:usize,updates:usize,traffic:usize,stages:usize,lineage:u32}
 fn run()->Run{run_order(0)}
-fn run_order(order:usize)->Run{run_storage::<56>(order)}
-fn run_storage<const N:usize>(order:usize)->Run{
+fn run_order(order:usize)->Run{run_storage_mode::<56,true>(order)}
+#[cfg(test)] fn run_storage<const N:usize>(order:usize)->Run{run_storage_mode::<N,false>(order)}
+fn run_storage_mode<const N:usize,const ADAPT:bool>(order:usize)->Run{
  let paths=paths();let mut mem:[Buffer;8]=std::array::from_fn(|_|Buffer::new(64));let mut applied:[[Option<usize>;8];8]=[[None;8];8];let mut rates=[1usize;8];let mut out=Run{epochs:vec![],count:0,updates:0,traffic:0,stages:0,lineage:2166136261};
  for g in 0..8{
  let widths=std::array::from_fn(|c|mem[c].width());let mut loss=[[0.;4];8];let mut probe=[[0.;4];8];let mut samples=[0usize;8];let mut errors=[0.;8];let mut counts=[0usize;8];
  for t in 0..360{
- let mut pending=PendingTick::<N>::new(g,t,&mem);
+ let mut pending=PendingTick::<N,ADAPT>::new(g,t,&mem);
  // Read phase: no writes to predictor storage until every path has observed this tick.
  for i in 0..192{let slot=match order{1=>191-i,2=>(i*37+g+t)%192,_=>i};let(c,f,e,l0,l1)=paths[slot];let l=if t%2==0{l0}else{l1};let x=signal(c,l,t,g);let m=mem[c].get(l);let obs=Observation{id:CodonId{g,t,c,f,e,l},value:x,prior:m};pending.observe(slot,&obs,&paths);}
  let records=pending.seal(&paths);let mut sum=[[0.;8];8];let mut n=[[0usize;8];8];
@@ -67,11 +68,11 @@ impl Stage{fn code(&self)->u32{let p=self.parent;let mut h=0u32;for v in [p.g,p.
 fn reciprocal(obs:&Observation)->[Stage;8]{let d=(obs.value-obs.prior).clamp(-1.,1.);std::array::from_fn(|i|{let inward=i>=4;let dimension=if inward{8-i}else{i+1} as u8;let scope=match dimension{1=>obs.id.e,2=>obs.id.f,3=>obs.id.c,_=>0};Stage{parent:obs.id,dimension,inward,scope,guidance:if inward{d}else{obs.value}}})}
 #[cfg(test)]mod lineage_tests{use super::*;#[test]fn lineage(){let obs=Observation{id:CodonId{g:0,t:0,c:0,f:0,e:0,l:0},value:0.5,prior:0.25};let s=reciprocal(&obs);assert_eq!(s.map(|x|x.dimension),[1,2,3,4,4,3,2,1]);assert!(s[..4].iter().all(|x|!x.inward&&x.guidance==0.5));assert!(s[4..].iter().all(|x|x.inward&&x.guidance==0.25));assert!(s.iter().all(|x|x.parent==obs.id));let r=run();assert_eq!(r.stages,4423680);assert_eq!(r.lineage,run().lineage);}}
 
-struct PendingTick<'a,const N:usize=192>{g:usize,t:usize,records:[f64;N],seen:u64,memory:&'a [Buffer;8],count:usize,coverage:[u64;3],topology:Option<&'a [(usize,usize,usize,usize,usize)]>}
-impl<'a,const N:usize> PendingTick<'a,N>{
- fn new(g:usize,t:usize,memory:&'a [Buffer;8])->Self{assert!(N==56||N==192);Self{g,t,records:[0.;N],seen:0,memory,count:0,coverage:[0;3],topology:None}}
- fn observe(&mut self,slot:usize,o:&Observation,paths:&'a [(usize,usize,usize,usize,usize)]){assert_eq!((o.id.g,o.id.t),(self.g,self.t));assert!(slot<192 && paths.len()==192);let(c,f,e,l0,l1)=paths[slot];let l=if self.t%2==0{l0}else{l1};assert_eq!((o.id.c,o.id.f,o.id.e,o.id.l),(c,f,e,l));assert!(o.value.is_finite()&&o.prior.is_finite());let mask=1u64<<(slot%64);assert_eq!(self.coverage[slot/64]&mask,0,"duplicate codon");if let Some(bound)=self.topology{assert!(std::ptr::eq(bound,paths),"topology changed");}else{self.topology=Some(paths);}assert_eq!(self.memory[c].get(l).to_bits(),o.prior.to_bits(),"conflicting contextual prior");if N==56{let a=compact_address(c,l,self.t);let bit=1u64<<a;if self.seen&bit!=0{assert_eq!(self.records[a].to_bits(),o.value.to_bits(),"distinct measurement in compact mode");}else{self.records[a]=o.value;self.seen|=bit;}}else{self.records[slot]=o.value;}self.coverage[slot/64]|=mask;self.count+=1;}
- fn seal(self,paths:&'a [(usize,usize,usize,usize,usize)])->impl Iterator<Item=Observation>+'a{assert_eq!(self.count,192);assert_eq!(self.coverage,[u64::MAX;3]);assert!(std::ptr::eq(self.topology.expect("missing topology"),paths));let(g,t)=(self.g,self.t);let memory=self.memory;if N==56{assert_eq!(self.seen,(1u64<<56)-1);}let records=self.records;(0..192).map(move |slot|{let(c,f,e,l0,l1)=paths[slot];Observation{id:CodonId{g,t,c,f,e,l:if t%2==0{l0}else{l1}},value:records[if N==56{compact_address(c,if t%2==0{l0}else{l1},t)}else{slot}],prior:memory[c].get(if t%2==0{l0}else{l1})}})}
+struct PendingTick<'a,const N:usize=192,const ADAPT:bool=false>{g:usize,t:usize,records:Option<Box<[f64;N]>>,promoted:Option<Box<[f64;192]>>,seen:u64,memory:&'a [Buffer;8],count:usize,coverage:[u64;3],topology:Option<&'a [(usize,usize,usize,usize,usize)]>}
+impl<'a,const N:usize,const ADAPT:bool> PendingTick<'a,N,ADAPT>{
+ fn new(g:usize,t:usize,memory:&'a [Buffer;8])->Self{assert!(N==56||N==192);Self{g,t,records:Some(Box::new([0.;N])),promoted:None,seen:0,memory,count:0,coverage:[0;3],topology:None}}
+ fn observe(&mut self,slot:usize,o:&Observation,paths:&'a [(usize,usize,usize,usize,usize)]){assert_eq!((o.id.g,o.id.t),(self.g,self.t));assert!(slot<192 && paths.len()==192);let(c,f,e,l0,l1)=paths[slot];let l=if self.t%2==0{l0}else{l1};assert_eq!((o.id.c,o.id.f,o.id.e,o.id.l),(c,f,e,l));assert!(o.value.is_finite()&&o.prior.is_finite());let mask=1u64<<(slot%64);assert_eq!(self.coverage[slot/64]&mask,0,"duplicate codon");if let Some(bound)=self.topology{assert!(std::ptr::eq(bound,paths),"topology changed");}else{self.topology=Some(paths);}assert_eq!(self.memory[c].get(l).to_bits(),o.prior.to_bits(),"conflicting contextual prior");if let Some(full)=self.promoted.as_mut(){full[slot]=o.value;}else if N==56{let a=compact_address(c,l,self.t);let bit=1u64<<a;if self.seen&bit!=0{let mismatch=self.records.as_ref().unwrap()[a].to_bits()!=o.value.to_bits();if mismatch{assert!(ADAPT,"distinct measurement in compact mode");let mut full=Box::new([0.;192]);let old=self.records.take().unwrap();for j in 0..192{if self.coverage[j/64]&(1u64<<(j%64))!=0{let(cc,_,_,lo,hi)=paths[j];let ll=if self.t%2==0{lo}else{hi};full[j]=old[compact_address(cc,ll,self.t)];}}full[slot]=o.value;self.promoted=Some(full);}}else{self.records.as_mut().unwrap()[a]=o.value;self.seen|=bit;}}else{self.records.as_mut().unwrap()[slot]=o.value;}self.coverage[slot/64]|=mask;self.count+=1;}
+ fn seal(self,paths:&'a [(usize,usize,usize,usize,usize)])->impl Iterator<Item=Observation>+'a{assert_eq!(self.count,192);assert_eq!(self.coverage,[u64::MAX;3]);assert!(std::ptr::eq(self.topology.expect("missing topology"),paths));let(g,t)=(self.g,self.t);let memory=self.memory;if N==56&&self.promoted.is_none(){assert_eq!(self.seen,(1u64<<56)-1);}let records=self.records;let promoted=self.promoted;(0..192).map(move |slot|{let(c,f,e,l0,l1)=paths[slot];Observation{id:CodonId{g,t,c,f,e,l:if t%2==0{l0}else{l1}},value:if let Some(full)=promoted.as_ref(){full[slot]}else{records.as_ref().unwrap()[if N==56{compact_address(c,if t%2==0{l0}else{l1},t)}else{slot}]},prior:memory[c].get(if t%2==0{l0}else{l1})}})}
  #[cfg(test)] fn close(self)->([[f64;8];8],[[usize;8];8]){let mut sum=[[0.;8];8];let mut n=[[0;8];8];let paths=self.topology.expect("missing topology");for o in self.seal(paths){sum[o.id.c][o.id.l]+=o.value;n[o.id.c][o.id.l]+=1;}(sum,n)}
 }
 fn fold(h:u32,v:u32)->u32{(h^v).wrapping_mul(16777619)}
@@ -114,4 +115,10 @@ fn compact_address(c:usize,l:usize,t:usize)->usize{assert!(c<8);let local=if t%2
 #[test]fn full_and_compact_parity(){let a=run_storage::<192>(0);assert_eq!(a,run_storage::<56>(0));assert_eq!(a,run_storage::<56>(1));assert_eq!(a,run_storage::<56>(2));}
 #[test]fn topology_and_payload(){let p=paths();for t in [0,1]{let mut seen=0u64;for &(c,_,_,l0,l1) in &p{seen|=1u64<<compact_address(c,if t==0{l0}else{l1},t);}assert_eq!(seen,(1u64<<56)-1);}assert_eq!(std::mem::size_of::<[f64;56]>()+std::mem::size_of::<[u64;3]>()+std::mem::size_of::<u64>(),480);}
 #[test]#[should_panic(expected="distinct measurement in compact mode")]fn distinct_measurement_rejected(){let p=paths();let mem=fixture(0.);let(c,_,_,l,_)=p[0];let j=(1..192).find(|&i|p[i].0==c&&p[i].3==l).unwrap();let mut a=PendingTick::<56>::new(0,0,&mem);for(slot,value)in [(0,0.25),(j,0.5)]{let(c,f,e,l,_)=p[slot];a.observe(slot,&Observation{id:CodonId{g:0,t:0,c,f,e,l},value,prior:0.},&p);}}
+}
+
+#[cfg(test)]mod adaptive_tests{use super::*;
+#[test]fn promotion_preserves_every_slot(){let p=paths();let mem=fixture(0.);for t in [0,1]{for order in 0..3{let mut adaptive=PendingTick::<56,true>::new(0,t,&mem);let mut full=PendingTick::<192>::new(0,t,&mem);for i in 0..192{let slot=match order{1=>191-i,2=>(i*37+17)%192,_=>i};let(c,f,e,l0,l1)=p[slot];let l=if t==0{l0}else{l1};let o=Observation{id:CodonId{g:0,t,c,f,e,l},value:slot as f64/192.,prior:0.};adaptive.observe(slot,&o,&p);full.observe(slot,&o,&p);}assert!(adaptive.promoted.is_some());assert!(adaptive.records.is_none());for(a,b)in adaptive.seal(&p).zip(full.seal(&p)){assert_eq!(a.id,b.id);assert_eq!(a.value.to_bits(),b.value.to_bits());assert_eq!(a.prior.to_bits(),b.prior.to_bits());}}}}
+#[test]fn compact_stays_compact(){let p=paths();let mem=fixture(0.);let mut a=PendingTick::<56,true>::new(0,0,&mem);for(slot,&(c,f,e,l,_))in p.iter().enumerate(){a.observe(slot,&Observation{id:CodonId{g:0,t:0,c,f,e,l},value:l as f64/8.,prior:0.},&p);}assert!(a.promoted.is_none());assert!(a.records.is_some());assert_eq!(a.seal(&p).count(),192);}
+#[test]fn adaptive_run_parity(){let a=run_storage::<192>(0);for order in 0..3{assert_eq!(a,run_storage_mode::<56,true>(order));}}
 }
