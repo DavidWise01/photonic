@@ -1,12 +1,22 @@
 name: PHOTON-16 WASM
 on:
   push:
+    branches: [main]
     paths:
       - 'rust/**'
       - '.github/workflows/photon16-wasm.yml'
+      - 'photon16/v83-rust-wasm.js'
   workflow_dispatch:
+    inputs:
+      publish_pages:
+        description: 'Publish complete tracked site (requires Pages source = GitHub Actions)'
+        type: boolean
+        default: false
 permissions:
   contents: read
+concurrency:
+  group: photon16-wasm-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,7 +26,39 @@ jobs:
       - run: cargo +stable test --manifest-path rust/Cargo.toml
       - run: cargo +stable build --release --lib --target wasm32-unknown-unknown --manifest-path rust/Cargo.toml
       - run: node rust/verify-wasm.cjs rust/target/wasm32-unknown-unknown/release/photon16.wasm
+      - name: Prepare verified binary and provenance
+        run: |
+          mkdir -p verified
+          cp rust/target/wasm32-unknown-unknown/release/photon16.wasm verified/
+          (cd verified && sha256sum photon16.wasm > SHA256SUMS)
+          printf '%s\n' "$GITHUB_SHA" > verified/SOURCE_COMMIT
       - uses: actions/upload-artifact@v4
         with:
           name: photon16-wasm
-          path: rust/target/wasm32-unknown-unknown/release/photon16.wasm
+          path: verified/
+      - name: Stage complete tracked site
+        if: github.event_name == 'workflow_dispatch' && inputs.publish_pages && github.ref == 'refs/heads/main'
+        run: |
+          mkdir site
+          git archive HEAD | tar -x -C site
+          rm -rf site/.github
+          mkdir -p site/photon16/wasm
+          cp verified/* site/photon16/wasm/
+          touch site/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name == 'workflow_dispatch' && inputs.publish_pages && github.ref == 'refs/heads/main'
+        with:
+          path: site
+  deploy:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish_pages && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
