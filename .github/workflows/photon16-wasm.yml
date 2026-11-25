@@ -1,0 +1,22 @@
+name: PHOTON-16 WASM
+on:
+  push:
+    paths:
+      - 'rust/**'
+      - '.github/workflows/photon16-wasm.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup toolchain install stable --target wasm32-unknown-unknown
+      - run: cargo +stable test --manifest-path rust/Cargo.toml
+      - run: cargo +stable build --release --lib --target wasm32-unknown-unknown --manifest-path rust/Cargo.toml
+      - run: node rust/verify-wasm.cjs rust/target/wasm32-unknown-unknown/release/photon16.wasm
+      - uses: actions/upload-artifact@v4
+        with:
+          name: photon16-wasm
+          path: rust/target/wasm32-unknown-unknown/release/photon16.wasm
