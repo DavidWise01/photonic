@@ -1,4 +1,4 @@
-//! PHOTON-16 v0.98 — native dimensional kernel. .dlw
+//! PHOTON-16 v0.99 — native dimensional kernel. .dlw
 const RATES: [f64;4] = [0.0625,0.125,0.25,0.5];
 const WIDTHS: [u8;4] = [8,16,32,64];
 #[derive(Clone)]
@@ -198,4 +198,32 @@ fn resource_trials(pattern:usize,weight:usize)->[ResourceTrial;4]{let trials=RES
 fn resource_winner(trials:&[ResourceTrial;4])->usize{(0..4).min_by_key(|&i|(trials[i].cost,trials[i].budget)).unwrap()}
 #[no_mangle]pub extern "C" fn photon_resource(pattern:u32,weight:u32,index:u32,metric:u32)->f64{if pattern>3||weight>65536||index>3{return f64::NAN}let trials=resource_trials(pattern as usize,weight as usize);let r=trials[index as usize];match metric{0=>r.budget as f64,1=>r.allocations as f64,2=>r.evictions as f64,3=>r.residency as f64,4=>r.peak as f64,5=>r.cost as f64,6=>r.digest as f64,7=>resource_winner(&trials)as f64,_=>f64::NAN}}
 #[cfg(test)]mod resource_tests{use super::*;#[test]fn all_policies_preserve_evidence(){for pattern in 0..4{let trials=resource_trials(pattern,2048);let w=resource_winner(&trials);assert!(trials.iter().all(|r|r.cost>=trials[w].cost));assert_eq!(trials,resource_trials(pattern,2048));}}#[test]fn cost_extremes(){let low=resource_trials(0,0);assert_eq!(resource_winner(&low),0);let high=resource_trials(0,65536);assert_eq!(resource_winner(&high),1);assert_eq!(high[0].allocations,96);assert_eq!(high[1].allocations,1);}}
+}
+
+#[derive(Clone,Copy,Debug,PartialEq,Eq)]
+struct OnlineStep{budget:usize,cost:usize,allocations:usize,idle:usize,digest:u32}
+#[derive(Default)]
+struct OnlinePolicy{costs:[usize;4],completed:usize}
+impl OnlinePolicy{
+ fn choose(&self)->usize{if self.completed==0{return 2}(0..4).min_by_key(|&i|(self.costs[i],RESOURCE_BUDGETS[i])).unwrap()}
+ fn observe(&mut self,costs:[usize;4]){for(i,c)in costs.into_iter().enumerate(){self.costs[i]+=c;}self.completed+=1;}
+}
+fn online_trial(environment:&[bool],weight:usize)->Vec<OnlineStep>{
+ let paths=paths();let mem:[Buffer;8]=std::array::from_fn(|_|Buffer::new(64));let mut pools:[StoragePool<56>;5]=std::array::from_fn(|_|StoragePool::default());let mut capacity=CapacityPolicy::default();let mut policy=OnlinePolicy::default();let mut trace=Vec::new();let mut digest=2166136261;let mut total=0;
+ for(t,&diverse)in environment.iter().enumerate(){
+ let choice=policy.choose();let budget=RESOURCE_BUDGETS[choice];let mut costs=[0;4];let mut evidence=0;
+ for j in 0..5{let p=&mut pools[j];let before=p.allocations;let mut a=PendingTick::<56,true>::recycled(0,t,&mem,p,capacity.expanded);
+ for i in 0..192{let slot=(i*37+t)%192;let(c,f,e,lo,hi)=paths[slot];let l=if t%2==0{lo}else{hi};let value=if diverse{slot as f64/192.}else{(l+t)as f64/128.};a.observe_recycled(slot,&Observation{id:CodonId{g:0,t,c,f,e,l},value,prior:mem[c].get(l)},&paths,p);}
+ assert_eq!(a.diverse(&paths),diverse);let mut sealed=a.finish(&paths);let mut h=2166136261;for(slot,o)in sealed.by_ref().enumerate(){let expected=if diverse{slot as f64/192.}else{(o.id.l+t)as f64/128.};assert_eq!(o.value.to_bits(),expected.to_bits());let bits=o.value.to_bits();h=fold(fold(fold(h,slot as u32),bits as u32),(bits>>32)as u32);}if j==0{evidence=h}else{assert_eq!(h,evidence);}sealed.recycle(p);
+ let next_full=diverse||(capacity.expanded&&capacity.clean+1<RECOVERY_TICKS);p.trim(if j==4{budget}else{RESOURCE_BUDGETS[j]},next_full);p.checkpoint();let cost=p.idle_bytes()+weight*(p.allocations-before);if j<4{costs[j]=cost;}else{total+=cost;digest=fold(digest,h);trace.push(OnlineStep{budget,cost:total,allocations:p.allocations,idle:p.idle_bytes(),digest});}}
+ capacity.finish(diverse);policy.observe(costs);
+ }trace
+}
+fn online_environment(pattern:usize)->Vec<bool>{(0..96).map(|t|match pattern{0=>false,1=>t%32>=4&&t%32<12,2=>t>=4&&t<80,_=>t%3==1}).collect()}
+thread_local!{static ONLINE_RESULT:std::cell::RefCell<Vec<OnlineStep>>=const{std::cell::RefCell::new(Vec::new())};}
+#[no_mangle]pub extern "C" fn photon_online_run(pattern:u32,weight:u32)->u32{if pattern>3||weight>65536{return 0}let trace=online_trial(&online_environment(pattern as usize),weight as usize);let n=trace.len()as u32;ONLINE_RESULT.with(|r|*r.borrow_mut()=trace);n}
+#[no_mangle]pub extern "C" fn photon_online_metric(t:u32,k:u32)->f64{ONLINE_RESULT.with(|r|{let r=r.borrow();let Some(s)=r.get(t as usize)else{return f64::NAN};match k{0=>s.budget as f64,1=>s.cost as f64,2=>s.allocations as f64,3=>s.idle as f64,4=>s.digest as f64,_=>f64::NAN}})}
+#[cfg(test)]mod online_tests{use super::*;
+#[test]fn prefix_noninterference(){let a=online_environment(1);let mut b=a.clone();for x in &mut b[48..]{*x=!*x;}let x=online_trial(&a,2048);let y=online_trial(&b,2048);assert_eq!(x[..48],y[..48]);assert_eq!(x[48].budget,y[48].budget);assert_eq!(x,online_trial(&a,2048));}
+#[test]fn causal_cost_and_bounds(){for pattern in 0..4{let a=online_trial(&online_environment(pattern),2048);assert_eq!(a.len(),96);assert_eq!(a[0].budget,1536);assert!(a.iter().all(|s|RESOURCE_BUDGETS.contains(&s.budget)&&s.idle<=s.budget));assert!(a.windows(2).all(|w|w[1].cost>=w[0].cost&&w[1].allocations>=w[0].allocations));}}
 }
