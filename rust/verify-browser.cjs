@@ -1,10 +1,15 @@
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const http=require('node:http');
+const crypto=require('node:crypto');
 const path=require('node:path');
 const {chromium}=require('playwright');
 (async()=>{
  const root=path.resolve(process.argv[2]||'site');
+ const sourceCommit=fs.readFileSync(path.join(root,'photon16/wasm/SOURCE_COMMIT'),'utf8').trim();
+ const wasmSha256=crypto.createHash('sha256').update(fs.readFileSync(path.join(root,'photon16/wasm/photon16.wasm'))).digest('hex');
+ assert.match(sourceCommit,/^[0-9a-f]{40}$/);assert.equal(sourceCommit,process.env.GITHUB_SHA);
+ assert.equal(wasmSha256,fs.readFileSync(path.join(root,'photon16/wasm/SHA256SUMS'),'utf8').trim().split(/\s+/)[0]);
  const server=http.createServer((req,res)=>{
   const name=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);
   if(!name.startsWith(root+path.sep)){res.writeHead(403).end();return;}
@@ -19,10 +24,11 @@ const {chromium}=require('playwright');
  try{
   browser=await chromium.launch({headless:true});
   const page=await browser.newPage({viewport:{width:1280,height:900}});
-  const errors=[],failed=[];
+  const errors=[],failed=[],servedHashes=[];
   page.on('pageerror',e=>errors.push(e.message));
   page.on('response',r=>{if(r.url().includes('/photon16/')&&r.status()>=400)failed.push(r.url()+' '+r.status());});
   const url='http://127.0.0.1:'+server.address().port+'/photon16/';
+  page.on('response',r=>{if(r.url()===url+'wasm/photon16.wasm'){servedHashes.push(r.body().then(b=>crypto.createHash('sha256').update(b).digest('hex')));}});
   await page.goto(url,{waitUntil:'load'});
   const main=page.locator('section').filter({has:page.getByRole('heading',{name:/RUST WASM/})});
   await main.getByRole('button',{name:'Execute Rust',exact:true}).click();
@@ -37,9 +43,10 @@ const {chromium}=require('playwright');
   await online.getByRole('button',{name:'Execute causal Rust'}).click();
   await page.waitForFunction(()=>[...document.querySelectorAll('section pre')].some(x=>x.textContent.includes('"trace"')),{},{timeout:120000});
   const trace=JSON.parse(await online.locator('pre').textContent());assert.equal(trace.trace.length,96);assert.equal(trace.trace[0].budget,1536);assert.ok(trace.trace.every(x=>x.idle<=x.budget));
+  const served=await Promise.all(servedHashes);assert.ok(served.length>=3);assert.ok(served.every(h=>h===wasmSha256));
   assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);
   await main.scrollIntoViewIfNeeded();await main.screenshot({path:'verified/browser-rust.png'});
-  fs.writeFileSync('verified/BROWSER_ACCEPTANCE.json',JSON.stringify({browser:browser.version(),native,trials,online:trace,errors,failed},null,2));
+  fs.writeFileSync('verified/BROWSER_ACCEPTANCE.json',JSON.stringify({sourceCommit,wasmSha256,servedHashes:served,browser:browser.version(),native,trials,online:trace,errors,failed},null,2));
   console.log('Chromium native kernel, resource policies and causal trace PASS');
  }finally{if(browser)await browser.close();await new Promise(r=>server.close(r));}
 })().catch(e=>{console.error(e);process.exitCode=1;});
