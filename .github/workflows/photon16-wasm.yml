@@ -62,6 +62,7 @@ jobs:
           printf '%s\n' 'native-tests=PASS' 'wasm-verifier=PASS' 'same-runner-reproduction=PASS' 'browser-acceptance=PASS' > verified/QUALIFICATION
           node -e 'const fs=require("fs"),crypto=require("crypto"),assert=require("assert/strict");const e=JSON.parse(fs.readFileSync("verified/BROWSER_ACCEPTANCE.json"));assert.equal(e.sourceCommit,process.env.GITHUB_SHA);assert.equal(e.wasmSha256,crypto.createHash("sha256").update(fs.readFileSync("verified/photon16.wasm")).digest("hex"));assert.ok(e.servedHashes.length>=3&&e.servedHashes.every(h=>h===e.wasmSha256));'
           (cd verified && sha256sum photon16.wasm SOURCE_COMMIT SOURCE_INDEX RUST_TOOLCHAIN NODE_VERSION REPRODUCTION QUALIFICATION BROWSER_ACCEPTANCE.json browser-rust.png > RELEASE_SHA256SUMS && sha256sum -c RELEASE_SHA256SUMS)
+          node rust/adjudicate-release.cjs verified
           cp verified/* site/photon16/wasm/
       - uses: actions/upload-artifact@v4
         with:
