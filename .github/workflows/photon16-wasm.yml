@@ -18,9 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: rustup toolchain install stable --target wasm32-unknown-unknown
-      - run: cargo +stable test --manifest-path rust/Cargo.toml
-      - run: cargo +stable build --release --lib --target wasm32-unknown-unknown --manifest-path rust/Cargo.toml
+      - run: rustup toolchain install 1.85.1 --target wasm32-unknown-unknown
+      - run: cargo +1.85.1 test --manifest-path rust/Cargo.toml
+      - run: cargo +1.85.1 build --release --lib --target wasm32-unknown-unknown --manifest-path rust/Cargo.toml
       - run: node rust/verify-wasm.cjs rust/target/wasm32-unknown-unknown/release/photon16.wasm
       - name: Prepare verified binary and provenance
         run: |
@@ -28,6 +28,10 @@ jobs:
           cp rust/target/wasm32-unknown-unknown/release/photon16.wasm verified/
           (cd verified && sha256sum photon16.wasm > SHA256SUMS)
           printf '%s\n' "$GITHUB_SHA" > verified/SOURCE_COMMIT
+          rustc +1.85.1 --version --verbose > verified/RUST_TOOLCHAIN
+          node --version > verified/NODE_VERSION
+          git ls-files -s rust photon16/v83-rust-wasm.js .github/workflows/photon16-wasm.yml > verified/SOURCE_INDEX
+          printf '%s\n' 'native-tests=PASS' 'wasm-verifier=PASS' 'browser-acceptance=UNVERIFIED' > verified/QUALIFICATION
       - uses: actions/upload-artifact@v4
         with:
           name: photon16-wasm
