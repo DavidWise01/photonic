@@ -1,4 +1,4 @@
-//! PHOTON-16 v0.95 — native dimensional kernel. .dlw
+//! PHOTON-16 v0.96 — native dimensional kernel. .dlw
 const RATES: [f64;4] = [0.0625,0.125,0.25,0.5];
 const WIDTHS: [u8;4] = [8,16,32,64];
 #[derive(Clone)]
@@ -38,6 +38,7 @@ fn run_storage_mode<const N:usize,const ADAPT:bool>(order:usize)->Run{
  // Consume the observation accumulator before acquiring mutable predictor access.
  // Canonical records have been fully consumed.
  records.recycle(&mut pool);
+ pool.trim(IDLE_POOL_BUDGET,N==56&&ADAPT&&capacity.expanded);
  // Write phase: each address updated once, after observation completes.
  for c in 0..8{for l in 0..8{if n[c][l]==0{continue}let m=mem[c].get(l);let d=sum[c][l]/n[c][l] as f64-m;let ideal=m+RATES[rates[c]]*d;samples[c]+=1;for(k,&b)in WIDTHS.iter().enumerate(){probe[c][k]+=(quant(ideal,1.,b)-ideal).abs()+0.5*(quant(d,2.,b)-d).abs();}mem[c].set(l,ideal);mem[c].set(8+l,d);applied[c][l]=Some(rates[c]);out.updates+=1;}}
  }
@@ -140,8 +141,8 @@ impl CapacityPolicy{fn finish(&mut self,diverse:bool){if diverse{self.clean=0;if
 #[test]fn qualified_tick_sequence(){let paths=paths();let mem=fixture(0.);let mut policy=CapacityPolicy::default();let mut promotions=0;for(t,diverse)in [true,true,true,false,false,false,true,false,false,false,false,false].into_iter().enumerate(){let mut a=PendingTick::<56,true>::new(0,t,&mem);if policy.expanded{a.start_expanded();}let started=a.promoted.is_some();let mut full=PendingTick::<192>::new(0,t,&mem);for(slot,&(c,f,e,lo,hi))in paths.iter().enumerate(){let l=if t%2==0{lo}else{hi};let o=Observation{id:CodonId{g:0,t,c,f,e,l},value:if diverse{slot as f64/192.}else{l as f64/8.},prior:0.};a.observe(slot,&o,&paths);full.observe(slot,&o,&paths);}assert_eq!(a.diverse(&paths),diverse);if !started&&a.promoted.is_some(){promotions+=1;}policy.finish(a.diverse(&paths));for(x,y)in a.seal(&paths).zip(full.seal(&paths)){assert_eq!(x.id,y.id);assert_eq!(x.value.to_bits(),y.value.to_bits());}}assert_eq!(promotions,1);assert_eq!(policy.promotions,1);assert_eq!(policy.recoveries,1);assert!(!policy.expanded);}
 }
 
-struct StoragePool<const N:usize>{base:Option<Box<[f64;N]>>,full:Option<Box<[f64;192]>>,allocations:usize}
-impl<const N:usize> Default for StoragePool<N>{fn default()->Self{Self{base:None,full:None,allocations:0}}}
+struct StoragePool<const N:usize>{base:Option<Box<[f64;N]>>,full:Option<Box<[f64;192]>>,allocations:usize,evictions:usize}
+impl<const N:usize> Default for StoragePool<N>{fn default()->Self{Self{base:None,full:None,allocations:0,evictions:0}}}
 impl<const N:usize> StoragePool<N>{fn take_base(&mut self)->Box<[f64;N]>{self.base.take().unwrap_or_else(||{self.allocations+=1;Box::new([0.;N])})}fn take_full(&mut self)->Box<[f64;192]>{self.full.take().unwrap_or_else(||{self.allocations+=1;Box::new([0.;192])})}}
 struct SealedTick<'a,const N:usize>{g:usize,t:usize,memory:&'a [Buffer;8],paths:&'a [(usize,usize,usize,usize,usize)],records:Option<Box<[f64;N]>>,promoted:Option<Box<[f64;192]>>,next:usize}
 impl<'a,const N:usize> Iterator for SealedTick<'a,N>{type Item=Observation;fn next(&mut self)->Option<Observation>{if self.next==192{return None}let slot=self.next;self.next+=1;let(c,f,e,l0,l1)=self.paths[slot];let l=if self.t%2==0{l0}else{l1};let value=if let Some(full)=self.promoted.as_ref(){full[slot]}else{self.records.as_ref().unwrap()[if N==56{compact_address(c,l,self.t)}else{slot}]};Some(Observation{id:CodonId{g:self.g,t:self.t,c,f,e,l},value,prior:self.memory[c].get(l)})}}
@@ -150,4 +151,22 @@ impl<'a,const N:usize> SealedTick<'a,N>{fn recycle(self,pool:&mut StoragePool<N>
 #[test]fn recycled_storage_exact_parity(){let paths=paths();let mem=fixture(0.);let mut pool=StoragePool::<56>::default();let mut policy=CapacityPolicy::default();for t in 0..24{let diverse=(3..10).contains(&t)||(17..20).contains(&t);let mut a=PendingTick::<56,true>::recycled(0,t,&mem,&mut pool,policy.expanded);let mut full=PendingTick::<192>::new(0,t,&mem);assert_eq!(a.coverage,[0;3]);assert_eq!(a.seen,0);for i in 0..192{let slot=(i*37+t)%192;let(c,f,e,lo,hi)=paths[slot];let l=if t%2==0{lo}else{hi};let o=Observation{id:CodonId{g:0,t,c,f,e,l},value:if diverse{slot as f64/192.}else{(l+t) as f64/64.},prior:0.};a.observe_recycled(slot,&o,&paths,&mut pool);full.observe(slot,&o,&paths);}policy.finish(a.diverse(&paths));let mut sealed=a.finish(&paths);for(x,y)in sealed.by_ref().zip(full.seal(&paths)){assert_eq!(x.id,y.id);assert_eq!(x.value.to_bits(),y.value.to_bits());}sealed.recycle(&mut pool);}assert_eq!(pool.allocations,2);}
 #[test]#[should_panic]fn stale_values_do_not_complete_tick(){let p=paths();let mem=fixture(0.);let mut pool=StoragePool::<56>::default();pool.base=Some(Box::new([0.5;56]));let a=PendingTick::<56,true>::recycled(0,1,&mem,&mut pool,false);let _=a.finish(&p);}
 #[test]#[should_panic(expected="unconsumed sealed tick")]fn partial_iterator_not_recycled(){let p=paths();let mem=fixture(0.);let mut pool=StoragePool::<56>::default();let mut a=PendingTick::<56,true>::recycled(0,0,&mem,&mut pool,false);for(slot,&(c,f,e,l,_))in p.iter().enumerate(){a.observe_recycled(slot,&Observation{id:CodonId{g:0,t:0,c,f,e,l},value:0.,prior:0.},&p,&mut pool);}a.finish(&p).recycle(&mut pool);}
+}
+
+const IDLE_POOL_BUDGET:usize=1536;
+impl<const N:usize> StoragePool<N>{
+ fn idle_bytes(&self)->usize{self.base.as_ref().map_or(0,|_|N*8)+self.full.as_ref().map_or(0,|_|192*8)}
+ fn evict_base(&mut self){if self.base.take().is_some(){self.evictions+=1;}}
+ fn evict_full(&mut self){if self.full.take().is_some(){self.evictions+=1;}}
+ // Only idle, pool-owned allocations can be dropped. Prefer the next qualified capacity.
+ fn trim(&mut self,budget:usize,prefer_full:bool){
+  if prefer_full{let reserve=if self.full.is_none(){192*8}else{0};if self.idle_bytes().saturating_add(reserve)>budget{self.evict_base();}if self.idle_bytes()>budget{self.evict_full();}}
+  else{let reserve=if self.base.is_none(){N*8}else{0};if self.idle_bytes().saturating_add(reserve)>budget{self.evict_full();}if self.idle_bytes()>budget{self.evict_base();}}
+  assert!(self.idle_bytes()<=budget);
+ }
+}
+#[cfg(test)]mod eviction_tests{use super::*;
+ #[test]fn budget_and_preference(){for budget in [0,447,448,1535,1536,1983,1984,4096]{for prefer in [false,true]{let mut p=StoragePool::<56>::default();p.base=Some(Box::new([0.;56]));p.full=Some(Box::new([0.;192]));p.trim(budget,prefer);assert!(p.idle_bytes()<=budget);if budget>=1984{assert_eq!(p.evictions,0);}else if prefer&&budget>=1536{assert!(p.full.is_some()&&p.base.is_none());}else if !prefer&&budget>=448{assert!(p.base.is_some()&&p.full.is_none());}}}}
+ #[test]fn active_and_sealed_survive_zero_budget(){let paths=paths();let mem=fixture(0.);let mut pool=StoragePool::<56>::default();let mut a=PendingTick::<56,true>::recycled(0,0,&mem,&mut pool,false);for(slot,&(c,f,e,l,_))in paths.iter().enumerate(){let o=Observation{id:CodonId{g:0,t:0,c,f,e,l},value:slot as f64/192.,prior:0.};a.observe_recycled(slot,&o,&paths,&mut pool);pool.trim(0,false);}let mut sealed=a.finish(&paths);pool.trim(0,false);for(slot,o)in sealed.by_ref().enumerate(){assert_eq!(o.value.to_bits(),(slot as f64/192.).to_bits());}sealed.recycle(&mut pool);pool.trim(0,false);assert_eq!(pool.idle_bytes(),0);}
+ #[test]fn budgeted_sequence_parity(){let paths=paths();let mem=fixture(0.);for budget in [0,448,1536,1984]{let mut pool=StoragePool::<56>::default();let mut policy=CapacityPolicy::default();for t in 0..24{let diverse=(3..10).contains(&t)||(17..20).contains(&t);let mut a=PendingTick::<56,true>::recycled(0,t,&mem,&mut pool,policy.expanded);let mut full=PendingTick::<192>::new(0,t,&mem);for i in 0..192{let slot=(i*37+t)%192;let(c,f,e,lo,hi)=paths[slot];let l=if t%2==0{lo}else{hi};let o=Observation{id:CodonId{g:0,t,c,f,e,l},value:if diverse{slot as f64/192.}else{(l+t) as f64/64.},prior:0.};a.observe_recycled(slot,&o,&paths,&mut pool);full.observe(slot,&o,&paths);}policy.finish(a.diverse(&paths));let mut sealed=a.finish(&paths);for(x,y)in sealed.by_ref().zip(full.seal(&paths)){assert_eq!(x.id,y.id);assert_eq!(x.value.to_bits(),y.value.to_bits());assert_eq!(x.prior.to_bits(),y.prior.to_bits());}sealed.recycle(&mut pool);pool.trim(budget,policy.expanded);assert!(pool.idle_bytes()<=budget);}}}
 }
