@@ -44,6 +44,8 @@ jobs:
         run: node rust/test-composite-qualification.cjs
       - name: Cross-module adversarial integration
         run: node rust/test-composite-adversarial.cjs
+      - name: Journal retained checkpoint regressions
+        run: node rust/test-journal-checkpoint.cjs
       - run: rustup toolchain install 1.85.1 --target wasm32-unknown-unknown
       - run: cargo +1.85.1 test --manifest-path rust/Cargo.toml
       - name: Native Rust JavaScript qualification parity
