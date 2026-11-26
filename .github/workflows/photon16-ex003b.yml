@@ -1,0 +1,56 @@
+name: PHOTON-16 EX-003B frozen regression execution
+on:
+  push:
+    paths:
+      - '.github/workflows/photon16-ex003b.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  frozen-regressions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 5d59333ce6c2b103d4634705175d6fcba76666fb
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Verify exact frozen sources and execute both suites
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir evidence
+          git rev-parse HEAD > evidence/SOURCE_COMMIT
+          node --version > evidence/NODE_VERSION
+          cat > evidence/EXPECTED_BLOBS <<'EOF'
+          65aca58c7a6079e485c98b78aaefb36c65915f70 rust/custody-registry.cjs
+          f43aaafb137729488d72bc722322e5b476c34fd1 rust/temporal-witness.cjs
+          9f21de24c2ef52aebaf9535d9f0eb66961c7ee16 rust/checkpoint-freshness.cjs
+          0515d6521955d0fd0c787898ae13782e45482d7b rust/custodian-transition.cjs
+          042fed613e5662d334547a8ae8f5bbfa77827d82 rust/registry-fork.cjs
+          dd7dec427f4328cb716d49e0e280cb0b3269f376 rust/independent-custody.cjs
+          4dada71dc6022ea1bb1fc767da4db2e3524e7277 rust/test-registry-fork.cjs
+          9e360507ccce08920431d77bbe521a5c4262586f rust/test-independent-custody.cjs
+          EOF
+          while read -r expected file; do
+            actual="$(git hash-object "$file")"
+            printf '%s %s\n' "$actual" "$file" >> evidence/OBSERVED_BLOBS
+            test "$actual" = "$expected"
+            sha256sum "$file" >> evidence/SHA256SUMS
+          done < evidence/EXPECTED_BLOBS
+          set +e
+          node rust/test-registry-fork.cjs > evidence/EQ-004.log 2>&1
+          a=$?
+          node rust/test-independent-custody.cjs > evidence/EQ-005.log 2>&1
+          b=$?
+          set -e
+          cat evidence/EQ-004.log evidence/EQ-005.log
+          printf 'EQ-004=%s\nEQ-005=%s\n' "$a" "$b" | tee evidence/EXIT_CODES
+          printf 'releaseAuthority=HOLD\nindependence=UNVERIFIED\n' > evidence/AUTHORITY
+          test "$a" -eq 0 && test "$b" -eq 0
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: EX-003B-execution-evidence
+          path: evidence/
