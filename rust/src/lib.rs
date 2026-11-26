@@ -229,3 +229,5 @@ thread_local!{static ONLINE_RESULT:std::cell::RefCell<Vec<OnlineStep>>=const{std
 }
 
 pub mod qualification;
+
+pub mod evidence_journal;
