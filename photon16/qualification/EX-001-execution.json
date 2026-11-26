@@ -1,0 +1,85 @@
+{
+  "schema": "photon16-local-execution-v1",
+  "turn": "EX-001",
+  "baselineCommit": "5d59333ce6c2b103d4634705175d6fcba76666fb",
+  "runtime": "Node.js v22.16.0",
+  "environment": "local isolated container; sources reconstructed and matched against frozen Git blob IDs",
+  "files": [
+    {
+      "path": "rust/blind-witness.cjs",
+      "blob": "953838ff03d95052ec86641cd16362b70781516f",
+      "sha256": "96b62b03540a04b925e55d67a1a8bc118b86a33cb3511ab294f15fa11066effe"
+    },
+    {
+      "path": "rust/external-reproduction.cjs",
+      "blob": "646b84fe1553de07f03ab7b0aed11ae282089696",
+      "sha256": "7f0b0cffc0418b41a821fb653d99c528676512ec5e22ec84726ec3a60aa747ec"
+    },
+    {
+      "path": "rust/test-blind-witness.cjs",
+      "blob": "40b337be0c428864f77573f6ce44a4cfb8f7474c",
+      "sha256": "2b2e44715486094a801ffbf7e1d8b3f117886944725a9bfc584463519bcf40e7"
+    },
+    {
+      "path": "rust/test-external-reproduction.cjs",
+      "blob": "703e515b4693707b3a804b43c2c7f2558ec49018",
+      "sha256": "2e7f126741d9eec7779e3e97cbbd2f6f01cf4e02078f92c934b688dfa8ea4178"
+    }
+  ],
+  "suites": [
+    {
+      "name": "EQ-006",
+      "command": "node test-blind-witness.cjs",
+      "exitCode": 0,
+      "controls": 3,
+      "rejections": 16,
+      "stdout": [
+        "REJECTED missing seals",
+        "REJECTED duplicate seals",
+        "REJECTED tampered seal",
+        "REJECTED missing barrier",
+        "REJECTED incorrect barrier digest",
+        "REJECTED incorrect barrier signer",
+        "REJECTED missing reveals",
+        "REJECTED duplicate reveals",
+        "REJECTED changed observation",
+        "REJECTED changed salt",
+        "REJECTED wrong reveal signature",
+        "REJECTED reused salts",
+        "REJECTED missing trust",
+        "REJECTED shared ancestry",
+        "REJECTED shared coordinator key",
+        "REJECTED stale context",
+        "SYNTHETIC ONLY: 3 controls and 16 rejection cases. Actual acquisition isolation unverified."
+      ]
+    },
+    {
+      "name": "EQ-007",
+      "command": "node test-external-reproduction.cjs",
+      "exitCode": 0,
+      "controls": 6,
+      "rejections": 8,
+      "stdout": [
+        "REJECTED missing reports",
+        "REJECTED duplicate reports",
+        "REJECTED changed report after reveal",
+        "REJECTED invalid report digest",
+        "REJECTED invalid reference",
+        "REJECTED foreign reference",
+        "REJECTED missing barrier",
+        "REJECTED stale context",
+        "SYNTHETIC ONLY: 6 classification controls and 8 rejection cases. No external execution attested."
+      ]
+    }
+  ],
+  "scope": "Two synthetic Node regression suites only; other accumulated suites not executed",
+  "blockers": [
+    "Direct GitHub clone DNS failure",
+    "Cargo absent"
+  ],
+  "releaseAuthority": "HOLD",
+  "independence": "UNVERIFIED",
+  "nativeRust": "UNVERIFIED",
+  "pagesDeployment": "UNVERIFIED",
+  "watermark": ".dlw"
+}
