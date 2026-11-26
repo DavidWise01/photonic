@@ -20,6 +20,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Adversarial release adjudication regressions
         run: node rust/test-adjudicate.cjs
+      - name: Witness authority separation regressions
+        run: node rust/test-witness.cjs
       - run: rustup toolchain install 1.85.1 --target wasm32-unknown-unknown
       - run: cargo +1.85.1 test --manifest-path rust/Cargo.toml
       - name: Reproduce WASM from two clean source trees
@@ -65,6 +67,7 @@ jobs:
           node -e 'const fs=require("fs"),crypto=require("crypto"),assert=require("assert/strict");const e=JSON.parse(fs.readFileSync("verified/BROWSER_ACCEPTANCE.json"));assert.equal(e.sourceCommit,process.env.GITHUB_SHA);assert.equal(e.wasmSha256,crypto.createHash("sha256").update(fs.readFileSync("verified/photon16.wasm")).digest("hex"));assert.ok(e.servedHashes.length>=3&&e.servedHashes.every(h=>h===e.wasmSha256));'
           (cd verified && sha256sum photon16.wasm SOURCE_COMMIT SOURCE_INDEX RUST_TOOLCHAIN NODE_VERSION REPRODUCTION QUALIFICATION BROWSER_ACCEPTANCE.json browser-rust.png > RELEASE_SHA256SUMS && sha256sum -c RELEASE_SHA256SUMS)
           node rust/adjudicate-release.cjs verified
+          node rust/witness-authority.cjs verified
           cp verified/* site/photon16/wasm/
       - uses: actions/upload-artifact@v4
         with:
