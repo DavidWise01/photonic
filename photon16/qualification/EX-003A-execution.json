@@ -1,0 +1,96 @@
+{
+  "schema": "photon16-local-execution-v1",
+  "turn": "EX-003A",
+  "baselineCommit": "5d59333ce6c2b103d4634705175d6fcba76666fb",
+  "runtime": "Node.js v22.16.0",
+  "files": [
+    {
+      "path": "rust/checkpoint-freshness.cjs",
+      "blob": "9f21de24c2ef52aebaf9535d9f0eb66961c7ee16",
+      "sha256": "f07550c763692b1e3edc73ccd35fc27d4c0319b10e049c8977e1259794bc0d29"
+    },
+    {
+      "path": "rust/custodian-transition.cjs",
+      "blob": "0515d6521955d0fd0c787898ae13782e45482d7b",
+      "sha256": "87f74bb38aee2d30c25214b14d3612930cff14ce7fed287f091f9a9dc7b802d6"
+    },
+    {
+      "path": "rust/custody-registry.cjs",
+      "blob": "65aca58c7a6079e485c98b78aaefb36c65915f70",
+      "sha256": "5cc0fede3bdd61c026b306cc19ec5aded153863204d222e07c92088d03352057"
+    },
+    {
+      "path": "rust/temporal-witness.cjs",
+      "blob": "f43aaafb137729488d72bc722322e5b476c34fd1",
+      "sha256": "24aa005b47e00b4d02f2c48300626554a5023827fa85f40e024ac8aae40837da"
+    },
+    {
+      "path": "rust/test-checkpoint.cjs",
+      "blob": "25e0cd89a7f1f96153cbeb73d91695887a2e6c00",
+      "sha256": "a9ab54f756b2eb55e605aecc6d71b5f20c48dea6dd1b56242c8ae12e4b01c3ea"
+    },
+    {
+      "path": "rust/test-custodian-transition.cjs",
+      "blob": "45b4564f33f6f54d54524a78f046a7381ceda8a1",
+      "sha256": "1c0a0554243baef57fe129124a614c93fdd5421beb40ee9b848943bafd3e92a6"
+    }
+  ],
+  "suites": [
+    {
+      "name": "EQ-002",
+      "command": "node test-checkpoint.cjs",
+      "exitCode": 0,
+      "controls": 2,
+      "rejections": 12,
+      "compositionChecks": 2,
+      "stdout": [
+        "REJECTED rollback",
+        "REJECTED wrong registry",
+        "REJECTED wrong challenge",
+        "REJECTED incorrect predecessor",
+        "REJECTED incorrect predecessor sequence",
+        "REJECTED wrong signing key",
+        "REJECTED wrong fingerprint",
+        "REJECTED truncated history",
+        "REJECTED forked prefix",
+        "REJECTED wrong final head",
+        "REJECTED missing retained anchor",
+        "REJECTED missing challenge",
+        "SYNTHETIC ONLY: two checkpoint controls, twelve rejection cases and two composition checks. No trusted UTC or external custody established."
+      ]
+    },
+    {
+      "name": "EQ-003",
+      "command": "node test-custodian-transition.cjs",
+      "exitCode": 0,
+      "controls": 2,
+      "rejections": 12,
+      "stdout": [
+        "REJECTED retired receipt key",
+        "REJECTED retired event key",
+        "REJECTED wrong old signature",
+        "REJECTED wrong new signature",
+        "REJECTED wrong ancestry",
+        "REJECTED wrong head",
+        "REJECTED reused witness key",
+        "REJECTED retroactive rotation",
+        "REJECTED transition rollback",
+        "REJECTED transition stripped at same registry sequence",
+        "REJECTED wrong transition head",
+        "REJECTED wrong challenge",
+        "SYNTHETIC ONLY: 2 controls and 12 rejection cases; authority HOLD."
+      ]
+    }
+  ],
+  "scope": "30 synthetic scenarios in two local suites; six exact Git blob matches; no source corrections",
+  "priorReportedScenarios": 58,
+  "combinedRecordedScenarios": 88,
+  "blockers": [
+    "GitHub DNS resolution unavailable locally",
+    "Cargo absent from PATH"
+  ],
+  "nativeRust": "UNVERIFIED",
+  "pagesDeployment": "UNVERIFIED",
+  "releaseAuthority": "HOLD",
+  "watermark": ".dlw"
+}
