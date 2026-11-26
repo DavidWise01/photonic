@@ -1,0 +1,63 @@
+name: PHOTON-16 EX-004 WASM reproduction evidence
+on:
+  push:
+    paths:
+      - '.github/workflows/photon16-ex004-wasm.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 5d59333ce6c2b103d4634705175d6fcba76666fb
+      - name: Capture two clean builds and executable verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir evidence
+          git rev-parse HEAD > evidence/SOURCE_COMMIT
+          test "$(cat evidence/SOURCE_COMMIT)" = 5d59333ce6c2b103d4634705175d6fcba76666fb
+          git ls-files -s rust > evidence/SOURCE_INDEX
+          printf 'releaseAuthority=HOLD\nexternalIndependence=UNVERIFIED\n' > evidence/AUTHORITY
+          rustup toolchain install 1.85.1 --target wasm32-unknown-unknown > evidence/INSTALL.log 2>&1 || { cat evidence/INSTALL.log; exit 1; }
+          rustc +1.85.1 --version --verbose > evidence/RUST_VERSION
+          node --version > evidence/NODE_VERSION
+          failed=0
+          for lane in a b; do
+            root="$RUNNER_TEMP/ex004-$lane"
+            mkdir -p "$root"
+            git archive HEAD | tar -x -C "$root"
+            set +e
+            CARGO_INCREMENTAL=0 RUSTFLAGS="--remap-path-prefix=$root=/photon" cargo +1.85.1 build --offline --release --lib --target wasm32-unknown-unknown --manifest-path "$root/rust/Cargo.toml" --target-dir "$root/target" > "evidence/BUILD-$lane.log" 2>&1
+            code=$?
+            set -e
+            printf 'build_%s=%s\n' "$lane" "$code" >> evidence/EXIT_CODES
+            cat "evidence/BUILD-$lane.log"
+            if [ "$code" -eq 0 ]; then
+              cp "$root/target/wasm32-unknown-unknown/release/photon16.wasm" "evidence/photon16-$lane.wasm"
+            else
+              failed=1
+            fi
+          done
+          test "$failed" -eq 0
+          (cd evidence && sha256sum photon16-a.wasm photon16-b.wasm > SHA256SUMS)
+          set +e
+          cmp evidence/photon16-a.wasm evidence/photon16-b.wasm > evidence/COMPARE.log 2>&1
+          c=$?
+          printf 'byte_compare=%s\n' "$c" >> evidence/EXIT_CODES
+          node rust/verify-wasm.cjs evidence/photon16-a.wasm > evidence/VERIFY-a.log 2>&1
+          a=$?
+          node rust/verify-wasm.cjs evidence/photon16-b.wasm > evidence/VERIFY-b.log 2>&1
+          b=$?
+          printf 'verify_a=%s\nverify_b=%s\n' "$a" "$b" >> evidence/EXIT_CODES
+          cat evidence/VERIFY-a.log evidence/VERIFY-b.log
+          set -e
+          test "$c" -eq 0 && test "$a" -eq 0 && test "$b" -eq 0
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: EX-004-wasm-evidence
+          path: evidence/
