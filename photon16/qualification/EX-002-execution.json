@@ -1,0 +1,82 @@
+{
+  "schema": "photon16-local-execution-v1",
+  "turn": "EX-002",
+  "baselineCommit": "5d59333ce6c2b103d4634705175d6fcba76666fb",
+  "runtime": "Node.js v22.16.0",
+  "environment": "local container; exact source reconstruction verified by git hash-object",
+  "files": [
+    {
+      "path": "rust/custody-registry.cjs",
+      "blob": "65aca58c7a6079e485c98b78aaefb36c65915f70",
+      "sha256": "5cc0fede3bdd61c026b306cc19ec5aded153863204d222e07c92088d03352057"
+    },
+    {
+      "path": "rust/temporal-witness.cjs",
+      "blob": "f43aaafb137729488d72bc722322e5b476c34fd1",
+      "sha256": "24aa005b47e00b4d02f2c48300626554a5023827fa85f40e024ac8aae40837da"
+    },
+    {
+      "path": "rust/test-custody.cjs",
+      "blob": "bf9504fbcd0eef9d4d20e241470ddf412ab550ef",
+      "sha256": "9940fc1752e1b1aed6b29ed62844e933c197b2e4d84db90759204db050413569"
+    },
+    {
+      "path": "rust/test-temporal-witness.cjs",
+      "blob": "0ea95fbc291beecdba08f251d6040d0839cb85f8",
+      "sha256": "8728b64b214be70f54a3a95e383adffd63aa7bc0107e845427894c2330f3eb61"
+    }
+  ],
+  "suites": [
+    {
+      "name": "RC7",
+      "command": "node test-custody.cjs",
+      "exitCode": 0,
+      "controls": 1,
+      "rejections": 12,
+      "stdout": [
+        "REJECTED missing anchor",
+        "REJECTED producer custodian",
+        "REJECTED rollback",
+        "REJECTED reordered events",
+        "REJECTED changed custody digest",
+        "REJECTED producer witness",
+        "REJECTED duplicate root",
+        "REJECTED duplicate key",
+        "REJECTED wrong old rotation key",
+        "REJECTED wrong ancestry rotation",
+        "REJECTED retired key reuse",
+        "REJECTED revoked identity rotation",
+        "SYNTHETIC ONLY: custody lifecycle control and 12 rejection scenarios. No external custody established."
+      ]
+    },
+    {
+      "name": "EQ-001",
+      "command": "node test-temporal-witness.cjs",
+      "exitCode": 0,
+      "controls": 2,
+      "rejections": 10,
+      "stdout": [
+        "REJECTED old checkpoint observations",
+        "REJECTED old checkpoint history",
+        "REJECTED old key signs current checkpoint",
+        "REJECTED missing external anchor",
+        "REJECTED sequence mismatch",
+        "REJECTED duplicate witness",
+        "REJECTED incomplete witnesses",
+        "REJECTED different binary",
+        "REJECTED unqualified candidate",
+        "REJECTED revoked key at current checkpoint",
+        "SYNTHETIC ONLY: 2 positive controls, 10 rejection cases; external independence and release authority remain HOLD."
+      ]
+    }
+  ],
+  "scope": "Two synthetic suites only; no source corrections made",
+  "blockers": [
+    "raw.githubusercontent.com DNS resolution failed",
+    "Cargo not present on PATH"
+  ],
+  "releaseAuthority": "HOLD",
+  "nativeRust": "UNVERIFIED",
+  "pagesDeployment": "UNVERIFIED",
+  "watermark": ".dlw"
+}
