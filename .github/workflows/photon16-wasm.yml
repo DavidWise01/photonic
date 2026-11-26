@@ -42,6 +42,8 @@ jobs:
         run: node rust/test-live-pages.cjs
       - name: Complete synthetic V3 composition
         run: node rust/test-composite-qualification.cjs
+      - name: Cross-module adversarial integration
+        run: node rust/test-composite-adversarial.cjs
       - run: rustup toolchain install 1.85.1 --target wasm32-unknown-unknown
       - run: cargo +1.85.1 test --manifest-path rust/Cargo.toml
       - name: Reproduce WASM from two clean source trees
