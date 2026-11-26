@@ -1,0 +1,97 @@
+{
+  "schema": "photon16-phase-freeze-v1",
+  "phase": "External Qualification I",
+  "turn": "EQ-008",
+  "baselineCommit": "5d59333ce6c2b103d4634705175d6fcba76666fb",
+  "scope": "16 selected phase source and test blob identities, not a compiled binary or execution freeze",
+  "status": "SOURCE_BOUNDARY_CLOSED",
+  "files": [
+    {
+      "path": "rust/temporal-witness.cjs",
+      "blob": "f43aaafb137729488d72bc722322e5b476c34fd1"
+    },
+    {
+      "path": "rust/checkpoint-freshness.cjs",
+      "blob": "9f21de24c2ef52aebaf9535d9f0eb66961c7ee16"
+    },
+    {
+      "path": "rust/custodian-transition.cjs",
+      "blob": "0515d6521955d0fd0c787898ae13782e45482d7b"
+    },
+    {
+      "path": "rust/registry-fork.cjs",
+      "blob": "042fed613e5662d334547a8ae8f5bbfa77827d82"
+    },
+    {
+      "path": "rust/independent-custody.cjs",
+      "blob": "dd7dec427f4328cb716d49e0e280cb0b3269f376"
+    },
+    {
+      "path": "rust/blind-witness.cjs",
+      "blob": "953838ff03d95052ec86641cd16362b70781516f"
+    },
+    {
+      "path": "rust/external-reproduction.cjs",
+      "blob": "646b84fe1553de07f03ab7b0aed11ae282089696"
+    },
+    {
+      "path": "rust/custody-registry.cjs",
+      "blob": "65aca58c7a6079e485c98b78aaefb36c65915f70"
+    },
+    {
+      "path": "rust/test-temporal-witness.cjs",
+      "blob": "0ea95fbc291beecdba08f251d6040d0839cb85f8"
+    },
+    {
+      "path": "rust/test-checkpoint.cjs",
+      "blob": "25e0cd89a7f1f96153cbeb73d91695887a2e6c00"
+    },
+    {
+      "path": "rust/test-custodian-transition.cjs",
+      "blob": "45b4564f33f6f54d54524a78f046a7381ceda8a1"
+    },
+    {
+      "path": "rust/test-registry-fork.cjs",
+      "blob": "4dada71dc6022ea1bb1fc767da4db2e3524e7277"
+    },
+    {
+      "path": "rust/test-independent-custody.cjs",
+      "blob": "9e360507ccce08920431d77bbe521a5c4262586f"
+    },
+    {
+      "path": "rust/test-blind-witness.cjs",
+      "blob": "40b337be0c428864f77573f6ce44a4cfb8f7474c"
+    },
+    {
+      "path": "rust/test-external-reproduction.cjs",
+      "blob": "703e515b4693707b3a804b43c2c7f2558ec49018"
+    },
+    {
+      "path": ".github/workflows/photon16-wasm.yml",
+      "blob": "c27cf666d982cab905420d47bad80bcb21070136"
+    }
+  ],
+  "qualification": {
+    "regressionExecution": "UNVERIFIED",
+    "nativeRust": "UNVERIFIED",
+    "wasmReproduction": "UNVERIFIED",
+    "chromium": "UNVERIFIED",
+    "pagesDeployment": "UNVERIFIED",
+    "productionCustody": "UNVERIFIED",
+    "independentAcquisition": "UNVERIFIED",
+    "externalReproduction": "UNVERIFIED",
+    "globalAntiRollback": "UNVERIFIED",
+    "trustedUTC": "UNVERIFIED",
+    "releaseAuthority": "HOLD"
+  },
+  "limitations": [
+    "External trust and retained checkpoints required",
+    "Legacy API downgrade not fenced",
+    "Fork visibility requires both histories",
+    "Declared ancestry does not establish independence",
+    "Commitments do not establish isolation",
+    "Reference and raw traces not externally authenticated",
+    "No production keys enrolled"
+  ],
+  "watermark": ".dlw"
+}
