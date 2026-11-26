@@ -9,7 +9,7 @@ function qualify(candidate,records,events,anchor){
  if(!anchor||!hex(anchor.head,64)||!Number.isSafeInteger(anchor.sequence)||anchor.sequence<0||!Array.isArray(anchor.producerRoots)||!anchor.producerRoots.length)return hold('MISSING_EXTERNAL_ANCHOR');
  if(!candidate||candidate.status!=='STAGED_BUNDLE_PASS'||!hex(candidate.sourceCommit,40)||!hex(candidate.wasmSha256,64)||!hex(candidate.manifestSha256,64))return hold('INVALID_CANDIDATE');
  let state;
- try{state=replay(events,anchor.custodian,anchor.producerRoots,anchor.head);if(state.events!==anchor.sequence)return hold('SEQUENCE_MISMATCH');}catch{return hold('CUSTODY_REPLAY_REJECTED');}
+ try{state=replay(events,anchor.custodian,anchor.producerRoots,anchor.head,anchor.transitions||[]);if(state.events!==anchor.sequence)return hold('SEQUENCE_MISMATCH');}catch{return hold('CUSTODY_REPLAY_REJECTED');}
  if(!Array.isArray(records)||records.length!==3)return hold('THREE_ROOTS_REQUIRED');
  const seen=new Set(),roots=new Set(),keys=new Set();
  for(const r of records){
