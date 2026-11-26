@@ -1,0 +1,107 @@
+{
+  "schema": "photon16-execution-boundary-v1",
+  "phase": "Execution Qualification II",
+  "turn": "EX-008",
+  "baselineCommit": "e56ae29b7f97ff0c54ec60b4fe6ce22474785aff",
+  "status": "SOURCE_BOUNDARY_CLOSED_EXECUTION_PARTIAL",
+  "files": [
+    {
+      "path": "photon16/qualification/EQ-008-freeze.json",
+      "blob": "90e1930a5e940fce31c395be42dc4307ebc2acc4"
+    },
+    {
+      "path": "photon16/qualification/EX-001-execution.json",
+      "blob": "bfa9d42807103a6c1c0b388c35d40f324887259d"
+    },
+    {
+      "path": "photon16/qualification/EX-002-execution.json",
+      "blob": "6ebec54c59cac33f14e5b8686ef15fbeb41e901c"
+    },
+    {
+      "path": "photon16/qualification/EX-003A-execution.json",
+      "blob": "d39784bd124dd92c3de8c64056517139b4b213e2"
+    },
+    {
+      "path": ".github/workflows/photon16-ex003b.yml",
+      "blob": "61362024d769d644459268b14ba610baec362abf"
+    },
+    {
+      "path": ".github/workflows/photon16-ex003c-native.yml",
+      "blob": "54897bba25933cc674835c39ba2f33c66c29597c"
+    },
+    {
+      "path": ".github/workflows/photon16-ex004-wasm.yml",
+      "blob": "2a68e5e35e18c884ac1e6d292dfa8b2455b00067"
+    },
+    {
+      "path": "rust/verify-browser.cjs",
+      "blob": "0c18e92d874a72a6c18f16959b61c6e435bf2ca2"
+    },
+    {
+      "path": "rust/verify-live-pages.cjs",
+      "blob": "6b781e0a139c906aa9486f7444b610b28eec5157"
+    },
+    {
+      "path": "rust/qualification-gate.cjs",
+      "blob": "ec9bdeb5eaa5c0151d811ca5491f7c28f4b82785"
+    },
+    {
+      "path": "rust/test-live-pages.cjs",
+      "blob": "13ff488f72fea249b09e57dfbd74eb4750c61ba9"
+    },
+    {
+      "path": ".github/workflows/photon16-wasm.yml",
+      "blob": "c61e07a63942718087ccbe190c2c9f90b90564c8"
+    }
+  ],
+  "recordedEvidence": {
+    "status": "REPOSITORY_RECORDED_NOT_REEXECUTED_THIS_TURN",
+    "suites": [
+      {
+        "suite": "RC7",
+        "reportedPassingScenarios": 13
+      },
+      {
+        "suite": "EQ-001",
+        "reportedPassingScenarios": 12
+      },
+      {
+        "suite": "EQ-002",
+        "reportedPassingScenarios": 16
+      },
+      {
+        "suite": "EQ-003",
+        "reportedPassingScenarios": 14
+      },
+      {
+        "suite": "EQ-006",
+        "reportedPassingScenarios": 19
+      },
+      {
+        "suite": "EQ-007",
+        "reportedPassingScenarios": 14
+      }
+    ],
+    "reportedPassingScenarios": 88,
+    "independentWitness": "UNVERIFIED"
+  },
+  "pending": {
+    "EQ004": "13 planned checks",
+    "EQ005": "16 planned scenarios",
+    "EX007": "19 authored scenarios; full composite positive path absent",
+    "nativeRust": "UNVERIFIED",
+    "wasmReproduction": "UNVERIFIED",
+    "chromium": "UNVERIFIED",
+    "livePages": "UNVERIFIED",
+    "productionCustody": "UNVERIFIED",
+    "repositoryWideProtocolEnforcement": "UNVERIFIED"
+  },
+  "limitations": [
+    "Earlier local execution claims retained as recorded evidence, not independently reproduced in this freeze",
+    "Workflow status discovery cannot enumerate push runs via PR-only endpoint",
+    "Source closure does not imply test completion",
+    "Freeze scope is selected files rather than entire repository"
+  ],
+  "releaseAuthority": "HOLD",
+  "watermark": ".dlw"
+}
