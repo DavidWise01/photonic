@@ -1,0 +1,48 @@
+name: PHOTON-16 EX-003C native evidence
+on:
+  push:
+    paths:
+      - '.github/workflows/photon16-ex003c-native.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 5d59333ce6c2b103d4634705175d6fcba76666fb
+      - name: Record frozen source and native execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir evidence
+          git rev-parse HEAD > evidence/SOURCE_COMMIT
+          test "$(cat evidence/SOURCE_COMMIT)" = 5d59333ce6c2b103d4634705175d6fcba76666fb
+          git ls-files -s rust > evidence/SOURCE_INDEX
+          test "$(git hash-object rust/Cargo.toml)" = 32892fa7f69b0d4f93f2492ea977267a73bd03e3
+          test "$(git hash-object rust/src/lib.rs)" = 9008cba8f9c1b5b8acf5015d398955ba3ddfe8e9
+          printf 'releaseAuthority=HOLD\nexternalIndependence=UNVERIFIED\n' > evidence/AUTHORITY
+          set +e
+          rustup toolchain install 1.85.1 > evidence/TOOLCHAIN_INSTALL.log 2>&1
+          a=$?
+          printf 'toolchain_install=%s\n' "$a" > evidence/EXIT_CODES
+          if [ "$a" -ne 0 ]; then cat evidence/TOOLCHAIN_INSTALL.log; exit "$a"; fi
+          rustc +1.85.1 --version --verbose > evidence/RUST_VERSION
+          cargo +1.85.1 --version > evidence/CARGO_VERSION
+          cargo +1.85.1 test --offline --manifest-path rust/Cargo.toml > evidence/NATIVE_TEST.log 2>&1
+          b=$?
+          printf 'native_test=%s\n' "$b" >> evidence/EXIT_CODES
+          cat evidence/NATIVE_TEST.log
+          cargo +1.85.1 build --offline --release --manifest-path rust/Cargo.toml > evidence/NATIVE_BUILD.log 2>&1
+          c=$?
+          printf 'native_build=%s\n' "$c" >> evidence/EXIT_CODES
+          cat evidence/NATIVE_BUILD.log
+          set -e
+          test "$b" -eq 0 && test "$c" -eq 0
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: EX-003C-native-evidence
+          path: evidence/
