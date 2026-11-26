@@ -227,3 +227,5 @@ thread_local!{static ONLINE_RESULT:std::cell::RefCell<Vec<OnlineStep>>=const{std
 #[test]fn prefix_noninterference(){let a=online_environment(1);let mut b=a.clone();for x in &mut b[48..]{*x=!*x;}let x=online_trial(&a,2048);let y=online_trial(&b,2048);assert_eq!(x[..48],y[..48]);assert_eq!(x[48].budget,y[48].budget);assert_eq!(x,online_trial(&a,2048));}
 #[test]fn causal_cost_and_bounds(){for pattern in 0..4{let a=online_trial(&online_environment(pattern),2048);assert_eq!(a.len(),96);assert_eq!(a[0].budget,1536);assert!(a.iter().all(|s|RESOURCE_BUDGETS.contains(&s.budget)&&s.idle<=s.budget));assert!(a.windows(2).all(|w|w[1].cost>=w[0].cost&&w[1].allocations>=w[0].allocations));}}
 }
+
+pub mod qualification;
