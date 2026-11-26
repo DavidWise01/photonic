@@ -1,0 +1,87 @@
+{
+  "schema": "photon16-operational-integration-freeze-v1",
+  "phase": "Operational Integration III",
+  "baselineCommit": "6071e8fab15bc95253a64e4f12fffc17b980aad8",
+  "status": "SOURCE_BOUNDARY_CLOSED_EXECUTION_UNVERIFIED",
+  "files": [
+    {
+      "path": "photon16/qualification/EX-008-freeze.json",
+      "blob": "6da835ce669646e252d73bbbf25a9b2336b6c52e"
+    },
+    {
+      "path": "rust/qualification-gate.cjs",
+      "blob": "ec9bdeb5eaa5c0151d811ca5491f7c28f4b82785"
+    },
+    {
+      "path": "rust/test-composite-qualification.cjs",
+      "blob": "b70382e133b1a17744ccce0b08643136860a6af1"
+    },
+    {
+      "path": "rust/test-composite-adversarial.cjs",
+      "blob": "e180aa1eb8fdef777de2e51a2bb57d437d2fb7d5"
+    },
+    {
+      "path": "rust/src/qualification.rs",
+      "blob": "522d33c36627a5471dbc68e828e73c8116f48b02"
+    },
+    {
+      "path": "rust/src/bin/qualification_parity.rs",
+      "blob": "9b8ce18d0a6083e13282287b6eed32b944e4b1aa"
+    },
+    {
+      "path": "rust/test-qualification-parity.cjs",
+      "blob": "3ad416b561ac629f1933beac8c33d00b95b13e7a"
+    },
+    {
+      "path": "rust/src/evidence_journal.rs",
+      "blob": "f3b38492847e102ee30a1034a1c8a540ca3907c1"
+    },
+    {
+      "path": "rust/journal-checkpoint.cjs",
+      "blob": "46add1a4927839460e1a81af6f153bf93b3af7e8"
+    },
+    {
+      "path": "rust/test-journal-checkpoint.cjs",
+      "blob": "84f6c0db8ccd0036910252e845b252a17010e149"
+    },
+    {
+      "path": "rust/src/lib.rs",
+      "blob": "ee8b8813e103aa5a660fba3ee32afaf0e83c8804"
+    },
+    {
+      "path": "rust/Cargo.toml",
+      "blob": "32892fa7f69b0d4f93f2492ea977267a73bd03e3"
+    },
+    {
+      "path": ".github/workflows/photon16-wasm.yml",
+      "blob": "86d6ba467f9d77a203d4afd9483d65d0807316e0"
+    },
+    {
+      "path": "photon16/qualification/OI-007-lab.html",
+      "blob": "c4622633eddca96a039f5fb9e6a3cc8a103f3950"
+    }
+  ],
+  "sourceMilestones": 8,
+  "authoredScenarios": {
+    "compositePositive": 1,
+    "adversarial": 19,
+    "rustDecisionNegative": 42,
+    "rustDecisionPositive": 1,
+    "paritySequences": 134,
+    "journalTests": 4,
+    "checkpointNegative": 10
+  },
+  "newConfirmedExecutionReceipts": 0,
+  "previousPhase": "EX-008-freeze.json",
+  "pending": [
+    "Complete composite positive path and adversarial execution",
+    "Rust compilation and native tests",
+    "Native JavaScript parity",
+    "Journal and checkpoint tests",
+    "Writer exclusion shared by Rust and observer",
+    "Independent checkpoint custody and global anti-rollback",
+    "Chromium and live Pages verification"
+  ],
+  "releaseAuthority": "HOLD",
+  "watermark": ".dlw"
+}
