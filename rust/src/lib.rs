@@ -183,7 +183,6 @@ impl<const N:usize> StoragePool<N>{
  fn checkpoint(&self){let s=self.snapshot();assert_eq!(s.active,0);assert_eq!(s.allocated,s.evicted+s.idle);assert_eq!(s.allocations+s.reuses,s.returns);}
 }
 #[cfg(test)]mod telemetry_tests{use super::*;#[test]fn homogeneous_ledger(){let r=run();for(g,e)in r.epochs.iter().enumerate(){let s=e.storage;assert_eq!((s.allocations,s.evictions,s.allocated,s.evicted,s.active,s.idle,s.peak),(1,0,448,0,0,448,448));assert_eq!(s.returns,(g+1)*360);assert_eq!(s.reuses+1,s.returns);}}#[test]fn promotion_ledger(){let mut p=StoragePool::<56>::default();let a=p.take_base();let b=p.take_full();assert_eq!(p.snapshot().peak,1984);p.return_base(a);p.return_full(b);p.trim(1536,true);p.checkpoint();assert_eq!(p.snapshot().evicted,448);assert_eq!(p.snapshot().idle,1536);}}
-}
 
 const RESOURCE_BUDGETS:[usize;4]=[0,448,1536,1984];
 #[derive(Clone,Copy,Debug,PartialEq,Eq)]
