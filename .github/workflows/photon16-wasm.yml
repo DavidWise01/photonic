@@ -52,6 +52,8 @@ jobs:
         run: |
           cargo +1.85.1 build --offline --manifest-path rust/Cargo.toml --bin journal_contention --target-dir rust/target
           node rust/test-journal-contention.cjs rust/target/debug/journal_contention
+      - name: Interrupted journal fail-closed recovery boundary
+        run: node rust/test-journal-interruption.cjs rust/target/debug/journal_contention
       - name: Native Rust JavaScript qualification parity
         run: |
           cargo +1.85.1 build --offline --manifest-path rust/Cargo.toml --bin qualification_parity --target-dir rust/target
