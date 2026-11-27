@@ -1,0 +1,103 @@
+{
+  "schema": "photon16-external-observation-freeze-v1",
+  "phase": "V",
+  "status": "OBSERVED_BOUNDARY_CLOSED_WITH_RESERVATIONS",
+  "baselineCommit": "3e2bbfd436e3a12439a1145626b669cbd47dd534",
+  "inputs": [
+    {
+      "path": "photon16/qualification/EA-008-freeze.json",
+      "blob": "0ec0c58c388babe39188333b3aa70ec137d77de1"
+    },
+    {
+      "path": "photon16/qualification/EO-002-observation.json",
+      "blob": "10f6b4ac35420bc41b188043d20f7db16e221fdb"
+    },
+    {
+      "path": "photon16/qualification/EO-006-provenance.json",
+      "blob": "98dfa7793f1c73a75ec3641bf4e5ad9789b5331e"
+    },
+    {
+      "path": "photon16/qualification/EO-007-comparison.json",
+      "blob": "212c4c9f6a3e012e1232ee8868337869e13591bb"
+    },
+    {
+      "path": "rust/src/bin/journal_contention.rs",
+      "blob": "eaed3fa7df2e1f4b86cc10e3f6af50ac632bc320"
+    },
+    {
+      "path": "rust/test-journal-contention.cjs",
+      "blob": "15e79facaa6da434e0a93855c47228248f1070cf"
+    },
+    {
+      "path": "rust/test-journal-interruption.cjs",
+      "blob": "ac47dd51ab14936bb75b046fa927a2989c998218"
+    },
+    {
+      "path": ".github/workflows/photon16-eo001-public.yml",
+      "blob": "4b8b404fa1b98a11c0acd8e580f2339c9ad6ebf5"
+    },
+    {
+      "path": ".github/workflows/photon16-eo005-reproduction.yml",
+      "blob": "fee9b84fdd23c5ee21984a493fa8f12b0a8aa1c8"
+    },
+    {
+      "path": ".github/workflows/photon16-wasm.yml",
+      "blob": "06ab4fc909d7d6bba7dd95cb5f79d5344b032b58"
+    }
+  ],
+  "observations": {
+    "publicHttpResponses": 3,
+    "publicWasmFingerprintMatch": true,
+    "completePublicReleaseIdentity": "PARTIAL",
+    "crossProcessExclusion": {
+      "run": 46036965578,
+      "status": "PASS"
+    },
+    "interruptionRetention": {
+      "run": 46044981614,
+      "status": "PASS",
+      "bytes": 38,
+      "records": 1,
+      "automaticRecovery": "HOLD"
+    },
+    "reproduction": {
+      "run": 46046479413,
+      "lanes": 2,
+      "status": "REPORTED_BINARY_AND_SEMANTIC_MATCH"
+    },
+    "threeChannelComparison": {
+      "agreement": 3,
+      "providerRoots": 1,
+      "independentExternalWitnesses": 0
+    }
+  },
+  "wasmSha256": "c5f8aac0f17e000bb71d3013ac3755c88b27fe99b6075afd1723f66cb3b4581c",
+  "latestBaselineWorkflow": {
+    "run": 46050935187,
+    "conclusion": "failure",
+    "jobs": [
+      {
+        "id": 140681758267,
+        "conclusion": "failure",
+        "failed": [
+          "Blocking Chromium acceptance"
+        ]
+      },
+      {
+        "id": 140683402461,
+        "conclusion": "skipped"
+      }
+    ]
+  },
+  "reserved": [
+    "complete newer public source identity",
+    "current deployment byte identity",
+    "independent external custody",
+    "authenticated independent witnesses",
+    "safe stale-lock reclamation",
+    "global anti-rollback",
+    "trusted UTC"
+  ],
+  "releaseAuthority": "HOLD",
+  "watermark": ".dlw"
+}
