@@ -1,0 +1,25 @@
+{
+  "schema": "photon16-execution-acquisition-v1",
+  "baselineCommit": "289ef17c32d43db9005a55db443cd6da7fcb5e52",
+  "status": "DISCOVERY_BLOCKED",
+  "observations": {
+    "combinedStatus": [],
+    "pullRequestWorkflowRuns": [],
+    "publicRestEndpoint": "NOT_ACCESSIBLE_VIA_WEB_TOOL",
+    "publicActionsPage": "FETCH_DISABLED",
+    "runIds": [],
+    "jobIds": [],
+    "logs": [],
+    "artifactFingerprints": []
+  },
+  "limitations": [
+    "Commit workflow connector filters to PR events only",
+    "Empty status list does not establish absence of check runs",
+    "No job or run ID acquired; log and artifact endpoints not invoked",
+    "No native compilation or Chromium result acquired"
+  ],
+  "firstBlockingFailure": "RUN_DISCOVERY_UNAVAILABLE; actual workflow failure unknown",
+  "next": "Acquire known workflow run ID or execute exact source fixtures locally; do not infer execution",
+  "releaseAuthority": "HOLD",
+  "watermark": ".dlw"
+}
