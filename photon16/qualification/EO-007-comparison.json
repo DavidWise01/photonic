@@ -1,0 +1,48 @@
+{
+  "schema": "photon16-three-channel-comparison-v1",
+  "inputs": [
+    {
+      "path": "photon16/qualification/EA-008-freeze.json",
+      "blob": "0ec0c58c388babe39188333b3aa70ec137d77de1"
+    },
+    {
+      "path": "photon16/qualification/EO-002-observation.json",
+      "blob": "10f6b4ac35420bc41b188043d20f7db16e221fdb"
+    },
+    {
+      "path": "photon16/qualification/EO-006-provenance.json",
+      "blob": "98dfa7793f1c73a75ec3641bf4e5ad9789b5331e"
+    }
+  ],
+  "channels": [
+    {
+      "kind": "original-build",
+      "run": 46016601441,
+      "hash": "c5f8aac0f17e000bb71d3013ac3755c88b27fe99b6075afd1723f66cb3b4581c",
+      "providerRoot": "github",
+      "externalCustody": "UNVERIFIED"
+    },
+    {
+      "kind": "public-http",
+      "run": 46029239862,
+      "hash": "c5f8aac0f17e000bb71d3013ac3755c88b27fe99b6075afd1723f66cb3b4581c",
+      "providerRoot": "github",
+      "externalCustody": "UNVERIFIED"
+    },
+    {
+      "kind": "cross-environment",
+      "run": 46046479413,
+      "hash": "c5f8aac0f17e000bb71d3013ac3755c88b27fe99b6075afd1723f66cb3b4581c",
+      "providerRoot": "github",
+      "externalCustody": "UNVERIFIED"
+    }
+  ],
+  "binaryAgreement": true,
+  "sourceReleaseAgreement": false,
+  "providerRoots": 1,
+  "independentExternalWitnessesVerified": 0,
+  "status": "THREE_CHANNEL_BINARY_AGREEMENT_NOT_INDEPENDENT",
+  "releaseAuthority": "HOLD",
+  "scope": "comparison of retained records; no new byte acquisition or authenticated witness claims",
+  "watermark": ".dlw"
+}
