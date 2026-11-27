@@ -1,0 +1,65 @@
+{
+  "schema": "photon16-operational-resilience-comparison-v1",
+  "baseline": "24b14a300e04d3594675037ef59ac711570cf331",
+  "wasmSha256": "c5f8aac0f17e000bb71d3013ac3755c88b27fe99b6075afd1723f66cb3b4581c",
+  "runs": [
+    {
+      "id": 46065589116,
+      "job": 140729993858,
+      "roundMs": [
+        123.7,
+        128.6,
+        122.8
+      ],
+      "heartbeats": [
+        6,
+        6,
+        6
+      ],
+      "maxGapMs": 28.5
+    },
+    {
+      "id": 46072825332,
+      "job": 140753723923,
+      "roundMs": [
+        179.6,
+        176.5,
+        170.4
+      ],
+      "heartbeats": [
+        8,
+        9,
+        9
+      ],
+      "maxGapMs": 34.5,
+      "manifestSha256": "39069376f53c8ca0fb2226bbbde3cb0b1c029b8132a590c2a1bfd85d25a4155d",
+      "deployJob": 140754072559,
+      "deploy": "SUCCESS"
+    }
+  ],
+  "liveness": {
+    "liveDescriptor": true,
+    "unrelatedProcessRejected": true,
+    "signatureTamperingRejected": true,
+    "absentProcessObserved": true,
+    "lockReplacementRejected": true
+  },
+  "interruption": {
+    "bytes": 38,
+    "records": 1,
+    "sha256": "8f840084f1b08ea284a4a8d83e356dce7ce0ad66d960fa6af0683da5456e2f60",
+    "staleLockPreserved": true
+  },
+  "scope": "observed CI logs; no new public byte acquisition",
+  "reserved": [
+    "PID reuse and boot change execution",
+    "atomic ownership acquisition proof",
+    "safe reclamation",
+    "historical activation compatibility",
+    "current public byte identity",
+    "external custody"
+  ],
+  "recoveryAuthority": "HOLD",
+  "releaseAuthority": "HOLD",
+  "watermark": ".dlw"
+}
