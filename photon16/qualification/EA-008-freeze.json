@@ -1,0 +1,83 @@
+{
+  "schema": "photon16-observed-execution-freeze-v1",
+  "phase": "IV",
+  "status": "OBSERVED_EXECUTION_BOUNDARY_CLOSED",
+  "baselineCommit": "a66382147433b7920a92242a11873c89b338d905",
+  "priorEvidenceCommit": "ee6624e18a4c2ab4af74eded771633bfdd1300d2",
+  "blobs": [
+    {
+      "path": "rust/src/lib.rs",
+      "blob": "3a9d71746b21d8cc8cb753a9e20a0561600253ca"
+    },
+    {
+      "path": "rust/src/qualification.rs",
+      "blob": "522d33c36627a5471dbc68e828e73c8116f48b02"
+    },
+    {
+      "path": "rust/src/evidence_journal.rs",
+      "blob": "0a215b9fe64b0f510ffbc53326e8014d4332ebfa"
+    },
+    {
+      "path": "rust/verify-browser.cjs",
+      "blob": "047c01a89fe32058764d0d2a09e1b3372763a71f"
+    },
+    {
+      "path": "rust/test-qualification-parity.cjs",
+      "blob": "3ad416b561ac629f1933beac8c33d00b95b13e7a"
+    },
+    {
+      "path": ".github/workflows/photon16-wasm.yml",
+      "blob": "e275a530f7a983bd720a07fcce01694ffa9718c9"
+    },
+    {
+      "path": ".github/workflows/photon16-rust.yml",
+      "blob": "6a91341f28eb40165d30867a32a7b87c63d1a02c"
+    },
+    {
+      "path": "rust/qualification-gate.cjs",
+      "blob": "ec9bdeb5eaa5c0151d811ca5491f7c28f4b82785"
+    },
+    {
+      "path": "rust/journal-checkpoint.cjs",
+      "blob": "46add1a4927839460e1a81af6f153bf93b3af7e8"
+    }
+  ],
+  "workflow": {
+    "wasm": 46016601441,
+    "native": 46016601438,
+    "buildJob": 140565205646,
+    "deployJob": 140566668495,
+    "conclusion": "success"
+  },
+  "observed": {
+    "nativeTests": 49,
+    "paritySequences": 134,
+    "jsSuites": 14,
+    "sameRunnerWasmBuilds": 2,
+    "chromium": "134.0.6998.35",
+    "manifestChecksums": 9,
+    "browserWasmMatches": 3,
+    "browserErrors": 0,
+    "failedResponses": 0,
+    "cooperativeRustLock": "PASS",
+    "pagesDeploymentJob": "SUCCESS"
+  },
+  "artifact": {
+    "id": 15206750209,
+    "bytes": 192593,
+    "zipSha256": "274de64afeaf71316cd31fad5ac54501b4b1f39f1973350065e675c36a50695e",
+    "wasmSha256": "c5f8aac0f17e000bb71d3013ac3755c88b27fe99b6075afd1723f66cb3b4581c",
+    "manifestSha256": "342b1443394ea3f84fc5d931a6174f850e6aad0b26a5ae28f317b1ed755d5d1c",
+    "localArchiveRecheck": "PASS"
+  },
+  "reserved": [
+    "public Pages byte retrieval",
+    "cross-process Rust-JavaScript exclusion",
+    "independent reproduction",
+    "external custody",
+    "global anti-rollback",
+    "trusted UTC"
+  ],
+  "releaseAuthority": "HOLD",
+  "watermark": ".dlw"
+}
