@@ -1,0 +1,48 @@
+name: PHOTON-16 EO001 public observation
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/photon16-eo001-public.yml'
+permissions:
+  contents: read
+jobs:
+  observe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Observe public bytes against sealed Phase IV anchors
+        shell: bash
+        run: |
+          mkdir -p observation
+          node - <<'NODE'
+          const fs=require('node:fs'),crypto=require('node:crypto');
+          const frozen=JSON.parse(fs.readFileSync('photon16/qualification/EA-008-freeze.json'));
+          const expected={sourceCommit:frozen.baselineCommit,wasmSha256:frozen.artifact.wasmSha256,manifestSha256:frozen.artifact.manifestSha256};
+          const base='https://davidwise01.github.io/photonic/photon16/wasm/';
+          const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
+          const rows=[];
+          (async()=>{
+            for(const name of ['SOURCE_COMMIT','RELEASE_SHA256SUMS','photon16.wasm']){
+              const url=base+name+'?eo001='+process.env.GITHUB_RUN_ID;
+              try{
+                const r=await fetch(url,{cache:'no-store',redirect:'error',signal:AbortSignal.timeout(30000)});
+                const b=Buffer.from(await r.arrayBuffer());
+                fs.writeFileSync('observation/'+name,b);
+                const sha256=hash(b);
+                const match=r.status===200&&(name==='SOURCE_COMMIT'?b.toString().trim()===expected.sourceCommit:name==='RELEASE_SHA256SUMS'?sha256===expected.manifestSha256:sha256===expected.wasmSha256&&WebAssembly.validate(b));
+                rows.push({name,url,http:r.status,bytes:b.length,sha256,match});
+              }catch(e){rows.push({name,url,match:false,error:String(e)});}
+            }
+            const result={schema:'photon16-public-observation-v1',runId:process.env.GITHUB_RUN_ID,expected,rows,status:rows.every(r=>r.match)?'FROZEN_PUBLIC_BYTES_MATCH':'PUBLIC_BYTES_NOT_QUALIFIED',independence:'UNVERIFIED_SAME_PROVIDER',releaseAuthority:'HOLD'};
+            fs.writeFileSync('observation/EO-001.json',JSON.stringify(result,null,2)+'\n');
+            console.log(JSON.stringify(result));
+            if(!rows.every(r=>r.match))process.exitCode=1;
+          })().catch(e=>{console.error(e);process.exitCode=1;});
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eo001-public-observation
+          path: observation/
