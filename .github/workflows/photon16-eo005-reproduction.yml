@@ -1,0 +1,46 @@
+name: PHOTON-16 EO005 cross-environment reproduction
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/photon16-eo005-reproduction.yml'
+permissions:
+  contents: read
+jobs:
+  reproduce:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, ubuntu-24.04]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: a66382147433b7920a92242a11873c89b338d905
+      - name: Reproduce frozen source on separate hosted runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          git rev-parse HEAD > evidence/SOURCE_COMMIT
+          test "$(cat evidence/SOURCE_COMMIT)" = a66382147433b7920a92242a11873c89b338d905
+          cat /etc/os-release > evidence/OS
+          uname -a > evidence/KERNEL
+          rustup toolchain install 1.85.1 --target wasm32-unknown-unknown
+          rustc +1.85.1 --version --verbose > evidence/RUST_TOOLCHAIN
+          node --version > evidence/NODE_VERSION
+          root="$RUNNER_TEMP/photon-frozen"
+          mkdir -p "$root"
+          git archive HEAD | tar -x -C "$root"
+          CARGO_INCREMENTAL=0 RUSTFLAGS="--remap-path-prefix=$root=/photon" cargo +1.85.1 build --release --offline --lib --target wasm32-unknown-unknown --manifest-path "$root/rust/Cargo.toml" --target-dir "$root/target" 2>&1 | tee evidence/BUILD_LOG
+          cp "$root/target/wasm32-unknown-unknown/release/photon16.wasm" evidence/
+          sha256sum evidence/photon16.wasm | tee evidence/WASM_SHA256
+          node rust/verify-wasm.cjs evidence/photon16.wasm 2>&1 | tee evidence/SEMANTIC_LOG
+          test "$(cut -d' ' -f1 evidence/WASM_SHA256)" = c5f8aac0f17e000bb71d3013ac3755c88b27fe99b6075afd1723f66cb3b4581c
+          printf '%s\n' 'CROSS_ENVIRONMENT_BINARY_AND_SEMANTIC_MATCH' 'INDEPENDENT_CUSTODY_UNVERIFIED' 'AUTHORITY_HOLD' > evidence/RESULT
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eo005-${{ matrix.os }}
+          path: evidence/
