@@ -1,20 +1,25 @@
 //! OI-005: local append-only decision journal; no external anti-rollback proof. .dlw
 use crate::qualification::{Machine,Observation,Stage,Decision,ORDER};
-use std::{fs::{File,OpenOptions},io::{self,Read,Write},path::Path};
+use std::{fs::{File,OpenOptions},io::{self,Read,Write},path::{Path,PathBuf}};
 const MAGIC:&[u8]=b"PHOTON16-JOURNAL-V1\n";
 fn invalid()->io::Error{io::Error::new(io::ErrorKind::InvalidData,"invalid journal history")}
 fn code(o:Observation)->u8{match o{Observation::Match=>0,Observation::Reject=>1,Observation::Missing=>2}}
 fn decode(o:u8)->io::Result<Observation>{match o{0=>Ok(Observation::Match),1=>Ok(Observation::Reject),2=>Ok(Observation::Missing),_=>Err(invalid())}}
-pub struct Journal{file:File,machine:Machine,count:u64,poisoned:bool}
+struct Guard{path:PathBuf,_file:File}
+impl Guard{fn acquire(path:&Path)->io::Result<Self>{let mut name=path.as_os_str().to_os_string();name.push(".observe.lock");let path=PathBuf::from(name);let file=OpenOptions::new().write(true).create_new(true).open(&path)?;Ok(Self{path,_file:file})}}
+impl Drop for Guard{fn drop(&mut self){let _=std::fs::remove_file(&self.path);}}
+pub struct Journal{file:File,_guard:Guard,machine:Machine,count:u64,poisoned:bool}
 impl Journal{
- /// Exclusive creation; caller must ensure sole writer for the journal lifetime.
+ /// Cooperative exclusive creation; all participants must use the same path.
  pub fn create(path:impl AsRef<Path>)->io::Result<Self>{
+  let path=path.as_ref();let guard=Guard::acquire(path)?;
   let mut file=OpenOptions::new().read(true).append(true).create_new(true).open(path)?;
   file.write_all(MAGIC)?;file.sync_all()?;
-  Ok(Self{file,machine:Machine::new(),count:0,poisoned:false})
+  Ok(Self{file,_guard:guard,machine:Machine::new(),count:0,poisoned:false})
  }
  /// Read-only replay. Incomplete or malformed records fail closed.
  pub fn inspect(path:impl AsRef<Path>)->io::Result<(u64,Decision)>{
+  let path=path.as_ref();let _guard=Guard::acquire(path)?;
   let mut file=File::open(path)?;let mut header=vec![0;MAGIC.len()];file.read_exact(&mut header)?;
   if header!=MAGIC{return Err(invalid());}
   let mut m=Machine::new();let mut count=0u64;
@@ -44,6 +49,7 @@ impl Journal{
 #[cfg(test)]mod tests{
  use super::*;
  fn path(tag:&str)->std::path::PathBuf{std::env::temp_dir().join(format!("photon16-{}-{}-{}",std::process::id(),tag,std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos()))}
+ #[test]fn shared_lock(){let p=path("shared");let j=Journal::create(&p).unwrap();assert!(Journal::inspect(&p).is_err());assert!(Journal::create(&p).is_err());drop(j);assert_eq!(Journal::inspect(&p).unwrap().0,0);let g=Guard::acquire(&p).unwrap();assert!(Journal::inspect(&p).is_err());drop(g);std::fs::remove_file(p).unwrap();}
  #[test]fn complete_replay(){let p=path("complete");let mut j=Journal::create(&p).unwrap();for s in ORDER{j.append(s,Observation::Match).unwrap();}assert!(j.append(Stage::Protocol,Observation::Match).is_err());drop(j);assert_eq!(Journal::inspect(&p).unwrap(),(6,Decision::DeclaredCompositionMatch));assert!(Journal::create(&p).is_err());std::fs::remove_file(p).unwrap();}
  #[test]fn reject_replay(){let p=path("reject");let mut j=Journal::create(&p).unwrap();let d=j.append(Stage::Custody,Observation::Match).unwrap();assert!(j.append(Stage::Protocol,Observation::Match).is_err());drop(j);assert_eq!(Journal::inspect(&p).unwrap(),(1,d));std::fs::remove_file(p).unwrap();}
  #[test]fn torn_record(){let p=path("torn");drop(Journal::create(&p).unwrap());OpenOptions::new().append(true).open(&p).unwrap().write_all(&[1]).unwrap();assert!(Journal::inspect(&p).is_err());std::fs::remove_file(p).unwrap();}
