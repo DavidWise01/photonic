@@ -50,10 +50,39 @@ const {chromium}=require('playwright');
   await online.getByRole('button',{name:'Execute causal Rust'}).click();
   await page.waitForFunction(()=>[...document.querySelectorAll('section')].some(s=>s.querySelector('h2')?.textContent.includes('Causal online resource adaptation')&&s.querySelector('pre')?.textContent.includes('"trace"')),{},{timeout:120000});
   const trace=JSON.parse(await online.locator('pre').textContent());assert.equal(trace.source,'Rust WASM');assert.equal(trace.trace.length,96);assert.deepEqual(trace.final,trace.trace[95]);assert.equal(trace.trace[0].budget,1536);assert.ok(trace.trace.every((x,i)=>x.t===i&&[0,448,1536,1984].includes(x.budget)&&Number.isFinite(x.idle)&&x.idle>=0&&x.idle<=x.budget&&Number.isFinite(x.cost)&&Number.isInteger(x.allocations)&&x.allocations>=0&&(!i||(x.cost>=trace.trace[i-1].cost&&x.allocations>=trace.trace[i-1].allocations))));
+  // OR004: exercise the actual panel handlers concurrently and verify deterministic replay.
+  const stress=await page.evaluate(async()=>{
+   const sections=[...document.querySelectorAll('section')];
+   const panels=['RUST WASM','Native resource policy laboratory','Causal online resource adaptation'].map(n=>sections.find(s=>s.querySelector('h2')?.textContent.includes(n)));
+   if(panels.some(p=>!p))throw Error('missing stress panel');
+   const buttons=panels.map(p=>p.querySelector('button'));
+   const rounds=[];let beats=0,maxGap=0,last=performance.now();
+   const timer=setInterval(()=>{const now=performance.now();maxGap=Math.max(maxGap,now-last);last=now;beats++;},20);
+   try{
+    for(let i=0;i<3;i++){
+     const start=performance.now(),before=beats;
+     buttons.forEach(b=>b.click());
+     if(!buttons.every(b=>b.disabled))throw Error('concurrent jobs not admitted');
+     while(buttons.some(b=>b.disabled)){
+      if(performance.now()-start>125000)throw Error('stress deadline');
+      await new Promise(r=>setTimeout(r,20));
+     }
+     rounds.push({results:panels.map(p=>JSON.parse(p.querySelector('pre').textContent)),wallMs:performance.now()-start,heartbeats:beats-before});
+    }
+    let invalidRejected=false;
+    try{await photonNativeJob('policy',4,2048);}catch(e){invalidRejected=String(e).includes('invalid policy input');}
+    return {rounds,beats,maxGap,invalidRejected,startup:window.PHOTON_STARTUP?.report()};
+   }finally{clearInterval(timer);}
+  });
+  assert.equal(stress.rounds.length,3);
+  for(const round of stress.rounds){assert.deepEqual(round.results,[native,trials,trace]);assert.ok(round.heartbeats>0);}
+  assert.equal(stress.invalidRejected,true);
+  assert.equal(stress.startup.state,'reserved');assert.equal(stress.startup.records.length,0);
+  console.log(JSON.stringify({status:'OR004_STRESS_PASS',rounds:stress.rounds.map(({wallMs,heartbeats})=>({wallMs,heartbeats})),maxGap:stress.maxGap,invalidRejected:stress.invalidRejected}));
   const served=await Promise.all(servedHashes);assert.ok(served.length>=3);assert.ok(wasmResponses.every(x=>x===200));assert.ok(served.every(h=>h===wasmSha256));
   assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);
   await main.scrollIntoViewIfNeeded();await main.screenshot({path:'verified/browser-rust.png'});
-  fs.writeFileSync('verified/BROWSER_ACCEPTANCE.json',JSON.stringify({sourceCommit,wasmSha256,servedHashes:served,wasmResponses,browser:browser.version(),native,trials,online:trace,errors,failed},null,2));
+  fs.writeFileSync('verified/BROWSER_ACCEPTANCE.json',JSON.stringify({sourceCommit,wasmSha256,servedHashes:served,wasmResponses,browser:browser.version(),native,trials,online:trace,stress,errors,failed},null,2));
   console.log('Chromium native kernel, resource policies and causal trace PASS');
  }finally{if(browser)await browser.close();await new Promise(r=>server.close(r));}
 })().catch(e=>{console.error(e);process.exitCode=1;});
