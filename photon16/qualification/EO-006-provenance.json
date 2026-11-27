@@ -1,0 +1,42 @@
+{
+  "schema": "photon16-cross-environment-provenance-v1",
+  "sourceCommit": "a66382147433b7920a92242a11873c89b338d905",
+  "workflowCommit": "96b5e19176fdfe668830261b03274a054f0c7379",
+  "run": 46046479413,
+  "provider": "GitHub Actions",
+  "wasmSha256": "c5f8aac0f17e000bb71d3013ac3755c88b27fe99b6075afd1723f66cb3b4581c",
+  "lanes": [
+    {
+      "os": "Ubuntu 22.04.5 LTS",
+      "job": 140666908271,
+      "artifact": 15222706824,
+      "zipBytes": 32161,
+      "zipSha256": "b6c31a8ffc9033adf20de0afb7859cb3f708170cad73f23bc0e6b1df1c25844f",
+      "localZipHashMatch": true,
+      "localWasmHashMatch": true,
+      "sourceFileMatch": true,
+      "semanticTranscript": "PASS",
+      "toolchain": "1.85.1"
+    },
+    {
+      "os": "Ubuntu 24.04.5 LTS",
+      "job": 140666908589,
+      "artifact": 15222037167,
+      "zipBytes": 32171,
+      "zipSha256": "69dc038a072bfec734a48b3e7006ae9cc8c1189333d983e9e520aed5f94af3b1",
+      "localZipHashMatch": true,
+      "localWasmHashMatch": true,
+      "sourceFileMatch": true,
+      "semanticTranscript": "PASS",
+      "toolchain": "1.85.1"
+    }
+  ],
+  "status": "CROSS_ENVIRONMENT_BINARY_AND_REPORTED_SEMANTIC_MATCH",
+  "ancestry": {
+    "sourceRoots": 1,
+    "providerRoots": 1,
+    "independentExternalCustodyRootsVerified": 0
+  },
+  "releaseAuthority": "HOLD",
+  "watermark": ".dlw"
+}
