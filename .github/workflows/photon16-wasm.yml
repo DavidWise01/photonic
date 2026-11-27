@@ -48,6 +48,10 @@ jobs:
         run: node rust/test-journal-checkpoint.cjs
       - run: rustup toolchain install 1.85.1 --target wasm32-unknown-unknown
       - run: cargo +1.85.1 test --manifest-path rust/Cargo.toml
+      - name: Cross-process Rust Node journal exclusion
+        run: |
+          cargo +1.85.1 build --offline --manifest-path rust/Cargo.toml --bin journal_contention --target-dir rust/target
+          node rust/test-journal-contention.cjs rust/target/debug/journal_contention
       - name: Native Rust JavaScript qualification parity
         run: |
           cargo +1.85.1 build --offline --manifest-path rust/Cargo.toml --bin qualification_parity --target-dir rust/target
