@@ -1,0 +1,30 @@
+{
+  "schema": "photon16-local-execution-v1",
+  "baselineCommit": "289ef17c32d43db9005a55db443cd6da7fcb5e52",
+  "suite": "OI-006 journal checkpoint",
+  "runtime": "v22.16.0",
+  "files": [
+    {
+      "path": "rust/journal-checkpoint.cjs",
+      "gitBlob": "46add1a4927839460e1a81af6f153bf93b3af7e8",
+      "sha256": "79d91f0ec05f79eb1b8c192b67cd125e620ae4c01941e8370bd7b3e6a20b867f"
+    },
+    {
+      "path": "rust/test-journal-checkpoint.cjs",
+      "gitBlob": "84f6c0db8ccd0036910252e845b252a17010e149",
+      "sha256": "fd073030a0ca2574cdbc15f41bada5242bcbd9c1929c125458f82a0ac62babbb"
+    }
+  ],
+  "sourceTransfer": "manual reconstruction, both Git blob hashes verified locally before execution",
+  "command": "node test-journal-checkpoint.cjs",
+  "exitCode": 0,
+  "stdout": "OI006: prefix controls, 10 rejection cases and cooperative observer lock controls; external custody unverified.",
+  "negativeCasesPassed": 10,
+  "positiveAndLockAssertions": "PASS",
+  "scope": "local Node.js execution only",
+  "compositeQualification": "UNVERIFIED",
+  "nativeRust": "UNVERIFIED",
+  "independentCustody": "UNVERIFIED",
+  "releaseAuthority": "HOLD",
+  "watermark": ".dlw"
+}
