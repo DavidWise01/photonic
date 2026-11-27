@@ -197,7 +197,6 @@ fn resource_trials(pattern:usize,weight:usize)->[ResourceTrial;4]{let trials=RES
 fn resource_winner(trials:&[ResourceTrial;4])->usize{(0..4).min_by_key(|&i|(trials[i].cost,trials[i].budget)).unwrap()}
 #[no_mangle]pub extern "C" fn photon_resource(pattern:u32,weight:u32,index:u32,metric:u32)->f64{if pattern>3||weight>65536||index>3{return f64::NAN}let trials=resource_trials(pattern as usize,weight as usize);let r=trials[index as usize];match metric{0=>r.budget as f64,1=>r.allocations as f64,2=>r.evictions as f64,3=>r.residency as f64,4=>r.peak as f64,5=>r.cost as f64,6=>r.digest as f64,7=>resource_winner(&trials)as f64,_=>f64::NAN}}
 #[cfg(test)]mod resource_tests{use super::*;#[test]fn all_policies_preserve_evidence(){for pattern in 0..4{let trials=resource_trials(pattern,2048);let w=resource_winner(&trials);assert!(trials.iter().all(|r|r.cost>=trials[w].cost));assert_eq!(trials,resource_trials(pattern,2048));}}#[test]fn cost_extremes(){let low=resource_trials(0,0);assert_eq!(resource_winner(&low),0);let high=resource_trials(0,65536);assert_eq!(resource_winner(&high),1);assert_eq!(high[0].allocations,96);assert_eq!(high[1].allocations,1);}}
-}
 
 #[derive(Clone,Copy,Debug,PartialEq,Eq)]
 struct OnlineStep{budget:usize,cost:usize,allocations:usize,idle:usize,digest:u32}
