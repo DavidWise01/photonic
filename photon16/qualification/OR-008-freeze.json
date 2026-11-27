@@ -1,0 +1,96 @@
+{
+  "schema": "photon16-operational-resilience-freeze-v1",
+  "phase": "VI",
+  "status": "OBSERVED_BOUNDARY_CLOSED_WITH_RESERVATIONS",
+  "baseline": "9c083ef5d6ed00941f2b79508dfc3a8465e6a0cd",
+  "inputs": [
+    {
+      "path": "photon16/index.html",
+      "blob": "b22d48db577308582009eb6fecab7adff9e6c535"
+    },
+    {
+      "path": "photon16/or002-startup.js",
+      "blob": "74ae1e951715df3b09ccc31523fee2009426c117"
+    },
+    {
+      "path": "photon16/or003-native-worker.js",
+      "blob": "0fd5c0c6d0abfdd75f870fb71c0127f15fa78440"
+    },
+    {
+      "path": "photon16/v83-rust-wasm.js",
+      "blob": "d30263f614f87e93ec6c9e073b7cc869ee3f5c62"
+    },
+    {
+      "path": "rust/profile-initialization.cjs",
+      "blob": "e179f560e40813a014147eee8d4d48c3e56a2ea1"
+    },
+    {
+      "path": "rust/verify-browser.cjs",
+      "blob": "d7e62acb0b43f59cf7db7e54e38fdeaf06b0cdac"
+    },
+    {
+      "path": "rust/journal-owner.cjs",
+      "blob": "2715a1eeb0f3b4d4f92deb7fa7880515f6121ef9"
+    },
+    {
+      "path": "rust/journal-liveness.cjs",
+      "blob": "b7dbea72df759d12930fdbf9fb31224660ad51a5"
+    },
+    {
+      "path": "rust/test-journal-liveness.cjs",
+      "blob": "b450b5be1101bf6a9fbe7917c047d233bb1c8531"
+    },
+    {
+      "path": ".github/workflows/photon16-wasm.yml",
+      "blob": "350220495ebef0b7d9a1066752be3cfc6a9a03a0"
+    },
+    {
+      "path": "photon16/qualification/OR-007-comparison.json",
+      "blob": "b5f8c01b01d1ad5aa51a52c37c35baaf58481595"
+    },
+    {
+      "path": "photon16/qualification/EO-008-freeze.json",
+      "blob": "a0fc998bd162a1e5d44f85b00e483c08337264b6"
+    }
+  ],
+  "execution": {
+    "run": 46080486993,
+    "buildJob": 140778050968,
+    "deployJob": 140778403101,
+    "nativeTests": 49,
+    "parity": 134,
+    "chromium": "PASS",
+    "deployment": "SUCCESS",
+    "stress": {
+      "roundMs": [
+        125.9,
+        121,
+        129.3
+      ],
+      "heartbeats": [
+        6,
+        6,
+        6
+      ],
+      "maxGapMs": 25.2,
+      "concurrentResults": 9,
+      "invalidRejected": true
+    },
+    "liveness": "PASS"
+  },
+  "wasmSha256": "c5f8aac0f17e000bb71d3013ac3755c88b27fe99b6075afd1723f66cb3b4581c",
+  "manifestSha256": "d79bded31863275670305593dd7e89147eaea29624383ff50875a5f2e0466657",
+  "reserved": [
+    "static profiler execution",
+    "full historical activation compatibility",
+    "forced worker deadline",
+    "PID reuse and boot change execution",
+    "atomic ownership and safe reclamation",
+    "current public byte identity",
+    "independent external custody",
+    "trusted UTC"
+  ],
+  "releaseAuthority": "HOLD",
+  "recoveryAuthority": "HOLD",
+  "watermark": ".dlw"
+}
