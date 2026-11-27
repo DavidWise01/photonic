@@ -1,0 +1,47 @@
+{
+  "schema": "photon16-observed-execution-v1",
+  "sourceCommit": "a66382147433b7920a92242a11873c89b338d905",
+  "runs": {
+    "wasm": 46016601441,
+    "native": 46016601438,
+    "buildJob": 140565205646,
+    "deployJob": 140566668495
+  },
+  "results": {
+    "nativeTests": 49,
+    "nativeFailures": 0,
+    "decisionParity": 134,
+    "javascriptSuites": 14,
+    "sameRunnerBuilds": 2,
+    "wasmVerifier": "PASS",
+    "chromium": "134.0.6998.35",
+    "browserAcceptance": "PASS",
+    "browserErrors": 0,
+    "failedResponses": 0,
+    "servedHashMatches": 3,
+    "manifestEntriesVerifiedLocally": 9,
+    "githubPagesDeployment": "REPORTED_SUCCESS"
+  },
+  "artifact": {
+    "id": 15206750209,
+    "bytes": 192593,
+    "zipSha256": "274de64afeaf71316cd31fad5ac54501b4b1f39f1973350065e675c36a50695e",
+    "wasmSha256": "c5f8aac0f17e000bb71d3013ac3755c88b27fe99b6075afd1723f66cb3b4581c",
+    "manifestSha256": "342b1443394ea3f84fc5d931a6174f850e6aad0b26a5ae28f317b1ed755d5d1c",
+    "verification": "DOWNLOADED_BYTES_HASHED_LOCALLY"
+  },
+  "pagesArtifact": {
+    "id": 15206765219,
+    "reportedSha256": "482b2f9e2f4a1ce2dad417d2aab93d199d00215e55f99be96065e84298c3fed1",
+    "downloaded": false
+  },
+  "limitations": [
+    "Live public URL bytes not independently retrieved",
+    "Browser acceptance executed against staged local site",
+    "Same-runner reproduction is not independent reproduction",
+    "Cross-process Rust-JavaScript exclusion not executed",
+    "External trust roots absent"
+  ],
+  "releaseAuthority": "HOLD",
+  "watermark": ".dlw"
+}
