@@ -1,0 +1,37 @@
+{
+  "schema": "photon16-public-observation-adjudication-v1",
+  "observerRun": 46029239862,
+  "observerJob": 140608494693,
+  "artifact": {
+    "id": 15212963751,
+    "reportedZipSha256": "c757043c1b550dcb645f6ca4a96d0bdca57a6e3f5164cfd63abda792e8a2bdfd",
+    "downloaded": true,
+    "localHashRecalculation": "UNVERIFIED"
+  },
+  "frozenBaseline": "a66382147433b7920a92242a11873c89b338d905",
+  "observed": {
+    "http200": 3,
+    "sourceFileSha256": "607add1a49b4ef6bc61d117fa18d43797720ec1d5db974e4481660b1adbde818",
+    "manifestSha256": "652d1df366454d24a8b139f71b3c7fadc8549cf2eb5121ebe05e858d96947f04",
+    "wasmSha256": "c5f8aac0f17e000bb71d3013ac3755c88b27fe99b6075afd1723f66cb3b4581c",
+    "wasmBytes": 77471
+  },
+  "matchingReportedRelease": {
+    "sourceCommit": "56352cb33c2f786739a9e6862a677af56104d842",
+    "run": 46018560899,
+    "job": 140571929477,
+    "manifestMatch": true,
+    "wasmMatch": true,
+    "sourceFileBytesMatch": "UNVERIFIED"
+  },
+  "subsequentDeployment": {
+    "sourceCommit": "bddb772720e9298b47a019c85241988dc4ab77a8",
+    "run": 46029239844,
+    "manifestSha256": "34b24bb89e80152ad3f22abbd76658585b58ddc0b00fe5a763e167205c83ba53",
+    "publicRetrieval": "UNVERIFIED"
+  },
+  "status": "PUBLIC_BINARY_MATCH_REPORTED_NEWER_RELEASE_MANIFEST_MATCH",
+  "independence": "UNVERIFIED_SAME_PROVIDER",
+  "releaseAuthority": "HOLD",
+  "watermark": ".dlw"
+}
