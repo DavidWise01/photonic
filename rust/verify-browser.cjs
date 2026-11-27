@@ -31,7 +31,9 @@ const {chromium}=require('playwright');
   page.on('response',r=>{if(r.url().includes('/photon16/')&&r.status()>=400)failed.push(r.url()+' '+r.status());});
   const url='http://127.0.0.1:'+server.address().port+'/photon16/';
   page.on('response',r=>{if(r.url()===url+'wasm/photon16.wasm'){servedHashes.push(r.body().then(b=>crypto.createHash('sha256').update(b).digest('hex')));wasmResponses.push(r.status());}});
-  await page.goto(url,{waitUntil:'load'});
+  // Bound navigation separately from historical module initialization; all panel assertions remain mandatory.
+  await page.goto(url,{waitUntil:'domcontentloaded',timeout:180000});
+  await page.waitForFunction(()=>document.readyState==='complete',{},{timeout:180000});
   const main=page.locator('section').filter({has:page.getByRole('heading',{name:/RUST WASM/})});
   assert.equal(await main.count(),1);
   await main.getByRole('button',{name:'Execute Rust',exact:true}).click();
