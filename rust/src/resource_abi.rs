@@ -17,3 +17,6 @@ thread_local!{static SESSION:RefCell<Session>=RefCell::new(Session::default());}
 5=>s.gate.cancel_pending(arg as u64),_=>false};if !s.gate.conserved(){return 2}u32::from(ok)})}
 // All counters fit u32 in this session: <=4096 events and <=13312 bytes/event.
 #[no_mangle]pub extern "C" fn photon_rg_metric(i:u32)->u32{SESSION.with(|s|{let s=s.borrow();let x=s.gate.snapshot();match i{0=>x.active as u32,1=>x.bytes as u32,2=>x.budget as u32,3=>x.pending as u32,4=>x.admitted as u32,5=>x.returned as u32,6=>x.allocated as u32,7=>x.released as u32,8=>u32::from(s.gate.conserved()),9=>s.events,_=>u32::MAX}})}
+
+// RI-003 read-only identity export; bounded by qualification session event ceiling.
+#[no_mangle]pub extern "C" fn photon_rg_identity(slot:u32,field:u32)->u32{SESSION.with(|s|{let s=s.borrow();let Some(k)=s.keys.get(slot as usize).copied().flatten()else{return u32::MAX};match field{0=>k.allocation as u32,1=>k.worker as u32,2=>k.generation as u32,3=>k.request as u32,_=>u32::MAX}})}
