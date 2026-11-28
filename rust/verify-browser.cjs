@@ -30,7 +30,7 @@ const {chromium}=require('playwright');
   page.on('pageerror',e=>errors.push(e.message));
   page.on('response',r=>{if(r.url().includes('/photon16/')&&r.status()>=400)failed.push(r.url()+' '+r.status());});
   const url='http://127.0.0.1:'+server.address().port+'/photon16/';
-  page.on('response',r=>{if(r.url()===url+'wasm/photon16.wasm'){servedHashes.push(r.body().then(b=>crypto.createHash('sha256').update(b).digest('hex')));wasmResponses.push(r.status());}});
+  page.on('response',r=>{if(r.url()===url+'wasm/photon16.wasm'){servedHashes.push(r.body().then(b=>crypto.createHash('sha256').update(b).digest('hex')).catch(e=>({captureError:String(e)})));wasmResponses.push(r.status());}});
   // Bound navigation separately from historical module initialization; all panel assertions remain mandatory.
   await page.goto(url,{waitUntil:'domcontentloaded',timeout:180000});
   await page.waitForFunction(()=>document.readyState==='complete',{},{timeout:180000});
@@ -100,11 +100,25 @@ const {chromium}=require('playwright');
   assert.equal(admission.after.rejected-admission.before.rejected,1);
   assert.equal(admission.after.peak,3);
   assert.equal(admission.after.conservation,true);
+  assert.equal(admission.full.reservedBytes,17408);
+  assert.equal(admission.after.reservedBytes,0);
+  assert.equal(admission.after.allocatedBytes-admission.before.allocatedBytes,17408);
+  assert.equal(admission.after.returnedBytes-admission.before.returnedBytes,17408);
+  const weighted=await page.evaluate(async()=>{
+   const before=PHOTON_RESOURCE.snapshot(),job=photonNativeJob('kernel');
+   let blocked=false;try{await photonNativeJob('kernel');}catch(e){blocked=String(e).includes('admission ceiling');}
+   const during=PHOTON_RESOURCE.snapshot();await job;
+   return {before,during,after:PHOTON_RESOURCE.snapshot(),blocked};
+  });
+  assert.equal(weighted.blocked,true);assert.equal(weighted.during.active,1);
+  assert.equal(weighted.during.reservedBytes,13312);
+  assert.equal(weighted.after.reservedBytes,0);assert.equal(weighted.after.conservation,true);
+  console.log(JSON.stringify({status:'RG003_WEIGHTED_PASS',...weighted}));
   console.log(JSON.stringify({status:'RG002_ADMISSION_PASS',...admission}));
   const served=await Promise.all(servedHashes);assert.ok(served.length>=3);assert.ok(wasmResponses.every(x=>x===200));assert.ok(served.every(h=>h===wasmSha256));
   assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);
   await main.scrollIntoViewIfNeeded();await main.screenshot({path:'verified/browser-rust.png'});
-  fs.writeFileSync('verified/BROWSER_ACCEPTANCE.json',JSON.stringify({sourceCommit,wasmSha256,servedHashes:served,wasmResponses,browser:browser.version(),native,trials,online:trace,stress,admission,errors,failed},null,2));
+  fs.writeFileSync('verified/BROWSER_ACCEPTANCE.json',JSON.stringify({sourceCommit,wasmSha256,servedHashes:served,wasmResponses,browser:browser.version(),native,trials,online:trace,stress,admission,weighted,errors,failed},null,2));
   console.log('Chromium native kernel, resource policies and causal trace PASS');
  }finally{if(browser)await browser.close();await new Promise(r=>server.close(r));}
 })().catch(e=>{console.error(e);process.exitCode=1;});
