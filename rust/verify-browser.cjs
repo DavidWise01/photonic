@@ -79,10 +79,32 @@ const {chromium}=require('playwright');
   assert.equal(stress.invalidRejected,true);
   assert.equal(stress.startup.state,'reserved');assert.equal(stress.startup.records.length,0);
   console.log(JSON.stringify({status:'OR004_STRESS_PASS',rounds:stress.rounds.map(({wallMs,heartbeats})=>({wallMs,heartbeats})),maxGap:stress.maxGap,invalidRejected:stress.invalidRejected}));
+  // RG002: actual worker ceiling and exact allocation return accounting.
+  const admission=await page.evaluate(async()=>{
+   const before=window.PHOTON_RESOURCE.snapshot();
+   const jobs=[photonNativeJob('kernel'),photonNativeJob('policy',0,2048),photonNativeJob('online',0,2048)];
+   const full=window.PHOTON_RESOURCE.snapshot();
+   let overflow=false;
+   const excess=photonNativeJob('kernel').catch(e=>{overflow=String(e).includes('admission ceiling');});
+   await Promise.all([...jobs,excess]);
+   const after=window.PHOTON_RESOURCE.snapshot();
+   return {before,full,after,overflow};
+  });
+  assert.equal(admission.before.active,0);
+  assert.equal(admission.full.active,3);
+  assert.equal(admission.full.limit,3);
+  assert.equal(admission.overflow,true);
+  assert.equal(admission.after.active,0);
+  assert.equal(admission.after.admitted-admission.before.admitted,3);
+  assert.equal(admission.after.returned-admission.before.returned,3);
+  assert.equal(admission.after.rejected-admission.before.rejected,1);
+  assert.equal(admission.after.peak,3);
+  assert.equal(admission.after.conservation,true);
+  console.log(JSON.stringify({status:'RG002_ADMISSION_PASS',...admission}));
   const served=await Promise.all(servedHashes);assert.ok(served.length>=3);assert.ok(wasmResponses.every(x=>x===200));assert.ok(served.every(h=>h===wasmSha256));
   assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);
   await main.scrollIntoViewIfNeeded();await main.screenshot({path:'verified/browser-rust.png'});
-  fs.writeFileSync('verified/BROWSER_ACCEPTANCE.json',JSON.stringify({sourceCommit,wasmSha256,servedHashes:served,wasmResponses,browser:browser.version(),native,trials,online:trace,stress,errors,failed},null,2));
+  fs.writeFileSync('verified/BROWSER_ACCEPTANCE.json',JSON.stringify({sourceCommit,wasmSha256,servedHashes:served,wasmResponses,browser:browser.version(),native,trials,online:trace,stress,admission,errors,failed},null,2));
   console.log('Chromium native kernel, resource policies and causal trace PASS');
  }finally{if(browser)await browser.close();await new Promise(r=>server.close(r));}
 })().catch(e=>{console.error(e);process.exitCode=1;});
