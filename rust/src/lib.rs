@@ -232,3 +232,6 @@ pub mod evidence_journal;
 
 // RI-001 reusable logical resource governance; operational authority remains HOLD.
 pub mod resource_governance;
+
+// RI-002 qualification-only interface.
+pub mod resource_abi;
