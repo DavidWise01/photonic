@@ -1,0 +1,21 @@
+name: PHOTON-16 RI-002 parity
+on:
+  push:
+    paths:
+      - 'rust/src/resource_abi.rs'
+      - 'rust/src/resource_governance.rs'
+      - 'rust/src/bin/ri002_parity.rs'
+      - 'rust/test-ri002-parity.cjs'
+      - '.github/workflows/photon16-ri002.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup toolchain install 1.85.1 --target wasm32-unknown-unknown
+      - run: cargo +1.85.1 build --offline --manifest-path rust/Cargo.toml --bin ri002_parity
+      - run: cargo +1.85.1 build --release --offline --manifest-path rust/Cargo.toml --lib --target wasm32-unknown-unknown
+      - run: node rust/test-ri002-parity.cjs rust/target/debug/ri002_parity rust/target/wasm32-unknown-unknown/release/photon16.wasm
