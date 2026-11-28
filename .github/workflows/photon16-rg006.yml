@@ -1,0 +1,15 @@
+name: PHOTON-16 RG-006 temporal leases
+on:
+  push:
+    paths:
+      - 'rust/src/bin/rg006_leases.rs'
+      - '.github/workflows/photon16-rg006.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  leases:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cargo run --offline --manifest-path rust/Cargo.toml --bin rg006_leases
