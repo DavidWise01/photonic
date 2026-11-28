@@ -1,0 +1,130 @@
+{
+  "schema": "photon16-resource-governance-freeze-v1",
+  "phase": "VII",
+  "status": "LOGICAL_BOUNDARY_CLOSED_WITH_RESERVATIONS",
+  "baseline": "7e7886bc5185e26bb8c5abf39e7d0c3019c9a1b4",
+  "inputs": [
+    {
+      "path": "photon16/qualification/OR-008-freeze.json",
+      "blob": "52e2e5836edb478befc47f8114a2bf0600448aa3"
+    },
+    {
+      "path": "photon16/v83-rust-wasm.js",
+      "blob": "6ef4e6b67915f583d587f1983187b02e1dfd17d4"
+    },
+    {
+      "path": "rust/test-resource-contention.cjs",
+      "blob": "a8e7ca4d9de4821e5d19529c21a27f62994161ff"
+    },
+    {
+      "path": "rust/src/bin/rg005_admission.rs",
+      "blob": "ef1a54306a243831c8b18ca09aced4c9979f6a22"
+    },
+    {
+      "path": "rust/src/bin/rg006_leases.rs",
+      "blob": "894212972028f8db5f8aaa9b9bdee699f12588c6"
+    },
+    {
+      "path": "rust/src/bin/rg007_fencing.rs",
+      "blob": "7d94746fae386dc73372910bad2a65ace849506f"
+    },
+    {
+      "path": "rust/src/bin/rg007r_fencing.rs",
+      "blob": "79eb44d756a714d17687de10efe3b20bfa31d73c"
+    },
+    {
+      "path": ".github/workflows/photon16-rg004.yml",
+      "blob": "79cfc482150358bf3fc14cc79be605b3e93109e3"
+    },
+    {
+      "path": ".github/workflows/photon16-rg005.yml",
+      "blob": "d5f6c934bfc9081ff7464a59b27ebc56b69dd889"
+    },
+    {
+      "path": ".github/workflows/photon16-rg006.yml",
+      "blob": "332892cf5cc15a7fc99b57299ac404b43b2358e4"
+    },
+    {
+      "path": ".github/workflows/photon16-rg007.yml",
+      "blob": "cc296147f8cabf00fcd6e1dab651f01af6b3e10a"
+    },
+    {
+      "path": ".github/workflows/photon16-rg007r.yml",
+      "blob": "adf2f9157d90fced224496f0b3cdeacbcccb0e79"
+    }
+  ],
+  "limits": {
+    "bytes": 17408,
+    "workers": 3,
+    "modelQueue": 32,
+    "modelLeaseTicks": 8
+  },
+  "observations": [
+    {
+      "id": "RG-004",
+      "run": 46106797206,
+      "job": 140861253666,
+      "sha": "212c50211e716a9ccfe2aea082d2bb5ba15a7bdd",
+      "result": "PASS",
+      "checks": 2560,
+      "admitted": 768,
+      "returned": 768,
+      "rejected": 1152,
+      "allocatedBytes": 6127616,
+      "returnedBytes": 6127616,
+      "scope": "actual JS admission with mock workers"
+    },
+    {
+      "id": "RG-005",
+      "run": 46111792401,
+      "job": 140876724821,
+      "sha": "020e19fddbfaa63d1533a087f75c353730ed95b8",
+      "result": "PASS",
+      "schedules": 256,
+      "checks": 17920,
+      "scope": "isolated Rust model"
+    },
+    {
+      "id": "RG-006",
+      "run": 46153764085,
+      "job": 141005800153,
+      "sha": "c3ec5763e4a85676fa478706f3f44eb172ef7a0c",
+      "result": "PASS",
+      "schedules": 256,
+      "checks": 3072,
+      "scope": "simulated stop acknowledgements"
+    },
+    {
+      "id": "RG-007",
+      "run": 46154839215,
+      "job": 141009102330,
+      "sha": "aaabac295f47d01d80258b85993da6a4f2cbda73",
+      "result": "FAIL",
+      "reason": "incorrect test oracle assumed most recently released slot rather than lowest free slot"
+    },
+    {
+      "id": "RG-007R",
+      "run": 46156786483,
+      "job": 141015088556,
+      "sha": "7e7886bc5185e26bb8c5abf39e7d0c3019c9a1b4",
+      "result": "PASS",
+      "schedules": 256,
+      "checks": 8192,
+      "rejectedAcknowledgements": 7168,
+      "scope": "simulated observer only"
+    }
+  ],
+  "totalSuccessfulCheckpoints": 31744,
+  "reserved": [
+    "RG-001 through RG-003 separate hosted qualification not established by this record",
+    "production adaptive queue and lease integration",
+    "cryptographic authentication",
+    "independent termination observation",
+    "physical memory reclamation",
+    "current Pages deployment",
+    "external custody and trusted UTC"
+  ],
+  "releaseAuthority": "HOLD",
+  "recoveryAuthority": "HOLD",
+  "watermark": ".dlw"
+}
