@@ -1,0 +1,19 @@
+name: PHOTON-16 RG-004 contention
+on:
+  push:
+    paths:
+      - 'photon16/v83-rust-wasm.js'
+      - 'rust/test-resource-contention.cjs'
+      - '.github/workflows/photon16-rg004.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contention:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node rust/test-resource-contention.cjs
